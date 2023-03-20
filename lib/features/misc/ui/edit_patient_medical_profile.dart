@@ -1382,6 +1382,7 @@ class _EditPatientMedicalProfileViewState
                         heightInInches);
                     _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
                     height = int.parse(localHeight);
+                    addHeight(localHeight.toString());
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
@@ -1459,6 +1460,7 @@ class _EditPatientMedicalProfileViewState
                     double.parse(heightInCm.toString());
                     _sharedPrefUtils.saveDouble('height', localHeight);
                     height = localHeight.toInt();
+                    addHeight(localHeight.toString());
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
@@ -1558,6 +1560,28 @@ class _EditPatientMedicalProfileViewState
     } catch (CustomException) {
       progressDialog.close();
       debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  addHeight(String height) async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyHeight'] = height.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Cm";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-heights', map);
+
+      if (baseResponse.status == 'success') {
+
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
@@ -167,6 +168,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('##########################${RemoteConfigValues.hospitalSystemVisibility}');
     return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -182,7 +184,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-
+                  if(RemoteConfigValues.hospitalSystemVisibility)...[
                   Row(
                     children: [
                       Padding(
@@ -205,6 +207,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ],
                   ),
                   healthSystem(),
+                  ],
                   Row(
                     children: [
                       Padding(

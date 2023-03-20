@@ -1127,7 +1127,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               onTap: () {
                                 Navigator.pushNamed(context, RoutePaths.My_Nutrition,
                                     arguments: '');
-                                //recordMyCaloriesConsumed(false);
+                                recordMyCaloriesConsumed(false);
                               },
                               child: ExcludeSemantics(
                                 child: Column(

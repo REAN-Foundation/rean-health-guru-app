@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
@@ -89,6 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    setupFirebaseConfig();
     FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();
     GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
@@ -228,10 +229,10 @@ class _SplashScreenState extends State<SplashScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        CircularProgressIndicator(
+                       /* CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color?>(
                               widget.loaderColor),
-                        ),
+                        ),*/
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                         ),
@@ -261,7 +262,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                  getSponsor(),
+                                  getSponsor().substring(1, getSponsor().length - 1),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 16,

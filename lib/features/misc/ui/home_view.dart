@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/models/GetRecords.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
@@ -34,7 +35,9 @@ import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
+import '../../common/activity/models/movements_tracking.dart';
 import '../../common/careplan/ui/careplan_task.dart';
+import '../../common/vitals/models/get_my_vitals_history.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
 
@@ -176,6 +179,74 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  loadAllHistoryData(){
+    Timer(Duration(seconds: 4), () {
+      getSleepHistory();
+      getVitalsHistory();
+      getStepHistory();
+    });
+  }
+
+  getVitalsHistory() async {
+    try {
+      final GetMyVitalsHistory getMyVitalsHistory =
+      await model.getMyVitalsHistory('body-heights');
+      if (getMyVitalsHistory.status == 'success') {
+        if (getMyVitalsHistory.data!.bodyHeightRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.saveDouble('height', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getSleepHistory() async {
+    try {
+      DateTime startDate = dateFormat.parse(DateTime.now().toIso8601String());
+      final GetRecords records =
+      await model.getMySleepHistory(startDate.toString());
+      if (records.status == 'success') {
+        if (records.data!.sleepRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.save(
+              'sleepTime', MovementsTracking(startDate, records.data!.sleepRecords!.items!.elementAt(0).sleepDuration, '').toJson());
+          //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getStepHistory() async {
+    try {
+      DateTime startDate = dateFormat.parse(DateTime.now().toIso8601String());
+      final GetRecords records =
+      await model.getMyStepHistory(startDate.toString());
+      if (records.status == 'success') {
+        if (records.data!.stepRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.save(
+              'stepCount', MovementsTracking(startDate, int.parse(records.data!.stepRecords!.items!.elementAt(0).stepCount.toString()), '').toJson());
+          //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   getCarePlan() async {
     try {
       final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
@@ -197,15 +268,24 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'Stroke'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
             debugPrint('CarePlan ==> Stroke');
             _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
           }else if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'Cholesterol'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
             debugPrint('CarePlan ==> Cholesterol');
-            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s Integrated ASCVD Management Initiative.');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'HFMotivator'){
+            RemoteConfigValues.hospitalSystemVisibility = false;
+            debugPrint('CarePlan ==> HFMotivator');
+            _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
           }
 
+        }else{
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -424,6 +504,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    loadAllHistoryData();
     getCarePlanSubscribe();
     _initPackageInfo();
     getDailyCheckInDate();

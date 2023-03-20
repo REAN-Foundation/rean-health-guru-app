@@ -1057,6 +1057,184 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         ));
   }*/
 
+  Widget _addHeightInFtnInchDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInFtNInchDialog(
+                  submitButtonListner: (int heightInFeet, int heightInInches) {
+                    var localHeight = Conversion.FeetAndInchToCm(
+                        heightInFeet,
+                        heightInInches);
+                    _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+                    addHeight(localHeight.toString());
+                    height = int.parse(localHeight);
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showSuccessToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInFeet: heightInFt,
+                  heightInInches: heightInInch,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  Widget _addHeightInCmDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInCmDialog(
+                  submitButtonListner: (int heightInCm) {
+                    var localHeight =
+                    double.parse(heightInCm.toString());
+                    _sharedPrefUtils.saveDouble('height', localHeight);
+                    height = localHeight.toInt();
+                    addHeight(localHeight.toString());
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showSuccessToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInCm: height.toInt(),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  addHeight(String height) async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyHeight'] = height.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Cm";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-heights', map);
+
+      if (baseResponse.status == 'success') {
+
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');

@@ -264,6 +264,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               else
                 InkWell(
                   onTap: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'resend_otp_button_click', parameters: <String, dynamic>{
+                      'mobile_number': mobileNumber,
+                      'country_code': countryCodeGlobe,
+                    },);
                     generateOTPForExistingUser(model);
                   },
                   child: Semantics(

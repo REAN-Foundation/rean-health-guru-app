@@ -1,4 +1,5 @@
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
@@ -444,6 +445,7 @@ class _EditPatientMedicalProfileViewState
                               height: 40,
                               child: ElevatedButton(
                                 onPressed: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'medical_profile_save_button_click');
                                   /*if (_heightInFeetController.text
                                       .trim()
                                       .isEmpty) {
@@ -1377,6 +1379,7 @@ class _EditPatientMedicalProfileViewState
               Expanded(
                 child: AddHeightInFtNInchDialog(
                   submitButtonListner: (int heightInFeet, int heightInInches) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight = Conversion.FeetAndInchToCm(
                         heightInFeet,
                         heightInInches);
@@ -1456,6 +1459,7 @@ class _EditPatientMedicalProfileViewState
               Expanded(
                 child: AddHeightInCmDialog(
                   submitButtonListner: (int heightInCm) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight =
                     double.parse(heightInCm.toString());
                     _sharedPrefUtils.saveDouble('height', localHeight);

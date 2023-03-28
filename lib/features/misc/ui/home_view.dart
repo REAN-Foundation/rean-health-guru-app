@@ -443,12 +443,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   void showTutorial() {
     coackMarkUtilites.displayCoachMark(context, targets,
         onCoachMartkFinish: () {
+          FirebaseAnalytics.instance.logEvent(name: 'app_tutorial_finish_button_click');
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
               const Duration(seconds: 2), () => healthJourneyCheck());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
+          FirebaseAnalytics.instance.logEvent(name: 'app_tutorial_skip_button_click');
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
@@ -549,6 +551,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
 
   showHealthJourneyDialog() {
+    FirebaseAnalytics.instance.logEvent(name: 'health_journey_popup_displayed');
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       backgroundColor: Colors.transparent,
@@ -609,6 +612,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'cancel_health_journey_button_click');
                               Navigator.pop(context);
                               Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
                             },
@@ -648,6 +652,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_button_click');
                               if (carePlanEnrollmentForPatientGlobe == null) {
                                 Navigator.popAndPushNamed(
                                     context, RoutePaths.Select_Care_Plan);
@@ -752,6 +757,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     );
     switch (_currentNav) {
       case 0:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_home_button_click');
         screen = DashBoardVer3View(
           positionToChangeNavigationBar: (int tabPosition) {
             debugPrint('Tapped Tab $tabPosition');
@@ -760,15 +766,18 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         );
         break;
       case 1:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_task_button_click');
         screen = CarePlanTasksView();
         break;
       case 2:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_upload_report_button_click');
         screen = MyReportsView();
         break;
       /*case 3:
         screen = ViewMyAppointment();
         break;*/
       case 3:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_emergency_button_click');
         screen = EmergencyContactView();
         break;
     }

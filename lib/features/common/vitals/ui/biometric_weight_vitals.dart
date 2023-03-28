@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -549,6 +550,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               button: true,
               child: InkWell(
                 onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'vitals_weight_save_button_click');
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
                   } else if(isNumeric(_weightController.text)) {
@@ -1114,6 +1116,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               Expanded(
                 child: AddHeightInFtNInchDialog(
                   submitButtonListner: (int heightInFeet, int heightInInches) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight = Conversion.FeetAndInchToCm(
                         heightInFeet,
                         heightInInches);
@@ -1193,6 +1196,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               Expanded(
                 child: AddHeightInCmDialog(
                   submitButtonListner: (int heightInCm) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight =
                     double.parse(heightInCm.toString());
                     _sharedPrefUtils.saveDouble('height', localHeight);

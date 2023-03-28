@@ -105,7 +105,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () => _onIntroEnd(context),
-      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      onChange: (int position) {
+        FirebaseAnalytics.instance.logEvent(name: 'onboarding_next_button_click');
+      },
+      onSkip: () {
+        FirebaseAnalytics.instance.logEvent(name: 'onboarding_skip_button_click');
+        _onIntroEnd(context);
+      }, // You can override onSkip callback
       showSkipButton: true,
       skipOrBackFlex: 0,
       nextFlex: 0,

@@ -369,6 +369,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         style: TextStyle(fontSize: 14, color: primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
+                            FirebaseAnalytics.instance.logEvent(name: 'privacy_policy_button_click');
                             navigateToPrivacyPolicy();
                           }),
                     if (getAppType() == "AHA") ...[
@@ -380,6 +381,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                           style: TextStyle(fontSize: 14, color: primaryColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
+                              FirebaseAnalytics.instance.logEvent(name: 'terms_of_service_button_click');
                               navigateToTermsOfService();
                             }),
                     ]

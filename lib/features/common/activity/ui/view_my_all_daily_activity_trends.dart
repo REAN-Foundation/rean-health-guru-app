@@ -599,6 +599,7 @@ class _ViewMyAllDailyActivityTrendsState
       stepsToDisplay = stepsMovements;
     }
 
+    recordMySteps(stepsToDisplay);
     return Container(
       height: 200,
       decoration: BoxDecoration(
@@ -1190,14 +1191,32 @@ class _ViewMyAllDailyActivityTrendsState
     }
   }
 
-  recordMySteps() async {
+  recordMySteps(int stepsToDisplay) async {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['StepCount'] = steps;
+      map['StepCount'] = stepsToDisplay;
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMySteps(map);
+      if (baseResponse.status == 'success') {
+      } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyStand() async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Stand'] = standMovements;
+      map['Unit'] = 'Minutes';
+      map['RecordDate'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyStand(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {

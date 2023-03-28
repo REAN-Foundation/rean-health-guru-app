@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -154,6 +155,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'enter_all_vitals_save_button_click');
                                 toastDisplay = true;
                                 validationToastDisplay = true;
                                 /*if(_controller.text.toString().isEmpty){

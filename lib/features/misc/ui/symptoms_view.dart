@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -207,6 +208,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       alignment: Alignment.center,
       child: ElevatedButton.icon(
         onPressed: () async {
+          FirebaseAnalytics.instance.logEvent(name: 'symptoms_done_button_click');
           showSuccessToast('Symptoms recorded successfully', context);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {

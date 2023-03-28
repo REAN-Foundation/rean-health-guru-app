@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -222,6 +223,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
               button: true,
               child: InkWell(
                 onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'lab_values_hdl_save_button_click');
                   if (_controller.text.toString().isEmpty) {
                     showToast('Please enter your HDL', context);
                   } else {

@@ -1,4 +1,5 @@
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -155,6 +156,7 @@ class _SupportViewState extends State<SupportView> {
                                         button: true,
                                         child: InkWell(
                                           onTap: () async {
+                                            FirebaseAnalytics.instance.logEvent(name: 'contact_us_call_us_button_click');
                                             final String url = 'tel://' + phone;
                                             if (await canLaunchUrl(Uri.parse(url))) {
                                               await launchUrl(Uri.parse(url));
@@ -214,6 +216,7 @@ class _SupportViewState extends State<SupportView> {
                                       button: true,
                                       child: InkWell(
                                         onTap: () async {
+                                          FirebaseAnalytics.instance.logEvent(name: 'contact_us_email_us_button_click');
                                           /* final Uri _emailLaunchUri = Uri(
                                             scheme: 'mailto',
                                             path: email,

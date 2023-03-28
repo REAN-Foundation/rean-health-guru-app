@@ -198,9 +198,11 @@ class Person {
     activeSince = json['ActiveSince'];
     if (json['Addresses'] != null) {
       addresses = <Addresses>[];
+      if(addresses!.isNotEmpty) {
         json['Addresses'].forEach((v) {
           addresses!.add(Addresses.fromJson(v));
         });
+      }
     }
   }
 

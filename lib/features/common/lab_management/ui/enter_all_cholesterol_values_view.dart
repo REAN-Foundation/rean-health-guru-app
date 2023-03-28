@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -98,6 +99,7 @@ class _EnterAllCholesterolValuesViewState
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'lab_values_enter_all_values_save_button_click');
                                 validate();
                               },
                               child: ExcludeSemantics(

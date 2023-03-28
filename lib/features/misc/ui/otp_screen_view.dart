@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -263,6 +264,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               else
                 InkWell(
                   onTap: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'resend_otp_button_click', parameters: <String, dynamic>{
+                      'mobile_number': mobileNumber,
+                      'country_code': countryCodeGlobe,
+                    },);
                     generateOTPForExistingUser(model);
                   },
                   child: Semantics(
@@ -303,6 +308,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                         borderRadius: BorderRadius.all(Radius.circular(24)),
                         side: BorderSide(color: primaryColor)))),
             onPressed: () async {
+              FirebaseAnalytics.instance.logEvent(name: 'submit_otp_button_click');
               debugPrint('mobile = ${widget.mobileNumber}');
               debugPrint('OTP = $otp');
 
@@ -469,6 +475,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           userDiviceData(
               model, userData.data!.accessToken!, userData.data!.user!.id);
         } else {
+          userDiviceData(
+              model, userData.data!.accessToken!, userData.data!.user!.id);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return CreateProfile();

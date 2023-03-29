@@ -153,9 +153,9 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Center(
         child: Text(
-          '\n' + widget.task!.action!.description.toString(),
+          widget.task!.action!.description.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
         ),
       ),
     );

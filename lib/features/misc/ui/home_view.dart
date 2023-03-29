@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/models/GetRecords.dart';
@@ -16,6 +19,7 @@ import 'package:patient/features/common/careplan/models/get_care_plan_enrollment
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
@@ -80,6 +84,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String imageResourceId = '';
+  late AndroidDeviceInfo androidInfo;
+  late IosDeviceInfo iosInfo;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: '',
+    packageName: '',
+    version: '',
+    buildNumber: '',
+  );
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
@@ -391,6 +403,72 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _packageInfo = info;
+      });
+    }
+  }
+
+  getDeviceData() async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+    }
+
+    if (Platform.isIOS) {
+      iosInfo = await deviceInfo.iosInfo;
+
+      print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+    }
+  }
+
+  userDiviceData() async {
+    try {
+      //ApiProvider apiProvider = new ApiProvider();
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final body = <String, dynamic>{};
+      body['Token'] = await _sharedPrefUtils.read('fcmToken');
+      body['UserId'] = patientUserId;
+      if (Platform.isAndroid) {
+        body['DeviceName'] = androidInfo.brand! + ' ' + androidInfo.model!;
+        body['DeviceId'] = androidInfo.id;
+        body['OSType'] = 'Android';
+        body['OSVersion'] = androidInfo.version.release;
+      }
+      if (Platform.isIOS) {
+        body['DeviceName'] = iosInfo.model;
+        body['DeviceId'] = iosInfo.identifierForVendor;
+        body['OSType'] = 'iOS';
+        body['OSVersion'] = Platform.operatingSystemVersion;
+      }
+      body['AppName'] = getAppName();
+      body['AppVersion'] = _packageInfo.version;
+
+      final response = await apiProvider!
+          .post('/user-device-details', header: map, body: body);
+
+      final BaseResponse baseResponse = BaseResponse.fromJson(response);
+
+      if (baseResponse.status == 'success') {
+      } else {
+        //showToast(baseResponse.message, context);
+      }
+    } on FetchDataException catch (e) {
+      showToast('Opps! Something went wrong, Please try again', context);
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint(e.toString());
+    }
+  }
+
   /*void showTutorial() {
     tutorialCoachMark = TutorialCoachMark(
       context,
@@ -495,7 +573,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         ShapeLightFocus.Circle));
   }
 
-  Future<void> _initPackageInfo() async {
+  Future<void> _initDeviceLocal() async {
     if (getCurrentLocale() == '') {
       final Locale countryLocale =
           await (Devicelocale.currentAsLocale as FutureOr<Locale>);
@@ -507,9 +585,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    getDeviceData();
     loadAllHistoryData();
     getCarePlanSubscribe();
     _initPackageInfo();
+    _initDeviceLocal();
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
@@ -721,6 +801,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             .toString()}");
         await _sharedPrefUtils.save(
             'patientDetails', apiResponse.data!.patient!.toJson());
+        userDiviceData();
       } else {
         autoLogOut(apiResponse);
         model.setBusy(false);

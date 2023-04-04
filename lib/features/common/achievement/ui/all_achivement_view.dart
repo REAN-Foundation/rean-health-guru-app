@@ -28,7 +28,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             backgroundColor: primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
-              '',
+              'Achievements',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -65,7 +65,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     color: primaryColor,
-                    height: 120,
+                    height: 100,
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,12 +74,12 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                         Expanded(
                             flex: 3,
                             child: Container(
-                              height: 120,
+                              height: 60,
                               child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 24,),
+                                SizedBox(height: 0,),
                                 Text(
                                   'My Honor',
                                   style: TextStyle(
@@ -129,7 +129,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
                                 ),
 
-                                SizedBox(height: 16,),
+                                SizedBox(height: 0,),
                               ],
                         ),
                             )),
@@ -290,17 +290,23 @@ class _AllAchievementViewState extends State<AllAchievementView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text('Name',
+            style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 4,),
             Image.asset('res/images/ic_medal.png',
               height: 60,
               width: 40,
             ),
-            SizedBox(height: 8,),
-            Text(
-              '7 Days',
+            SizedBox(height: 4,),
+            Text('Status',
               style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 10.0,
                   color: Colors.black,
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w500),
             ),
           ],
         ),

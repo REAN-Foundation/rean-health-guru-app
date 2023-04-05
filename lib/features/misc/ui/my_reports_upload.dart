@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
@@ -240,7 +241,9 @@ class _MyReportsViewState extends State<MyReportsView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      downloadReportWidget(),
+                      if(RemoteConfigValues.downloadReportButtonVisibility)...[
+                        downloadReportWidget(),
+                      ],
                       uploadWidget(),
                     ],
                   ),

@@ -81,7 +81,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                               children: [
                                 SizedBox(height: 0,),
                                 Text(
-                                  'My Honor',
+                                  'My Badges',
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,

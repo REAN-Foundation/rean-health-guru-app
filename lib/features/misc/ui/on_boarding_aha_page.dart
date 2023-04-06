@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -30,6 +31,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
   @override
   void initState() {
     super.initState();
+    FirebaseAnalytics.instance.logTutorialBegin();
     _initPackageInfo();
   }
 

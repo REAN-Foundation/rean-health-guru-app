@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
@@ -1358,6 +1359,7 @@ class _EditProfileState extends State<EditProfile> {
       alignment: Alignment.centerLeft,
       child: TextButton.icon(
         onPressed: () {
+          FirebaseAnalytics.instance.logEvent(name: 'delete_account_button_click');
           showMaterialModalBottomSheet(
               isDismissible: true,
               backgroundColor: Colors.transparent,

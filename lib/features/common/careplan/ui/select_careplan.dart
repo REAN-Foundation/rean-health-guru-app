@@ -1,4 +1,5 @@
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -308,6 +309,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                             selectCarePlanDropDown(),
                                             startCarePlanDate(),
                                             SizedBox(height: 8,),
+                                            if(RemoteConfigValues.hospitalSystemVisibility)
                                             healthSystem(),
                                             //checkElegibility(),
                                             /* if (selectedCarePlan == '')
@@ -412,6 +414,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ]*/
                 ,
                 onChanged: (value) {
+                  if(value == 'Heart Failure Motivator'){
+                    RemoteConfigValues.hospitalSystemVisibility = false;
+                  }else{
+                    RemoteConfigValues.hospitalSystemVisibility = true;
+                  }
+
                   setState(() {
                     selectedCarePlan = value;
                     getCarePlanDetails();
@@ -900,12 +908,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   startCarePlan() async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-      model.setBusy(true);
       final map = <String, String?>{};
       map['Provider'] = carePlanTypes!.provider;
       map['PlanCode'] = carePlanTypes!.code;
       map['StartDate'] = startDate;
+
+      FirebaseAnalytics.instance.logEvent(name: 'health_journey_register_button_click', parameters: map);
+      progressDialog.show(max: 100, msg: 'Loading...');
+      model.setBusy(true);
 
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
@@ -1093,6 +1103,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       }).toList(),
                       hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
+                        FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
+                          'health_system': data,
+                        },);
                         debugPrint(data);
                         setState(() {
                           healthSystemGlobe = data.toString();
@@ -1151,6 +1164,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       }).toList(),
                       hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
+                        FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
+                          'select_hospital': data,
+                        },);
                         debugPrint(data);
                         setState(() {
                           healthSystemHospitalGlobe = data.toString();

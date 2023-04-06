@@ -1,4 +1,5 @@
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
@@ -444,6 +445,7 @@ class _EditPatientMedicalProfileViewState
                               height: 40,
                               child: ElevatedButton(
                                 onPressed: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'medical_profile_save_button_click');
                                   /*if (_heightInFeetController.text
                                       .trim()
                                       .isEmpty) {
@@ -1377,11 +1379,13 @@ class _EditPatientMedicalProfileViewState
               Expanded(
                 child: AddHeightInFtNInchDialog(
                   submitButtonListner: (int heightInFeet, int heightInInches) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight = Conversion.FeetAndInchToCm(
                         heightInFeet,
                         heightInInches);
                     _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
                     height = int.parse(localHeight);
+                    addHeight(localHeight.toString());
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
@@ -1455,10 +1459,12 @@ class _EditPatientMedicalProfileViewState
               Expanded(
                 child: AddHeightInCmDialog(
                   submitButtonListner: (int heightInCm) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
                     var localHeight =
                     double.parse(heightInCm.toString());
                     _sharedPrefUtils.saveDouble('height', localHeight);
                     height = localHeight.toInt();
+                    addHeight(localHeight.toString());
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
@@ -1558,6 +1564,28 @@ class _EditPatientMedicalProfileViewState
     } catch (CustomException) {
       progressDialog.close();
       debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  addHeight(String height) async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyHeight'] = height.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Cm";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-heights', map);
+
+      if (baseResponse.status == 'success') {
+
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 

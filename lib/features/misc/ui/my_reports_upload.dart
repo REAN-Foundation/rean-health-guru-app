@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
@@ -271,7 +272,7 @@ class _MyReportsViewState extends State<MyReportsView> {
               } else {
                 showToast('Please select document type');
               }*/
-
+              FirebaseAnalytics.instance.logEvent(name: 'upload_my_report_button_click');
               showMaterialModalBottomSheet(
                   isDismissible: true,
                   backgroundColor: Colors.transparent,
@@ -416,6 +417,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         button: true,
                         child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'rename_my_report_button_click');
                               _renameDialog(document);
                             },
                             child: Container(
@@ -449,6 +451,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         button: true,
                         child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'delete_my_report_button_click');
                               _removeConfirmation(document);
                             },
                             child: Container(
@@ -482,6 +485,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         button: true,
                         child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'share_my_report_button_click');
                               if (document.mimeType != null) {
                                 getDocumentPublicLink(document, false);
                               } else {

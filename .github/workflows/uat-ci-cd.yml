@@ -14,6 +14,10 @@ on:
     branches:
       - 'release/**'
       - '!release/aha**'
+
+  pull_request:
+    types: [opened, edited]
+    branches: main
       
 jobs:
   gitguardian-scanning:
@@ -60,8 +64,23 @@ jobs:
         run: |
           flutter clean
           flutter analyze --preamble --congratulate
+  
+  Label_Checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Check labels
+      - uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          one_of: major,minor,patch
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   Android-BuildApp:
+    needs: Label_Checks
     environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest

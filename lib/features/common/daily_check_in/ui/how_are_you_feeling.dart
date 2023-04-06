@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -83,7 +84,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                         selectedFeelings = 1;
                         dailyFeeling = 'Better';
                         setState(() {});
-
+                        //FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_feeling_better_button_click');
                         Future.delayed(
                             const Duration(
                               milliseconds: 300,
@@ -154,6 +155,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     label: 'Same',
                     child: InkWell(
                       onTap: () {
+                        //FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_feeling_same_button_click');
                         selectedFeelings = 2;
                         dailyFeeling = 'Same';
                         setState(() {});
@@ -228,6 +230,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     label: 'Worse',
                     child: InkWell(
                       onTap: () {
+                        //FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_feeling_worse_button_click');
                         selectedFeelings = 3;
                         dailyFeeling = 'Worse';
                         setState(() {});
@@ -304,6 +307,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
               ),
               TextButton(
                 onPressed: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_feeling_skip_button_click');
                   Navigator.pop(context);
                   //Future.delayed(const Duration(seconds: 0), () => showDailyCheckIn());
                 },
@@ -321,6 +325,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
   }
 
   showDailyCheckIn() {
+    FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_mood_${dailyFeeling.toLowerCase().replaceAll(' ', '_')}_button_click');
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(

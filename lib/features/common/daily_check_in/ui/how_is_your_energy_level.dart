@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/daily_check_in/ui/thanks_for_the_feedback.dart';
@@ -769,6 +770,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_energy_level_done_button_click');
                     showDailyCheckIn();
                   },
                   child: Text(
@@ -789,6 +791,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
   }
 
   showDailyCheckIn() {
+    for(int i = 0 ; i < dailyEnergyLevels.length ; i++){
+      FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_energy_level_${dailyEnergyLevels[i].toLowerCase().replaceAll(' ', '_')}_button_click');
+    }
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(

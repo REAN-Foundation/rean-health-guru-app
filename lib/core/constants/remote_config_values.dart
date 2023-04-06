@@ -10,6 +10,7 @@ class RemoteConfigValues{
   static List<String> vitalScreenTile = [ "Weight", "Blood Pressure", "Blood Glucose", "Blood Oxygen Sturation",  "Pulse Rate",  "Body Temprature" ];
   static List<String> carePlanCode = []; //[ "Cholesterol", "Stroke", "HeartFailure"]
   static int carePlanTaskDurationInDays = 0;
+  static bool hospitalSystemVisibility = true;
   static bool dashboardSymptomsVisibility = true;
   static bool dashboardVitalsVisibility = true;
 
@@ -18,6 +19,7 @@ class RemoteConfigValues{
     dashboardSymptomsVisibility = remoteConfig.getBool('dashboard_vitals_visibility');
     dashboardVitalsVisibility = remoteConfig.getBool('dashboard_symptoms_visibility');
     carePlanTaskDurationInDays = remoteConfig.getInt('careplan_task_duration_in_days');
+    hospitalSystemVisibility = remoteConfig.getBool('hospital_system_visibility');
 
     var dashboardTileJsonArray =  remoteConfig.getValue('home_screen_tile');
     homeScreenTile = List<String>.from(jsonDecode(dashboardTileJsonArray.asString()));
@@ -26,7 +28,7 @@ class RemoteConfigValues{
     var carePlanCodeJsonArray =  remoteConfig.getValue('careplan_code');
     carePlanCode = List<String>.from(jsonDecode(carePlanCodeJsonArray.asString()));
     debugPrint('############################################################################################');
-    debugPrint('$carePlanCode');
+    debugPrint('$hospitalSystemVisibility');
     debugPrint('############################################################################################');
   }
 

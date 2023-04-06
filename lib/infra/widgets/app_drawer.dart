@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -144,6 +145,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: [
           InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_edit_profile_button_click');
               Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
             },
             child: Container(
@@ -165,6 +167,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_medical_profile_button_click');
               Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
             },
             child: Container(
@@ -222,6 +225,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
           InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_my_medication_button_click');
               Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
             },
             child: Container(
@@ -246,6 +250,7 @@ class _AppDrawerState extends State<AppDrawer> {
             visible: false,
             child: InkWell(
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_my_activity_button_click');
                 Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
               },
               child: Container(
@@ -299,7 +304,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 if (carePlanEnrollmentForPatientGlobe == null) {
                   Navigator.popAndPushNamed(
                       context, RoutePaths.Select_Care_Plan);
+                  FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_select_health_journey_button_click');
                 } else {
+                  FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_view_health_journey_status_button_click');
                   Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
                 }
               },
@@ -406,6 +413,7 @@ class _AppDrawerState extends State<AppDrawer> {
             visible: getAppName() != 'Heart & Stroke Helper™ ',
             child: InkWell(
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_about_button_click');
                 Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
               },
               child: Container(
@@ -428,6 +436,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_contact_us_button_click');
               Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
             },
             child: Container(
@@ -451,6 +460,7 @@ class _AppDrawerState extends State<AppDrawer> {
             visible: getAppType() == 'AHA',
             child: InkWell(
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_support_network_button_click');
                 Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);
               },
               child: Container(
@@ -659,6 +669,7 @@ class _AppDrawerState extends State<AppDrawer> {
         Semantics(
           child: InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_logout_button_click');
               _logoutConfirmation();
             },
             child: Container(

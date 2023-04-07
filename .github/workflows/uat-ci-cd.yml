@@ -69,12 +69,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           
       - name: Check labels
-      - uses: docker://agilepathway/pull-request-label-checker:latest
+        uses: docker://agilepathway/pull-request-label-checker:latest
         with:
           one_of: major,minor,patch
           repo_token: ${{ secrets.GITHUB_TOKEN }}

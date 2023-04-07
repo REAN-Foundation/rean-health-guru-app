@@ -922,49 +922,15 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            /*if (details.contactPerson!.email != null)
-                              Semantics(
-                                label:
-                                    "Email: " + details.contactPerson!.email!,
-                                child: ExcludeSemantics(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 250,
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            *//*Text(
-                                                'Email:  ',
-                                                style: TextStyle(
-                                                    fontSize: 12.0,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: primaryColor)),*//*
-                                            Expanded(
-                                              child: Text(
-                                                  details.contactPerson!.email!,
-                                                  style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      color: textBlack)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),*/
-                            Text("Doctor",
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w300,
-                                    color: textBlack)),
+                            Text(
+                              details.contactRelation!,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w200,
+                                  color: textBlack),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),

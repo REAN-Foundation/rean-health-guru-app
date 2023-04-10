@@ -82,4 +82,25 @@ class PatientObservationsViewModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+
+  Future<BaseResponse> addMyVitals(String path, Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    body['PatientUserId'] = patientUserId;
+    //body['RecordedByUserId'] = recordedByUserId;
+
+    print('body:');
+
+    final response = await apiProvider!
+        .post('/clinical/biometrics/' + path, header: map, body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
 }

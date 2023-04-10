@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/lab_management/ui/cholesterol_trends_view.dart';
@@ -24,9 +25,11 @@ class _BiometricCholesterolTrendsViewState
     late Widget screen;
     switch (_currentIndex) {
       case 0:
+        FirebaseAnalytics.instance.logEvent(name: 'lab_values_enter_all_values_tab_click');
         screen = EnterAllCholesterolValuesView();
         break;
       case 1:
+        FirebaseAnalytics.instance.logEvent(name: 'lab_values_trends_tab_click');
         screen = CholesterolTrendView();
         break;
     }

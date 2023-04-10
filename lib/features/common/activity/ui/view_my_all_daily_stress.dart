@@ -102,7 +102,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       fetchData();
       sleepDataASleep = GetSleepData();
       sleepDataInBed = GetSleepDataInBed();
-      _timerRefrehs = Timer.periodic(Duration(seconds: 3), (Timer t) {
+      _timerRefrehs = Timer(Duration(seconds: 5), () {
         setState(() {});
       });
       //data = GetHealthData();
@@ -132,6 +132,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
           _sleepHrs = _sleepTracking!.value!;
         }
       }
+      recordMySleepTimeInHrs(_sleepHrs.toString());
+      //recordMySleepTimeInHrs("1");
       setState(() {});
     } catch (e) {
       debugPrint('error caught: $e');
@@ -435,10 +437,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       } else {
         sleepToDisplay = sleepInBed;
       }
+      recordMySleepTimeInHrs(Conversion.durationFromMinToHrsToString(sleepToDisplay).substring(0,1));
     } else {
       //https://pub.dev/packages/time_range_picker
     }
-
     return Container(
       height: 240,
       decoration: BoxDecoration(
@@ -697,6 +699,26 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       final BaseResponse baseResponse = await model.recordMySteps(map);
       if (baseResponse.status == 'success') {
       } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMySleepTimeInHrs(String sleepInHrs) async {
+    try {
+      debugPrint('Sleep Hrs in API ==> $sleepInHrs');
+      if(sleepInHrs != 0 ) {
+        final map = <String, dynamic>{};
+        map['PatientUserId'] = patientUserId;
+        map['SleepDuration'] = sleepInHrs;
+        map['Unit'] = 'Hrs';
+        map['RecordDate'] = dateFormat.format(DateTime.now());
+
+        final BaseResponse baseResponse = await model.recordMySleep(map);
+        if (baseResponse.status == 'success') {} else {}
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -466,6 +467,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       color: Colors.white,
                       fontWeight: FontWeight.w600)),
               onPressed: () async {
+                FirebaseAnalytics.instance.logEvent(name: 'create_profile_button_click');
                 if (_firstNameController.text.toString().trim() == '') {
                   showToast('Please enter First Name', context);
                 } else if (_lastNameController.text.toString().trim() == '') {

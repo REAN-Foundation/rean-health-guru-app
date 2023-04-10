@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -30,6 +31,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void initState() {
     super.initState();
+    FirebaseAnalytics.instance.logTutorialBegin();
     _initPackageInfo();
   }
 
@@ -103,7 +105,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () => _onIntroEnd(context),
-      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      onChange: (int position) {
+        FirebaseAnalytics.instance.logEvent(name: 'onboarding_next_button_click');
+      },
+      onSkip: () {
+        FirebaseAnalytics.instance.logEvent(name: 'onboarding_skip_button_click');
+        _onIntroEnd(context);
+      }, // You can override onSkip callback
       showSkipButton: true,
       skipOrBackFlex: 0,
       nextFlex: 0,

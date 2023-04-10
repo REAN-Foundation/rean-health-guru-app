@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -339,6 +340,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                     child: ElevatedButton(
                                                       child: Text('Finish'),
                                                       onPressed: () {
+                                                        FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_mindfulness_finish_button_click');
                                                         showSuccessToast('Mindfulness duration recorded successfully', context);
                                                         saveMindfulnessTime();
                                                       },

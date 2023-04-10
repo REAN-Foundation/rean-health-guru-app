@@ -1,19 +1,25 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/models/GetRecords.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
@@ -33,7 +39,9 @@ import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
+import '../../common/activity/models/movements_tracking.dart';
 import '../../common/careplan/ui/careplan_task.dart';
+import '../../common/vitals/models/get_my_vitals_history.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
 
@@ -76,6 +84,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String imageResourceId = '';
+  late AndroidDeviceInfo androidInfo;
+  late IosDeviceInfo iosInfo;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: '',
+    packageName: '',
+    version: '',
+    buildNumber: '',
+  );
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
@@ -129,6 +145,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
       //}
 
+      await FirebaseAnalytics.instance.setUserId(id: patientUserId);
+      await FirebaseAnalytics.instance.setUserProperty(name: 'name', value: name);
+      await FirebaseAnalytics.instance.setUserProperty(name: 'app_name', value: getAppName());
+      await FirebaseAnalytics.instance.setUserProperty(name: 'user_gender', value: patientGender);
+
+
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
@@ -169,6 +191,74 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  loadAllHistoryData(){
+    Timer(Duration(seconds: 4), () {
+      getSleepHistory();
+      getVitalsHistory();
+      getStepHistory();
+    });
+  }
+
+  getVitalsHistory() async {
+    try {
+      final GetMyVitalsHistory getMyVitalsHistory =
+      await model.getMyVitalsHistory('body-heights');
+      if (getMyVitalsHistory.status == 'success') {
+        if (getMyVitalsHistory.data!.bodyHeightRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.saveDouble('height', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getSleepHistory() async {
+    try {
+      DateTime startDate = dateFormat.parse(DateTime.now().toIso8601String());
+      final GetRecords records =
+      await model.getMySleepHistory(startDate.toString());
+      if (records.status == 'success') {
+        if (records.data!.sleepRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.save(
+              'sleepTime', MovementsTracking(startDate, records.data!.sleepRecords!.items!.elementAt(0).sleepDuration, '').toJson());
+          //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getStepHistory() async {
+    try {
+      DateTime startDate = dateFormat.parse(DateTime.now().toIso8601String());
+      final GetRecords records =
+      await model.getMyStepHistory(startDate.toString());
+      if (records.status == 'success') {
+        if (records.data!.stepRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.save(
+              'stepCount', MovementsTracking(startDate, int.parse(records.data!.stepRecords!.items!.elementAt(0).stepCount.toString()), '').toJson());
+          //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   getCarePlan() async {
     try {
       final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
@@ -190,15 +280,25 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'Stroke'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
             debugPrint('CarePlan ==> Stroke');
             _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
           }else if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'Cholesterol'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
             debugPrint('CarePlan ==> Cholesterol');
-            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s Integrated ASCVD Management Initiative.');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'HFMotivator'){
+            RemoteConfigValues.hospitalSystemVisibility = false;
+            debugPrint('CarePlan ==> HFMotivator');
+            _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
           }
 
+        }else{
+          //RemoteConfigValues.hospitalSystemVisibility = true;
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -303,6 +403,72 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _packageInfo = info;
+      });
+    }
+  }
+
+  getDeviceData() async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+    }
+
+    if (Platform.isIOS) {
+      iosInfo = await deviceInfo.iosInfo;
+
+      print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+    }
+  }
+
+  userDiviceData() async {
+    try {
+      //ApiProvider apiProvider = new ApiProvider();
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final body = <String, dynamic>{};
+      body['Token'] = await _sharedPrefUtils.read('fcmToken');
+      body['UserId'] = patientUserId;
+      if (Platform.isAndroid) {
+        body['DeviceName'] = androidInfo.brand! + ' ' + androidInfo.model!;
+        body['DeviceId'] = androidInfo.id;
+        body['OSType'] = 'Android';
+        body['OSVersion'] = androidInfo.version.release;
+      }
+      if (Platform.isIOS) {
+        body['DeviceName'] = iosInfo.model;
+        body['DeviceId'] = iosInfo.identifierForVendor;
+        body['OSType'] = 'iOS';
+        body['OSVersion'] = Platform.operatingSystemVersion;
+      }
+      body['AppName'] = getAppName();
+      body['AppVersion'] = _packageInfo.version;
+
+      final response = await apiProvider!
+          .post('/user-device-details', header: map, body: body);
+
+      final BaseResponse baseResponse = BaseResponse.fromJson(response);
+
+      if (baseResponse.status == 'success') {
+      } else {
+        //showToast(baseResponse.message, context);
+      }
+    } on FetchDataException catch (e) {
+      showToast('Opps! Something went wrong, Please try again', context);
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint(e.toString());
+    }
+  }
+
   /*void showTutorial() {
     tutorialCoachMark = TutorialCoachMark(
       context,
@@ -355,12 +521,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   void showTutorial() {
     coackMarkUtilites.displayCoachMark(context, targets,
         onCoachMartkFinish: () {
+          FirebaseAnalytics.instance.logEvent(name: 'app_tutorial_finish_button_click');
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
               const Duration(seconds: 2), () => healthJourneyCheck());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
+          FirebaseAnalytics.instance.logEvent(name: 'app_tutorial_skip_button_click');
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
@@ -405,7 +573,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         ShapeLightFocus.Circle));
   }
 
-  Future<void> _initPackageInfo() async {
+  Future<void> _initDeviceLocal() async {
     if (getCurrentLocale() == '') {
       final Locale countryLocale =
           await (Devicelocale.currentAsLocale as FutureOr<Locale>);
@@ -417,8 +585,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    getDeviceData();
+    loadAllHistoryData();
     getCarePlanSubscribe();
     _initPackageInfo();
+    _initDeviceLocal();
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
@@ -460,6 +631,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
 
   showHealthJourneyDialog() {
+    FirebaseAnalytics.instance.logEvent(name: 'health_journey_popup_displayed');
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       backgroundColor: Colors.transparent,
@@ -520,6 +692,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'cancel_health_journey_button_click');
                               Navigator.pop(context);
                               Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
                             },
@@ -559,6 +732,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_button_click');
                               if (carePlanEnrollmentForPatientGlobe == null) {
                                 Navigator.popAndPushNamed(
                                     context, RoutePaths.Select_Care_Plan);
@@ -627,6 +801,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             .toString()}");
         await _sharedPrefUtils.save(
             'patientDetails', apiResponse.data!.patient!.toJson());
+        userDiviceData();
       } else {
         autoLogOut(apiResponse);
         model.setBusy(false);
@@ -663,6 +838,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     );
     switch (_currentNav) {
       case 0:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_home_button_click');
         screen = DashBoardVer3View(
           positionToChangeNavigationBar: (int tabPosition) {
             debugPrint('Tapped Tab $tabPosition');
@@ -671,15 +847,18 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         );
         break;
       case 1:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_task_button_click');
         screen = CarePlanTasksView();
         break;
       case 2:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_upload_report_button_click');
         screen = MyReportsView();
         break;
       /*case 3:
         screen = ViewMyAppointment();
         break;*/
       case 3:
+        FirebaseAnalytics.instance.logEvent(name: 'navigation_emergency_button_click');
         screen = EmergencyContactView();
         break;
     }

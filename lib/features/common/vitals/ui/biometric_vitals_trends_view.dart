@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/vitals/ui/biometric_trends_view.dart';
@@ -24,9 +25,11 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
     late Widget screen;
     switch (_currentIndex) {
       case 0:
+        FirebaseAnalytics.instance.logEvent(name: 'enter_all_vitals_tab_click');
         screen = EnterAllVitalsView();
         break;
       case 1:
+        FirebaseAnalytics.instance.logEvent(name: 'view_vitals_tab_click');
         screen = BiometricTrendView();
         break;
     }

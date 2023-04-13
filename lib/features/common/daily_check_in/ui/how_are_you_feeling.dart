@@ -61,7 +61,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                   focused: true,
                   child: Text(
                     "How are you feeling today?",
-                    semanticsLabel: "How are you feeling today?",
+                    semanticsLabel: "How are you feeling today? Select any one that applied",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18.0,

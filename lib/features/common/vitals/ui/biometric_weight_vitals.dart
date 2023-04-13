@@ -771,39 +771,42 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'making graph of Weight',
+        button: false,
         readOnly: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [primaryLightColor, colorF6F6FF]),
-                  border: Border.all(color: primaryLightColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              padding: const EdgeInsets.all(16),
-              height: 250,
-              child: Center(
-                child: SimpleTimeSeriesChart(_createSampleData()),
+        child: ExcludeSemantics(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [primaryLightColor, colorF6F6FF]),
+                    border: Border.all(color: primaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                padding: const EdgeInsets.all(16),
+                height: 250,
+                child: Center(
+                  child: SimpleTimeSeriesChart(_createSampleData()),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Weight',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                'Weight',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ),
     );

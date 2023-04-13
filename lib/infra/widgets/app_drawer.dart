@@ -141,6 +141,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                     Text(
                       'Profile',
+                      semanticsLabel: 'My Profile',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),

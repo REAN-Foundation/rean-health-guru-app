@@ -145,6 +145,7 @@ jobs:
           retention-days: 14
 
   Android-Release-Alpha:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: Android-BuildApp
     runs-on: ubuntu-latest
@@ -177,6 +178,7 @@ jobs:
           
 
   iOS-BuildApp:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: macos-latest
@@ -240,6 +242,7 @@ jobs:
           retention-days: 14
 
   iOS-Release-Alpha:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: iOS-BuildApp
     runs-on: macos-latest

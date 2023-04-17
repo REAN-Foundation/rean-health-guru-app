@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -368,6 +369,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         style: TextStyle(fontSize: 14, color: primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
+                            FirebaseAnalytics.instance.logEvent(name: 'privacy_policy_button_click');
                             navigateToPrivacyPolicy();
                           }),
                     if (getAppType() == "AHA") ...[
@@ -379,6 +381,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                           style: TextStyle(fontSize: 14, color: primaryColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
+                              FirebaseAnalytics.instance.logEvent(name: 'terms_of_service_button_click');
                               navigateToTermsOfService();
                             }),
                     ]
@@ -547,6 +550,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         side: BorderSide(color: primaryColor)))),
             onPressed: () {
+              FirebaseAnalytics.instance.logEvent(name: 'get_otp_button_click');
               isDummyNumber = false;
               if (mobileNumber!.trim().isEmpty) {
                 showToast('Please enter phone number', context);

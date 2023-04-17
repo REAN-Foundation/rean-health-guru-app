@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -549,6 +550,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               button: true,
               child: InkWell(
                 onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'vitals_weight_save_button_click');
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
                   } else if(isNumeric(_weightController.text)) {
@@ -1057,6 +1059,186 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         ));
   }*/
 
+  Widget _addHeightInFtnInchDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInFtNInchDialog(
+                  submitButtonListner: (int heightInFeet, int heightInInches) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
+                    var localHeight = Conversion.FeetAndInchToCm(
+                        heightInFeet,
+                        heightInInches);
+                    _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+                    addHeight(localHeight.toString());
+                    height = int.parse(localHeight);
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showSuccessToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInFeet: heightInFt,
+                  heightInInches: heightInInch,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  Widget _addHeightInCmDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInCmDialog(
+                  submitButtonListner: (int heightInCm) {
+                    FirebaseAnalytics.instance.logEvent(name: 'vitals_height_save_button_click');
+                    var localHeight =
+                    double.parse(heightInCm.toString());
+                    _sharedPrefUtils.saveDouble('height', localHeight);
+                    height = localHeight.toInt();
+                    addHeight(localHeight.toString());
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showSuccessToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInCm: height.toInt(),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  addHeight(String height) async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyHeight'] = height.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Cm";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-heights', map);
+
+      if (baseResponse.status == 'success') {
+
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
@@ -1152,247 +1334,5 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
-  }
-
-/*  showHeightPickerInFoot(BuildContext context) {
-    Picker(
-        adapter: NumberPickerAdapter(data: [
-          NumberPickerColumn(
-            begin: 1,
-            end: 9,
-            initValue: heightInFt,
-            suffix: Text('  ft'),
-          ),
-          NumberPickerColumn(
-            begin: 0,
-            end: 11,
-            initValue: heightInInch,
-            suffix: Text('  inch'),
-          ),
-        ]),
-        delimiter: [
-          PickerDelimiter(
-              child: Container(
-            width: 30.0,
-            alignment: Alignment.center,
-            child: Icon(Icons.more_vert),
-          ))
-        ],
-        hideHeader: true,
-        title: Center(
-            child: Text(
-          " Height",
-          style: TextStyle(
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w600,
-              color: primaryColor,
-              fontSize: 18.0),
-          textAlign: TextAlign.center,
-        )),
-        selectedTextStyle: TextStyle(color: Colors.blue),
-        onConfirm: (Picker picker, List value) {
-          var localHeight = Conversion.FeetAndInchToCm(
-              picker.getSelectedValues().elementAt(0),
-              picker.getSelectedValues().elementAt(1));
-          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
-          height = int.parse(localHeight);
-          conversion();
-          calculetBMI();
-          debugPrint('Selected Height ==> $localHeight');
-          setState(() {
-            showToast('Height record created successfully!', context);
-          });
-        }).showDialog(
-        barrierDismissible: false,context);
-  }
-
-  showHeightPickerCms(BuildContext context) {
-    Picker(
-        adapter: NumberPickerAdapter(data: [
-          NumberPickerColumn(
-            begin: 1,
-            end: 250,
-            initValue: height.toInt(),
-            suffix: Text('  cm'),
-          ),
-        ]),
-        hideHeader: true,
-        title: Center(
-            child: Text(
-          " Height",
-          style: TextStyle(
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w600,
-              color: primaryColor,
-              fontSize: 18.0),
-          textAlign: TextAlign.center,
-        )),
-        selectedTextStyle: TextStyle(color: Colors.blue),
-        onConfirm: (Picker picker, List value) {
-          var localHeight =
-              double.parse(picker.getSelectedValues().elementAt(0).toString());
-          _sharedPrefUtils.saveDouble('height', localHeight);
-          height = localHeight.toInt();
-          conversion();
-          calculetBMI();
-          debugPrint('Selected Height ==> $localHeight');
-          setState(() {
-            showToast('Height record created successfully!', context);
-          });
-        }).showDialog(context);
-  }*/
-
-  Widget _addHeightInFtnInchDialog(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        //child: addOrEditAllergiesDialog(context),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 240,
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ExcludeSemantics(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Height',
-                        semanticsLabel: 'Height',
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor,
-                            fontSize: 18.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    alignment: Alignment.topRight,
-                    icon: Icon(
-                      Icons.close,
-                      color: primaryColor,
-                      semanticLabel: 'Close',
-                    ),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                  ),
-                ],
-              ),
-              Expanded(
-                child: AddHeightInFtNInchDialog(
-                  submitButtonListner: (int heightInFeet, int heightInInches) {
-                    var localHeight = Conversion.FeetAndInchToCm(
-                        heightInFeet,
-                        heightInInches);
-                    _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
-                    height = int.parse(localHeight);
-                    conversion();
-                    debugPrint('Selected Height ==> $localHeight');
-                    setState(() {
-                      showSuccessToast('Height record created successfully!', context);
-                    });
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  heightInFeet: heightInFt,
-                  heightInInches: heightInInch,
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-
-  Widget _addHeightInCmDialog(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        //child: addOrEditAllergiesDialog(context),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 240,
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ExcludeSemantics(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Height',
-                        semanticsLabel: 'Height',
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor,
-                            fontSize: 18.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    alignment: Alignment.topRight,
-                    icon: Icon(
-                      Icons.close,
-                      color: primaryColor,
-                      semanticLabel: 'Close',
-                    ),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                  ),
-                ],
-              ),
-              Expanded(
-                child: AddHeightInCmDialog(
-                  submitButtonListner: (int heightInCm) {
-                    var localHeight =
-                    double.parse(heightInCm.toString());
-                    _sharedPrefUtils.saveDouble('height', localHeight);
-                    height = localHeight.toInt();
-                    conversion();
-                    debugPrint('Selected Height ==> $localHeight');
-                    setState(() {
-                      showSuccessToast('Height record created successfully!', context);
-                    });
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  heightInCm: height.toInt(),
-                ),
-              )
-            ],
-          ),
-        ));
   }
 }

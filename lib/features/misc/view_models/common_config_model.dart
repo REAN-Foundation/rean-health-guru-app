@@ -14,6 +14,8 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../infra/view_models/base_model.dart';
+import '../../common/activity/models/GetRecords.dart';
+import '../../common/vitals/models/get_my_vitals_history.dart';
 
 class CommonConfigModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
@@ -232,4 +234,71 @@ class CommonConfigModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+
+  Future<GetMyVitalsHistory> getMyVitalsHistory(String path) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/clinical/biometrics/' +
+            path +
+            '/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetMyVitalsHistory.fromJson(response);
+  }
+
+  Future<GetRecords> getMySleepHistory(String createFromDate) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/sleep/search?patientUserId=' +
+            patientUserId!+'&createdDateFrom='+createFromDate,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetRecords.fromJson(response);
+  }
+
+  Future<GetRecords> getMyStepHistory(String createFromDate) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/step-counts/search?patientUserId=' +
+            patientUserId!+'&createdDateFrom='+createFromDate,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetRecords.fromJson(response);
+  }
+
+  Future<BaseResponse> generateReport() async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+    final response = await apiProvider!
+        .get('/patient-statistics/'+patientUserId.toString()+'/report', header: map);
+    debugPrint('Report Generation ==> $response');
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }//your report is getting downloaded, Please check in the medical records after few minutes
 }

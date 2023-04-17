@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
@@ -28,9 +29,11 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
     late Widget screen;
     switch (widget._currentIndex) {
       case 0:
+        FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_enter_values_tab_click');
         screen = EnterAllMentalWellBeingView();
         break;
       case 1:
+        FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_view_values_tab_click');
         screen = ViewMyAllDailyStress(false);
         break;
     }

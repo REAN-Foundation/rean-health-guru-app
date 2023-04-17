@@ -1,9 +1,11 @@
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
@@ -167,6 +169,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('##########################${RemoteConfigValues.hospitalSystemVisibility}');
     return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -182,7 +185,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-
+                  if(RemoteConfigValues.hospitalSystemVisibility)...[
                   Row(
                     children: [
                       Padding(
@@ -205,6 +208,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ],
                   ),
                   healthSystem(),
+                  ],
                   Row(
                     children: [
                       Padding(
@@ -328,6 +332,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       }).toList(),
                       hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
+                        FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
+                          'health_system': data,
+                        },);
                         debugPrint(data);
                         setState(() {
                           healthSystemGlobe = data.toString();
@@ -381,6 +388,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       }).toList(),
                       hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
+                        FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
+                          'select_hospital': data,
+                        },);
                         debugPrint(data);
                         setState(() {
                           healthSystemHospitalGlobe = data.toString();
@@ -517,6 +527,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   semanticLabel: 'edit hospitalization details',
                                 ),
                                 onPressed: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'emergency_edit_button_click');
                                   _emergencyDetailDialog(true);
                                 },
                               ),
@@ -531,6 +542,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   semanticLabel: 'delete hospitalization details',
                                 ),
                                 onPressed: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'emergency_delete_button_click');
                                   ConfirmationBottomSheet(
                                       context: context,
                                       height: 180,
@@ -557,6 +569,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'emergency_yes_button_click');
                             _emergencyDetailDialog(false);
                           },
                           child: ExcludeSemantics(
@@ -649,6 +662,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           TextButton(
               child: const Text('Submit'),
               onPressed: () {
+                FirebaseAnalytics.instance.logEvent(name: 'emergency_submit_button_click');
                 if (emergencyDetailsTextControler.text.trim().isEmpty) {
                   showToastMsg('Please enter hospitalization details', context);
                 } else {
@@ -705,6 +719,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         button: true,
                         child: InkWell(
                           onTap: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'emergency_add_${tittle.toLowerCase()}_button_click');
                             //showToast(tittle);
                             if (tittle == 'Doctors') {
                               showDialog(
@@ -907,49 +922,15 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            /*if (details.contactPerson!.email != null)
-                              Semantics(
-                                label:
-                                    "Email: " + details.contactPerson!.email!,
-                                child: ExcludeSemantics(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 250,
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            *//*Text(
-                                                'Email:  ',
-                                                style: TextStyle(
-                                                    fontSize: 12.0,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: primaryColor)),*//*
-                                            Expanded(
-                                              child: Text(
-                                                  details.contactPerson!.email!,
-                                                  style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      color: textBlack)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),*/
-                            Text("Doctor",
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w300,
-                                    color: textBlack)),
+                            Text(
+                              details.contactRelation!,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w200,
+                                  color: textBlack),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),
@@ -1512,6 +1493,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     (String firstName, String lastName, String email,
                         String phoneNumber, String gender) {
                   debugPrint('Team Member ==> $firstName');
+                  FirebaseAnalytics.instance.logEvent(name: 'emergency_doctor_save_button_click');
                   addTeamMembers(
                       firstName, lastName, phoneNumber, gender, '', 'Doctor',
                       email: email);
@@ -1620,6 +1602,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 child: AddNurseDialog(submitButtonListner: (String firstName,
                     String lastName, String phoneNumber, String gender) {
                   debugPrint('Team Member ==> $firstName');
+                  FirebaseAnalytics.instance.logEvent(name: 'emergency_nurse_save_button_click');
                   addTeamMembers(firstName, lastName, phoneNumber, gender, '',
                       'HealthWorker');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -1688,6 +1671,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 child: AddFamilyMemberDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender, String relation) {
+                      FirebaseAnalytics.instance.logEvent(name: 'emergency_family_member_save_button_click');
                   debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender,
                       relation, 'FamilyMember');

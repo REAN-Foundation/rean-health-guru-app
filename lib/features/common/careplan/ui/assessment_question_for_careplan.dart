@@ -8,6 +8,8 @@ import 'package:patient/features/common/careplan/view_models/patients_careplan.d
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
+import '../../../../infra/utils/common_utils.dart';
+
 //ignore: must_be_immutable
 class AssessmentQuestionCarePlanView extends StatefulWidget {
   Next? assesment;
@@ -127,7 +129,12 @@ class _AssessmentQuestionCarePlanViewState
                       child: InkWell(
                         onTap: () {
                           //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-                          Navigator.pop(context, id);
+                          //Navigator.pop(context, id);
+                          if(id != 1000) {
+                            Navigator.pop(context, id);
+                          }else{
+                            showToast('Please select valid option.', context);
+                          }
                         },
                         child: Container(
                             height: 40,

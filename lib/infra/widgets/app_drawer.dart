@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
@@ -57,7 +58,7 @@ class _AppDrawerState extends State<AppDrawer> {
       debugPrint(Excepetion.toString());
     }
   }
-
+  //init 
   @override
   void initState() {
     _initPackageInfo();
@@ -123,45 +124,53 @@ class _AppDrawerState extends State<AppDrawer> {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
+          Semantics(
+            button: true,
+            child: InkWell(
+              onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_edit_profile_button_click');
+                Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Text(
+                      'Profile',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text(
-                    'Medical Profile',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
+          Semantics(
+            button: true,
+            child: InkWell(
+              onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_medical_profile_button_click');
+                Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Text(
+                      'Medical Profile',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -201,33 +210,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text(
-                    'Medications',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          /*if (Platform.isIOS) ...[*/
-          Visibility(
-            visible: false,
+          Semantics(
+            button: true,
             child: InkWell(
               onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_my_medication_button_click');
+                Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
               },
               child: Container(
                 height: 48,
@@ -238,11 +226,40 @@ class _AppDrawerState extends State<AppDrawer> {
                       width: 40,
                     ),
                     Text(
-                      'Activity',
+                      'Medications',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+          /*if (Platform.isIOS) ...[*/
+          Visibility(
+            visible: false,
+            child: Semantics(
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'navigation_my_activity_button_click');
+                  Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Activity',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -275,29 +292,34 @@ class _AppDrawerState extends State<AppDrawer> {
             /*visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
                 getAppName() == 'Heart & Stroke Helper™ ',*/
-            child: InkWell(
-              onTap: () {
-                if (carePlanEnrollmentForPatientGlobe == null) {
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.Select_Care_Plan);
-                } else {
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
-                }
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Text(
-                      'Health Journey',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+            child: Semantics(
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (carePlanEnrollmentForPatientGlobe == null) {
+                    Navigator.popAndPushNamed(
+                        context, RoutePaths.Select_Care_Plan);
+                    FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_select_health_journey_button_click');
+                  } else {
+                    FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_view_health_journey_status_button_click');
+                    Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                  }
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Health Journey',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -380,9 +402,38 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
           Visibility(
             visible: getAppName() != 'Heart & Stroke Helper™ ',
+            child: Semantics(
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_about_button_click');
+                  Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        getAppType() == 'AHA' ? 'About Us' : 'About REAN',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Semantics(
+            button: true,
             child: InkWell(
               onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_contact_us_button_click');
+                Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
               },
               child: Container(
                 height: 48,
@@ -393,7 +444,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       width: 40,
                     ),
                     Text(
-                      getAppType() == 'AHA' ? 'About Us' : 'About REAN',
+                      'Contact Us',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
@@ -402,47 +453,30 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text(
-                    'Contact Us',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
           Visibility(
             visible: getAppType() == 'AHA',
-            child: InkWell(
-              onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Text(
-                      'Support Network',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+            child: Semantics(
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_support_network_button_click');
+                  Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Support Network',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -460,8 +494,10 @@ class _AppDrawerState extends State<AppDrawer> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Semantics(
+          button: true,
           child: InkWell(
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_logout_button_click');
               _logoutConfirmation();
             },
             child: Container(
@@ -661,7 +697,10 @@ class _AppDrawerState extends State<AppDrawer> {
               mobileNumber!,
               style: TextStyle(
                   fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
-              semanticsLabel: mobileNumber,
+              semanticsLabel: "Phone: " +
+                  mobileNumber!
+                      .replaceAllMapped(RegExp(r".{1}"),
+                          (match) => "${match.group(0)} "),
             ),
           ],
         ),

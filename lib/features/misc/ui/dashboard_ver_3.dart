@@ -1,5 +1,6 @@
 
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -320,6 +321,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_better_button_click');
                               recordHowAreYouFeeling(1);
                               //Navigator.pushNamed(context, RoutePaths.Symptoms);
                             },
@@ -352,6 +354,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_same_button_click');
                               recordHowAreYouFeeling(0);
                               //Navigator.pushNamed(context, RoutePaths.Symptoms);
                             },
@@ -384,6 +387,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_worse_button_click');
                               recordHowAreYouFeeling(-1);
                               //Navigator.pushNamed(context, RoutePaths.Symptoms);
                             },
@@ -874,6 +878,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               color: iconColor,
                             ),
                             onPressed: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_medication_button_click');
                               Navigator.pushNamed(
                                   context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Dashboard');
                             }),
@@ -922,6 +927,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                       'Your medication list is empty. Please add your medications.',
                                       context);
                                 } else {
+                                  FirebaseAnalytics.instance.logEvent(name: 'medication_yes_button_click');
                                   markAllMedicationAsTaken();
                                 }
                               },
@@ -954,6 +960,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'medication_no_button_click');
                                 Navigator.pushNamed(
                                     context, RoutePaths.My_Medications, arguments: 0);
                               },
@@ -1059,6 +1066,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             semanticLabel: 'Add Nutrition',
                           ),
                           onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'add_nutrition_button_click');
                             Navigator.pushNamed(context, RoutePaths.My_Nutrition,
                                 arguments: '');
                           }),
@@ -1094,6 +1102,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'nutrition_yes_button_click');
                                 recordMyCaloriesConsumed(true);
                               },
                               child: ExcludeSemantics(
@@ -1125,9 +1134,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'nutrition_no_button_click');
                                 Navigator.pushNamed(context, RoutePaths.My_Nutrition,
                                     arguments: '');
-                                //recordMyCaloriesConsumed(false);
+                                recordMyCaloriesConsumed(false);
                               },
                               child: ExcludeSemantics(
                                 child: Column(
@@ -1630,6 +1640,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             semanticLabel: 'Add Vitals',
                           ),
                           onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'add_vitals_button_click');
                             Navigator.pushNamed(context, RoutePaths.My_Vitals);
                           }),
                     ],
@@ -1653,6 +1664,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_weight_button_click');
                               Navigator.pushNamed(context,
                                   RoutePaths.Biometric_Weight_Vitals_Care_Plan);
                             },
@@ -1700,6 +1712,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_blood_pressure_button_click');
                               Navigator.pushNamed(
                                   context,
                                   RoutePaths
@@ -1749,6 +1762,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_blood_glucose_button_click');
                               Navigator.pushNamed(
                                   context,
                                   RoutePaths
@@ -1798,6 +1812,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_pulse_button_click');
                               Navigator.pushNamed(context,
                                   RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
                             },
@@ -1912,6 +1927,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             semanticLabel: 'Add Lab records',
                           ),
                           onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'add_lab_records_button_click');
                             Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
                           }),
                     ],
@@ -1934,6 +1950,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_total_cholesterol_button_click');
                               Navigator.pushNamed(context,
                                   RoutePaths.Lipid_Profile_Total_Cholesterol);
                             },
@@ -1979,6 +1996,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_ldl_button_click');
                               Navigator.pushNamed(
                                   context, RoutePaths.Lipid_Profile_LDL);
                             },
@@ -2023,6 +2041,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_hdl_button_click');
                               Navigator.pushNamed(
                                   context, RoutePaths.Lipid_Profile_HDL);
                             },
@@ -2067,6 +2086,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           button: true,
                           child: InkWell(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'add_triglycerides_button_click');
                               Navigator.pushNamed(context,
                                   RoutePaths.Lipid_Profile_Triglyceroid);
                             },
@@ -2479,6 +2499,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             semanticLabel: 'Add physical activity',
                           ),
                           onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'add_physical_activity_button_click');
                             Navigator.pushNamed(
                                 context, RoutePaths.My_Activity_Trends,
                                 arguments: 0);
@@ -2658,6 +2679,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               button: true,
                               child: InkWell(
                                 onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_yes_button_click');
                                   recordMyPhysicalActivity(true);
                                   Navigator.pushNamed(
                                       context, RoutePaths.My_Activity_Trends,
@@ -2692,6 +2714,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               button: true,
                               child: InkWell(
                                 onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_no_button_click');
                                   recordMyPhysicalActivity(false);
                                 },
                                 child: ExcludeSemantics(
@@ -2795,6 +2818,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             semanticLabel: 'Add mental well-being record'
                           ),
                           onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'add_mental_well_being_button_click');
                             Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
                                 arguments: 0);
                           }),
@@ -2819,6 +2843,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             onTap: () {
                               /*Navigator.pushNamed(
                                   context, RoutePaths.MY_STRESS);*/
+                              FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_sleep_button_click');
                               Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
                                   arguments: 1);
                             },
@@ -2865,6 +2890,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             onTap: () {
                              /* Navigator.pushNamed(
                                   context, RoutePaths.MY_STRESS);*/
+                              FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_mindfulness_button_click');
                               Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
                                   arguments: 1);
                             },

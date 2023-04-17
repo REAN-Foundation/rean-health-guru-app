@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -221,7 +222,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 backgroundColor: Colors.white,
                 systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 title: Text(
-                  'Medications',
+                  'Add Medications',
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
@@ -1044,6 +1045,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                             borderRadius: BorderRadius.circular(24),
                             side: BorderSide(color: primaryColor)))),
                 onPressed: () {
+
                   int frequency = 0;
 
                   if (_frequencyUnit == 'Daily') {
@@ -1544,9 +1546,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       late BaseResponse baseResponse;
 
       if(globeMedication != null) {
+        FirebaseAnalytics.instance.logEvent(name: 'add_medication_update_button_click');
         baseResponse = await model.updateMedicationforVisit(
             map,globeMedication!.id.toString());
       }else {
+        FirebaseAnalytics.instance.logEvent(name: 'add_medication_save_button_click');
         baseResponse = await model.addMedicationforVisit(
             map);
       }

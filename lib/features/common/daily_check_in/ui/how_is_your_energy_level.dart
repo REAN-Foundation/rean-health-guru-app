@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/daily_check_in/ui/thanks_for_the_feedback.dart';
@@ -88,9 +89,11 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(1)) {
                           selectedList.remove(1);
+                          announceText('Not Ticked Get off the bed');
                           dailyEnergyLevels.remove('Get off the bed');
                         } else {
                           dailyEnergyLevels.add('Get off the bed');
+                          announceText('Ticked Get off the bed');
                           selectedList.add(1);
                         }
                         setState(() {});
@@ -190,8 +193,10 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(5)) {
                           selectedList.remove(5);
+                          announceText('Not Ticked Stand');
                           dailyEnergyLevels.remove('Stand');
                         } else {
+                          announceText('Ticked Stand');
                           dailyEnergyLevels.add('Stand');
                           selectedList.add(5);
                         }
@@ -283,9 +288,11 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(4)) {
                           selectedList.remove(4);
+                          announceText('Not Ticked Walk');
                           dailyEnergyLevels.remove('Walk');
                         } else {
                           selectedList.add(4);
+                          announceText('Ticked Walk');
                           dailyEnergyLevels.add('Walk');
                         }
                         setState(() {});
@@ -376,8 +383,10 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(6)) {
                           selectedList.remove(6);
+                          announceText('Not Ticked Eat');
                           dailyEnergyLevels.remove('Eat');
                         } else {
+                          announceText('Ticked Eat');
                           dailyEnergyLevels.add('Eat');
                           selectedList.add(6);
                         }
@@ -477,9 +486,11 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                     child: InkWell(
                       onTap: () {
                         if (selectedList.contains(2)) {
+                          announceText('Not Ticked Climb Stairs');
                           dailyEnergyLevels.remove('Climb Stairs');
                           selectedList.remove(2);
                         } else {
+                          announceText('Ticked Climb Stairs');
                           dailyEnergyLevels.add('Climb Stairs');
                           selectedList.add(2);
                         }
@@ -570,9 +581,11 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                     child: InkWell(
                       onTap: () {
                         if (selectedList.contains(3)) {
+                          announceText('Not Ticked Exercise');
                           dailyEnergyLevels.remove('Exercise');
                           selectedList.remove(3);
                         } else {
+                          announceText('Ticked Exercise');
                           dailyEnergyLevels.add('Exercise');
                           selectedList.add(3);
                         }
@@ -670,10 +683,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                   child: InkWell(
                     onTap: () {
                       if (selectedList.contains(7)) {
+                        announceText('Not Ticked Get through the day without a nap');
                         dailyEnergyLevels
                             .remove('Get through the day without a nap');
                         selectedList.remove(7);
                       } else {
+                        announceText('Ticked Get through the day without a nap');
                         dailyEnergyLevels
                             .add('Get through the day without a nap');
                         selectedList.add(7);
@@ -769,6 +784,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_energy_level_done_button_click');
                     showDailyCheckIn();
                   },
                   child: Text(
@@ -789,6 +805,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
   }
 
   showDailyCheckIn() {
+    for(int i = 0 ; i < dailyEnergyLevels.length ; i++){
+      FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_energy_level_${dailyEnergyLevels[i].toLowerCase().replaceAll(' ', '_')}_button_click');
+    }
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(

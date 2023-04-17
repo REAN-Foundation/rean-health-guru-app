@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_is_your_energy_level.dart';
@@ -802,6 +803,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
               ),
               TextButton(
                 onPressed: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_mood_skip_button_click');
                   Navigator.pop(context);
                 },
                 child: Text(
@@ -818,6 +820,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
   }
 
   showDailyCheckIn() {
+    FirebaseAnalytics.instance.logEvent(name: 'daily_check_in_mood_${dailyMood.toLowerCase().replaceAll(' ', '_')}_button_click');
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(

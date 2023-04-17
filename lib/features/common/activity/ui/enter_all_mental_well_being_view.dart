@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -135,6 +136,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_save_button_click');
                                 toastDisplay = true;
                                 if(_sleepingHrs == _sleepHrs && mindfulnessController.text.toString().isEmpty){
                                   showToast('Please enter valid input', context);

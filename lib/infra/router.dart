@@ -99,7 +99,7 @@ class Routers {
       case RoutePaths.Splash_Screen:
         return MaterialPageRoute(
           builder: (_) => SplashScreen(
-            seconds: 3,
+            seconds: 5,
             navigateAfterSeconds: AfterSplashScreen(getSessionFlag()),
             title: Text('REAN HealthGuru\n\nDev-Build',
                 style: TextStyle(

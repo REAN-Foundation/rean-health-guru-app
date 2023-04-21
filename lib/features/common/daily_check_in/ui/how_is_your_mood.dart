@@ -55,6 +55,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
               DelayedAnimation(
                 child: Text(
                   "How is your mood today?",
+                  semanticsLabel: 'How is your mood today?  Select any one that applied',
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0,

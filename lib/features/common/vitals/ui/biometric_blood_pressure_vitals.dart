@@ -888,38 +888,41 @@ class _BiometricBloodPresureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [primaryLightColor, colorF6F6FF]),
-                  border: Border.all(color: primaryLightColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              padding: const EdgeInsets.all(16),
-              height: 200,
-              child: Center(
-                child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+        label: 'making graph of Systolic Blood Pressure',
+        button: false,
+        child: ExcludeSemantics(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [primaryLightColor, colorF6F6FF]),
+                    border: Border.all(color: primaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                padding: const EdgeInsets.all(16),
+                height: 200,
+                child: Center(
+                  child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Systolic Blood Pressure',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                'Systolic Blood Pressure',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -955,38 +958,41 @@ class _BiometricBloodPresureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [primaryLightColor, colorF6F6FF]),
-                  border: Border.all(color: primaryLightColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              padding: const EdgeInsets.all(16),
-              height: 200,
-              child: Center(
-                child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+        label: 'making graph of Diastolic Blood Pressure',
+        button: false,
+        child: ExcludeSemantics(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [primaryLightColor, colorF6F6FF]),
+                    border: Border.all(color: primaryLightColor),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                padding: const EdgeInsets.all(16),
+                height: 200,
+                child: Center(
+                  child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Diastolic Blood Pressure',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                'Diastolic Blood Pressure',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -989,7 +989,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     label: 'home page',
-                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_home_colored.png'),
                       size: 24,
@@ -1002,7 +1001,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   icon: Semantics(
                     key: _keyMyTasks,
                     label: 'daily task',
-                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_daily_tasks_colored.png'),
                       size: 24,
@@ -1015,7 +1013,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   icon: Semantics(
                     key: _keyUploadReports,
                     label: 'medical record',
-                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),
                       size: 24,
@@ -1042,7 +1039,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   icon: Semantics(
                       key: _keyEmergencyContacts,
                       label: 'emergency contact',
-                      selected: true,
                       child: Icon(
                         FontAwesomeIcons.truckMedical,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,

@@ -68,7 +68,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
               ),
               DelayedAnimation(
                 child: Text(
-                  "You are able to:",
+                  "You are able to: Select all that applied",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16.0,

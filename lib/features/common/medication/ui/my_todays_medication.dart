@@ -349,7 +349,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         ),),*/
         title: Semantics(
           label: tittle +
-              " " +
+              " medicine " +
               medication.drugName! +
               " swipe right for not taken or left for taken",
           child: ExcludeSemantics(

@@ -258,7 +258,7 @@ class _EnterAllCholesterolValuesViewState
             Row(
               children: [
                 ImageIcon(
-                  AssetImage('res/images/ic_ldl.png'),
+                  AssetImage('res/images/ic_lpa.png'),
                   size: 24,
                   color: primaryColor,
                 ),

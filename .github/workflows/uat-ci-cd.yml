@@ -10,14 +10,14 @@ name: UAT Workflow
 # Controls when the workflow will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
+  
+  pull_request:
+    branches: main
+    
   push:
     branches:
       - 'release/**'
-      - '!release/aha**'
-
-  pull_request:
-    types: [opened, edited]
-    branches: main
+      - '!release/aha**'  
       
 jobs:
   gitguardian-scanning:
@@ -74,13 +74,14 @@ jobs:
           fetch-depth: 0
           
       - name: Check labels
-      - uses: docker://agilepathway/pull-request-label-checker:latest
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: docker://agilepathway/pull-request-label-checker:latest
         with:
-          one_of: major,minor,patch
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+           one_of: major,minor,patch
+           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   Android-BuildApp:
-    needs: Label_Checks
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest
@@ -144,6 +145,7 @@ jobs:
           retention-days: 14
 
   Android-Release-Alpha:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: Android-BuildApp
     runs-on: ubuntu-latest
@@ -176,6 +178,7 @@ jobs:
           
 
   iOS-BuildApp:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: macos-latest
@@ -239,6 +242,7 @@ jobs:
           retention-days: 14
 
   iOS-Release-Alpha:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: iOS-BuildApp
     runs-on: macos-latest

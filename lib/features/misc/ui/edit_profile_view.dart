@@ -2240,8 +2240,10 @@ class _EditProfileState extends State<EditProfile> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Semantics(
-                label:
-                'Mobile number ' + _mobileNumberController.text.toString(),
+                label: "Phone: " +
+                _mobileNumberController.text.toString()
+                    .replaceAllMapped(RegExp(r".{1}"),
+                        (match) => "${match.group(0)} "),
                 child: TextFormField(
                     controller: _mobileNumberController,
                     focusNode: _mobileNumberFocus,

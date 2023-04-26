@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
@@ -29,6 +30,8 @@ import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+
+import '../../../infra/networking/custom_exception.dart';
 
 class MyReportsView extends StatefulWidget {
   @override
@@ -200,10 +203,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                    height: 16,
-                  ),
-                  uploadWidget(),
                   Row(
                     children: [
                       Padding(
@@ -235,6 +234,22 @@ class _MyReportsViewState extends State<MyReportsView> {
                                 ? noRecordsFound()
                                 : listWidget()),
                   ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if(RemoteConfigValues.downloadReportButtonVisibility)...[
+                        downloadReportWidget(),
+                      ],
+                      uploadWidget(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
@@ -255,57 +270,99 @@ class _MyReportsViewState extends State<MyReportsView> {
     );
   }
 
-  Widget uploadWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 20,
-          height: 40,
-          child: ElevatedButton(
-            //.icon
-            onPressed: () async {
-              /*String type = await _askForDocsType();
-              debugPrint('File Type ${type}');
-              if (type != null) {
-                getFile(type);
-              } else {
-                showToast('Please select document type');
-              }*/
-              FirebaseAnalytics.instance.logEvent(name: 'upload_my_report_button_click');
-              showMaterialModalBottomSheet(
-                  isDismissible: true,
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(25.0)),
-                  ),
-                  context: context,
-                  builder: (context) => _uploadImageSelector());
-            },
-            /*icon: Icon(
-              Icons.file_upload,
-              color: Colors.white,
-              size: 24,
-            ),*/
-            child: Text(
-              'Upload medical records',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
-            ),
-            style: ButtonStyle(
-                foregroundColor:
-                    MaterialStateProperty.all<Color>(primaryLightColor),
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        side: BorderSide(color: primaryColor)))),
-          ),
+  Widget downloadReportWidget() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2.2,
+      child: ElevatedButton(
+        //.icon
+        onPressed: () async {
+          FirebaseAnalytics.instance.logEvent(name: 'download_history_button_click');
+          try {
+            final BaseResponse response =
+            await model.generateReport();
+            if (response.status == 'success') {
+              showToast('Your report is getting downloaded, Please check in the medical records after few minutes', context);
+              setState(() {});
+            } else {
+              showToast(response.message!, context);
+            }
+          } on FetchDataException catch (e) {
+            debugPrint('error caught: $e');
+            model.setBusy(false);
+            showToast(e.toString(), context);
+          }
+        },
+        /*icon: Icon(
+          Icons.file_upload,
+          color: Colors.white,
+          size: 24,
+        ),*/
+        child: Text(
+          'Download report',
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: TextStyle(
+              fontSize: 14.0,
+              color: primaryColor,
+              fontWeight: FontWeight.w600),
         ),
-      ],
+        style: ButtonStyle(
+            foregroundColor:
+            MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    side: BorderSide(color: primaryColor)))),
+      ),
+    );
+  }
+
+  Widget uploadWidget() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2.2,
+      child: ElevatedButton(
+        //.icon
+        onPressed: () async {
+          /*String type = await _askForDocsType();
+          debugPrint('File Type ${type}');
+          if (type != null) {
+            getFile(type);
+          } else {
+            showToast('Please select document type');
+          }*/
+          FirebaseAnalytics.instance.logEvent(name: 'upload_my_report_button_click');
+          showMaterialModalBottomSheet(
+              isDismissible: true,
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(25.0)),
+              ),
+              context: context,
+              builder: (context) => _uploadImageSelector());
+        },
+        /*icon: Icon(
+          Icons.file_upload,
+          color: Colors.white,
+          size: 24,
+        ),*/
+        child: Text(
+          'Upload records',
+          style: TextStyle(
+              fontSize: 14.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w600),
+        ),
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    side: BorderSide(color: primaryColor)))),
+      ),
     );
   }
 

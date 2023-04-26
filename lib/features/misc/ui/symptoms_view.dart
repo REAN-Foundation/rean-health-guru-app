@@ -331,32 +331,31 @@ class _SymptomsViewState extends State<SymptomsView> {
 
     return Dismissible(
       key: index == 1 ? _keySymptoms : Key(symptomTypes.symptom!),
-      child: InkWell(
-          onTap: () {
-            debugPrint('${symptomTypes.symptom} clicked');
-          },
-          child: ListTile(
-            leading: ExcludeSemantics(
-              child: SizedBox(
-                height: 40,
-                width: 40,
-                child: CachedNetworkImage(
-                  imageUrl: apiProvider!.getBaseUrl()! +
-                      '/file-resources/' +
-                      symptomTypes.imageResourceId! +
-                      '/download-by-version-name/1',
-                ),
+      child: Semantics(
+        hint: '   Swipe left to mark as worse & Swipe right to mark as better',
+        child: ListTile(
+          leading: ExcludeSemantics(
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: CachedNetworkImage(
+                imageUrl: apiProvider!.getBaseUrl()! +
+                    '/file-resources/' +
+                    symptomTypes.imageResourceId! +
+                    '/download-by-version-name/1',
               ),
             ),
-            title: Text(
-              symptomTypes.symptom!,
-              style: TextStyle(
-                  fontSize: 14.0,
-                  color: primaryColor,
-                  fontWeight: FontWeight.w600),
-            ),
-            tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
-          )),
+          ),
+          title: Text(
+            symptomTypes.symptom!,
+            style: TextStyle(
+                fontSize: 14.0,
+                color: primaryColor,
+                fontWeight: FontWeight.w600),
+          ),
+          tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
+        ),
+      ),
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {

@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 
 import '../../../misc/ui/base_widget.dart';
+import 'lipid_profile_lipoprotein.dart';
 
 class CholesterolTrendView extends StatefulWidget {
   @override
@@ -48,6 +49,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                           height: 8,
                         ),
                         ldlTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        lpaTrends(),
                         const SizedBox(
                           height: 8,
                         ),
@@ -118,6 +123,54 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
               height: 8,
             ),
             LipidProfileLDLView(false),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget lpaTrends() {
+    return Card(
+      elevation: 8,
+      semanticContainer: false,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_ldl.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Lp(a)',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Lp(a) Information',
+                      description:
+                      'Lp(a) : Lipoprotein (a) is a type of LDL.',
+                      height: 200),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            LipidProfileLipoproteinView(false),
           ],
         ),
       ),

@@ -23,6 +23,7 @@ class _EnterAllCholesterolValuesViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   final _ldlController = TextEditingController();
+  final _lpaController = TextEditingController();
   final _hdlcontroller = TextEditingController();
   final _totalCholesterolController = TextEditingController();
   final _triglyceridesController = TextEditingController();
@@ -34,6 +35,7 @@ class _EnterAllCholesterolValuesViewState
   final _totalCholesterolFocus = FocusNode();
   final _hdlFocus = FocusNode();
   final _ldlFocus = FocusNode();
+  final _lpaFocus = FocusNode();
   ProgressDialog? progressDialog;
   var scrollContainer = ScrollController();
   final ScrollController _scrollController = ScrollController();
@@ -68,6 +70,7 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
+                  lpaFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
@@ -222,6 +225,107 @@ class _EnterAllCholesterolValuesViewState
                           ],
                           decoration: InputDecoration(
                               /*hintText: unit == 'lbs'
+                                  ? '(100 to 200)'
+                                  : '(50 to 100)',*/
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget lpaFeilds() {
+    return Card(
+      semanticContainer: false,
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_ldl.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Enter your Lp(a)',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: ' (mg/dl) ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        color: textBlack,
+                        fontSize: 12),
+                  ),
+                ),
+                SizedBox(
+                  width: 0,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Lp(a) Information',
+                      description:
+                      'Lp(a) : Lipoprotein (a) is a type of LDL.',
+                      height: 200),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: textGrey, width: 1),
+                        color: Colors.white),
+                    child: Semantics(
+                      label: 'Lp(a) measures in mg/dl',
+                      child: TextFormField(
+                          controller: _lpaController,
+                          focusNode: _lpaFocus,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {
+                            _fieldFocusChange(context, _ldlFocus, _hdlFocus);
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
+                          decoration: InputDecoration(
+                            /*hintText: unit == 'lbs'
                                   ? '(100 to 200)'
                                   : '(50 to 100)',*/
                               hintStyle: TextStyle(
@@ -735,6 +839,13 @@ class _EnterAllCholesterolValuesViewState
       validationToastDisplay = false;
       addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
     }
+
+    if (_lpaController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+      validationToastDisplay = false;
+      addvitals('Lipoprotein', _lpaController.text.toString(), 'mg/dl');
+    }
+
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;

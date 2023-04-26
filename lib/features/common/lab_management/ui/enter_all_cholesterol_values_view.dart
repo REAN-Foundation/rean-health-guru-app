@@ -982,6 +982,11 @@ class _EnterAllCholesterolValuesViewState
       TextPosition(offset: _ldlController.text.length),
     );
 
+    _lpaController.text = '';
+    _lpaController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _lpaController.text.length),
+    );
+
     _hdlcontroller.text = '';
     _hdlcontroller.selection = TextSelection.fromPosition(
       TextPosition(offset: _hdlcontroller.text.length),

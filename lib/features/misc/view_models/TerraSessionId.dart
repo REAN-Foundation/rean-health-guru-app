@@ -12,6 +12,7 @@ class TerraSessionId {
       String? url,}){
     _expiresIn = expiresIn;
     _sessionId = sessionId;
+    _message = message;
     _status = status;
     _url = url;
 }

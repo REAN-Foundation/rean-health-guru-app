@@ -376,7 +376,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dL) ',
+                    text: ' (mg/dl) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,

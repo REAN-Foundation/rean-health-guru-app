@@ -155,8 +155,8 @@ class _LipidProfileLipoproteinViewState
                 child: InfoScreen(
                     tittle: 'Lp(a) Information',
                     description:
-                        'Lp(a): Lipoprotein (a) is a type of LDL.',
-                    height: 200),
+                        'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease..',
+                    height: 400),
               ),
             ],
           ),

@@ -175,7 +175,7 @@ class _LipidProfileLipoproteinViewState
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Lipoprotein (a) measures in mg/dl',
+                    label: 'Lipoprotein (a) measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -204,7 +204,7 @@ class _LipidProfileLipoproteinViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dl    ',
+                          text: '    mg/dL    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -299,7 +299,7 @@ class _LipidProfileLipoproteinViewState
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Lp(a)\nmg/dl',
+                    'Lp(a)\nmg/dL',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,

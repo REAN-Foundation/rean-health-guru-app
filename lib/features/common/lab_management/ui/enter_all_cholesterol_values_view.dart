@@ -174,7 +174,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -210,7 +210,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'ldl measures in mg/dl',
+                      label: 'ldl measures in mg/dL',
                       child: TextFormField(
                           controller: _ldlController,
                           focusNode: _ldlFocus,
@@ -275,7 +275,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -311,7 +311,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Lp(a) measures in mg/dl',
+                      label: 'Lp(a) measures in mg/dL',
                       child: TextFormField(
                           controller: _lpaController,
                           focusNode: _lpaFocus,
@@ -376,7 +376,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -412,7 +412,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'HDL measures in mg/dl',
+                      label: 'HDL measures in mg/dL',
                       child: TextFormField(
                           focusNode: _hdlFocus,
                           controller: _hdlcontroller,
@@ -477,7 +477,7 @@ class _EnterAllCholesterolValuesViewState
                   ),
                   RichText(
                     text: TextSpan(
-                      text: ' (mg/dl)',
+                      text: ' (mg/dL)',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
@@ -514,7 +514,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Total Cholesterol messures in mg/dl ',
+                      label: 'Total Cholesterol messures in mg/dL ',
                       child: TextFormField(
                           focusNode: _totalCholesterolFocus,
                           controller: _totalCholesterolController,
@@ -578,7 +578,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -614,7 +614,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Triglycerides measures in mg/dl',
+                      label: 'Triglycerides measures in mg/dL',
                       child: TextFormField(
                           focusNode: _triglyceridesFocus,
                           controller: _triglyceridesController,
@@ -837,29 +837,29 @@ class _EnterAllCholesterolValuesViewState
     if (_ldlController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
+      addvitals('LDL', _ldlController.text.toString(), 'mg/dL');
     }
 
     if (_lpaController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Lipoprotein', _lpaController.text.toString(), 'mg/dl');
+      addvitals('Lipoprotein', _lpaController.text.toString(), 'mg/dL');
     }
 
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dl');
+      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dL');
     }
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dl');
+      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dL');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dl');
+      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dL');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
@@ -945,7 +945,7 @@ class _EnterAllCholesterolValuesViewState
       if (_ratioController.text.toString().isNotEmpty)
         map['Ratio'] = _ratioController.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "mg/dL";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMylipidProfile(map);

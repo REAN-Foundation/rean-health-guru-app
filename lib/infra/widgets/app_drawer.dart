@@ -15,7 +15,6 @@ import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
-import 'package:patient/features/misc/view_models/TerraSessionId.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -26,6 +25,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:terra_flutter_bridge/terra_flutter_bridge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../features/common/health_device/models/terra_session_id.dart';
 import '../networking/custom_exception.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -407,8 +407,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
           InkWell(
             onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
               //progressDialog!.show(max: 100, msg: 'Loading...');
-              generateSeesionId();
+              //generateSeesionId();
               //initTerraWebView('https://widget.tryterra.co/session/ca5757dc-8297-4d8c-b1d8-c246239ac705');
               //initTerraFunctionState();
             },

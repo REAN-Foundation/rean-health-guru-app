@@ -10,6 +10,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class EnterAllCholesterolValuesView extends StatefulWidget {
   @override
@@ -102,7 +103,9 @@ class _EnterAllCholesterolValuesViewState
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                FirebaseAnalytics.instance.logEvent(name: 'lab_values_enter_all_values_save_button_click');
+                                FirebaseAnalytics.instance.logEvent(
+                                    name:
+                                        'lab_values_enter_all_values_save_button_click');
                                 validate();
                               },
                               child: ExcludeSemantics(
@@ -245,6 +248,7 @@ class _EnterAllCholesterolValuesViewState
     );
   }
 
+  String lipoproteiUnit = 'mg/dL';
   Widget lpaFeilds() {
     return Card(
       semanticContainer: false,
@@ -273,7 +277,7 @@ class _EnterAllCholesterolValuesViewState
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
-                RichText(
+                /*RichText(
                   text: TextSpan(
                     text: ' (mg/dL) ',
                     style: TextStyle(
@@ -282,6 +286,31 @@ class _EnterAllCholesterolValuesViewState
                         color: textBlack,
                         fontSize: 12),
                   ),
+                ),*/
+                SizedBox(
+                  width: 4,
+                ),
+                ToggleSwitch(
+                  minWidth: 64.0,
+                  minHeight: 28.0,
+                  fontSize: 12.0,
+                  initialLabelIndex: 0,
+                  activeBgColor: [primaryColor],
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.white,
+                  inactiveFgColor: Colors.grey[900],
+                  totalSwitches: 2,
+                  labels: ['mg/dL', 'nmol/L'],
+                  borderWidth: 2.0,
+                  borderColor: [primaryColor],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                    if(index == 0){
+                      lipoproteiUnit = 'mg/dL';
+                    }else{
+                      lipoproteiUnit = 'nmol/L';
+                    }
+                  },
                 ),
                 SizedBox(
                   width: 0,
@@ -290,7 +319,7 @@ class _EnterAllCholesterolValuesViewState
                   child: InfoScreen(
                       tittle: 'Lp(a) Information',
                       description:
-                      'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease.',
+                          'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease.',
                       height: 300),
                 ),
               ],
@@ -325,7 +354,7 @@ class _EnterAllCholesterolValuesViewState
                             FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
-                            /*hintText: unit == 'lbs'
+                              /*hintText: unit == 'lbs'
                                   ? '(100 to 200)'
                                   : '(50 to 100)',*/
                               hintStyle: TextStyle(
@@ -593,7 +622,7 @@ class _EnterAllCholesterolValuesViewState
                   child: InfoScreen(
                       tittle: 'Triglycerides Information',
                       description:
-                      'Triglycerides: The most common type of fat in the body.',
+                          'Triglycerides: The most common type of fat in the body.',
                       height: 200),
                 ),
               ],
@@ -687,7 +716,8 @@ class _EnterAllCholesterolValuesViewState
                 Expanded(
                   child: InfoScreen(
                       tittle: 'A1C Level Information',
-                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
+                      description:
+                          "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
                       height: 320),
                 ),
               ],
@@ -843,7 +873,7 @@ class _EnterAllCholesterolValuesViewState
     if (_lpaController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Lipoprotein', _lpaController.text.toString(), 'mg/dL');
+      addvitals('Lipoprotein', _lpaController.text.toString(), lipoproteiUnit);
     }
 
     if (_hdlcontroller.text.isNotEmpty) {
@@ -854,12 +884,14 @@ class _EnterAllCholesterolValuesViewState
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dL');
+      addvitals('Total Cholesterol',
+          _totalCholesterolController.text.toString(), 'mg/dL');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dL');
+      addvitals('Triglyceride Level', _triglyceridesController.text.toString(),
+          'mg/dL');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
@@ -868,15 +900,15 @@ class _EnterAllCholesterolValuesViewState
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
-      if(isNumeric(_a1cLevelController.text)) {
+      if (isNumeric(_a1cLevelController.text)) {
         ifRecordsEnterted = true;
         validationToastDisplay = false;
         addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
-      }else{
+      } else {
         showToast('Please enter valid input', context);
       }
 
-     /* if(isNumeric(_a1cLevelController.text){
+      /* if(isNumeric(_a1cLevelController.text){
         ifRecordsEnterted = true;
         addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
       }else{
@@ -884,7 +916,7 @@ class _EnterAllCholesterolValuesViewState
       }*/
     }
 
-    if(validationToastDisplay){
+    if (validationToastDisplay) {
       showToast('Please enter valid input', context);
     }
 
@@ -974,7 +1006,7 @@ class _EnterAllCholesterolValuesViewState
     _scrollController.animateTo(0.0,
         duration: Duration(seconds: 2), curve: Curves.ease);
     showSuccessToast('Record Created Successfully!', context);
-      //toastDisplay = false;
+    //toastDisplay = false;
     //}
 
     _ldlController.text = '';

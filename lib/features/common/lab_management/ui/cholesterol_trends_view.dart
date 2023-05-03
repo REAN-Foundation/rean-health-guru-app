@@ -52,10 +52,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                         const SizedBox(
                           height: 8,
                         ),
-                        /*lpaTrends(),
+                        lpaTrends(),
                         const SizedBox(
                           height: 8,
-                        ),*/
+                        ),
                         hdlTrends(),
                         const SizedBox(
                           height: 8,

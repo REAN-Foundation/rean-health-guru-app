@@ -114,10 +114,10 @@ class _LipidProfileLipoproteinViewState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    if (records.isEmpty) Container() else graph(),
+                    /*if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
-                    ),
+                    ),*/
                     _historyListFeilds(),
                   ],
                 ),
@@ -299,7 +299,7 @@ class _LipidProfileLipoproteinViewState
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Lp(a)\nmg/dL',
+                    'Lp(a)',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -389,12 +389,12 @@ class _LipidProfileLipoproteinViewState
               child: Semantics(
                 label: 'Lp(a) ',
                 child: Text(
-                  record.primaryValue.toString(),
+                  record.primaryValue.toString()+' '+record.unit.toString(),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w300),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

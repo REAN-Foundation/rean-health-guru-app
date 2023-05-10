@@ -1,8 +1,27 @@
 import 'package:get_it/get_it.dart';
+import 'package:patient/features/common/achievement/models/get_my_awards.dart';
+import 'package:patient/infra/networking/awards_api_provider.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/view_models/base_model.dart';
 
-import '../../../../infra/networking/api_provider.dart';
 
 class AllAchievementViewModel extends BaseModel{
-  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  AwardApiProvider? apiProvider = GetIt.instance<AwardApiProvider>();
+
+  Future<GetMyAwards> getMyAwards() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/participants/'+getAwardsSystemId()+'/badges',
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return GetMyAwards.fromJson(response);
+  }
+
 }

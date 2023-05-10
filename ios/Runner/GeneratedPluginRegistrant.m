@@ -30,6 +30,12 @@
 @import firebase_core;
 #endif
 
+#if __has_include(<firebase_in_app_messaging/FirebaseInAppMessagingPlugin.h>)
+#import <firebase_in_app_messaging/FirebaseInAppMessagingPlugin.h>
+#else
+@import firebase_in_app_messaging;
+#endif
+
 #if __has_include(<firebase_messaging/FLTFirebaseMessagingPlugin.h>)
 #import <firebase_messaging/FLTFirebaseMessagingPlugin.h>
 #else
@@ -163,6 +169,7 @@
   [DevicelocalePlugin registerWithRegistrar:[registry registrarForPlugin:@"DevicelocalePlugin"]];
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
+  [FirebaseInAppMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FirebaseInAppMessagingPlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FLTFirebaseRemoteConfigPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseRemoteConfigPlugin"]];
   [GDBCustomTabsPlugin registerWithRegistrar:[registry registrarForPlugin:@"GDBCustomTabsPlugin"]];

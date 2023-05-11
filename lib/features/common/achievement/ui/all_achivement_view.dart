@@ -334,7 +334,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       opacity = 0.3;
       textColor = Colors.grey;
     }
-
+     
     if(index == 2){
       name = '30 - Days';
       image = 'res/images/awards/ic_gold_medicatio_medal.png';

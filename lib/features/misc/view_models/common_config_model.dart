@@ -294,6 +294,17 @@ class CommonConfigModel extends BaseModel {
     return GetRecords.fromJson(response);
   }
 
+  Future<BaseResponse> generateReport() async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+    final response = await apiProvider!
+        .get('/patient-statistics/'+patientUserId.toString()+'/report', header: map);
+    debugPrint('Report Generation ==> $response');
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }//your report is getting downloaded, Please check in the medical records after few minutes
+
   Future<AwardsUserDetails> getAwardsSytstemUserDetails() async {
     // Get user profile for id
     //setBusy(true);

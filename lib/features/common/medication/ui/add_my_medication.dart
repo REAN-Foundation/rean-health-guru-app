@@ -222,7 +222,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 backgroundColor: Colors.white,
                 systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 title: Text(
-                  'Medications',
+                  'Add Medications',
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,

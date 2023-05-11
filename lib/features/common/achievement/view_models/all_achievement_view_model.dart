@@ -11,7 +11,7 @@ class AllAchievementViewModel extends BaseModel{
 
   Future<GetMyAwards> getMyAwards() async {
     // Get user profile for id
-    //setBusy(true);
+    setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -19,7 +19,7 @@ class AllAchievementViewModel extends BaseModel{
     final response = await apiProvider!.get(
         '/participants/'+getAwardsSystemId()+'/badges',
         header: map);
-    //setBusy(false);
+    setBusy(false);
     // Convert and return
     return GetMyAwards.fromJson(response);
   }

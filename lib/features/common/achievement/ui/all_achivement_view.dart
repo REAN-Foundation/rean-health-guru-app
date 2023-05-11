@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:patient/features/common/achievement/view_models/all_achievement_view_model.dart';
 
 import '../../../../infra/themes/app_colors.dart';
+import '../../../../infra/utils/common_utils.dart';
 import '../../../misc/ui/base_widget.dart';
+import '../models/get_my_awards.dart';
 
 class AllAchievementView extends StatefulWidget {
   @override
@@ -14,6 +16,35 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
   var model = AllAchievementViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Data> awardsList = <Data>[];
+
+  getAwardsDetails() async {
+    try {
+      GetMyAwards getMyAwards =
+      await model.getMyAwards();
+      if (getMyAwards.status == 'success') {
+        debugPrint('Awards List ==> ${getMyAwards.toJson().toString()}');
+        awardsList.clear();
+        awardsList.addAll(getMyAwards.data!.toList());
+        setState(() {
+
+        });
+      } else {
+
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  @override
+  void initState() {
+    getAwardsDetails();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +149,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                       SizedBox(
                                         width: 8,
                                       ),
-                                      Text('1/10',
+                                      Text(awardsList.length.toString()+'/3',
                                           style: TextStyle(
                                               color: textBlack,
                                               fontSize: 12,
@@ -138,9 +169,9 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Image.asset('res/images/ic_medal.png',
-                                height: 100,
-                                width: 100,
+                              Image.asset('res/images/awards/ic_medicatio_medal.png',
+                                height: 80,
+                                width: 80,
                               ),
                             ],
                           ),
@@ -157,7 +188,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: allAchievements(),
+                      child: model!.busy ? Center(child: CircularProgressIndicator(color: primaryColor,),) :allAchievements(),
                     ),
                   )
                 ],
@@ -186,9 +217,9 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             SizedBox(
-                height: 120,
-                child: awardsListView(8)),
-            SizedBox(height: 16,),
+                height: 140,
+                child: awardsListView()),
+/*            SizedBox(height: 16,),
             Text(
               'Nutrition',
               style: TextStyle(
@@ -259,14 +290,14 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             SizedBox(height: 4,),
             SizedBox(
                 height: 120,
-                child: awardsListView(3)),
+                child: awardsListView(3)),*/
           ],
         ),
       ),
     );
   }
 
-  Widget awardsListView(int count){
+  Widget awardsListView(){
     return ListView.separated(
         itemBuilder: (context, index) => _makeAwardsListCard(context, index),
         separatorBuilder: (BuildContext context, int index) {
@@ -274,38 +305,73 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             width: 2,
           );
         },
-        itemCount: count,
+        itemCount: 3,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true);
   }
 
   Widget _makeAwardsListCard(BuildContext context, int index) {
+    String name = '';
+    String image = '';
+    double opacity = 0.2;
+    Color textColor = Colors.black;
+
+    if(awardsList.length == 1 && index == 0){
+      //Data data = awardsList.elementAt(index);
+      name = '7 - Days';
+      image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+      opacity = 1.0;
+    }else{
+      name = '7 - Days';
+      image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+      opacity = 0.2;
+      textColor = Colors.grey;
+    }
+
+    if(index == 1){
+      name = '14 - Days';
+      image = 'res/images/awards/ic_silver_medicatio_medal.png';
+      opacity = 0.3;
+      textColor = Colors.grey;
+    }
+
+    if(index == 2){
+      name = '30 - Days';
+      image = 'res/images/awards/ic_gold_medicatio_medal.png';
+      opacity = 0.2;
+      textColor = Colors.grey;
+    }
+
+
     return Container(
-      height: 100,
-      width: 90,
+      height: 120,
+      width: 112,
       child: Card(
         semanticContainer: false,
         elevation: 8,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Name',
+            Text(name,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 12.0,
-                color: Colors.black,
+                color: textColor,
                 fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 4,),
-            Image.asset('res/images/ic_medal.png',
-              height: 60,
-              width: 40,
+            Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
             ),
             SizedBox(height: 4,),
-            Text('Status',
+            Text('Medication',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 10.0,
-                  color: Colors.black,
+                  color: textColor,
                   fontWeight: FontWeight.w500),
             ),
           ],

@@ -290,15 +290,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       final body = <String, String>{};
       body['ClientId'] = dotenv.env['AWARD_CLIENT_ID'].toString();
       body['ReferenceId'] = patientUserId.toString();
-      body['Prefix'] = '    ';
       body['FirstName'] = user.data!.user!.person!.firstName.toString();
       body['LastName'] = user.data!.user!.person!.lastName.toString();
       body['Gender'] = user.data!.user!.person!.gender.toString();
-      body['BirthDate'] = user.data!.user!.person!.birthDate.toString();
-      body['Email'] = user.data!.user!.person!.email.toString();
-      body['CountryCode'] = '  ';
-      body['Phone'] = user.data!.user!.person!.phone.toString();;
-      body['OnboardingDate'] = DateTime.now().toIso8601String();
+      body['BirthDate'] = dateFormat.format(DateTime.parse(user.data!.user!.person!.birthDate.toString()));
+      body['CountryCode'] = '+91';
+      body['Phone'] = user.data!.user!.person!.phone.toString();
+      body['OnboardingDate'] = dateFormat.format(DateTime.now());
 
 
       final BaseResponse response =

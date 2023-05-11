@@ -328,7 +328,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Hero(
                       tag: 'header',
                       child: Text(
-                        'Achievement',
+                        'Achievements',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),

@@ -191,7 +191,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  if(RemoteConfigValues.hospitalSystemVisibility && carePlanEnrollmentForPatientGlobe != null && healthSystemList.length != 0)...[
+                  if(RemoteConfigValues.hospitalSystemVisibility && carePlanEnrollmentForPatientGlobe != null && healthSystemList.isNotEmpty)...[
                   Row(
                     children: [
                       Padding(

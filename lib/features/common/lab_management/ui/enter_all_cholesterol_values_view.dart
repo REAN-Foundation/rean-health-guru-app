@@ -871,7 +871,7 @@ class _EnterAllCholesterolValuesViewState
       addvitals('LDL', _ldlController.text.toString(), 'mg/dL');
     }
 
-    if (_lpaController.text.isNotEmpty) {
+    if (_lpaController.text.isNotEmpty && isNumeric(_lpaController.text)) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
       addvitals('Lipoprotein', _lpaController.text.toString(), lipoproteiUnit);

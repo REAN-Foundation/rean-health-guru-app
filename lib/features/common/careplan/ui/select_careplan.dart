@@ -54,12 +54,16 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   late ProgressDialog progressDialog;
 
-  getHealthSystem() async {
+  getHealthSystem(String planName) async {
     try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+      healthSystemGlobe = null;
+      healthSystemHospitalGlobe = null;
       healthSystemList.clear();
-      final HealthSystemPojo healthSystemPojo = await model.getHealthSystem();
+      final HealthSystemPojo healthSystemPojo = await model.getHealthSystem(planName);
 
       if (healthSystemPojo.status == 'success') {
+        progressDialog.close();
         _healthSystems = healthSystemPojo.data!.healthSystems;
         for (int i = 0; i < healthSystemPojo.data!.healthSystems!.length; i++) {
           healthSystemList
@@ -67,9 +71,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         }
         setState(() {});
       } else {
+        progressDialog.close();
         showToast(healthSystemPojo.message!, context);
       }
     } on FetchDataException catch (e) {
+      progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -104,7 +110,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   void initState() {
     progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
-    getHealthSystem();
+    /*if(carePlanEnrollmentForPatientGlobe != null) {
+      getHealthSystem();
+    }*/
     getAHACarePlans();
     doctorSearchListGlobe.clear();
     parmacySearchListGlobe.clear();
@@ -417,6 +425,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   if(value == 'Heart Failure Motivator'){
                     RemoteConfigValues.hospitalSystemVisibility = false;
                   }else{
+                    getHealthSystem(value.toString());
                     RemoteConfigValues.hospitalSystemVisibility = true;
                   }
 

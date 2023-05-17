@@ -202,7 +202,9 @@ class Person {
       addresses = <Addresses>[];
       if (addresses != null) {
         json['Addresses'].forEach((v) {
-          addresses!.add(Addresses.fromJson(v));
+          if(v != null) {
+            addresses!.add(Addresses.fromJson(v));
+          }
         });
       }
     }

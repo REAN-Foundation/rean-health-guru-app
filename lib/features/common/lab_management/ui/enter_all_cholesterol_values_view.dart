@@ -346,12 +346,13 @@ class _EnterAllCholesterolValuesViewState
                           focusNode: _lpaFocus,
                           maxLines: 1,
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {
                             _fieldFocusChange(context, _ldlFocus, _hdlFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               /*hintText: unit == 'lbs'

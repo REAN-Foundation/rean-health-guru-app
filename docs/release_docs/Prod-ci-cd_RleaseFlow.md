@@ -1,6 +1,6 @@
 ## PROD-CI-CD
 
-[prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_workflow.png?raw=true)
+![prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_workflow.png?raw=true)
 
 ### Ways To Trigger The Workflow
 

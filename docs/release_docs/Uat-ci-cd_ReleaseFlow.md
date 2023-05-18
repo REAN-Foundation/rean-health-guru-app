@@ -9,7 +9,7 @@
 
 ## Jobs
 
-### gitguardian-scanning
+### Gitguardian-scanning
 
 Git Guardian-scanning job will be performing the following steps.
 

@@ -71,15 +71,15 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
-                  lpaFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   hdlFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
                   triglyceridesFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  lpaFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
@@ -348,7 +348,7 @@ class _EnterAllCholesterolValuesViewState
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {
-                            _fieldFocusChange(context, _ldlFocus, _hdlFocus);
+                            _fieldFocusChange(context, _lpaFocus, _a1cLevelFocus);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(

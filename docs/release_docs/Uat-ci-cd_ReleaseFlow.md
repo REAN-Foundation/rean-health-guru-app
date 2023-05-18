@@ -1,6 +1,6 @@
 ## UAT-CI-CD
 
-[uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/uatWorkflow.png?raw=true)
+![uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/uatWorkflow.png?raw=true)
 
 ### Ways to trigger Dev Workflow
 

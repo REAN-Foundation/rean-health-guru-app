@@ -30,7 +30,7 @@ Android BuildApp job will be performing the following steps
 
 ### Android-PublishAppInternally
 
-Android PublishAppInternally job will be performing the following steps. 
+Android Publish AppInternally job will be performing the following steps. 
 
 * This job sets up Fastlane, publishes the app to Firebase, and performs app distribution and testing, For Smoke Testing it will publishes the app to TestProject.io It uploads the app with specific parameters, such as the project ID, app ID, app name, and app path. The app is uploaded for smoke testing purposes, which is conditionally triggered based on the branch name being different from 'develop', For regression it will executed only when the branch name is 'develop'.
 

@@ -173,7 +173,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'LDL measures in mg/dl',
+                    label: 'LDL measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -202,7 +202,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dl    ',
+                          text: '    mg/dL    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -297,7 +297,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'LDL\nmg/dl',
+                    'LDL\nmg/dL',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -648,7 +648,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
       map['DisplayName'] = 'LDL';
       map['PrimaryValue'] = _controller.text.toString();
       map['PatientUserId'] = patientUserId;
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "mg/dL";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addlipidProfile(map);

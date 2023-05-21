@@ -82,7 +82,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     try {
       healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo =
-      await model.getHealthSystem();
+      await model.getHealthSystem(carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planName
+          .toString());
 
       if (healthSystemPojo.status == 'success') {
         _healthSystems = healthSystemPojo.data!.healthSystems;
@@ -161,7 +165,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   void initState() {
-    getHealthSystem();
+    if(carePlanEnrollmentForPatientGlobe != null) {
+      getHealthSystem();
+    }
     loadSharedPrefs();
     getEmergencyTeam();
     super.initState();
@@ -185,7 +191,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  if(RemoteConfigValues.hospitalSystemVisibility)...[
+                  if(RemoteConfigValues.hospitalSystemVisibility && carePlanEnrollmentForPatientGlobe != null && healthSystemList.isNotEmpty)...[
                   Row(
                     children: [
                       Padding(

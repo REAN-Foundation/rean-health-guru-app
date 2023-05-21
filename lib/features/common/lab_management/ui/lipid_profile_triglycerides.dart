@@ -175,7 +175,7 @@ class _LipidProfileTriglyceridesViewState
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Triglycerides measures in mg/dl',
+                    label: 'Triglycerides measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -204,7 +204,7 @@ class _LipidProfileTriglyceridesViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dl    ',
+                          text: '    mg/dL    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -299,7 +299,7 @@ class _LipidProfileTriglyceridesViewState
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Triglycerides\nmg/dl',
+                    'Triglycerides\nmg/dL',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,

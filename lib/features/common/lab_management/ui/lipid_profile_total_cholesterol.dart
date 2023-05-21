@@ -176,7 +176,7 @@ class _LipidProfileTotalCholesterolViewState
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Total Cholesterol measures in mg/dl',
+                    label: 'Total Cholesterol measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -205,7 +205,7 @@ class _LipidProfileTotalCholesterolViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dl    ',
+                          text: '    mg/dL    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -300,7 +300,7 @@ class _LipidProfileTotalCholesterolViewState
                           Expanded(
                             flex: 3,
                             child: Text(
-                              'Total Cholesterol\nmg/dl',
+                              'Total Cholesterol\nmg/dL',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -651,7 +651,7 @@ class _LipidProfileTotalCholesterolViewState
       map['DisplayName'] = 'Total Cholesterol';
       map['PrimaryValue'] = _controller.text.toString();
       map['PatientUserId'] = patientUserId;
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "mg/dL";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addlipidProfile(map);

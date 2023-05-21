@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.229+169
+version: 1.8.237+173
 
 publish_to: none
 
@@ -50,6 +50,7 @@ dependencies:
   firebase_messaging: ^14.0.4
   firebase_analytics: ^10.0.4
   firebase_remote_config: ^3.0.6
+  #firebase_in_app_messaging: ^0.7.1+1
   #razorpay_flutter: ^1.2.3
   flutter_linkify: ^5.0.2
   url_launcher: ^6.1.5

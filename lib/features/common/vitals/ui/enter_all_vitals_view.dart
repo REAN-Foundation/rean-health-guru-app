@@ -719,7 +719,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Blood Glucose measures in mg/dl',
+                      label: 'Blood Glucose measures in mg/dL',
                       child: TextFormField(
                           focusNode: _bloodGlucoseFocus,
                           controller: _bloodGlucosecontroller,

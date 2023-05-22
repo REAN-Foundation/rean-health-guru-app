@@ -1152,7 +1152,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                 fontSize: 18),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                  text: 'mg/dl',
+                                                  text: 'mg/dL',
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:

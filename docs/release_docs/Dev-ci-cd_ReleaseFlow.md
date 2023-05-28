@@ -34,4 +34,25 @@ Android Publish AppInternally job will be performing the following steps.
 
 * This job sets up Fastlane, publishes the app to Firebase, and performs app distribution and testing, For Smoke Testing it will publishes the app to TestProject.io It uploads the app with specific parameters, such as the project ID, app ID, app name, and app path. The app is uploaded for smoke testing purposes, which is conditionally triggered based on the branch name being different from 'develop', For regression it will executed only when the branch name is 'develop'.
 
+### iOS-BuildApp
+
+iOS-BuildApp job will be performing the following steps. 
+ 
+* This job sets up the necessary tools like fastlane, flutter then builds the iOS app using Flutter, signs the build using Fastlane, specifying the "dev" flavor and release mode. It uses various environment variables for authentication and configuration, and uploads the artifacts for further use.
+* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact)
+
+### iOS-PublishAppInternally
+
+iOS-PublishAppInternally job will be performing the following steps.
+
+* This job checks out the code, sets up Fastlane, downloads the previously built artifacts, publishes the app to Firebase, and uploads it to TestProject.io, for smoke testing purposes which is conditionally triggered based on the branch name being different from 'develop', For regression it will executed only when the branch name is 'develop'.
+
+
+
+
+
+
+ 
+ 
+ 
  

@@ -17,3 +17,5 @@ Android-App-Release-Prod job will be performing the following steps.
 ### iOS-App-Release-Prod
 
 iOS-App-Release-Prod job will be performing the following steps.
+
+* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new github release with generated release notes. 

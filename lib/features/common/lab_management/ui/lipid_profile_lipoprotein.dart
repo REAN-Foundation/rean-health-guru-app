@@ -4,34 +4,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
-import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:patient/features/common/lab_management/models/lipid_profile_history_response.dart';
+import 'package:patient/features/common/lab_management/view_models/patients_lipid_profile.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
-class BiometricBloodSugarVitalsView extends StatefulWidget {
+class LipidProfileLipoproteinView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
-  BiometricBloodSugarVitalsView(bool allUIViewsVisible) {
+  LipidProfileLipoproteinView(bool allUIViewsVisible) {
     this.allUIViewsVisible = allUIViewsVisible;
   }
 
   @override
-  _BiometricBloodSugarVitalsViewState createState() =>
-      _BiometricBloodSugarVitalsViewState();
+  _LipidProfileLipoproteinViewState createState() =>
+      _LipidProfileLipoproteinViewState();
 }
 
-class _BiometricBloodSugarVitalsViewState
-    extends State<BiometricBloodSugarVitalsView> {
-  var model = PatientVitalsViewModel();
+class _LipidProfileLipoproteinViewState
+    extends State<LipidProfileLipoproteinView> {
+  var model = PatientLipidProfileViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
@@ -44,23 +45,13 @@ class _BiometricBloodSugarVitalsViewState
   @override
   void initState() {
     getVitalsHistory();
-    getVitalsFromDevice();
     super.initState();
-  }
-
-  getVitalsFromDevice() {
-    if (getHealthData.getBloodGlucose() != '0.0') {
-      _controller.text = getHealthData.getBloodGlucose();
-      _controller.selection = TextSelection.fromPosition(
-        TextPosition(offset: _controller.text.length),
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientVitalsViewModel?>(
+    return BaseWidget<PatientLipidProfileViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: widget.allUIViewsVisible
@@ -71,7 +62,7 @@ class _BiometricBloodSugarVitalsViewState
                   backgroundColor: Colors.white,
                   systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
-                    'Blood Glucose',
+                    'Lipoprotein',
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
@@ -100,7 +91,7 @@ class _BiometricBloodSugarVitalsViewState
                         const SizedBox(
                           height: 16,
                         ),
-                        weightFeilds(),
+                        _feilds(),
                         const SizedBox(
                           height: 16,
                         ),
@@ -108,7 +99,7 @@ class _BiometricBloodSugarVitalsViewState
                         const SizedBox(
                           height: 16,
                         ),
-                        weightHistoryListFeilds(),
+                        _historyListFeilds(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -123,11 +114,11 @@ class _BiometricBloodSugarVitalsViewState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    if (records.isEmpty) Container() else graph(),
+                    /*if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
-                    ),
-                    weightHistoryListFeilds(),
+                    ),*/
+                    _historyListFeilds(),
                   ],
                 ),
               ),
@@ -135,7 +126,7 @@ class _BiometricBloodSugarVitalsViewState
     );
   }
 
-  Widget weightFeilds() {
+  Widget _feilds() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -149,38 +140,23 @@ class _BiometricBloodSugarVitalsViewState
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Enter your blood glucose:',
-                    style: TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 4,),
-                  Text(
-                    '(Also known as blood sugar)',
-                    style: TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              Text(
+                'Enter your Lp(A):',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 width: 8,
               ),
               Expanded(
                 child: InfoScreen(
-                    tittle: 'Blood Glucose Information',
+                    tittle: 'Lp(a) Information',
                     description:
-                        'High blood glucose or "blood sugar" levels put you at greater risk of developing insulin resistance, prediabetes and type 2 diabetes. Prediabetes and Type 2 diabetes increases risk of heart disease and stroke. Blood glucose is measured through a blood test.\n\nPrediabetes: Fasting blood glucose range is 100 to 125 mg/dL\nDiabetes mellitus (Type 2 diabetes): 126 mg/dL',
-                    height: 320),
+                        'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease..',
+                    height: 400),
               ),
             ],
           ),
@@ -199,7 +175,7 @@ class _BiometricBloodSugarVitalsViewState
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Blood Glucose measures in mg/dL',
+                    label: 'Lipoprotein (a) measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -210,7 +186,7 @@ class _BiometricBloodSugarVitalsViewState
                           FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
-                            //hintText: '(100 to 125)',
+                            //hintText: '(65 to 95)',
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
@@ -232,7 +208,7 @@ class _BiometricBloodSugarVitalsViewState
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: textGrey,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),
@@ -245,13 +221,13 @@ class _BiometricBloodSugarVitalsViewState
           Align(
             alignment: Alignment.centerRight,
             child: Semantics(
-              label: 'Save',
+              label: "Save",
               button: true,
               child: InkWell(
                 onTap: () {
-                  FirebaseAnalytics.instance.logEvent(name: 'vitals_blood_glucose_save_button_click');
+                  FirebaseAnalytics.instance.logEvent(name: 'lab_values_triglycerides_save_button_click');
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your blood glucose', context);
+                    showToast('Please enter your Lp(a)', context);
                   } else {
                     addvitals();
                   }
@@ -287,7 +263,7 @@ class _BiometricBloodSugarVitalsViewState
     );
   }
 
-  Widget weightHistoryListFeilds() {
+  Widget _historyListFeilds() {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
@@ -296,87 +272,87 @@ class _BiometricBloodSugarVitalsViewState
       //height: 160,
       child: model.busy
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+        child: CircularProgressIndicator(),
+      )
           : (records.isEmpty
-              ? noHistoryFound()
-              : Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Date',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Blood Glucose\n(mg/dL)',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: ExcludeSemantics(
-                              child: SizedBox(
-                                height: 32,
-                                width: 32,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+          ? noHistoryFound()
+          : Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Date',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Lp(a)',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ExcludeSemantics(
+                    child: SizedBox(
+                      height: 32,
+                      width: 32,
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Expanded(
-                      child: Scrollbar(
-                        thumbVisibility: true,
-                        controller: _scrollController,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  _makeWeightList(context, index),
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 0,
-                                );
-                              },
-                              itemCount: records.length,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              controller: _scrollController,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView.separated(
+                    itemBuilder: (context, index) =>
+                        _makeList(context, index),
+                    separatorBuilder:
+                        (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 0,
+                      );
+                    },
+                    itemCount: records.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true),
+              ),
+            ),
+          ),
+        ],
+      )),
     );
   }
 
   Widget noHistoryFound() {
     return Center(
-      child: Text('No vital history found',
+      child: Text('No lab value found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -385,7 +361,7 @@ class _BiometricBloodSugarVitalsViewState
     );
   }
 
-  Widget _makeWeightList(BuildContext context, int index) {
+  Widget _makeList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
     return Card(
       semanticContainer: false,
@@ -399,7 +375,7 @@ class _BiometricBloodSugarVitalsViewState
             Expanded(
               flex: 3,
               child: Text(
-                dateFormatStandard.format(DateTime.parse(record.recordDate!)),
+                dateFormatStandard.format(DateTime.parse(record.recordedAt!)),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -411,14 +387,14 @@ class _BiometricBloodSugarVitalsViewState
             Expanded(
               flex: 2,
               child: Semantics(
-                label: 'Blood Glucose ',
+                label: 'Lp(a) ',
                 child: Text(
-                  record.bloodGlucose.toString(),
+                  record.primaryValue.toString()+' '+record.unit.toString(),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w300),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -444,7 +420,7 @@ class _BiometricBloodSugarVitalsViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Blood Glucose Delete',
+                  semanticLabel: 'Lp(a) Delete',
                 ))
           ],
         ),
@@ -479,7 +455,7 @@ class _BiometricBloodSugarVitalsViewState
               height: 8,
             ),
             Text(
-              'Blood Glucose',
+              'Lp(a)',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -502,18 +478,15 @@ class _BiometricBloodSugarVitalsViewState
       new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
     ];*/
 
-    //2022-01-03T10:14:05.000Z
-    //2022-01-03T10:10:37.000Z
-
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
-          double.parse(records.elementAt(i).bloodGlucose.toString())));
+          DateTime.parse(records.elementAt(i).recordedAt!).toLocal(),
+          double.parse(records.elementAt(i).primaryValue.toString())));
     }
-    debugPrint('Biometric Blood Glucose Date ==> ${data.elementAt(0).time}');
+
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'BGS',
+        id: 'HDL',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -523,15 +496,13 @@ class _BiometricBloodSugarVitalsViewState
   }
 
   Widget allGoal() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Semantics(
-            label: 'checking progress goal',
-            readOnly: true,
-            child: Container(
+    return MergeSemantics(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
               height: 60,
               color: primaryColor,
               child: Row(
@@ -561,112 +532,112 @@ class _BiometricBloodSugarVitalsViewState
                 ],
               ),
             ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Initial',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                '85',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Target',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                '65',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Latest',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                '74',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    height: 10,
-                    color: primaryColor,
-                  ),
+                Text(
+                  'Initial',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    height: 10,
-                    color: primaryLightColor,
-                  ),
-                )
+                Text(
+                  '85',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Target',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  '65',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Latest',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  '74',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: Container(
+                      height: 10,
+                      color: primaryColor,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      height: 10,
+                      color: primaryLightColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -675,13 +646,14 @@ class _BiometricBloodSugarVitalsViewState
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['BloodGlucose'] = _controller.text.toString();
-      map['PatientUserId'] = "";
-      map['Unit'] = "mg|dL";
+      map['TypeName'] = 'Cholesterol';
+      map['DisplayName'] = 'Lipoprotein';
+      map['PrimaryValue'] = _controller.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
-      final BaseResponse baseResponse =
-          await model.addMyVitals('blood-glucose', map);
+      final BaseResponse baseResponse = await model.addlipidProfile(map);
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
@@ -702,12 +674,29 @@ class _BiometricBloodSugarVitalsViewState
     }
   }
 
+  getVitalsHistory() async {
+    try {
+      final LipidProfileHistoryResponse lipidProfileHistoryResponse =
+      await model.getLabRecordHistory('Lipoprotein');
+      if (lipidProfileHistoryResponse.status == 'success') {
+        records.clear();
+        records.addAll(lipidProfileHistoryResponse.data!.labRecordRecords!.items!.toList());
+      } else {
+        showToast(lipidProfileHistoryResponse.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   deleteVitals(String recordId) async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
 
       final BaseResponse baseResponse =
-          await model.deleteVitalsRecord('blood-glucose', recordId);
+      await model.deleteLabRecord(recordId);
 
       if (baseResponse.status == 'success') {
         if (progressDialog.isOpen()) {
@@ -723,23 +712,6 @@ class _BiometricBloodSugarVitalsViewState
       }
     } catch (e) {
       progressDialog.close();
-      model.setBusy(false);
-      showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
-    }
-  }
-
-  getVitalsHistory() async {
-    try {
-      final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-glucose');
-      if (getMyVitalsHistory.status == 'success') {
-        records.clear();
-        records.addAll(getMyVitalsHistory.data!.bloodGlucoseRecords!.items!);
-      } else {
-        showToast(getMyVitalsHistory.message!, context);
-      }
-    } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

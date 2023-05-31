@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 
 import '../../../misc/ui/base_widget.dart';
+import 'lipid_profile_lipoprotein.dart';
 
 class CholesterolTrendView extends StatefulWidget {
   @override
@@ -56,6 +57,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                           height: 8,
                         ),
                         triglyceridesTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        lpaTrends(),
                         const SizedBox(
                           height: 8,
                         ),
@@ -118,6 +123,54 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
               height: 8,
             ),
             LipidProfileLDLView(false),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget lpaTrends() {
+    return Card(
+      elevation: 8,
+      semanticContainer: false,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_lpa.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Lp(a)',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Lp(a) Information',
+                      description:
+                      'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease.',
+                      height: 300),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            LipidProfileLipoproteinView(false),
           ],
         ),
       ),

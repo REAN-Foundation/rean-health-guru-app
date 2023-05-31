@@ -5,7 +5,7 @@ import 'package:patient/features/common/achievement/view_models/all_achievement_
 import '../../../../infra/themes/app_colors.dart';
 import '../../../../infra/utils/common_utils.dart';
 import '../../../misc/ui/base_widget.dart';
-import '../models/get_my_awards.dart';
+import '../models/get_my_awards_list.dart';
 
 class AllAchievementView extends StatefulWidget {
   @override
@@ -16,19 +16,21 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
   var model = AllAchievementViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Data> awardsList = <Data>[];
+  List<BadgeList> awardsList = <BadgeList>[];
+  List<BadgeList> medicationAwardsList = <BadgeList>[];
+  List<BadgeList> nutritionAwardsList = <BadgeList>[];
+  List<BadgeList> activityAwardsList = <BadgeList>[];
+
 
   getAwardsDetails() async {
     try {
-      GetMyAwards getMyAwards =
+      GetMyAwardsList getMyAwards =
       await model.getMyAwards();
       if (getMyAwards.status == 'success') {
         debugPrint('Awards List ==> ${getMyAwards.toJson().toString()}');
         awardsList.clear();
-        awardsList.addAll(getMyAwards.data!.toList());
-        setState(() {
-
-        });
+        awardsList.addAll(getMyAwards.data!.badgeList!.toList());
+        sortAwardsListAccordingToCategory();
       } else {
 
         //showToast(getMyVitalsHistory.message!, context);
@@ -38,6 +40,27 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+  sortAwardsListAccordingToCategory(){
+    debugPrint("Total number of awards ==> ${awardsList.length.toString()}");
+    for ( int i = 0 ; i < awardsList.length ; i++ ) {
+      debugPrint("Awards Category ==> ${awardsList[i].badge!.category!.name.toString()}");
+      if(awardsList[i].badge!.category!.name == 'Medication'){
+        medicationAwardsList.add(awardsList[i]);
+      }else if(awardsList[i].badge!.category!.name == 'Nutrition'){
+        nutritionAwardsList.add(awardsList[i]);
+      }else if(awardsList[i].badge!.category!.name == 'Exercise'){
+        activityAwardsList.add(awardsList[i]);
+      }//else
+  }
+    debugPrint("Total number of Medication awards ==> ${medicationAwardsList.length.toString()}");
+    debugPrint("Total number of Nutrition awards ==> ${nutritionAwardsList.length.toString()}");
+    debugPrint("Total number of Exercise awards ==> ${activityAwardsList.length.toString()}");
+    setState(() {
+
+    });
+
   }
 
   @override
@@ -140,7 +163,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                       SizedBox(
                                         width: 2,
                                       ),
-                                      Text('Awards',
+                                      Text('Awards:',
                                           style: TextStyle(
                                               color: textBlack,
                                               fontSize: 12,
@@ -149,7 +172,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                       SizedBox(
                                         width: 8,
                                       ),
-                                      Text(awardsList.length.toString()+'/3',
+                                      Text(awardsList.length.toString()+'',
                                           style: TextStyle(
                                               color: textBlack,
                                               fontSize: 12,
@@ -218,8 +241,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             SizedBox(height: 4,),
             SizedBox(
                 height: 140,
-                child: awardsListView()),
-/*            SizedBox(height: 16,),
+                child: medicationAwardsListView()),
+            SizedBox(height: 16,),
             Text(
               'Nutrition',
               style: TextStyle(
@@ -229,8 +252,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             SizedBox(
-                height: 120,
-                child: awardsListView(3)),
+                height: 140,
+                child: nutritionAwardsListView()),
             SizedBox(height: 16,),
             Text(
               'Physical Activity',
@@ -241,10 +264,10 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             SizedBox(
-                height: 120,
-                child: awardsListView(6)),
+                height: 140,
+                child: activityAwardsListView()),
             SizedBox(height: 16,),
-            Text(
+/*            Text(
               'Mental Well-Being',
               style: TextStyle(
                   fontSize: 16.0,
@@ -297,9 +320,9 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     );
   }
 
-  Widget awardsListView(){
+  Widget medicationAwardsListView(){
     return ListView.separated(
-        itemBuilder: (context, index) => _makeAwardsListCard(context, index),
+        itemBuilder: (context, index) => _makeMedicationAwardsListCard(context, index),
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
             width: 2,
@@ -310,37 +333,59 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         shrinkWrap: true);
   }
 
-  Widget _makeAwardsListCard(BuildContext context, int index) {
+  Widget _makeMedicationAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
     double opacity = 0.2;
-    Color textColor = Colors.black;
+    Color textColor = Colors.grey;
 
-    if(awardsList.length == 1 && index == 0){
-      //Data data = awardsList.elementAt(index);
+    if(index == 0){
       name = '7 - Days';
-      image = 'res/images/awards/ic_bronze_medicatio_medal.png';
-      opacity = 1.0;
-    }else{
-      name = '7 - Days';
-      image = 'res/images/awards/ic_bronze_medicatio_medal.png';
-      opacity = 0.2;
-      textColor = Colors.grey;
-    }
-
-    if(index == 1){
-      name = '14 - Days';
-      image = 'res/images/awards/ic_silver_medicatio_medal.png';
-      opacity = 0.3;
-      textColor = Colors.grey;
-    }
-     
-    if(index == 2){
+      image = "res/images/awards/ic_bronze_medicatio_medal.png";
+    }else if(index == 1){
+      name = '15 - Days';
+      image = "res/images/awards/ic_silver_medicatio_medal.png";
+    }else if(index == 2){
       name = '30 - Days';
-      image = 'res/images/awards/ic_gold_medicatio_medal.png';
-      opacity = 0.2;
-      textColor = Colors.grey;
+      image = "res/images/awards/ic_gold_medicatio_medal.png";
     }
+
+
+      for ( int i = 0 ; i < medicationAwardsList.length ; i++ ) {
+
+      if(medicationAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
+        //Data data = awardsList.elementAt(index);
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else{
+        name = '7 - Days';
+        image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(medicationAwardsList[i].badge!.name!.contains('15-day') && index == 1){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '15 - Days';
+        image = 'res/images/awards/ic_silver_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(medicationAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '30 - Days';
+        image = 'res/images/awards/ic_gold_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+    }
+
 
 
     return Container(
@@ -368,6 +413,217 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             Text('Medication',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 10.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget nutritionAwardsListView(){
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeNutritionAwardsListCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 2,
+          );
+        },
+        itemCount: 3,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true);
+  }
+
+  Widget _makeNutritionAwardsListCard(BuildContext context, int index) {
+    String name = '';
+    String image = '';
+    double opacity = 0.2;
+    Color textColor = Colors.grey;
+
+    if(index == 0){
+      name = '7 - Days';
+      image = "res/images/awards/ic_bronze_medicatio_medal.png";
+    }else if(index == 1){
+      name = '15 - Days';
+      image = "res/images/awards/ic_silver_medicatio_medal.png";
+    }else if(index == 2){
+      name = '30 - Days';
+      image = "res/images/awards/ic_gold_medicatio_medal.png";
+    }
+
+
+    for ( int i = 0 ; i < nutritionAwardsList.length ; i++ ) {
+
+      if(nutritionAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
+        //Data data = awardsList.elementAt(index);
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else{
+        name = '7 - Days';
+        image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(nutritionAwardsList[i].badge!.name!.contains('15-day') && index == 1){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '15 - Days';
+        image = 'res/images/awards/ic_silver_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(nutritionAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '30 - Days';
+        image = 'res/images/awards/ic_gold_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+    }
+
+
+
+    return Container(
+      height: 120,
+      width: 112,
+      child: Card(
+        semanticContainer: false,
+        elevation: 8,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 4,),
+            Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
+            ),
+            SizedBox(height: 4,),
+            Text('Nutrition',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 10.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget activityAwardsListView(){
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeActivityAwardsListCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 2,
+          );
+        },
+        itemCount: 3,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true);
+  }
+
+  Widget _makeActivityAwardsListCard(BuildContext context, int index) {
+    String name = '';
+    String image = '';
+    double opacity = 0.2;
+    Color textColor = Colors.grey;
+    //int count = 0;
+
+    if(index == 0){
+      name = '7 - Days';
+      image = "res/images/awards/ic_bronze_medicatio_medal.png";
+    }else if(index == 1){
+      name = '15 - Days';
+      image = "res/images/awards/ic_silver_medicatio_medal.png";
+    }else if(index == 2){
+      name = '30 - Days';
+      image = "res/images/awards/ic_gold_medicatio_medal.png";
+    }
+
+
+    for ( int i = 0 ; i < activityAwardsList.length ; i++ ) {
+
+      if(activityAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
+        //Data data = awardsList.elementAt(index);
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else{
+        name = '7 - Days';
+        image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(activityAwardsList[i].badge!.name!.contains('15-Day') && index == 1){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '15 - Days';
+        image = 'res/images/awards/ic_silver_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(activityAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '30 - Days';
+        image = 'res/images/awards/ic_gold_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+    }
+
+
+
+    return Container(
+      height: 120,
+      width: 112,
+      child: Card(
+        semanticContainer: false,
+        elevation: 8,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 4,),
+            Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
+            ),
+            SizedBox(height: 4,),
+            Text('Physical Activity',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 10.0,

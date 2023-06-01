@@ -446,13 +446,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     if(index == 0){
       name = '7 - Days';
-      image = "res/images/awards/ic_bronze_medicatio_medal.png";
+      image = "res/images/awards/ic_bronze_nutrtion_medal.png";
     }else if(index == 1){
       name = '15 - Days';
-      image = "res/images/awards/ic_silver_medicatio_medal.png";
+      image = "res/images/awards/ic_silver_nutritiono_medal.png";
     }else if(index == 2){
       name = '30 - Days';
-      image = "res/images/awards/ic_gold_medicatio_medal.png";
+      image = "res/images/awards/ic_gold_nutrition_medal.png";
     }
 
 
@@ -552,13 +552,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     if(index == 0){
       name = '7 - Days';
-      image = "res/images/awards/ic_bronze_medicatio_medal.png";
+      image = "res/images/awards/ic_bronze_activity_medal.png";
     }else if(index == 1){
       name = '15 - Days';
-      image = "res/images/awards/ic_silver_medicatio_medal.png";
+      image = "res/images/awards/ic_silver_activity_medal.png";
     }else if(index == 2){
       name = '30 - Days';
-      image = "res/images/awards/ic_gold_medicatio_medal.png";
+      image = "res/images/awards/ic_gold_activity_medal.png";
     }
 
 

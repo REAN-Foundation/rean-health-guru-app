@@ -121,7 +121,30 @@ iOS-Release-Alpha job will be performing the following steps.
 * This job checks out the code, sets up Fastlane, downloads the previously built artifacts, Uses Fastlane to upload the app build to TestFlight for the UAT environment. It specifies the "uat" flavor and release mode and uses various environment variables for authentication and configuration, including the App Store Connect key ID, issuer ID, API key, and demo user credentials.
 
 
+## PROD-CI-CD
+Mode of trigger: ```Automated```
 
+Prod Workflow can be manually triggered. The workflow builds the applications and deploys the changes to the RF Platform Production environment.
+
+Release Process Workflow Diagram.
+![prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_workflow.png?raw=true)
+
+GitHub Action Workflow run.
+![prod_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_github_action.png?raw=true)
+
+### JOBS
+
+#### Android-App-Release-Prod
+
+Android-App-Release-Prod job will be performing the following steps.
+
+* This job sets up Fastlane and promotes the Android app from the beta release track to the production release track on the Google Play Store. It automates the process of promoting a tested and approved beta version of the app to the production environment
+
+#### iOS-App-Release-Prod
+
+iOS-App-Release-Prod job will be performing the following steps.
+
+* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new github release with generated release notes. 
 
 
 

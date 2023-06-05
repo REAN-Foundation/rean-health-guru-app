@@ -122,7 +122,7 @@ iOS-Release-Alpha job will be performing the following steps.
 
 
 ## PROD-CI-CD
-Mode of trigger: ```Automated```
+Mode of trigger: ```On-Demand```
 
 Prod Workflow can be manually triggered. The workflow builds the applications and deploys the changes to the RF Platform Production environment.
 

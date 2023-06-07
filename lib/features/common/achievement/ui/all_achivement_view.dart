@@ -20,6 +20,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   List<BadgeList> medicationAwardsList = <BadgeList>[];
   List<BadgeList> nutritionAwardsList = <BadgeList>[];
   List<BadgeList> activityAwardsList = <BadgeList>[];
+  List<BadgeList> vitalsAwardsList = <BadgeList>[];
+  List<BadgeList> mentalHealthAwardsList = <BadgeList>[];
 
 
   getAwardsDetails() async {
@@ -52,11 +54,17 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         nutritionAwardsList.add(awardsList[i]);
       }else if(awardsList[i].badge!.category!.name == 'Exercise'){
         activityAwardsList.add(awardsList[i]);
-      }//else
+      }else if(awardsList[i].badge!.category!.name == 'Vital'){
+        vitalsAwardsList.add(awardsList[i]);
+      }else if(awardsList[i].badge!.category!.name == 'MentalHealth'){
+        mentalHealthAwardsList.add(awardsList[i]);
+      }
   }
     debugPrint("Total number of Medication awards ==> ${medicationAwardsList.length.toString()}");
     debugPrint("Total number of Nutrition awards ==> ${nutritionAwardsList.length.toString()}");
     debugPrint("Total number of Exercise awards ==> ${activityAwardsList.length.toString()}");
+    debugPrint("Total number of Vital awards ==> ${vitalsAwardsList.length.toString()}");
+    debugPrint("Total number of Mental Health awards ==> ${medicationAwardsList.length.toString()}");
     setState(() {
 
     });
@@ -267,7 +275,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 height: 140,
                 child: activityAwardsListView()),
             SizedBox(height: 16,),
-/*            Text(
+            Text(
               'Mental Well-Being',
               style: TextStyle(
                   fontSize: 16.0,
@@ -276,8 +284,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             SizedBox(
-                height: 120,
-                child: awardsListView(4)),
+                height: 140,
+                child: mentalHealthAwardsListView()),
             SizedBox(height: 16,),
             Text(
               'Vitals',
@@ -288,10 +296,10 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             SizedBox(
-                height: 120,
-                child: awardsListView(6)),
+                height: 140,
+                child: vitalAwardsListView()),
             SizedBox(height: 16,),
-            Text(
+/*            Text(
               'Symptoms',
               style: TextStyle(
                   fontSize: 16.0,
@@ -624,6 +632,218 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ),
             SizedBox(height: 4,),
             Text('Physical Activity',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 10.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget mentalHealthAwardsListView(){
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeMentalHealthAwardsListCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 2,
+          );
+        },
+        itemCount: 3,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true);
+  }
+
+  Widget _makeMentalHealthAwardsListCard(BuildContext context, int index) {
+    String name = '';
+    String image = '';
+    double opacity = 0.2;
+    Color textColor = Colors.grey;
+    //int count = 0;
+
+    if(index == 0){
+      name = '7 - Days';
+      image = "res/images/awards/ic_bronze_activity_medal.png";
+    }else if(index == 1){
+      name = '15 - Days';
+      image = "res/images/awards/ic_silver_activity_medal.png";
+    }else if(index == 2){
+      name = '30 - Days';
+      image = "res/images/awards/ic_gold_activity_medal.png";
+    }
+
+
+    for ( int i = 0 ; i < mentalHealthAwardsList.length ; i++ ) {
+
+      if(mentalHealthAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
+        //Data data = awardsList.elementAt(index);
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else{
+        name = '7 - Days';
+        image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(mentalHealthAwardsList[i].badge!.name!.contains('15-Day') && index == 1){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '15 - Days';
+        image = 'res/images/awards/ic_silver_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(mentalHealthAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '30 - Days';
+        image = 'res/images/awards/ic_gold_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+    }
+
+
+
+    return Container(
+      height: 120,
+      width: 112,
+      child: Card(
+        semanticContainer: false,
+        elevation: 8,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 4,),
+            Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
+            ),
+            SizedBox(height: 4,),
+            Text('Mental Well-Being',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 10.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget vitalAwardsListView(){
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeVitalAwardsListCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 2,
+          );
+        },
+        itemCount: 3,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true);
+  }
+
+  Widget _makeVitalAwardsListCard(BuildContext context, int index) {
+    String name = '';
+    String image = '';
+    double opacity = 0.2;
+    Color textColor = Colors.grey;
+    //int count = 0;
+
+    if(index == 0){
+      name = '7 - Days';
+      image = "res/images/awards/ic_bronze_activity_medal.png";
+    }else if(index == 1){
+      name = '15 - Days';
+      image = "res/images/awards/ic_silver_activity_medal.png";
+    }else if(index == 2){
+      name = '30 - Days';
+      image = "res/images/awards/ic_gold_activity_medal.png";
+    }
+
+
+    for ( int i = 0 ; i < vitalsAwardsList.length ; i++ ) {
+
+      if(vitalsAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
+        //Data data = awardsList.elementAt(index);
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else{
+        name = '7 - Days';
+        image = 'res/images/awards/ic_bronze_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(vitalsAwardsList[i].badge!.name!.contains('15-Day') && index == 1){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '15 - Days';
+        image = 'res/images/awards/ic_silver_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+      if(vitalsAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+        opacity = 1.0;
+        textColor = Colors.black;
+      }/*else {
+        name = '30 - Days';
+        image = 'res/images/awards/ic_gold_medicatio_medal.png';
+        opacity = 0.2;
+        textColor = Colors.grey;
+      }*/
+
+    }
+
+
+
+    return Container(
+      height: 120,
+      width: 112,
+      child: Card(
+        semanticContainer: false,
+        elevation: 8,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: textColor,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 4,),
+            Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
+            ),
+            SizedBox(height: 4,),
+            Text('Vitals',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 10.0,

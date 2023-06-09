@@ -293,7 +293,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       body['FirstName'] = user.data!.user!.person!.firstName.toString();
       body['LastName'] = user.data!.user!.person!.lastName.toString();
       body['Gender'] = user.data!.user!.person!.gender.toString();
-      body['BirthDate'] = dateFormat.format(DateTime.parse(user.data!.user!.person!.birthDate.toString()));
+      body['BirthDate'] = dateFormat.format(patient.user!.person!.birthDate!);
       body['CountryCode'] = '+91';
       body['Phone'] = user.data!.user!.person!.phone.toString();
       body['OnboardingDate'] = dateFormat.format(DateTime.now());
@@ -1009,6 +1009,17 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     },
                   ),
                 ),*/
+                IconButton(
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_badges.png'),
+                    size: 32,
+                    color: primaryColor,
+                    semanticLabel: 'FAQ',
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT);
+                  },
+                ),
                 IconButton(
                   icon: ImageIcon(
                     AssetImage('res/images/ic_chat_bot.png'),

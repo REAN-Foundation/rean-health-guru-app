@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:patient/features/common/achievement/view_models/all_achievement_view_model.dart';
 
 import '../../../../infra/themes/app_colors.dart';
-import '../../../../infra/utils/common_utils.dart';
 import '../../../misc/ui/base_widget.dart';
 import '../models/get_my_awards_list.dart';
 import 'badges_details_dialog.dart';
@@ -44,7 +43,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       }
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }
@@ -132,9 +131,9 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     color: primaryColor,
-                    height: 100,
+                    height: 80,
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -145,24 +144,24 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                             child: Container(
                               height: 60,
                               child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 0,),
-                                Text(
-                                  'My Badges',
+                                /*Text(
+                                  'Badges',
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                SizedBox(height: 8,),
+                                SizedBox(height: 8,),*/
                                 Container(
-                                  height: 24,
-                                  width: MediaQuery.of(context).size.width * 0.30,
+                                  /*height: 24,
+                                  width: MediaQuery.of(context).size.width * 0.41,
                                   decoration: BoxDecoration(
                                       color: primaryLightColor.withOpacity(0.5),
-                                      borderRadius: BorderRadius.all( Radius.circular(12))),
+                                      borderRadius: BorderRadius.all( Radius.circular(12))),*/
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,16 +171,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                       ),
                                       Icon(
                                         Icons.star,
-                                        size: 16,
+                                        size: 24,
                                         color: Colors.amberAccent,
                                       ),
                                       SizedBox(
                                         width: 2,
                                       ),
-                                      Text('Awards:',
+                                      Text('Badges Earned:',
                                           style: TextStyle(
-                                              color: textBlack,
-                                              fontSize: 12,
+                                              color: Colors.white,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.w600,
                                               fontFamily: 'Montserrat')),
                                       SizedBox(
@@ -189,8 +188,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                       ),
                                       Text(awardsList.length.toString()+'',
                                           style: TextStyle(
-                                              color: textBlack,
-                                              fontSize: 12,
+                                              color: Colors.white,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.w600,
                                               fontFamily: 'Montserrat')),
                                     ],
@@ -208,8 +207,8 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Image.asset('res/images/awards/ic_medicatio_medal.png',
-                                height: 80,
-                                width: 80,
+                                height: 68,
+                                width: 68,
                               ),
                             ],
                           ),
@@ -247,7 +246,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
           children: [
             SizedBox(height: 8,),
             Text(
-              'Medication',
+              'Medications',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.black,
@@ -356,13 +355,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     int count = 0;
 
     if(index == 0){
-      name = '7 - Days';
+      name = '7 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/464081fb-e80b-4e6b-a8c4-6dc2caeebab1/download-by-version-name/1";
     }else if(index == 1){
-      name = '15 - Days';
+      name = '15 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/c5ddbdea-0dc7-4e18-aaf7-3331006a51e7/download-by-version-name/1";
     }else if(index == 2){
-      name = '30 - Days';
+      name = '30 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/4b806c0d-162e-4def-9b87-f591701564e1/download-by-version-name/1";
     }
 
@@ -375,29 +374,29 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else{
-        name = '7 - Days';
+        name = '7 days';
         image = 'res/images/awards/ic_bronze_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(medicationAwardsList[i].badge!.name!.contains('15-day') && index == 1){
+      if(medicationAwardsList[i].badge!.name!.contains('15-Day') && index == 1){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '15 - Days';
+        name = '15 days';
         image = 'res/images/awards/ic_silver_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(medicationAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+      if(medicationAwardsList[i].badge!.name!.contains('30-Day') && index == 2){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '30 - Days';
+        name = '30 days';
         image = 'res/images/awards/ic_gold_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -409,6 +408,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     return InkWell(
       onTap: (){
+        if(count == 0)
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -468,13 +468,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 width: 68,
               ),*/
               SizedBox(height: 4,),
-              Text('Medication',
+              /*Text('Medication',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.0,
                     color: textColor,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -503,48 +503,51 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     int count = 0;
 
     if(index == 0){
-      name = '7 - Days';
+      name = '7 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/28858b77-e698-4b2e-b70e-0cb177de5a35/download-by-version-name/1";
     }else if(index == 1){
-      name = '15 - Days';
+      name = '15 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/654de7ce-ed98-46a1-aba9-c27ff71c371f/download-by-version-name/1";
     }else if(index == 2){
-      name = '30 - Days';
+      name = '30 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/ed6bf9c0-dd93-4099-ba66-341cca6cc5ad/download-by-version-name/1";
     }
 
 
     for ( int i = 0 ; i < nutritionAwardsList.length ; i++ ) {
-
+      debugPrint('Award Name ==> ${nutritionAwardsList[i].badge!.name}');
       if(nutritionAwardsList[i].badge!.name!.contains('7-Day') && index == 0){
         //Data data = awardsList.elementAt(index);
         opacity = 1.0;
         textColor = Colors.black;
         count++;
+        debugPrint('7 days');
       }/*else{
-        name = '7 - Days';
+        name = '7 days';
         image = 'res/images/awards/ic_bronze_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(nutritionAwardsList[i].badge!.name!.contains('15-day') && index == 1){
+      if(nutritionAwardsList[i].badge!.name!.contains('15-Day') && index == 1){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
+        debugPrint('15 days');
       }/*else {
-        name = '15 - Days';
+        name = '15 days';
         image = 'res/images/awards/ic_silver_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(nutritionAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+      if(nutritionAwardsList[i].badge!.name!.contains('30-Day') && index == 2){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
+        debugPrint('30 days');
       }/*else {
-        name = '30 - Days';
+        name = '30 days';
         image = 'res/images/awards/ic_gold_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -556,6 +559,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     return InkWell(
       onTap: (){
+        if(count == 0)
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -615,13 +619,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 width: 68,
               ),*/
               SizedBox(height: 4,),
-              Text('Nutrition',
+             /* Text('Nutrition',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.0,
                     color: textColor,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -650,13 +654,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     int count = 0;
 
     if(index == 0){
-      name = '7 - Days';
+      name = '7 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/8ea911f4-4fe4-4d83-904f-b6de37f8d066/download-by-version-name/1";
     }else if(index == 1){
-      name = '15 - Days';
+      name = '15 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/dcdc163b-6763-4ce9-8a5a-7a4895277531/download-by-version-name/1";
     }else if(index == 2){
-      name = '30 - Days';
+      name = '30 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/342a7849-2513-45b3-acd1-b1cd4b6040cc/download-by-version-name/1";
     }
 
@@ -669,7 +673,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else{
-        name = '7 - Days';
+        name = '7 days';
         image = 'res/images/awards/ic_bronze_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -680,18 +684,18 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '15 - Days';
+        name = '15 days';
         image = 'res/images/awards/ic_silver_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(activityAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+      if(activityAwardsList[i].badge!.name!.contains('30-Day') && index == 2){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '30 - Days';
+        name = '30 days';
         image = 'res/images/awards/ic_gold_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -703,6 +707,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     return InkWell(
       onTap: (){
+        if(count == 0)
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -762,13 +767,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 width: 68,
               ),*/
               SizedBox(height: 4,),
-              Text('Physical Activity',
+              /*Text('Physical Activity',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.0,
                     color: textColor,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -797,13 +802,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     int count = 0;
 
     if(index == 0){
-      name = '7 - Days';
+      name = '7 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/f053bf04-e65d-47cc-bf38-33d88f112f58/download-by-version-name/1";
     }else if(index == 1){
-      name = '15 - Days';
+      name = '15 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/115d6b2b-b8ca-43da-801e-622e05074986/download-by-version-name/1";
     }else if(index == 2){
-      name = '30 - Days';
+      name = '30 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/f552ba2e-e561-4683-a97b-38f95aada8fe/download-by-version-name/1";
     }
 
@@ -816,7 +821,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else{
-        name = '7 - Days';
+        name = '7 days';
         image = 'res/images/awards/ic_bronze_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -827,18 +832,18 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '15 - Days';
+        name = '15 days';
         image = 'res/images/awards/ic_silver_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(mentalHealthAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+      if(mentalHealthAwardsList[i].badge!.name!.contains('30-Day') && index == 2){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '30 - Days';
+        name = '30 days';
         image = 'res/images/awards/ic_gold_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -850,6 +855,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     return InkWell(
       onTap: (){
+        if(count == 0)
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -909,13 +915,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 width: 68,
               ),*/
               SizedBox(height: 4,),
-              Text('Mental Well-Being',
+              /*Text('Mental Well-Being',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.0,
                     color: textColor,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -944,13 +950,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     int count = 0;
 
     if(index == 0){
-      name = '7 - Days';
+      name = '7 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/e1ffbeb4-703b-445d-97ae-60e93bb75eef/download-by-version-name/1";
     }else if(index == 1){
-      name = '15 - Days';
+      name = '15 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/43972de1-4e8d-4685-9161-5c9667042a14/download-by-version-name/1";
     }else if(index == 2){
-      name = '30 - Days';
+      name = '30 days';
       image = "https://awards-dev.services.reanfoundation.org/api/v1/file-resources/ef576415-2c20-47cf-84e9-e7997a8fb0c6/download-by-version-name/1";
     }
 
@@ -963,7 +969,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else{
-        name = '7 - Days';
+        name = '7 days';
         image = 'res/images/awards/ic_bronze_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -974,18 +980,18 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '15 - Days';
+        name = '15 days';
         image = 'res/images/awards/ic_silver_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
       }*/
 
-      if(vitalsAwardsList[i].badge!.name!.contains('30-day') && index == 2){
+      if(vitalsAwardsList[i].badge!.name!.contains('30-Day') && index == 2){
         opacity = 1.0;
         textColor = Colors.black;
         count++;
       }/*else {
-        name = '30 - Days';
+        name = '30 days';
         image = 'res/images/awards/ic_gold_medicatio_medal.png';
         opacity = 0.2;
         textColor = Colors.grey;
@@ -997,6 +1003,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     return InkWell(
       onTap: (){
+        if(count == 0)
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -1056,13 +1063,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 width: 68,
               ),*/
               SizedBox(height: 4,),
-              Text('Vitals',
+              /*Text('Vitals',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.0,
                     color: textColor,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
             ],
           ),
         ),

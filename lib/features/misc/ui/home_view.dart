@@ -1014,7 +1014,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     AssetImage('res/images/ic_badges.png'),
                     size: 32,
                     color: primaryColor,
-                    semanticLabel: 'FAQ',
+                    semanticLabel: 'Achievements',
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT);

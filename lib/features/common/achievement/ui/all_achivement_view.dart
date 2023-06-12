@@ -131,9 +131,9 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     color: primaryColor,
-                    height: 80,
+                    height: 100,
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -142,75 +142,88 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                         Expanded(
                             flex: 3,
                             child: Container(
-                              height: 60,
+                              height: 80,
                               child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 0,),
-                                /*Text(
-                                  'Badges',
+                                Text(
+                                  'My Badges',
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                SizedBox(height: 8,),*/
-                                Container(
-                                  /*height: 24,
-                                  width: MediaQuery.of(context).size.width * 0.41,
-                                  decoration: BoxDecoration(
-                                      color: primaryLightColor.withOpacity(0.5),
-                                      borderRadius: BorderRadius.all( Radius.circular(12))),*/
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 8,
+                                SizedBox(height: 8,),
+                                Semantics(
+                                  label: 'Badges Earned: '+awardsList.length.toString(),
+                                  child: ExcludeSemantics(
+                                    child: Container(
+                                      height: 24,
+                                      width: MediaQuery.of(context).size.width * 0.34,
+                                      decoration: BoxDecoration(
+                                          color: primaryLightColor.withOpacity(0.5),
+                                          borderRadius: BorderRadius.all( Radius.circular(12))),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            size: 16,
+                                            color: Colors.amberAccent,
+                                          ),
+                                          /*ImageIcon(
+                                            AssetImage('res/images/ic_badges.png'),
+                                            size: 16,
+                                            color: Colors.amber,
+                                            semanticLabel: 'Achievements',
+                                          ),*/
+                                          SizedBox(
+                                            width: 2,
+                                          ),
+                                          Text('Earned:',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Montserrat')),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(awardsList.length.toString()+'',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Montserrat')),
+                                        ],
                                       ),
-                                      Icon(
-                                        Icons.star,
-                                        size: 24,
-                                        color: Colors.amberAccent,
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text('Badges Earned:',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(awardsList.length.toString()+'',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                    ],
-                                  ),
 
+                                    ),
+                                  ),
                                 ),
 
                                 SizedBox(height: 0,),
                               ],
                         ),
                             )),
-                        Container(
-                          height: 120,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset('res/images/awards/ic_medicatio_medal.png',
-                                height: 68,
-                                width: 68,
-                              ),
-                            ],
+                        ExcludeSemantics(
+                          child: Container(
+                            height: 120,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset('res/images/awards/ic_medicatio_medal.png',
+                                  height: 80,
+                                  width: 80,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -404,82 +417,96 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    String lable = 'Earned '+count.toString()+' Medications badges for '+ name +' ';
+    String hint = '';
+
+    if(count > 0){
+    } else {
+      hint = 'Double click to explore how to earn this badge.';
+    }
 
 
-    return InkWell(
-      onTap: (){
-        if(count == 0)
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) {
-              return _badgesDialog(context, image, name+' Medication Badge');
-            });
-      },
-      child: Container(
-        height: 120,
-        width: 112,
-        child: Card(
-          semanticContainer: false,
-          elevation: 8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(name,
+   return Semantics(
+     label: lable,
+     hint: hint,
+     child: InkWell(
+       excludeFromSemantics: true,
+       onTap: (){
+         if(count == 0)
+           showDialog(
+               barrierDismissible: false,
+               context: context,
+               builder: (_) {
+                 return _badgesDialog(context, image, name+' Medication Badge');
+               });
+       },
+       child: ExcludeSemantics(
+         child: Container(
+           height: 120,
+           width: 112,
+           child: Card(
+             semanticContainer: false,
+             elevation: 8,
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+                 Text(name,
+                   textAlign: TextAlign.center,
+                   style: TextStyle(
+                       fontSize: 12.0,
+                       color: textColor,
+                       fontWeight: FontWeight.w600),
+                 ),
+                 SizedBox(height: 4,),
+                 if(count > 0)...[
+                   badges.Badge(
+                     badgeContent: Text(count.toString(),
+                       style: TextStyle(color: Colors.white),),
+                     position: badges.BadgePosition.topEnd(top: -5, end: 2),
+                     child:Opacity(
+                       opacity: opacity,
+                       child: CachedNetworkImage(
+                         imageUrl: image,
+                         width: 68,
+                         height: 68,
+                         placeholder: (context, url) => CircularProgressIndicator(),
+                         errorWidget: (context, url, error) => Icon(Icons.error),
+                       ),
+                     ),),
+                 ],
+                 if(count == 0)...[
+                   Opacity(
+                     opacity: opacity,
+                     child: CachedNetworkImage(
+                       imageUrl: image,
+                       width: 68,
+                       height: 68,
+                       placeholder: (context, url) => CircularProgressIndicator(),
+                       errorWidget: (context, url, error) => Icon(Icons.error),
+                     ),
+                   ),
+                 ],
+                 /*Image.asset(image,
+              opacity: AlwaysStoppedAnimation(opacity),
+              height: 68,
+              width: 68,
+            ),*/
+                 SizedBox(height: 4,),
+                 /*Text('Medication',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 10.0,
                   color: textColor,
-                  fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 4,),
-              if(count > 0)...[
-              badges.Badge(
-                badgeContent: Text(count.toString(),
-                style: TextStyle(color: Colors.white),),
-                position: badges.BadgePosition.topEnd(top: -5, end: 2),
-                child:Opacity(
-                opacity: opacity,
-                child: CachedNetworkImage(
-                  imageUrl: image,
-                  width: 68,
-                  height: 68,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),),
-              ],
-              if(count == 0)...[
-                Opacity(
-                  opacity: opacity,
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 68,
-                    height: 68,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                ),
-              ],
-              /*Image.asset(image,
-                opacity: AlwaysStoppedAnimation(opacity),
-                height: 68,
-                width: 68,
-              ),*/
-              SizedBox(height: 4,),
-              /*Text('Medication',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w500),
-              ),*/
-            ],
-          ),
-        ),
-      ),
-    );
+                  fontWeight: FontWeight.w500),
+            ),*/
+               ],
+             ),
+           ),
+         ),
+       ),
+     ),
+   );
   }
 
   Widget nutritionAwardsListView(){
@@ -555,42 +582,66 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    String lable = 'Earned '+count.toString()+' Nutrition badges for '+ name +' ';
+    String hint = '';
+
+    if(count > 0){
+    } else {
+      hint = 'Double click to explore how to earn this badge.';
+    }
 
 
-    return InkWell(
-      onTap: (){
-        if(count == 0)
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) {
-              return _badgesDialog(context, image, name+' Nutrition Badge');
-            });
-      },
-      child: Container(
-        height: 120,
-        width: 112,
-        child: Card(
-          semanticContainer: false,
-          elevation: 8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 4,),
-              if(count > 0)...[
-                badges.Badge(
-                  badgeContent: Text(count.toString(),
-                    style: TextStyle(color: Colors.white),),
-                  position: badges.BadgePosition.topEnd(top: -5, end: 2),
-                  child:Opacity(
+
+    return Semantics(
+      label: lable,
+      hint: hint,
+      child: InkWell(
+        excludeFromSemantics: true,
+        onTap: (){
+          if(count == 0)
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                return _badgesDialog(context, image, name+' Nutrition Badge');
+              });
+        },
+        child: Container(
+          height: 120,
+          width: 112,
+          child: Card(
+            semanticContainer: false,
+            elevation: 8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 4,),
+                if(count > 0)...[
+                  badges.Badge(
+                    badgeContent: Text(count.toString(),
+                      style: TextStyle(color: Colors.white),),
+                    position: badges.BadgePosition.topEnd(top: -5, end: 2),
+                    child:Opacity(
+                      opacity: opacity,
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 68,
+                        height: 68,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),),
+                ],
+                if(count == 0)...[
+                  Opacity(
                     opacity: opacity,
                     child: CachedNetworkImage(
                       imageUrl: image,
@@ -599,34 +650,23 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                       placeholder: (context, url) => CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  ),),
-              ],
-              if(count == 0)...[
-                Opacity(
-                  opacity: opacity,
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 68,
-                    height: 68,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                ),
+                ],
+                /*Image.asset(image,
+                  opacity: AlwaysStoppedAnimation(opacity),
+                  height: 68,
+                  width: 68,
+                ),*/
+                SizedBox(height: 4,),
+               /* Text('Nutrition',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w500),
+                ),*/
               ],
-              /*Image.asset(image,
-                opacity: AlwaysStoppedAnimation(opacity),
-                height: 68,
-                width: 68,
-              ),*/
-              SizedBox(height: 4,),
-             /* Text('Nutrition',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w500),
-              ),*/
-            ],
+            ),
           ),
         ),
       ),
@@ -703,42 +743,65 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    String lable = 'Earned '+count.toString()+' Physical Activity badges for '+ name +' ';
+    String hint = '';
+
+    if(count > 0){
+    } else {
+      hint = 'Double click to explore how to earn this badge.';
+    }
 
 
-    return InkWell(
-      onTap: (){
-        if(count == 0)
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) {
-              return _badgesDialog(context, image, name+' Physical Activity Badge');
-            });
-      },
-      child: Container(
-        height: 120,
-        width: 112,
-        child: Card(
-          semanticContainer: false,
-          elevation: 8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 4,),
-              if(count > 0)...[
-                badges.Badge(
-                  badgeContent: Text(count.toString(),
-                    style: TextStyle(color: Colors.white),),
-                  position: badges.BadgePosition.topEnd(top: -5, end: 2),
-                  child:Opacity(
+    return Semantics(
+      label: lable,
+      hint: hint,
+      child: InkWell(
+        excludeFromSemantics: true,
+        onTap: (){
+          if(count == 0)
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                return _badgesDialog(context, image, name+' Physical Activity Badge');
+              });
+        },
+        child: Container(
+          height: 120,
+          width: 112,
+          child: Card(
+            semanticContainer: false,
+            elevation: 8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 4,),
+                if(count > 0)...[
+                  badges.Badge(
+                    badgeContent: Text(count.toString(),
+                      style: TextStyle(color: Colors.white),),
+                    position: badges.BadgePosition.topEnd(top: -5, end: 2),
+                    child:Opacity(
+                      opacity: opacity,
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 68,
+                        height: 68,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),),
+                ],
+                if(count == 0)...[
+                  Opacity(
                     opacity: opacity,
                     child: CachedNetworkImage(
                       imageUrl: image,
@@ -747,34 +810,23 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                       placeholder: (context, url) => CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  ),),
-              ],
-              if(count == 0)...[
-                Opacity(
-                  opacity: opacity,
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 68,
-                    height: 68,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                ),
+                ],
+                /*Image.asset(image,
+                  opacity: AlwaysStoppedAnimation(opacity),
+                  height: 68,
+                  width: 68,
+                ),*/
+                SizedBox(height: 4,),
+                /*Text('Physical Activity',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w500),
+                ),*/
               ],
-              /*Image.asset(image,
-                opacity: AlwaysStoppedAnimation(opacity),
-                height: 68,
-                width: 68,
-              ),*/
-              SizedBox(height: 4,),
-              /*Text('Physical Activity',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w500),
-              ),*/
-            ],
+            ),
           ),
         ),
       ),
@@ -852,41 +904,64 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     }
 
 
+    String lable = 'Earned '+count.toString()+' Mental Well-Being badges for '+ name +' ';
+    String hint = '';
 
-    return InkWell(
-      onTap: (){
-        if(count == 0)
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) {
-              return _badgesDialog(context, image, name+' Mental Well-Being Badge');
-            });
-      },
-      child: Container(
-        height: 120,
-        width: 112,
-        child: Card(
-          semanticContainer: false,
-          elevation: 8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 4,),
-              if(count > 0)...[
-                badges.Badge(
-                  badgeContent: Text(count.toString(),
-                    style: TextStyle(color: Colors.white),),
-                  position: badges.BadgePosition.topEnd(top: -5, end: 2),
-                  child:Opacity(
+    if(count > 0){
+    } else {
+      hint = 'Double click to explore how to earn this badge.';
+    }
+
+    return Semantics(
+      label: lable,
+      hint: hint,
+      child: InkWell(
+        excludeFromSemantics: true,
+        onTap: (){
+          if(count == 0)
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                return _badgesDialog(context, image, name+' Mental Well-Being Badge');
+              });
+        },
+        child: Container(
+          height: 120,
+          width: 112,
+          child: Card(
+            semanticContainer: false,
+            elevation: 8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 4,),
+                if(count > 0)...[
+                  badges.Badge(
+                    badgeContent: Text(count.toString(),
+                      style: TextStyle(color: Colors.white),),
+                    position: badges.BadgePosition.topEnd(top: -5, end: 2),
+                    child:Opacity(
+                      opacity: opacity,
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 68,
+                        height: 68,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),),
+                ],
+                if(count == 0)...[
+                  Opacity(
                     opacity: opacity,
                     child: CachedNetworkImage(
                       imageUrl: image,
@@ -895,34 +970,23 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                       placeholder: (context, url) => CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  ),),
-              ],
-              if(count == 0)...[
-                Opacity(
-                  opacity: opacity,
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 68,
-                    height: 68,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                ),
+                ],
+                /*Image.asset(image,
+                  opacity: AlwaysStoppedAnimation(opacity),
+                  height: 68,
+                  width: 68,
+                ),*/
+                SizedBox(height: 4,),
+                /*Text('Mental Well-Being',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w500),
+                ),*/
               ],
-              /*Image.asset(image,
-                opacity: AlwaysStoppedAnimation(opacity),
-                height: 68,
-                width: 68,
-              ),*/
-              SizedBox(height: 4,),
-              /*Text('Mental Well-Being',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w500),
-              ),*/
-            ],
+            ),
           ),
         ),
       ),
@@ -999,42 +1063,65 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    String lable = 'Earned '+count.toString()+' vitals badges for '+ name +' ';
+    String hint = '';
+
+    if(count > 0){
+    } else {
+      hint = 'Double click to explore how to earn this badge.';
+    }
 
 
-    return InkWell(
-      onTap: (){
-        if(count == 0)
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (_) {
-              return _badgesDialog(context, image, name+' Vital Badge');
-            });
-      },
-      child: Container(
-        height: 120,
-        width: 112,
-        child: Card(
-          semanticContainer: false,
-          elevation: 8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 4,),
-              if(count > 0)...[
-                badges.Badge(
-                  badgeContent: Text(count.toString(),
-                    style: TextStyle(color: Colors.white),),
-                  position: badges.BadgePosition.topEnd(top: -5, end: 2),
-                  child:Opacity(
+    return Semantics(
+      label: lable,
+      hint: hint,
+      child: InkWell(
+        excludeFromSemantics: true,
+        onTap: (){
+          if(count == 0)
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                return _badgesDialog(context, image, name+' Vital Badge');
+              });
+        },
+        child: Container(
+          height: 120,
+          width: 112,
+          child: Card(
+            semanticContainer: false,
+            elevation: 8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 4,),
+                if(count > 0)...[
+                  badges.Badge(
+                    badgeContent: Text(count.toString(),
+                      style: TextStyle(color: Colors.white),),
+                    position: badges.BadgePosition.topEnd(top: -5, end: 2),
+                    child:Opacity(
+                      opacity: opacity,
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 68,
+                        height: 68,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),),
+                ],
+                if(count == 0)...[
+                  Opacity(
                     opacity: opacity,
                     child: CachedNetworkImage(
                       imageUrl: image,
@@ -1043,34 +1130,23 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                       placeholder: (context, url) => CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  ),),
-              ],
-              if(count == 0)...[
-                Opacity(
-                  opacity: opacity,
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 68,
-                    height: 68,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                ),
+                ],
+                /*Image.asset(image,
+                  opacity: AlwaysStoppedAnimation(opacity),
+                  height: 68,
+                  width: 68,
+                ),*/
+                SizedBox(height: 4,),
+                /*Text('Vitals',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      color: textColor,
+                      fontWeight: FontWeight.w500),
+                ),*/
               ],
-              /*Image.asset(image,
-                opacity: AlwaysStoppedAnimation(opacity),
-                height: 68,
-                width: 68,
-              ),*/
-              SizedBox(height: 4,),
-              /*Text('Vitals',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: textColor,
-                    fontWeight: FontWeight.w500),
-              ),*/
-            ],
+            ),
           ),
         ),
       ),

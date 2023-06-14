@@ -209,18 +209,20 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
     bmiValue = weight.roundToDouble() / heightInMetersSquare;
 
+    bmiValue = double.parse(bmiValue.toStringAsFixed(1));
+
     if (bmiValue == 0.0) {
       bmiResult = '';
-    } else if (bmiValue < 18.5) {
+    } else if (bmiValue <= 18.5) {
       bmiResult = 'Underweight';
       bmiResultColor = Colors.indigoAccent;
-    } else if (bmiValue > 18.6 && bmiValue < 24.9) {
+    } else if (bmiValue >= 18.6 && bmiValue <= 24.9) {
       bmiResult = 'Healthy';
       bmiResultColor = Colors.green;
-    } else if (bmiValue > 25 && bmiValue < 29.9) {
+    } else if (bmiValue >= 25 && bmiValue <= 29.9) {
       bmiResult = 'Overweight';
       bmiResultColor = Colors.orange;
-    } else if (bmiValue > 30 && bmiValue < 39.9) {
+    } else if (bmiValue >= 30 && bmiValue <= 39.9) {
       bmiResult = 'Obese';
       bmiResultColor = Colors.deepOrange;
     } else {
@@ -382,8 +384,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            bmiValue.toStringAsFixed(2),
-                            semanticsLabel: bmiValue.toStringAsFixed(2),
+                            bmiValue.toStringAsFixed(1),
+                            semanticsLabel: bmiValue.toStringAsFixed(1),
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: bmiValue == 0.0 ? 14 : 28.0,

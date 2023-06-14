@@ -141,58 +141,58 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                       children: [
                         Expanded(
                             flex: 3,
-                            child: Container(
-                              height: 80,
-                              child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 0,),
-                                Text(
-                                  'My Badges',
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                SizedBox(height: 8,),
-                                Semantics(
-                                  label: 'Badges Earned: '+awardsList.length.toString(),
-                                  child: ExcludeSemantics(
-                                    child: Container(
-                                      height: 24,
+                            child: Semantics(
+                              label: 'Badges Earned: '+awardsList.length.toString(),
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  height: 80,
+                                  child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 0,),
+                                    Text(
+                                      awardsList.length.toString()+'',
+                                      style: TextStyle(
+                                          fontSize: 38.0,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Container(
+                                      /*height: 24,
                                       width: MediaQuery.of(context).size.width * 0.34,
                                       decoration: BoxDecoration(
                                           color: primaryLightColor.withOpacity(0.5),
-                                          borderRadius: BorderRadius.all( Radius.circular(12))),
+                                          borderRadius: BorderRadius.all( Radius.circular(12))),*/
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          SizedBox(
+                                         /* SizedBox(
                                             width: 8,
-                                          ),
-                                          Icon(
+                                          ),*/
+                                          /*Icon(
                                             Icons.star,
                                             size: 16,
                                             color: Colors.amberAccent,
                                           ),
-                                          /*ImageIcon(
+                                          ImageIcon(
                                             AssetImage('res/images/ic_badges.png'),
                                             size: 16,
                                             color: Colors.amber,
                                             semanticLabel: 'Achievements',
                                           ),*/
-                                          SizedBox(
+                                          /*SizedBox(
                                             width: 2,
-                                          ),
-                                          Text('Earned:',
+                                          ),*/
+                                          Text('Badge Earned',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
                                                   fontFamily: 'Montserrat')),
-                                          SizedBox(
+                                          /*SizedBox(
                                             width: 8,
                                           ),
                                           Text(awardsList.length.toString()+'',
@@ -200,17 +200,17 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                                   color: Colors.white,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
-                                                  fontFamily: 'Montserrat')),
+                                                  fontFamily: 'Montserrat')),*/
                                         ],
                                       ),
 
                                     ),
-                                  ),
-                                ),
 
-                                SizedBox(height: 0,),
-                              ],
+                                    SizedBox(height: 0,),
+                                  ],
                         ),
+                                ),
+                              ),
                             )),
                         ExcludeSemantics(
                           child: Container(

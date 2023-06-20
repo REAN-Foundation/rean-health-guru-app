@@ -9,7 +9,6 @@ import 'package:patient/features/common/achievement/view_models/all_achievement_
 import '../../../../infra/themes/app_colors.dart';
 import '../../../misc/ui/base_widget.dart';
 import '../models/get_my_awards_list.dart';
-import 'badges_details_dialog.dart';
 
 class AllAchievementView extends StatefulWidget {
   @override
@@ -1153,7 +1152,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     );
   }
 
-  Widget _badgesDialog(BuildContext context, String images, String tittle) {
+  /*Widget _badgesDialog(BuildContext context, String images, String tittle) {
     return Dialog(
         insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
@@ -1213,6 +1212,6 @@ class _AllAchievementViewState extends State<AllAchievementView> {
             ],
           ),
         ));
-  }
+  }*/
 
 }

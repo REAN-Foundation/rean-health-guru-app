@@ -142,7 +142,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                         Expanded(
                             flex: 3,
                             child: Semantics(
-                              label: 'Badges Earned: '+awardsList.length.toString(),
+                              label: awardsList.length.toString()+' Badges Earned',
                               child: ExcludeSemantics(
                                 child: Container(
                                   height: 80,
@@ -432,13 +432,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
      child: InkWell(
        excludeFromSemantics: true,
        onTap: (){
-         if(count == 0)
+         /*if(count == 0)
            showDialog(
                barrierDismissible: false,
                context: context,
                builder: (_) {
-                 return _badgesDialog(context, image, name+' Medication Badge');
-               });
+                 return _badgesDialog(context, image,'Medications');
+               });*/
        },
        child: ExcludeSemantics(
          child: Container(
@@ -598,13 +598,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          if(count == 0)
+          /*if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
                 return _badgesDialog(context, image, name+' Nutrition Badge');
-              });
+              });*/
         },
         child: Container(
           height: 120,
@@ -758,13 +758,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          if(count == 0)
+          /*if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
                 return _badgesDialog(context, image, name+' Physical Activity Badge');
-              });
+              });*/
         },
         child: Container(
           height: 120,
@@ -918,13 +918,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          if(count == 0)
+         /* if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
                 return _badgesDialog(context, image, name+' Mental Well-Being Badge');
-              });
+              });*/
         },
         child: Container(
           height: 120,
@@ -1078,13 +1078,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          if(count == 0)
+          /*if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
                 return _badgesDialog(context, image, name+' Vital Badge');
-              });
+              });*/
         },
         child: Container(
           height: 120,
@@ -1164,7 +1164,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: double.infinity,
-          height: 660,
+          height: 400,
           child: Column(
             children: [
               Row(

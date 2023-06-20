@@ -500,6 +500,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+                  countries: getAppFlavour() == 'Heart & Stroke Helper™ ' ? ['US'] : getAppFlavour() == 'HF Helper' ? ['US']  :null,
                   readOnly: model.busy,
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);

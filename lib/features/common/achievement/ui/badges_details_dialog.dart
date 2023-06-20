@@ -66,7 +66,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                     ),
                   ),
                   SizedBox(height: 16,),
-                  Text('To earn badges, follow these steps:',
+                  Text('Earn a badge for every medications you take.',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 16.0,
@@ -86,7 +86,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                             fontWeight: FontWeight.w500),
                       ),
                       Expanded(
-                        child: Text('Achieve milestones: Set goals and work towards achieving them. Progress and accomplishments will be recognized with specific badges.',
+                        child: Text('Daily Mark your medication as \'Taken\' by swiping left in the Medication Reminders. You can also mark the medication as \'taken\' in the To Do\'s.',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: 14.0,
@@ -109,7 +109,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                             fontWeight: FontWeight.w500),
                       ),
                       Expanded(
-                        child: Text('Complete tasks: Successfully complete assigned tasks, whether they are related to health, wellness, or other areas of focus within the app.',
+                        child: Text('For 7 consistent days take your medications and earn a badge.',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: 14.0,
@@ -120,7 +120,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                     ],
                   ),
                   SizedBox(height: 8,),
-                  Row(
+/*                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -173,7 +173,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                         color: textBlack,
                         fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(height: 8,),*/
 
                   Center(child: _submitButton(context)),
                 ],

@@ -7,6 +7,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ import 'package:patient/features/common/careplan/models/get_care_plan_enrollment
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
+import 'package:patient/features/misc/models/awards_user_details.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
@@ -86,6 +88,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   String imageResourceId = '';
   late AndroidDeviceInfo androidInfo;
   late IosDeviceInfo iosInfo;
+  late UserData user;
+  late Patient patient;
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -99,9 +103,9 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   loadSharedPrefs() async {
     try {
-      final UserData user =
+       user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
-      final Patient patient =
+       patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data!.accessToken;
 
@@ -196,6 +200,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       getSleepHistory();
       getVitalsHistory();
       getStepHistory();
+      getAwardsSystemUserDetails();
     });
   }
 
@@ -250,6 +255,57 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
         }
       } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getAwardsSystemUserDetails() async {
+    try {
+      final AwardsUserDetails awardsUserDetails =
+      await model.getAwardsSytstemUserDetails();
+      if (awardsUserDetails.status == 'success') {
+        debugPrint('Awards System Id ==> ${awardsUserDetails.data!.id.toString()}');
+        setAwardsSystemId(awardsUserDetails.data!.id.toString());
+      } else {
+        if(awardsUserDetails.message == 'Cannot read properties of null (reading \'ReferenceId\')'){
+          createAwardsSystemParticipent();
+        }
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  createAwardsSystemParticipent() async {
+    try {
+
+      final body = <String, String>{};
+      body['ClientId'] = dotenv.env['AWARD_CLIENT_ID'].toString();
+      body['ReferenceId'] = patientUserId.toString();
+      body['FirstName'] = user.data!.user!.person!.firstName.toString();
+      body['LastName'] = user.data!.user!.person!.lastName.toString();
+      body['Gender'] = user.data!.user!.person!.gender.toString();
+      body['BirthDate'] = dateFormat.format(patient.user!.person!.birthDate!);
+      body['CountryCode'] = '+91';
+      body['Phone'] = user.data!.user!.person!.phone.toString();
+      body['OnboardingDate'] = dateFormat.format(DateTime.now());
+
+
+      final BaseResponse response =
+      await model.createAwardParticipent(body);
+      if (response.status == 'success') {
+        debugPrint('Awards System Id ==> ${response.message}');
+        getAwardsSystemUserDetails();
+      } else {
+
         //showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
@@ -953,6 +1009,17 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     },
                   ),
                 ),*/
+                IconButton(
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_badges.png'),
+                    size: 32,
+                    color: primaryColor,
+                    semanticLabel: 'Achievements',
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT);
+                  },
+                ),
                 IconButton(
                   icon: ImageIcon(
                     AssetImage('res/images/ic_chat_bot.png'),

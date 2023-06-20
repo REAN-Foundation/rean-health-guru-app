@@ -324,6 +324,35 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
+          Visibility(
+            visible: true,
+            child: InkWell(
+              onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_achievement_button_click');
+                Navigator.popAndPushNamed(
+                    context, RoutePaths.ACHIEVEMENT);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Hero(
+                      tag: 'header',
+                      child: Text(
+                        'Achievements',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);

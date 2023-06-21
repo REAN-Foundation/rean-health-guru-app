@@ -38,6 +38,7 @@ jobs:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   CodeScan-FlutterAnalyze:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     runs-on: ubuntu-latest
     steps:

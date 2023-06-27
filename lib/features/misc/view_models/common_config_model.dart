@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:patient/features/common/achievement/models/how_to_earn_badges.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
@@ -333,6 +334,21 @@ class CommonConfigModel extends BaseModel {
     //setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
+  }
+
+  Future<HowToEarnBadges> howToEarnAwardsDescription() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await awardApiProvider!.get(
+        '/badges/how-to-earn',
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return HowToEarnBadges.fromJson(response);
   }
 
 }

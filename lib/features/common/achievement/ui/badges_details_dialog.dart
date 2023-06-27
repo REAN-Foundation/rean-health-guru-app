@@ -8,12 +8,16 @@ import '../view_models/all_achievement_view_model.dart';
 //ignore: must_be_immutable
 class BadgesDetailsDialog extends StatefulWidget {
   late String _image;
+  late String _tittle;
+  late String _description;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
-  BadgesDetailsDialog({Key? key, required String image})
+  BadgesDetailsDialog({Key? key, required String image, required String tittle, required String description})
       : super(key: key) {
     _image = image;
+    _tittle = tittle;
+    _description = description;
   }
 
   @override
@@ -50,53 +54,41 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Center(
+            child: CachedNetworkImage(
+              imageUrl: widget._image,
+              width: 80,
+              height: 80,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+          ),
+          SizedBox(height: 16,),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text('How to earn ${widget._tittle} Badge',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: textBlack,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          SizedBox(height: 8,),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: CachedNetworkImage(
-                      imageUrl: widget._image,
-                      width: 80,
-                      height: 80,
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
-                  ),
-                  SizedBox(height: 16,),
-                  Text('Earn a badge for every medications you take.',
+                  Text(widget._description.toString(),//+'\n\n'+widget._description.toString()+'\n\n'+widget._description.toString()
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                         color: textBlack,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 8,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('1. ',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 14.0,
-                            color: textBlack,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Expanded(
-                        child: Text('Daily Mark your medication as \'Taken\' by swiping left in the Medication Reminders. You can also mark the medication as \'taken\' in the To Do\'s.',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 14.0,
-                              color: textBlack,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8,),
+                  /*SizedBox(height: 8,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +110,7 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                         ),
                       ),
                     ],
-                  ),
+                  ),*/
                   SizedBox(height: 8,),
 /*                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -175,11 +167,13 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
                   ),
                   SizedBox(height: 8,),*/
 
-                  Center(child: _submitButton(context)),
+
                 ],
               ),
             ),
           ),
+          SizedBox(height: 8,),
+          Center(child: _submitButton(context)),
         ],
       ),
     );

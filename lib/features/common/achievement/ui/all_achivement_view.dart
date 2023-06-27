@@ -4,7 +4,11 @@ import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patient/features/common/achievement/models/how_to_earn_badges.dart';
+import 'package:patient/features/common/achievement/ui/badges_details_dialog.dart';
 import 'package:patient/features/common/achievement/view_models/all_achievement_view_model.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 
 import '../../../../infra/themes/app_colors.dart';
 import '../../../misc/ui/base_widget.dart';
@@ -25,7 +29,17 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   List<BadgeList> activityAwardsList = <BadgeList>[];
   List<BadgeList> vitalsAwardsList = <BadgeList>[];
   List<BadgeList> mentalHealthAwardsList = <BadgeList>[];
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  late HowToEarnBadges howToEarnBadges;
 
+  loadHowToEarnsBadgesDescription() async {
+    try {
+      howToEarnBadges = HowToEarnBadges.fromJson(await _sharedPrefUtils.read('how_to_earn_badges'));
+      debugPrint('How To Earn Badges ==> ${howToEarnBadges.toJson().toString()}');
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
 
   getAwardsDetails() async {
     try {
@@ -79,6 +93,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   @override
   void initState() {
     getAwardsDetails();
+    loadHowToEarnsBadgesDescription();
     super.initState();
   }
 
@@ -362,6 +377,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   Widget _makeMedicationAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
+    String description = '';
     double opacity = 0.2;
     Color textColor = Colors.grey;
     int count = 0;
@@ -416,6 +432,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    for(int i = 0 ; i < howToEarnBadges.data!.items!.length ; i++)  {
+      if(name == '7 days' && howToEarnBadges.data!.items![i].name == '7-Day Medication Adherence'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '15 days' && howToEarnBadges.data!.items![i].name == '15-Day Medication Adherence'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '30 days' && howToEarnBadges.data!.items![i].name == '30-Day Medication Adherence'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }
+    }
+
     String lable = 'Earned '+count.toString()+' Medications badges for '+ name +' ';
     String hint = '';
 
@@ -431,13 +457,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
      child: InkWell(
        excludeFromSemantics: true,
        onTap: (){
-         /*if(count == 0)
+         if(count == 0)
            showDialog(
                barrierDismissible: false,
                context: context,
                builder: (_) {
-                 return _badgesDialog(context, image,'Medications');
-               });*/
+                 return _badgesDialog(context, image,'Medications', description);
+               });
        },
        child: ExcludeSemantics(
          child: Container(
@@ -524,6 +550,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   Widget _makeNutritionAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
+    String description = '';
     double opacity = 0.2;
     Color textColor = Colors.grey;
     int count = 0;
@@ -590,6 +617,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     }
 
 
+    for(int i = 0 ; i < howToEarnBadges.data!.items!.length ; i++)  {
+      if(name == '7 days' && howToEarnBadges.data!.items![i].name == '7-Day Healthy Nutrition Choice'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '15 days' && howToEarnBadges.data!.items![i].name == '15-Day Healthy Nutrition Choice'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '30 days' && howToEarnBadges.data!.items![i].name == '30-Day Healthy Nutrition Choice'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }
+    }
+
 
     return Semantics(
       label: lable,
@@ -597,13 +634,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          /*if(count == 0)
+          if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, name+' Nutrition Badge');
-              });*/
+                return _badgesDialog(context, image, 'Nutrition', description);
+              });
         },
         child: Container(
           height: 120,
@@ -688,6 +725,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   Widget _makeActivityAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
+    String description = '';
     double opacity = 0.2;
     Color textColor = Colors.grey;
     int count = 0;
@@ -742,6 +780,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    for(int i = 0 ; i < howToEarnBadges.data!.items!.length ; i++)  {
+      if(name == '7 days' && howToEarnBadges.data!.items![i].name == '7-Day Physical Activity'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '15 days' && howToEarnBadges.data!.items![i].name == '15-Day Physical Activity'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '30 days' && howToEarnBadges.data!.items![i].name == '30-Day Physical Activity'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }
+    }
+
     String lable = 'Earned '+count.toString()+' Physical Activity badges for '+ name +' ';
     String hint = '';
 
@@ -757,13 +805,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          /*if(count == 0)
+          if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, name+' Physical Activity Badge');
-              });*/
+                return _badgesDialog(context, image, 'Physical Activity', description);
+              });
         },
         child: Container(
           height: 120,
@@ -848,6 +896,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   Widget _makeMentalHealthAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
+    String description = '';
     double opacity = 0.2;
     Color textColor = Colors.grey;
     int count = 0;
@@ -903,6 +952,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     }
 
 
+    for(int i = 0 ; i < howToEarnBadges.data!.items!.length ; i++)  {
+      if(name == '7 days' && howToEarnBadges.data!.items![i].name == 'Mental health 7-Day Badge'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '15 days' && howToEarnBadges.data!.items![i].name == 'Mental health 15-Day Badge'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '30 days' && howToEarnBadges.data!.items![i].name == 'Mental health 30-Day Badge'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }
+    }
+
     String lable = 'Earned '+count.toString()+' Mental Well-Being badges for '+ name +' ';
     String hint = '';
 
@@ -917,13 +976,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-         /* if(count == 0)
+         if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, name+' Mental Well-Being Badge');
-              });*/
+                return _badgesDialog(context, image, 'Mental Well-Being', description);
+              });
         },
         child: Container(
           height: 120,
@@ -1008,6 +1067,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
   Widget _makeVitalAwardsListCard(BuildContext context, int index) {
     String name = '';
     String image = '';
+    String description = '';
     double opacity = 0.2;
     Color textColor = Colors.grey;
     int count = 0;
@@ -1062,6 +1122,16 @@ class _AllAchievementViewState extends State<AllAchievementView> {
 
     }
 
+    for(int i = 0 ; i < howToEarnBadges.data!.items!.length ; i++)  {
+      if(name == '7 days' && howToEarnBadges.data!.items![i].name == '7-Day Vitals'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '15 days' && howToEarnBadges.data!.items![i].name == '15-Day Vitals'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }else if(name == '30 days' && howToEarnBadges.data!.items![i].name == '30-Day Vitals'){
+        description = howToEarnBadges.data!.items![i].howToEarn.toString();
+      }
+    }
+
     String lable = 'Earned '+count.toString()+' vitals badges for '+ name +' ';
     String hint = '';
 
@@ -1077,13 +1147,13 @@ class _AllAchievementViewState extends State<AllAchievementView> {
       child: InkWell(
         excludeFromSemantics: true,
         onTap: (){
-          /*if(count == 0)
+          if(count == 0)
           showDialog(
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, name+' Vital Badge');
-              });*/
+                return _badgesDialog(context, image, 'Vital', description);
+              });
         },
         child: Container(
           height: 120,
@@ -1152,7 +1222,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
     );
   }
 
-  /*Widget _badgesDialog(BuildContext context, String images, String tittle) {
+  Widget _badgesDialog(BuildContext context, String images, String tittle, String description) {
     return Dialog(
         insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
@@ -1163,7 +1233,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: double.infinity,
-          height: 400,
+          height: 500,
           child: Column(
             children: [
               Row(
@@ -1207,11 +1277,11 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                 ],
               ),
               Expanded(
-                child: BadgesDetailsDialog(image: images,),
+                child: BadgesDetailsDialog(image: images, tittle: tittle, description: description),
               )
             ],
           ),
         ));
-  }*/
+  }
 
 }

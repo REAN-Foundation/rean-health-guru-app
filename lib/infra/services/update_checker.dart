@@ -53,7 +53,7 @@ class UpdateChecker{
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Force Update Required', style: TextStyle( fontSize: 18, fontWeight: FontWeight.w600),),
+          title: Text('Mandatory security update is required', style: TextStyle( fontSize: 18, fontWeight: FontWeight.w600),),
           content: Text('A new version of the app is now available. To ensure uninterrupted usage, kindly update to the latest version.', style: TextStyle( fontSize: 16, fontWeight: FontWeight.w500),),
           actions: [
             ElevatedButton(

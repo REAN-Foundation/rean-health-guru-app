@@ -15,6 +15,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/achievement/models/how_to_earn_badges.dart';
 import 'package:patient/features/common/activity/models/GetRecords.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
@@ -30,6 +31,7 @@ import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -200,6 +202,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       getSleepHistory();
       getVitalsHistory();
       getStepHistory();
+      howToEarnBadgesDescription();
       getAwardsSystemUserDetails();
     });
   }
@@ -307,6 +310,24 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       } else {
 
         //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+
+  howToEarnBadgesDescription() async {
+    try {
+      final HowToEarnBadges earnBadges =
+      await model.howToEarnAwardsDescription();
+      if (earnBadges.status == 'success') {
+        debugPrint('How To Earn Badges ==> ${earnBadges.toJson().toString()}');
+        _sharedPrefUtils.save('how_to_earn_badges', earnBadges.toJson());
+      } else {
+        showToast(earnBadges.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -883,6 +904,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     setAppBuildContext(context);
+    UpdateChecker(context);
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 

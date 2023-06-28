@@ -14,6 +14,8 @@ class RemoteConfigValues{
   static bool downloadReportButtonVisibility = false;
   static bool dashboardSymptomsVisibility = true;
   static bool dashboardVitalsVisibility = true;
+  static String minimumAppVersionRequired = '1.0.0';
+  static String softUpdateNewAppVersion = '1.0.0';
 
 
   static getValues(FirebaseRemoteConfig remoteConfig){
@@ -22,6 +24,8 @@ class RemoteConfigValues{
     downloadReportButtonVisibility = remoteConfig.getBool('download_report_button_visibility');
     carePlanTaskDurationInDays = remoteConfig.getInt('careplan_task_duration_in_days');
     hospitalSystemVisibility = remoteConfig.getBool('hospital_system_visibility');
+    minimumAppVersionRequired = remoteConfig.getString('minimum_app_version_required');
+    softUpdateNewAppVersion = remoteConfig.getString('soft_update_new_app_version');
 
     var dashboardTileJsonArray =  remoteConfig.getValue('home_screen_tile');
     homeScreenTile = List<String>.from(jsonDecode(dashboardTileJsonArray.asString()));

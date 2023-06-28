@@ -19,6 +19,7 @@ import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -130,6 +131,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   @override
   Widget build(BuildContext context) {
     checkItenetConnection();
+    UpdateChecker(context);
     height = MediaQuery.of(context).size.height;
     //debugPrint('Height ==> $height');
     return BaseWidget<LoginViewModel?>(
@@ -500,6 +502,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+                  countries: getAppFlavour() == 'Heart & Stroke Helper™ ' ? ['US'] : getAppFlavour() == 'HF Helper' ? ['US']  :null,
                   readOnly: model.busy,
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);

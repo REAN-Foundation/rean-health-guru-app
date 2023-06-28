@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/achievement/ui/all_achivement_view.dart';
 import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
@@ -357,6 +358,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => MyReportsView());
       case RoutePaths.FAQ_BOT:
         return MaterialPageRoute(builder: (_) => FAQChatScreen());
+      case RoutePaths.ACHIEVEMENT:
+        return MaterialPageRoute(builder: (_) => AllAchievementView());
       /* case RoutePaths.Order_Medicine:
         return MaterialPageRoute(builder: (_) =>
       case RoutePaths.Order_Ambulance:

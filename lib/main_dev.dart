@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
   bool? isLogin;
   String? _baseUrl;
   String? _botBaseUrl;
+  String? _awardBaseUrl;
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);
@@ -40,8 +42,10 @@ class MyApp extends StatelessWidget {
   MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
+    debugPrint('Print from .env ==> ${dotenv.env['AWARD_BASE_URL']}');
     _baseUrl = dotenv.env['DEV_BASE_URL'];
     _botBaseUrl = dotenv.env['DEV_BOT_BASE_URL'];
+    _awardBaseUrl = dotenv.env['AWARD_BASE_URL'];
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
@@ -50,6 +54,8 @@ class MyApp extends StatelessWidget {
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
+    GetIt.instance
+        .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 

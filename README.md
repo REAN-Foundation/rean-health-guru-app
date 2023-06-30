@@ -11,3 +11,4 @@ __We encourage forking and welcome contributions to this code base.__
 * [Get started](docs/get-started.md) - how to setup dev-environment on your local machine
 * [Learn how to contribute](./CONTRIBUTING.md)
 * [Code of conduct](./CODE_OF_CONDUCT.md)
+* [Release Flow](./docs/releae_flow.md)

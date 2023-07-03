@@ -3,6 +3,8 @@
 ## AHA-PROD-CI-CD
 Mode of trigger: ```On-Demand```
 
+Note: This workflow does not require any parameters to run.
+
 This workflow uses two jobs: Android-App-Release-Prod and iOS-App-Release-Prod to deploy ```rean-health-guru``` release to ```aha-prod``` environment
 
 ### AHA Prod Release Workflow
@@ -30,6 +32,8 @@ iOS-App-Release-Prod job will be performing the following steps.
 
 ## AHA-UAT-CI-CD
 Mode of trigger: ```On-Demand```
+
+Note: This workflow does not require any parameters to run.
 
 This workflow deploy ```rean-health-guru``` release to ```aha-uat``` environment
 

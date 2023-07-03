@@ -58,7 +58,7 @@ iOS-PublishAppInternally job will be performing the following steps.
 
 
 ## UAT-CI-CD
-Mode of trigger: ```On-Demand``` ```Automated```
+Mode of trigger: ```Automated```
 
 There are two ways to use or trigger uat-CI-CD workflow
 * By pushing code into branch with prefix of ``` release/** ``` .
@@ -123,6 +123,8 @@ iOS-Release-Alpha job will be performing the following steps.
 
 ## PROD-CI-CD
 Mode of trigger: ```On-Demand```
+
+Note: This workflow does not require any parameters to run.
 
 Prod Workflow can be manually triggered. The workflow builds the applications and deploys the changes to the RF Platform Production environment.
 

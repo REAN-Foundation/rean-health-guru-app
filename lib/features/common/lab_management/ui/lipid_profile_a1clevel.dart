@@ -154,7 +154,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'A1CLevel measures in mg/dl',
+                    label: 'A1CLevel measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -628,7 +628,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
       map['DisplayName'] = 'A1C Level';
       map['PrimaryValue'] = _controller.text.toString();
       map['PatientUserId'] = patientUserId;
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "mg/dL";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addlipidProfile(map);

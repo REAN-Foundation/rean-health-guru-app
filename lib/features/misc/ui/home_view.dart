@@ -7,6 +7,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -14,11 +15,13 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/achievement/models/how_to_earn_badges.dart';
 import 'package:patient/features/common/activity/models/GetRecords.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
+import 'package:patient/features/misc/models/awards_user_details.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
@@ -28,6 +31,7 @@ import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -86,6 +90,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   String imageResourceId = '';
   late AndroidDeviceInfo androidInfo;
   late IosDeviceInfo iosInfo;
+  late UserData user;
+  late Patient patient;
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -99,9 +105,9 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   loadSharedPrefs() async {
     try {
-      final UserData user =
+       user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
-      final Patient patient =
+       patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data!.accessToken;
 
@@ -196,6 +202,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       getSleepHistory();
       getVitalsHistory();
       getStepHistory();
+      howToEarnBadgesDescription();
+      getAwardsSystemUserDetails();
     });
   }
 
@@ -251,6 +259,75 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         }
       } else {
         //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  getAwardsSystemUserDetails() async {
+    try {
+      final AwardsUserDetails awardsUserDetails =
+      await model.getAwardsSytstemUserDetails();
+      if (awardsUserDetails.status == 'success') {
+        debugPrint('Awards System Id ==> ${awardsUserDetails.data!.id.toString()}');
+        setAwardsSystemId(awardsUserDetails.data!.id.toString());
+      } else {
+        if(awardsUserDetails.message == 'Cannot read properties of null (reading \'ReferenceId\')'){
+          createAwardsSystemParticipent();
+        }
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  createAwardsSystemParticipent() async {
+    try {
+
+      final body = <String, String>{};
+      body['ClientId'] = dotenv.env['AWARD_CLIENT_ID'].toString();
+      body['ReferenceId'] = patientUserId.toString();
+      body['FirstName'] = user.data!.user!.person!.firstName.toString();
+      body['LastName'] = user.data!.user!.person!.lastName.toString();
+      body['Gender'] = user.data!.user!.person!.gender.toString();
+      body['BirthDate'] = dateFormat.format(patient.user!.person!.birthDate!);
+      body['CountryCode'] = '+91';
+      body['Phone'] = user.data!.user!.person!.phone.toString();
+      body['OnboardingDate'] = dateFormat.format(DateTime.now());
+
+
+      final BaseResponse response =
+      await model.createAwardParticipent(body);
+      if (response.status == 'success') {
+        debugPrint('Awards System Id ==> ${response.message}');
+        getAwardsSystemUserDetails();
+      } else {
+
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+
+  howToEarnBadgesDescription() async {
+    try {
+      final HowToEarnBadges earnBadges =
+      await model.howToEarnAwardsDescription();
+      if (earnBadges.status == 'success') {
+        debugPrint('How To Earn Badges ==> ${earnBadges.toJson().toString()}');
+        _sharedPrefUtils.save('how_to_earn_badges', earnBadges.toJson());
+      } else {
+        showToast(earnBadges.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -827,6 +904,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     setAppBuildContext(context);
+    UpdateChecker(context);
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
@@ -953,6 +1031,17 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     },
                   ),
                 ),*/
+                IconButton(
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_badges.png'),
+                    size: 32,
+                    color: primaryColor,
+                    semanticLabel: 'Achievements',
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT);
+                  },
+                ),
                 IconButton(
                   icon: ImageIcon(
                     AssetImage('res/images/ic_chat_bot.png'),

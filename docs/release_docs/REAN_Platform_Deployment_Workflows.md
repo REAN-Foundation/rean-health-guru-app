@@ -10,10 +10,10 @@ There are two ways to use or trigger the dev-CI-CD workflow
 
 
 Release Process Workflow Diagram.
-![dev workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/DevWorkflow.png?raw=true)
+![dev workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/DevWorkflow.png?raw=true)
 
 GitHub Action Workflow run.
-![dev_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/dev_github_job.png?raw=true)
+![dev_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/dev_github_job.png?raw=true)
 
 ### JOBS
 
@@ -65,10 +65,10 @@ There are two ways to use or trigger the uat-CI-CD workflow
 * By raising Pull Request against the main branch.
 
 Release Process Workflow Diagram.
-![uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/uatWorkflow.png?raw=true)
+![uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/uatWorkflow.png?raw=true)
 
 GitHub Action Workflow run.
-![uat-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/uat_github_action.png?raw=true)
+![uat-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/uat_github_action.png?raw=true)
 
 ### JOBS
 
@@ -129,10 +129,10 @@ Note: This workflow does not require any parameters to run.
 Prod Workflow can be manually triggered. The workflow builds the applications and deploys the changes to the RF Platform Production environment.
 
 Release Process Workflow Diagram.
-![prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_workflow.png?raw=true)
+![prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/prod_workflow.png?raw=true)
 
 GitHub Action Workflow run.
-![prod_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/prod_github_action.png?raw=true)
+![prod_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/prod_github_action.png?raw=true)
 
 ### JOBS
 

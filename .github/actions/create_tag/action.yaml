@@ -20,5 +20,5 @@ runs:
       shell: bash
       if: ${{ steps.checkTag.outputs.exists == 'false' }}
       run: |
-        git tag ${{ steps.get_version.outputs.version }}
-        git push origin ${{ steps.get_version.outputs.version }}
+        git tag v${{ steps.get_version.outputs.version }}
+        git push origin v${{ steps.get_version.outputs.version }}

@@ -65,10 +65,6 @@ jobs:
           IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
           IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
         
-      - name: New Release Publish
-        uses: release-drafter/release-drafter@v5
-        with:
-          publish : true
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
-
+      - name: New github tag
+        uses: ./.github/actions/create_tag
+        

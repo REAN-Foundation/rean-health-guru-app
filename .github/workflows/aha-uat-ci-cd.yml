@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       Tag_name:
-        description: Tag name of your release(please include "v", example:v1.8.245+177)
+        description: Github Tag name(please include "v", example:v1.8.245+177)
         required: true
 
 jobs:

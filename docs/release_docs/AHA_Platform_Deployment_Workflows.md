@@ -10,10 +10,10 @@ This workflow uses two jobs: Android-App-Release-Prod and iOS-App-Release-Prod t
 ### AHA Prod Release Workflow
 
 Release Process Workflow Diagram.
-![aha-wokflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
+![aha-wokflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
 
 GitHub Action Workflow run.
-![aah_prod-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
+![aah_prod-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
 
 ### JOBS
 
@@ -40,10 +40,10 @@ This workflow deploy ```rean-health-guru``` release to ```aha-uat``` environment
 ### AHA UAT Release Workflow
 
 Release Process Workflow Diagram.
-![AHA-uat](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
+![AHA-uat](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
 
 GitHub Action Workflow run
-![aha-uat-workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
+![aha-uat-workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
 
 ### JOBS
 

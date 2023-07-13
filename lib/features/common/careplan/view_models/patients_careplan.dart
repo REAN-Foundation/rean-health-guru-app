@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
@@ -72,15 +71,15 @@ class PatientCarePlanViewModel extends BaseModel {
     return CheckCareplanEligibility.fromJson(response);
   }
 
-  Future<HealthSystemPojo> getHealthSystem() async {
-    setBusy(true);
+  Future<HealthSystemPojo> getHealthSystem(String planName) async {
+    //setBusy(true);
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems',
+        '/patient-emergency-contacts/health-systems?planName='+planName,
         header: map);
 
     setBusy(false);

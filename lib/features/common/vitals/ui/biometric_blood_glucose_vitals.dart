@@ -199,7 +199,7 @@ class _BiometricBloodSugarVitalsViewState
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Blood Glucose measures in mg/dl',
+                    label: 'Blood Glucose measures in mg/dL',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -323,7 +323,7 @@ class _BiometricBloodSugarVitalsViewState
                           Expanded(
                             flex: 2,
                             child: Text(
-                              'Blood Glucose\n(mg/dl)',
+                              'Blood Glucose\n(mg/dL)',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,

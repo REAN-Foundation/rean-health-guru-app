@@ -358,7 +358,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
       map['BloodSugar_HealthyRangeStart'] = 100;
       map['BloodSugar_HealthyRangeEnd'] = 130;
       map['BloodSugar_StartingValue'] = 140;
-      map['MeasurementUnit'] = 'mg/dl';
+      map['MeasurementUnit'] = 'mg/dL';
 
       final body = <String, dynamic>{};
       body['Goal'] = map;

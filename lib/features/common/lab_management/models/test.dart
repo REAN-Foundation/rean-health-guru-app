@@ -1,7 +1,7 @@
 /// Status : "success"
 /// Message : "Total 1 lab records retrieved successfully!"
 /// HttpCode : 200
-/// Data : {"LabRecordRecords":{"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}}
+/// Data : {"LabRecordRecords":{"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dL","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}}
 
 class Test {
   Test({
@@ -52,7 +52,7 @@ Test copyWith({  String? status,
 
 }
 
-/// LabRecordRecords : {"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}
+/// LabRecordRecords : {"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dL","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}
 
 class Data {
   Data({
@@ -85,7 +85,7 @@ Data copyWith({  LabRecordRecords? labRecordRecords,
 /// ItemsPerPage : 25
 /// Order : "descending"
 /// OrderedBy : "CreatedAt"
-/// Items : [{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]
+/// Items : [{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dL","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]
 
 class LabRecordRecords {
   LabRecordRecords({
@@ -173,7 +173,7 @@ LabRecordRecords copyWith({  num? totalCount,
 /// DisplayName : "Total Cholesterol"
 /// PrimaryValue : 223
 /// SecondaryValue : null
-/// Unit : "mg/dl"
+/// Unit : "mg/dL"
 /// ReportId : null
 /// OrderId : null
 /// RecordedAt : "2022-08-29T09:40:47.000Z"

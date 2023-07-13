@@ -2,15 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:patient/features/common/achievement/models/how_to_earn_badges.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
 import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
+import 'package:patient/features/misc/models/awards_user_details.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
 import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../infra/view_models/base_model.dart';
@@ -21,6 +24,7 @@ class CommonConfigModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  AwardApiProvider? awardApiProvider = GetIt.instance<AwardApiProvider>();
 
   Future<GetCarePlanEnrollmentForPatient> getCarePlan() async {
     // Get user profile for id
@@ -128,7 +132,7 @@ class CommonConfigModel extends BaseModel {
     return EmergencyContactResponse.fromJson(response);
   }
 
-  Future<HealthSystemPojo> getHealthSystem() async {
+  Future<HealthSystemPojo> getHealthSystem(String planName) async {
     setBusy(true);
 
     final map = <String, String>{};
@@ -136,7 +140,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems',
+        '/patient-emergency-contacts/health-systems?planName='+planName,
         header: map);
 
     setBusy(false);
@@ -301,4 +305,50 @@ class CommonConfigModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }//your report is getting downloaded, Please check in the medical records after few minutes
+
+  Future<AwardsUserDetails> getAwardsSytstemUserDetails() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await awardApiProvider!.get(
+        '/participants/by-reference-id/'+patientUserId.toString(),
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return AwardsUserDetails.fromJson(response);
+  }
+
+  Future<BaseResponse> createAwardParticipent(Map body) async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await awardApiProvider!.post(
+        '/participants', body: body,
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<HowToEarnBadges> howToEarnAwardsDescription() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await awardApiProvider!.get(
+        '/badges/how-to-earn',
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return HowToEarnBadges.fromJson(response);
+  }
+
 }

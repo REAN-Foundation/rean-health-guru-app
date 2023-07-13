@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.234+173
+version: 1.8.245+177
 
 publish_to: none
 
@@ -129,6 +129,7 @@ flutter:
   assets:
     - res/images/
     - res/images/dailyCheckIn/
+    - res/images/awards/
     - res/.env
     - res/lottiefiles/
   #   - assets/images/

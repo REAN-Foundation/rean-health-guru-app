@@ -10,6 +10,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class EnterAllCholesterolValuesView extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _EnterAllCholesterolValuesViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   final _ldlController = TextEditingController();
+  final _lpaController = TextEditingController();
   final _hdlcontroller = TextEditingController();
   final _totalCholesterolController = TextEditingController();
   final _triglyceridesController = TextEditingController();
@@ -34,6 +36,7 @@ class _EnterAllCholesterolValuesViewState
   final _totalCholesterolFocus = FocusNode();
   final _hdlFocus = FocusNode();
   final _ldlFocus = FocusNode();
+  final _lpaFocus = FocusNode();
   ProgressDialog? progressDialog;
   var scrollContainer = ScrollController();
   final ScrollController _scrollController = ScrollController();
@@ -68,14 +71,15 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   hdlFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
                   triglyceridesFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  lpaFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
@@ -99,7 +103,9 @@ class _EnterAllCholesterolValuesViewState
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                FirebaseAnalytics.instance.logEvent(name: 'lab_values_enter_all_values_save_button_click');
+                                FirebaseAnalytics.instance.logEvent(
+                                    name:
+                                        'lab_values_enter_all_values_save_button_click');
                                 validate();
                               },
                               child: ExcludeSemantics(
@@ -171,7 +177,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -207,7 +213,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'ldl measures in mg/dl',
+                      label: 'ldl measures in mg/dL',
                       child: TextFormField(
                           controller: _ldlController,
                           focusNode: _ldlFocus,
@@ -219,6 +225,134 @@ class _EnterAllCholesterolValuesViewState
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
+                          decoration: InputDecoration(
+                              /*hintText: unit == 'lbs'
+                                  ? '(100 to 200)'
+                                  : '(50 to 100)',*/
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String lipoproteiUnit = 'mg/dL';
+  Widget lpaFeilds() {
+    return Card(
+      semanticContainer: false,
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_lpa.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Enter your Lp(a)',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+                /*RichText(
+                  text: TextSpan(
+                    text: ' (mg/dL) ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        color: textBlack,
+                        fontSize: 12),
+                  ),
+                ),*/
+                SizedBox(
+                  width: 4,
+                ),
+                ToggleSwitch(
+                  minWidth: 64.0,
+                  minHeight: 28.0,
+                  fontSize: 12.0,
+                  initialLabelIndex: 0,
+                  activeBgColor: [primaryColor],
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.white,
+                  inactiveFgColor: Colors.grey[900],
+                  totalSwitches: 2,
+                  labels: ['mg/dL', 'nmol/L'],
+                  borderWidth: 2.0,
+                  borderColor: [primaryColor],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                    if(index == 0){
+                      lipoproteiUnit = 'mg/dL';
+                    }else{
+                      lipoproteiUnit = 'nmol/L';
+                    }
+                  },
+                ),
+                SizedBox(
+                  width: 0,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Lp(a) Information',
+                      description:
+                          'Lipoprotein(a), like low-density cholesterol (LDL), is a subtype of lipoprotein that can build up in arteries, increasing the risk of a heart attack or stroke. Lp(a) is an independent risk factor for heart disease that is genetically inherited. Talk to your doctor if you should have your Lp(a) measured based on your personal and family history of heart disease.',
+                      height: 300),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: textGrey, width: 1),
+                        color: Colors.white),
+                    child: Semantics(
+                      label: 'Lp(a) measures in mg/dL',
+                      child: TextFormField(
+                          controller: _lpaController,
+                          focusNode: _lpaFocus,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          onFieldSubmitted: (term) {
+                            _fieldFocusChange(context, _lpaFocus, _a1cLevelFocus);
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               /*hintText: unit == 'lbs'
@@ -308,7 +442,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'HDL measures in mg/dl',
+                      label: 'HDL measures in mg/dL',
                       child: TextFormField(
                           focusNode: _hdlFocus,
                           controller: _hdlcontroller,
@@ -373,7 +507,7 @@ class _EnterAllCholesterolValuesViewState
                   ),
                   RichText(
                     text: TextSpan(
-                      text: ' (mg/dl)',
+                      text: ' (mg/dL)',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
@@ -410,7 +544,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Total Cholesterol messures in mg/dl ',
+                      label: 'Total Cholesterol messures in mg/dL ',
                       child: TextFormField(
                           focusNode: _totalCholesterolFocus,
                           controller: _totalCholesterolController,
@@ -474,7 +608,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dL) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -489,7 +623,7 @@ class _EnterAllCholesterolValuesViewState
                   child: InfoScreen(
                       tittle: 'Triglycerides Information',
                       description:
-                      'Triglycerides: The most common type of fat in the body.',
+                          'Triglycerides: The most common type of fat in the body.',
                       height: 200),
                 ),
               ],
@@ -510,7 +644,7 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Triglycerides measures in mg/dl',
+                      label: 'Triglycerides measures in mg/dL',
                       child: TextFormField(
                           focusNode: _triglyceridesFocus,
                           controller: _triglyceridesController,
@@ -583,7 +717,8 @@ class _EnterAllCholesterolValuesViewState
                 Expanded(
                   child: InfoScreen(
                       tittle: 'A1C Level Information',
-                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
+                      description:
+                          "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
                       height: 320),
                 ),
               ],
@@ -733,22 +868,31 @@ class _EnterAllCholesterolValuesViewState
     if (_ldlController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
+      addvitals('LDL', _ldlController.text.toString(), 'mg/dL');
     }
+
+    if (_lpaController.text.isNotEmpty && isNumeric(_lpaController.text)) {
+      ifRecordsEnterted = true;
+      validationToastDisplay = false;
+      addvitals('Lipoprotein', _lpaController.text.toString(), lipoproteiUnit);
+    }
+
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dl');
+      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dL');
     }
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dl');
+      addvitals('Total Cholesterol',
+          _totalCholesterolController.text.toString(), 'mg/dL');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
       validationToastDisplay = false;
-      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dl');
+      addvitals('Triglyceride Level', _triglyceridesController.text.toString(),
+          'mg/dL');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
@@ -757,15 +901,15 @@ class _EnterAllCholesterolValuesViewState
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
-      if(isNumeric(_a1cLevelController.text)) {
+      if (isNumeric(_a1cLevelController.text)) {
         ifRecordsEnterted = true;
         validationToastDisplay = false;
         addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
-      }else{
+      } else {
         showToast('Please enter valid input', context);
       }
 
-     /* if(isNumeric(_a1cLevelController.text){
+      /* if(isNumeric(_a1cLevelController.text){
         ifRecordsEnterted = true;
         addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
       }else{
@@ -773,7 +917,7 @@ class _EnterAllCholesterolValuesViewState
       }*/
     }
 
-    if(validationToastDisplay){
+    if (validationToastDisplay) {
       showToast('Please enter valid input', context);
     }
 
@@ -834,7 +978,7 @@ class _EnterAllCholesterolValuesViewState
       if (_ratioController.text.toString().isNotEmpty)
         map['Ratio'] = _ratioController.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "mg/dL";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMylipidProfile(map);
@@ -863,12 +1007,17 @@ class _EnterAllCholesterolValuesViewState
     _scrollController.animateTo(0.0,
         duration: Duration(seconds: 2), curve: Curves.ease);
     showSuccessToast('Record Created Successfully!', context);
-      //toastDisplay = false;
+    //toastDisplay = false;
     //}
 
     _ldlController.text = '';
     _ldlController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ldlController.text.length),
+    );
+
+    _lpaController.text = '';
+    _lpaController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _lpaController.text.length),
     );
 
     _hdlcontroller.text = '';

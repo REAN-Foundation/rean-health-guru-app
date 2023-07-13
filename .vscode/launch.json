@@ -1,0 +1,90 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "main_dev.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_dev.dart",
+            "args": [
+              "--flavor",
+              "dev"
+            ]
+        },
+        {
+            "name": "main_uat.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_uat.dart",
+            "args": [
+              "--flavor",
+              "uat"
+            ]
+        },
+        {
+            "name": "main_prod.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_prod.dart",
+            "args": [
+                "--flavor",
+                "prod"
+              ]
+        },
+        {
+            "name": "main_aha_uat.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_aha_uat.dart",
+            "args": [
+                "--flavor",
+                "aha_uat"
+              ]
+        },
+        {
+            "name": "main_aha.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_aha.dart",
+            "args": [
+                "--flavor",
+                "aha"
+              ]
+        },
+        {
+            "name": "main_aha_sac.dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main_aha_sac.dart",
+            "args": [
+                "--flavor",
+                "aha_sac"
+              ]
+        },
+        // {
+        //     "name": "ReanCare-Patient",
+        //     "request": "launch",
+        //     "type": "dart"
+        // }
+        // {
+        //     "name": "rean-health-guru-app",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
+        // {
+        //     "name": "rean-health-guru-app (profile mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "rean-health-guru-app (release mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // }
+    ]
+}

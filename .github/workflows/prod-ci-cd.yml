@@ -65,6 +65,18 @@ jobs:
           IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
           IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
         
-      - name: New github tag
-        uses: ./.github/actions/create_tag
+      - name: Get version
+        id: yq
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -r '.version' 'pubspec.yaml'
+        
+      - name: New Release Publish
+        id: new_publish
+        uses: release-drafter/release-drafter@v5
+        with:
+          tag: v${{ steps.yq.outputs.result }}
+          publish : true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         

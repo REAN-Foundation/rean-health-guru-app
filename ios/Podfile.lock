@@ -145,10 +145,6 @@ PODS:
     - FMDB (>= 2.7.5)
   - syncfusion_flutter_pdfviewer (0.0.1):
     - Flutter
-  - terra_flutter_bridge (0.0.4):
-    - Flutter
-    - TerraiOS (~> 1.2.22)
-  - TerraiOS (1.2.24)
   - Toast (4.0.0)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -182,7 +178,6 @@ DEPENDENCIES:
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - syncfusion_flutter_pdfviewer (from `.symlinks/plugins/syncfusion_flutter_pdfviewer/ios`)
-  - terra_flutter_bridge (from `.symlinks/plugins/terra_flutter_bridge/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
@@ -206,7 +201,6 @@ SPEC REPOS:
     - OrderedSet
     - PhoneNumberKit
     - PromisesObjC
-    - TerraiOS
     - Toast
 
 EXTERNAL SOURCES:
@@ -254,8 +248,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   syncfusion_flutter_pdfviewer:
     :path: ".symlinks/plugins/syncfusion_flutter_pdfviewer/ios"
-  terra_flutter_bridge:
-    :path: ".symlinks/plugins/terra_flutter_bridge/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player:
@@ -304,8 +296,6 @@ SPEC CHECKSUMS:
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   syncfusion_flutter_pdfviewer: bb9998884b864cfedf72628df3503bdf57e397c0
-  terra_flutter_bridge: 2025cb1d49fcb104d4ac8843aee7fffb86b2e061
-  TerraiOS: 1b79b7406f4ac9c2fb111aa392a12093bf16657b
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e

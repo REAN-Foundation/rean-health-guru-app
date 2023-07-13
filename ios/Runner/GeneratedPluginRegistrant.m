@@ -132,12 +132,6 @@
 @import syncfusion_flutter_pdfviewer;
 #endif
 
-#if __has_include(<terra_flutter_bridge/TerraFlutterPlugin.h>)
-#import <terra_flutter_bridge/TerraFlutterPlugin.h>
-#else
-@import terra_flutter_bridge;
-#endif
-
 #if __has_include(<url_launcher_ios/FLTURLLauncherPlugin.h>)
 #import <url_launcher_ios/FLTURLLauncherPlugin.h>
 #else
@@ -186,7 +180,6 @@
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
-  [TerraFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"TerraFlutterPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
   [FLTVideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTVideoPlayerPlugin"]];
   [WakelockPlugin registerWithRegistrar:[registry registrarForPlugin:@"WakelockPlugin"]];

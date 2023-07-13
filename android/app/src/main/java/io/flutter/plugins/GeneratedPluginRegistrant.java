@@ -91,11 +91,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin image_picker, io.flutter.plugins.imagepicker.ImagePickerPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new de.ffuf.in_app_update.InAppUpdatePlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin in_app_update, de.ffuf.in_app_update.InAppUpdatePlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.packageinfo.PackageInfoPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin package_info, io.flutter.plugins.packageinfo.PackageInfoPlugin", e);
@@ -129,11 +124,6 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new com.syncfusion.flutter.pdfviewer.SyncfusionFlutterPdfViewerPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin syncfusion_flutter_pdfviewer, com.syncfusion.flutter.pdfviewer.SyncfusionFlutterPdfViewerPlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new co.tryterra.terra_flutter_bridge.TerraFlutterPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin terra_flutter_bridge, co.tryterra.terra_flutter_bridge.TerraFlutterPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.urllauncher.UrlLauncherPlugin());

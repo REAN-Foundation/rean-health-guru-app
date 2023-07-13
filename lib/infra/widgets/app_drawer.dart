@@ -9,7 +9,6 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -22,7 +21,6 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
-import 'package:terra_flutter_bridge/terra_flutter_bridge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../features/common/health_device/models/terra_session_id.dart';
@@ -603,7 +601,7 @@ class _AppDrawerState extends State<AppDrawer> {
     }
   }
 
-  Future<void> initTerraFunctionState() async {
+/*  Future<void> initTerraFunctionState() async {
     bool initialised = false;
     bool connected = false;
     bool daily = false;
@@ -627,7 +625,7 @@ class _AppDrawerState extends State<AppDrawer> {
       daily = await TerraFlutter.getDaily(
           c, lastMidnight, now) ??
           false;
-      /*daily = await TerraFlutter.getAthlete(c) ?? false;
+      *//*daily = await TerraFlutter.getAthlete(c) ?? false;
       daily = await TerraFlutter.getMenstruation(
           c, DateTime(2022, 9, 25), DateTime(2022, 9, 30)) ??
           false;
@@ -639,7 +637,7 @@ class _AppDrawerState extends State<AppDrawer> {
           false;
       daily = await TerraFlutter.getActivity(
           c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
-          false;*/
+          false;*//*
     } on Exception catch (e) {
       print('error caught: $e');
       testText = "Some exception went wrong";
@@ -684,7 +682,7 @@ class _AppDrawerState extends State<AppDrawer> {
       });
     }
   }
-
+  */
 
 
   Widget _footer() {

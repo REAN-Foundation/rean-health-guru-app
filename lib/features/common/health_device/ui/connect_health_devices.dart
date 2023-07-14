@@ -217,7 +217,9 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  generateSeesionId(details.provider.toString());
+                  if( details.status == 'Disconnected') {
+                    generateSeesionId(details.provider.toString());
+                  }
                 },
                 child: Container(
                   height: 30,
@@ -227,11 +229,11 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
                   ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: details.status == 'Disconnected' ? primaryColor : Colors.grey, width: 1),
                       color: primaryColor),
                   child: Center(
                     child: Text(
-                      details.status == 'Disconnected' ? 'Connect' : 'Disconnect',
+                      details.status == 'Disconnected' ? 'Connect' : 'Connected',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,

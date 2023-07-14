@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -19,6 +20,7 @@ import 'infra/networking/api_provider.dart';
 Future<void> main() async {
   //enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
@@ -27,7 +29,15 @@ Future<void> main() async {
   login ??= false;
   String? sponsor = prefs.getString('Sponsor');
   setSponsor(sponsor??'');
-  runApp(MyApp(login));
+  //runApp(MyApp(login));
+  runApp(
+    EasyLocalization(
+        supportedLocales: [Locale('en')],
+        path: 'res/translations', // <-- change the path of the translation files
+        fallbackLocale: Locale('en'),
+        child: MyApp(login)
+    ),
+  );
 }
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
@@ -75,6 +85,9 @@ class MyApp extends StatelessWidget {
         title: 'REAN HealthGuru',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: ThemeData(
             primarySwatch: Colors.deepPurple, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml

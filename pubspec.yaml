@@ -103,6 +103,7 @@ dependencies:
   syncfusion_flutter_gauges: ^20.3.57
   flutter_html: 2.2.1
   flutter_custom_tabs: ^1.0.4
+  easy_localization: ^3.0.2
 
 dev_dependencies:
   #test: any
@@ -130,6 +131,7 @@ flutter:
     - res/images/awards/
     - res/.env
     - res/lottiefiles/
+    - res/translations/
   #   - assets/images/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg

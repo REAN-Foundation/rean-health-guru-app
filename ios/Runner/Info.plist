@@ -70,5 +70,10 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleLocalizations</key>
+    <array>
+    	<string>en</string>
+    	<string>hi</string>
+    </array>
 </dict>
 </plist>

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:devicelocale/devicelocale.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -84,22 +85,22 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),*/
       pages: [
         PageViewModel(
-          title: 'Medication Reminders',
+          title: 'medication_reminders'.tr(),
           body:
-              'Set your medication reminders. Don\'t forget even a single dose!',
+              'medication_raminder_tag_line'.tr(),
           image: _buildImage('walkthrough_img_1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: 'Vitals',
+          title: 'vitals'.tr(),
           body:
-              'Monitor your body vitals. Keep a close watch over your health.',
+              'vitals_tag_line'.tr(),
           image: _buildImage('walkthrough_img_2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: 'Medical Records',
-          body: 'Access and share your medical history on the go.',
+          title: 'medical_records'.tr(),
+          body: 'medical_records_tag_line'.tr(),
           image: _buildImage('walkthrough_img_3.png'),
           decoration: pageDecoration,
         ),

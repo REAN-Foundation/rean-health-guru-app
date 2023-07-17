@@ -222,13 +222,13 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
             Material(
               color: Colors.transparent,
               child: Semantics(
-                button: true,
+                button: details.status == 'Disconnected' ? true : false,
                 child: InkWell(
                   onTap: () {
                     if( details.status == 'Disconnected') {
                       generateSeesionId(details.provider.toString());
                     }else{
-                      showToast('Connected', context);
+                      showToast('You are already connected to '+details.provider.toString().toCapitalized(), context);
                     }
                   },
                   child: Container(

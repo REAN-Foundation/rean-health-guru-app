@@ -109,7 +109,7 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(8.0),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -151,16 +151,22 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
 
   Widget listView() {
     return Expanded(
-      child: ListView.separated(
-          itemBuilder: (context, index) =>
-              _makeListCard(context, index),
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 8,
-            );
-          },
-          itemCount: deviceList.length,
-          shrinkWrap: true),
+      child: Scrollbar(
+        thumbVisibility: true,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.separated(
+              itemBuilder: (context, index) =>
+                  _makeListCard(context, index),
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 8,
+                );
+              },
+              itemCount: deviceList.length,
+              shrinkWrap: true),
+        ),
+      ),
     );
   }
 
@@ -187,15 +193,15 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             details.status == 'Disconnected' ? Container(
-          width: 16,
-          height: 16,
+          width: 12,
+          height: 12,
           decoration: BoxDecoration(
             color: Colors.red,
             shape: BoxShape.circle,
           ),
             ) : Container(
-              width: 16,
-              height: 16,
+              width: 12,
+              height: 12,
               decoration: BoxDecoration(
                 color: Colors.green,
                 shape: BoxShape.circle,
@@ -219,21 +225,26 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
                 onTap: () {
                   if( details.status == 'Disconnected') {
                     generateSeesionId(details.provider.toString());
+                  }else{
+                    showToast('Connected', context);
                   }
                 },
                 child: Container(
-                  height: 30,
-                  width: 100,
+                  height: 36,
+                  width: 128,
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.0,
                   ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6.0),
                       border: Border.all(color: details.status == 'Disconnected' ? primaryColor : Colors.grey, width: 1),
-                      color: primaryColor),
+                      color: details.status == 'Disconnected' ? primaryColor : Colors.grey,),
                   child: Center(
                     child: Text(
                       details.status == 'Disconnected' ? 'Connect' : 'Connected',
+                      semanticsLabel: details.status == 'Disconnected' ? 'Connect to '+details.provider.toString() : 'Connected to '+details.provider.toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,

@@ -349,8 +349,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 height: 8,
                               ),
-                              if(healthProfile!.isSmoker != null)
-                              Text('' + yesOrNo(healthProfile!.isSmoker!),
+                              if(healthProfile!.tobaccoQuestionAns != null)
+                              Text('' + yesOrNo(healthProfile!.tobaccoQuestionAns!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,

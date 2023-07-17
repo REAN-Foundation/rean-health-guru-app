@@ -1152,7 +1152,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, 'Vital', description);
+                return _badgesDialog(context, image, 'Vitals', description);
               });
         },
         child: Container(

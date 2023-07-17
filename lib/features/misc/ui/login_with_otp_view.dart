@@ -634,6 +634,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
+      progressDialog.close();
       model.setBusy(false);
       setState(() {});
       showToast(e.toString(), context);
@@ -759,6 +760,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         showToast(doctorListApiResponse.message!, context);
       }
     } on FetchDataException catch (e) {
+      progressDialog.close();
       showToast('Opps! Something went wrong, Please try again', context);
       model.setBusy(false);
       showToast(e.toString(), context);

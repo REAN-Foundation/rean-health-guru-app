@@ -221,34 +221,37 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
 
             Material(
               color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  if( details.status == 'Disconnected') {
-                    generateSeesionId(details.provider.toString());
-                  }else{
-                    showToast('Connected', context);
-                  }
-                },
-                child: Container(
-                  height: 36,
-                  width: 128,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(color: details.status == 'Disconnected' ? primaryColor : Colors.grey, width: 1),
-                      color: details.status == 'Disconnected' ? primaryColor : Colors.grey,),
-                  child: Center(
-                    child: Text(
-                      details.status == 'Disconnected' ? 'Connect' : 'Connected',
-                      semanticsLabel: details.status == 'Disconnected' ? 'Connect to '+details.provider.toString() : 'Connected to '+details.provider.toString(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize: 14),
+              child: Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    if( details.status == 'Disconnected') {
+                      generateSeesionId(details.provider.toString());
+                    }else{
+                      showToast('Connected', context);
+                    }
+                  },
+                  child: Container(
+                    height: 36,
+                    width: 128,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        border: Border.all(color: details.status == 'Disconnected' ? primaryColor : Colors.grey, width: 1),
+                        color: details.status == 'Disconnected' ? primaryColor : Colors.grey,),
+                    child: Center(
+                      child: Text(
+                        details.status == 'Disconnected' ? 'Connect' : 'Connected',
+                        semanticsLabel: details.status == 'Disconnected' ? 'Connect to '+details.provider.toString() : 'Connected to '+details.provider.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 14),
+                      ),
                     ),
                   ),
                 ),

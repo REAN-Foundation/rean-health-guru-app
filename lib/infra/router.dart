@@ -58,6 +58,7 @@ import 'package:patient/features/common/careplan/ui/successfully_setup_careplan.
 import 'package:patient/features/common/careplan/ui/video_more_careplan.dart';
 import 'package:patient/features/common/careplan/ui/word_of_the_week_careplan.dart';
 import 'package:patient/features/common/chat_bot/ui/faq_chat_screen.dart';
+import 'package:patient/features/common/health_device/ui/connect_health_devices.dart';
 import 'package:patient/features/common/lab_management/ui/biometric_cholesterol_trends_view.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_a1clevel.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_hdl.dart';
@@ -358,6 +359,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => MyReportsView());
       case RoutePaths.FAQ_BOT:
         return MaterialPageRoute(builder: (_) => FAQChatScreen());
+      case RoutePaths.Connect_Health_Device:
+        return MaterialPageRoute(builder: (_) => ConnectHealthDevicesView());
       case RoutePaths.ACHIEVEMENT:
         return MaterialPageRoute(builder: (_) => AllAchievementView());
       /* case RoutePaths.Order_Medicine:

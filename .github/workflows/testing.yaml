@@ -1,6 +1,9 @@
 name: tesing Workflow
 on:
   workflow_dispatch:
+  push:
+    branches: feature/aha_workflow
+      
 
 jobs: 
   testing:

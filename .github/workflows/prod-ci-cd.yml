@@ -67,8 +67,6 @@ jobs:
         
   Github-tag-And-Realease:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
      - name: Checkout Code
        uses: actions/checkout@v2.3.4
@@ -87,4 +85,4 @@ jobs:
          tag: v${{ steps.tag.outputs.version }}
          publish : true
        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}

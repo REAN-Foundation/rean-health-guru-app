@@ -139,7 +139,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await remoteConfig.fetchAndActivate();
 
-    GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
+    //GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
 
     debugPrint(
         'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');

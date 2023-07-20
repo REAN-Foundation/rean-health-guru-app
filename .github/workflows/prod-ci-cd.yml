@@ -65,7 +65,7 @@ jobs:
           IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
           IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
         
-  Github-Tag-And-Realease:
+  Github-Tag-And-Release:
     runs-on: ubuntu-latest
     steps:
      - name: Checkout Code

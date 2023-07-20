@@ -35,7 +35,7 @@ The CodeScan-FlutterAnalyze job will be performing the following steps:
 Android BuildApp job will be performing the following steps:
 
 * For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job involves setting up the development environment for Android app building, which includes configuring Flutter and Fastlane. Additionally, it retrieves AWS credentials and environment files, imports build dependencies and builds the Android APK for the development flavor. Finally, it uploads the generated artifacts for further use.
+* This job involves setting up the development environment for Android app building, which includes configuring Flutter and Fastlane. Additionally, It retrieves AWS credentials and environment files, imports build dependencies, and builds the Android APK for the development flavor. Finally, it uploads the generated artifacts for further use.
 
 #### Android-PublishAppInternally
 
@@ -48,7 +48,7 @@ The Android-PublishAppInternally job will be performing the following steps:
 The iOS-BuildApp job will be performing the following steps:
  
 * For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job sets up the necessary tools like Fastlane and Flutter. It then builds the iOS app using Flutter, signs the build using Fastlane, specifying the 'dev' flavor and release mode. Additionally, it utilizes various environment variables for authentication and configuration and uploads the artifacts for further use.
+* This job sets up the necessary tools like Fastlane and Flutter. It then builds the iOS app using Flutter, and signs the build using Fastlane, specifying the 'dev' flavor and release mode. Additionally, it utilizes various environment variables for authentication and configuration and uploads the artifacts for further use.
 
 #### iOS-PublishAppInternally
 

@@ -84,12 +84,6 @@ The CodeScan-FlutterAnalyze job will be performing the following steps:
 
 * This job sets up the Flutter environment, configures AWS credentials, downloads an environment file, and performs static code analysis using Flutter's built-in analysis tools. It helps ensure code quality and consistency within the Flutter project.
 
-#### Label_Checks
-
-The Label-Checks job will be performing the following steps:
-
-* This job uses [pull-request-label-checker](https://github.com/marketplace/actions/label-checker-for-pull-requests). 
-* On event Pull Request this job will check whether the Pull Request has one of the major, minor, or patch labels or not.
 
 #### Android-BuildApp
 
@@ -144,7 +138,15 @@ The android-App-Release-Prod job will be performing the following steps:
 
 iOS-App-Release-Prod job will be performing the following steps:
 
-* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new GitHub release with generated release notes. 
+* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new GitHub release with generated release notes.
+
+#### Github-Tag-And-Realease
+
+The Github-Tag-And-Release job will be performing the following steps:
+
+* This job is used to automate the process of tagging and releasing a project. It fetches the code, extracts the version from a "pubspec.yaml" file, and then creates a new release draft with the obtained version tag, which will be automatically published.
+
+
 
 
 

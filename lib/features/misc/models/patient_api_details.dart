@@ -34,7 +34,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     patient =
-        json['Patient'] != null ? Patient.fromJson(json['Patient']) : null;
+    json['Patient'] != null ? Patient.fromJson(json['Patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -109,14 +109,14 @@ class User {
 
   User(
       {this.id,
-      this.userName,
-      this.personId,
-      this.person,
-      this.lastLogin,
-      this.defaultTimeZone,
-      this.currentTimeZone,
-      this.roleId,
-      this.role});
+        this.userName,
+        this.personId,
+        this.person,
+        this.lastLogin,
+        this.defaultTimeZone,
+        this.currentTimeZone,
+        this.roleId,
+        this.role});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -166,19 +166,19 @@ class Person {
 
   Person(
       {this.id,
-      this.prefix,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.displayName,
-      this.gender,
-      this.birthDate,
-      this.age,
-      this.phone,
-      this.email,
-      this.imageResourceId,
-      this.activeSince,
-      this.addresses});
+        this.prefix,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.displayName,
+        this.gender,
+        this.birthDate,
+        this.age,
+        this.phone,
+        this.email,
+        this.imageResourceId,
+        this.activeSince,
+        this.addresses});
 
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -250,14 +250,14 @@ class Addresses {
 
   Addresses(
       {this.id,
-      this.type,
-      this.addressLine,
-      this.city,
-      this.district,
-      this.state,
-      this.country,
-      this.postalCode,
-      this.longitude,
+        this.type,
+        this.addressLine,
+        this.city,
+        this.district,
+        this.state,
+        this.country,
+        this.postalCode,
+        this.longitude,
         this.lattitude});
 
   Addresses.fromJson(Map<String, dynamic> json) {

@@ -19,13 +19,13 @@ GitHub Action Workflow run.
 
 #### Android-App-Release-Prod
 
-The android-App-Release-Prod job will be performing the following steps.
+The android-App-Release-Prod job will be performing the following steps:
 
 * This job sets up Fastlane and promotes the Android app from the beta release track to the production release track on the Google Play Store. It automates the process of promoting a tested and approved beta version of the app to the production environment
 
 #### iOS-App-Release-Prod
 
-iOS-App-Release-Prod job will be performing the following steps.
+iOS-App-Release-Prod job will be performing the following steps:
 
 * This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new GitHub release with generated release notes. 
 
@@ -49,21 +49,28 @@ GitHub Action Workflow run
 
 #### Gitguardian-scanning
 
-The Git Guardian-scanning job will be performing the following steps.
+The Git Guardian-scanning job will be performing the following steps:
 
 * This job uses [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action)
 * The GitGuardian shield CLI application will scan and detect potential secrets or issues in the code, as well as other potential security vulnerabilities or policy breaks.
 
+#### Github-ECR-Tag-Check
+
+The Github-ECR-Tag-Check job will be performing the following steps:
+
+* This job is designed to check if a specific tag exists in the repository, and if the tag is not found, it will result in a job failure.
+
+
 #### CodeScan-FlutterAnalyze
 
-CodeScan FlutterAnalyze job will be performing the following steps.
+The CodeScan FlutterAnalyze job will be performing the following steps:
 
 * This job sets up the Flutter environment, configures AWS credentials, downloads an environment file, and performs static code analysis using Flutter's built-in analysis tools. It helps ensure code quality and consistency within the Flutter project.
 
 
 #### Android-BuildApp
 
-Android BuildApp job will be performing the following steps.
+The Android BuildApp job will be performing the following steps:
 
 * For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact)
 * This job sets up the built environment, including Flutter and Fastlane configurations, configures dependencies, and builds the Android app in the "uat" flavor. The resulting app bundle is then uploaded as an artifact for further use in the workflow or deployment processes.
@@ -71,14 +78,14 @@ Android BuildApp job will be performing the following steps.
 
 #### Android-Release-Alpha
 
-Android-Release-Alpha job will be performing the following steps.
+The Android-Release-Alpha job will be performing the following steps:
 
 * This job sets up Fastlane, downloads the build artifacts from the "Android-BuildApp" job, and publishes the Android App Bundle (AAB) to the alpha release track on the Google Play Store.
 
 
 #### iOS-BuildApp
 
-the iOS-BuildApp job will be performing the following steps.
+The iOS-BuildApp job will be performing the following steps:
 
 * For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact)
 * This job sets up the built environment, including Flutter and Fastlane configurations, configures dependencies, and builds the IOS app in the "uat" flavor, signs the build using Fastlane, and uploads the artifacts for further use in the workflow or deployment processes
@@ -86,7 +93,7 @@ the iOS-BuildApp job will be performing the following steps.
 
 #### iOS-Release-Alpha
 
-iOS-Release-Alpha job will be performing the following steps.
+The iOS-Release-Alpha job will be performing the following steps:
 
 * This job checks out the code, sets up Fastlane, downloads the previously built artifacts, and Uses Fastlane to upload the app build to TestFlight for the UAT environment. It specifies the "uat" flavor and release mode and uses various environment variables for authentication and configuration, including the App Store Connect key ID, issuer ID, API key, and demo user credentials.
 

@@ -30,6 +30,8 @@ class GetHealthData {
   double bloodPressureSystolic = 0;
   double bloodPressureDiastolic = 0;
   double heartRate = 0;
+  late HealthDataPoint diastolicHealthDataPoint;
+  late HealthDataPoint systolicHealthDataPoint;
 
   GetHealthData() {
     startDate = DateTime(
@@ -162,8 +164,10 @@ class GetHealthData {
         bloodGlucose = p.value.toDouble();
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
         bloodPressureDiastolic = p.value.toDouble();
+        diastolicHealthDataPoint = p;
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
         bloodPressureSystolic = p.value.toDouble();
+        systolicHealthDataPoint = p;
       } else if (p.typeString == 'BODY_TEMPERATURE') {
         if (p.value.toDouble() != 0) {
           bodyTemprature = p.value.toDouble();
@@ -227,7 +231,7 @@ class GetHealthData {
   }
 
   String getHeartRate() {
-    return heartRate.toString();
+    return heartRate.toInt().toString();
   }
 
   String getBodyTemprature() {
@@ -235,7 +239,7 @@ class GetHealthData {
   }
 
   String getBloodGlucose() {
-    return bloodGlucose.toString();
+    return bloodGlucose.toInt().toString();
   }
 
   String getBloodOxygen() {
@@ -243,11 +247,19 @@ class GetHealthData {
   }
 
   String getBPSystolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureSystolic.toInt().toString();
   }
 
   String getBPDiastolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureSystolic.toInt().toString();
+  }
+
+  HealthDataPoint getBPSystolicHealthDataPoint() {
+    return systolicHealthDataPoint;
+  }
+
+  HealthDataPoint getBPDiastolicHealthDataPoint() {
+    return diastolicHealthDataPoint;
   }
 
   int getExerciseTimeInMin() {

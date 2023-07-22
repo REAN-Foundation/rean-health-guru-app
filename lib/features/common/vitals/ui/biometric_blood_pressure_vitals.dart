@@ -44,17 +44,21 @@ class _BiometricBloodPresureVitalsViewState
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   int sytolicBloodPressure = 0;
   int diastolicBloodPressure = 0;
-
+  bool dataSyncCheck = true;
   late ProgressDialog progressDialog;
 
   @override
   void initState() {
     getVitalsHistory();
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 
   getVitalsFromDevice() {
+
+    /*debugPrint("BP Device Data ==> Dia => ${getHealthData.getBPDiastolic()}  Sys => ${getHealthData.getBPSystolic()}");
+
+
     if (getHealthData.getBPDiastolic() != '0.0') {
       _diastolicController.text = getHealthData.getBPDiastolic();
       _diastolicController.selection = TextSelection.fromPosition(
@@ -67,6 +71,14 @@ class _BiometricBloodPresureVitalsViewState
       _systolicController.selection = TextSelection.fromPosition(
         TextPosition(offset: _systolicController.text.length),
       );
+    }*/
+
+    if (getHealthData.getBPDiastolicHealthDataPoint().value != '0.0' && getHealthData.getBPSystolicHealthDataPoint().value != '0.0') {
+      if(getHealthData.getBPDiastolicHealthDataPoint().value != records.elementAt(0).diastolic && getHealthData.getBPSystolicHealthDataPoint().value != records.elementAt(0).systolic){
+        progressDialog.show(max: 100, msg: 'Please wait, data is syncing.');
+        addvitals(getHealthData.getBPSystolicHealthDataPoint().value.toInt().toString(),getHealthData.getBPDiastolicHealthDataPoint().value.toInt().toString());
+      }
+
     }
   }
 
@@ -332,7 +344,7 @@ class _BiometricBloodPresureVitalsViewState
                         showToast('Please enter your diastolic blood pressure',
                             context);
                       } else {
-                        addvitals();
+                        addvitals(_systolicController.text.toString(),_diastolicController.text.toString());
                       }
                     },
                     child: ExcludeSemantics(
@@ -1335,12 +1347,12 @@ class _BiometricBloodPresureVitalsViewState
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  addvitals() async {
+  addvitals(String systolicValue, String diastolicValue) async {
     try {
       //progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['Systolic'] = _systolicController.text.toString();
-      map['Diastolic'] = _diastolicController.text.toString();
+      map['Systolic'] = systolicValue;
+      map['Diastolic'] = diastolicValue;
       map['PatientUserId'] = "";
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
@@ -1349,9 +1361,6 @@ class _BiometricBloodPresureVitalsViewState
           await model.addMyVitals('blood-pressures', map);
       progressDialog.close();
       if (baseResponse.status == 'success') {
-        if(progressDialog.isOpen()) {
-          progressDialog.close();
-        }
         showSuccessToast(baseResponse.message!, context);
         _systolicController.clear();
         _diastolicController.clear();
@@ -1402,6 +1411,9 @@ class _BiometricBloodPresureVitalsViewState
       final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('blood-pressures');
       if (getMyVitalsHistory.status == 'success') {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         model.setBusy(false);
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bloodPressureRecords!.items!);
@@ -1412,10 +1424,20 @@ class _BiometricBloodPresureVitalsViewState
           calculateBPRange();
         }
 
+        if(dataSyncCheck) {
+          dataSyncCheck = false;
+          getVitalsFromDevice();
+        }
       } else {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
+      if(progressDialog.isOpen()) {
+        progressDialog.close();
+      }
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

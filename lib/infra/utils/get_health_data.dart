@@ -101,10 +101,10 @@ class GetHealthData {
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
        //Print the results
-       _healthDataList.forEach((x) {
+       /*_healthDataList.forEach((x) {
         debugPrint('Data point:  ${x}');
         //steps += x.value.round();
-      });
+      });*/
 
       //debugPrint("Steps: $steps");
 

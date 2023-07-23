@@ -584,7 +584,12 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     showToast('Please enter your weight', context);
                   } else if(isNumeric(_weightController.text)) {
                     progressDialog.show(max: 100, msg: 'Loading...');
-                    addvitals(_weightController.text.toString());
+                    double entertedWeight = double.parse(_weightController.text.toString());
+
+                    if (unit == 'lbs') {
+                      entertedWeight = entertedWeight / 2.20462;
+                    }
+                    addvitals(entertedWeight.toStringAsFixed(1));
                   } else{
                     showToast('Please enter valid input', context);
                   }
@@ -1272,14 +1277,14 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   addvitals(String bodyWeight) async {
     try {
 
-      double entertedWeight = double.parse(bodyWeight);
+      /*double entertedWeight = double.parse(bodyWeight);
 
       if (unit == 'lbs') {
         entertedWeight = entertedWeight / 2.20462;
-      }
+      }*/
 
       final map = <String, dynamic>{};
-      map['BodyWeight'] = entertedWeight.toString();
+      map['BodyWeight'] = bodyWeight;
       map['PatientUserId'] = "";
       map['Unit'] = "kg";
 
@@ -1292,7 +1297,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         }
         _weightController.clear();
         _sharedPrefUtils.saveDouble(
-            'weight', double.parse(entertedWeight.toString()));
+            'weight', double.parse(bodyWeight.toString()));
         showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();

@@ -255,7 +255,7 @@ class GetHealthData {
   }
 
   String getWeight() {
-    return weight.toString();
+    return weight.toStringAsFixed(1);
   }
 
   String getHeight() {

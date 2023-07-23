@@ -35,7 +35,7 @@ class GetHealthData {
     startDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 11, 59, 59);
+        DateTime.now().day, 23, 59, 59);
     debugPrint('Start Date ==> $startDate');
     debugPrint('End Date ==> $endDate');
     if (Platform.isIOS) {
@@ -100,9 +100,9 @@ class GetHealthData {
       /// Filter out duplicates
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
-      /// Print the results
-      /* _healthDataList.forEach((x) {
-        //debugPrint('Data point:  ${x}');
+       //Print the results
+       /*_healthDataList.forEach((x) {
+        debugPrint('Data point:  ${x}');
         //steps += x.value.round();
       });*/
 
@@ -227,7 +227,7 @@ class GetHealthData {
   }
 
   String getHeartRate() {
-    return heartRate.toString();
+    return heartRate.toInt().toString();
   }
 
   String getBodyTemprature() {
@@ -235,7 +235,7 @@ class GetHealthData {
   }
 
   String getBloodGlucose() {
-    return bloodGlucose.toString();
+    return bloodGlucose.toInt().toString();
   }
 
   String getBloodOxygen() {
@@ -243,11 +243,11 @@ class GetHealthData {
   }
 
   String getBPSystolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureSystolic.toInt().toString();
   }
 
   String getBPDiastolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureDiastolic.toInt().toString();
   }
 
   int getExerciseTimeInMin() {

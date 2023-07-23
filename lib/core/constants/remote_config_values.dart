@@ -15,6 +15,7 @@ class RemoteConfigValues{
   static bool dashboardSymptomsVisibility = true;
   static bool dashboardVitalsVisibility = true;
   static bool healthDeviceConnectionVisibility = false;
+  static bool healthDataSync = false;
   static String minimumAppVersionRequired = '1.0.0';
   static String softUpdateNewAppVersion = '1.0.0';
 
@@ -28,6 +29,7 @@ class RemoteConfigValues{
     minimumAppVersionRequired = remoteConfig.getString('minimum_app_version_required');
     softUpdateNewAppVersion = remoteConfig.getString('soft_update_new_app_version');
     healthDeviceConnectionVisibility = remoteConfig.getBool('health_device_connection_visibility');
+    healthDataSync = remoteConfig.getBool('health_data_sync');
 
     var dashboardTileJsonArray =  remoteConfig.getValue('home_screen_tile');
     homeScreenTile = List<String>.from(jsonDecode(dashboardTileJsonArray.asString()));

@@ -118,7 +118,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
       if(RemoteConfigValues.healthDataSync) {
         if (getHealthData.getWeight() != '0.0') {
-          if (records.length == 0) {
+          if (records.isEmpty) {
             progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
             addvitals(getHealthData.getWeight().toString());
           } else{

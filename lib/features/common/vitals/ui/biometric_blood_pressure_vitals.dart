@@ -86,7 +86,7 @@ class _BiometricBloodPresureVitalsViewState
             .diastolic} ${getHealthData.getBPSystolic()} ${records
             .elementAt(0)
             .systolic} ${records.length}");*/
-          if (records.length == 0) {
+          if (records.isEmpty) {
             progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
             addvitals(getHealthData.getBPSystolic().toString(),
                 getHealthData.getBPDiastolic().toString());

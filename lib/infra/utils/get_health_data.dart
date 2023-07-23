@@ -251,7 +251,7 @@ class GetHealthData {
   }
 
   String getBPDiastolic() {
-    return bloodPressureSystolic.toInt().toString();
+    return bloodPressureDiastolic.toInt().toString();
   }
 
   HealthDataPoint getBPSystolicHealthDataPoint() {

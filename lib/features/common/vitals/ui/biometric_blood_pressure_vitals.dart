@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -49,6 +50,7 @@ class _BiometricBloodPresureVitalsViewState
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
     //getVitalsFromDevice();
     super.initState();
@@ -72,19 +74,43 @@ class _BiometricBloodPresureVitalsViewState
         TextPosition(offset: _systolicController.text.length),
       );
     }*/
-
-    if (getHealthData.getBPDiastolicHealthDataPoint().value != '0.0' && getHealthData.getBPSystolicHealthDataPoint().value != '0.0') {
-      if(getHealthData.getBPDiastolicHealthDataPoint().value != records.elementAt(0).diastolic && getHealthData.getBPSystolicHealthDataPoint().value != records.elementAt(0).systolic){
-        progressDialog.show(max: 100, msg: 'Please wait, data is syncing.');
-        addvitals(getHealthData.getBPSystolicHealthDataPoint().value.toInt().toString(),getHealthData.getBPDiastolicHealthDataPoint().value.toInt().toString());
+    try {
+      if(RemoteConfigValues.healthDataSync) {
+        if (getHealthData
+            .getBPDiastolicHealthDataPoint()
+            .value != '0.0' && getHealthData
+            .getBPSystolicHealthDataPoint()
+            .value != '0.0') {
+          /*debugPrint("If check ==> ${getHealthData.getBPDiastolic()} ${records
+            .elementAt(0)
+            .diastolic} ${getHealthData.getBPSystolic()} ${records
+            .elementAt(0)
+            .systolic} ${records.length}");*/
+          if (records.length == 0) {
+            progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+            addvitals(getHealthData.getBPSystolic().toString(),
+                getHealthData.getBPDiastolic().toString());
+          } else if (getHealthData.getBPDiastolic() != records
+              .elementAt(0)
+              .diastolic
+              .toString() && getHealthData.getBPSystolic() != records
+              .elementAt(0)
+              .systolic
+              .toString()) {
+            progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+            addvitals(getHealthData.getBPSystolic().toString(),
+                getHealthData.getBPDiastolic().toString());
+          }
+        }
       }
-
+    }catch (e){
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -1359,8 +1385,11 @@ class _BiometricBloodPresureVitalsViewState
 
       final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressures', map);
-      progressDialog.close();
+      //progressDialog.close();
       if (baseResponse.status == 'success') {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         showSuccessToast(baseResponse.message!, context);
         _systolicController.clear();
         _diastolicController.clear();
@@ -1410,6 +1439,9 @@ class _BiometricBloodPresureVitalsViewState
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('blood-pressures');
+      if(progressDialog.isOpen()) {
+        progressDialog.close();
+      }
       if (getMyVitalsHistory.status == 'success') {
         if(progressDialog.isOpen()) {
           progressDialog.close();

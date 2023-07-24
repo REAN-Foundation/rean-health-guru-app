@@ -123,7 +123,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             addvitals(getHealthData.getWeight().toString());
           } else{
             double roundValueByHealthApp = double.parse(getHealthData.getWeight()).roundToDouble();
-            double roundValueByDB = Conversion.kgToLbs(double.parse(records.elementAt(0).bodyWeight.toString())).roundToDouble();
+            double roundValueByDB = double.parse(records.elementAt(0).bodyWeight.toString()).roundToDouble();
 
             //debugPrint("Check ${roundValueByHealthApp.toString()} ${roundValueByDB.toString()}");
 

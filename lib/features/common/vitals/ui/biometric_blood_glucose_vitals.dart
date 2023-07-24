@@ -44,7 +44,7 @@ class _BiometricBloodSugarVitalsViewState
   @override
   void initState() {
     getVitalsHistory();
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 

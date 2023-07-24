@@ -140,6 +140,7 @@ class GetHealthData {
         steps = steps + p.value.toInt();
       } else if (p.typeString == 'WEIGHT') {
         if (p.value.toDouble() != 0) {
+          if(weight == 0)
           weight = p.value.toDouble();
         }
       } else if (p.typeString == 'HEIGHT') {
@@ -161,8 +162,10 @@ class GetHealthData {
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
         bloodGlucose = p.value.toDouble();
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
+        if(bloodPressureDiastolic == 0)
         bloodPressureDiastolic = p.value.toDouble();
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
+        if(bloodPressureSystolic == 0)
         bloodPressureSystolic = p.value.toDouble();
       } else if (p.typeString == 'BODY_TEMPERATURE') {
         if (p.value.toDouble() != 0) {
@@ -255,7 +258,7 @@ class GetHealthData {
   }
 
   String getWeight() {
-    return weight.toString();
+    return weight.toStringAsFixed(1);
   }
 
   String getHeight() {

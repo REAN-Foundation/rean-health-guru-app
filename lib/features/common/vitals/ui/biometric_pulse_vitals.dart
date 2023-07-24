@@ -43,7 +43,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   @override
   void initState() {
     getVitalsHistory();
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 

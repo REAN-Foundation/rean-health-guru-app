@@ -76,7 +76,7 @@ class _BiometricBloodPresureVitalsViewState
     }*/
     try {
       if(RemoteConfigValues.healthDataSync) {
-        if (getHealthData.getBPDiastolic() != '0.0' && getHealthData.getBPSystolic() != '0.0') {
+        if (getHealthData.getBPDiastolic() != '0' && getHealthData.getBPSystolic() != '0') {
           /*debugPrint("If check ==> ${getHealthData.getBPDiastolic()} ${records
             .elementAt(0)
             .diastolic} ${getHealthData.getBPSystolic()} ${records

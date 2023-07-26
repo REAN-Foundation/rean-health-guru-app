@@ -5,8 +5,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -23,6 +21,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/primary_light_color_container.dart';
+import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 //ignore: must_be_immutable
@@ -45,10 +44,33 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String? _fcmToken = '';
   bool loginOTP = false;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
-  OtpFieldController otpController = OtpFieldController();
+  //OtpFieldController otpController = OtpFieldController();
+  final focusNode = FocusNode();
+  TextEditingController otpController = TextEditingController();
+
+  var focusedBorderColor = primaryColor;
+  var fillColor = Color.fromRGBO(243, 246, 249, 0);
+  var borderColor = primaryLightColor;
+
+  final defaultPinTheme = PinTheme(
+    width: 56,
+    height: 56,
+    textStyle: const TextStyle(
+      fontSize: 22,
+      color: Color.fromRGBO(30, 60, 87, 1),
+    ),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(19),
+      border: Border.all(color: Colors.grey),
+    ),
+  );
 
   @override
   void initState() {
+    if (getAppType() == 'AHA') {
+      borderColor = redLightAha;
+    }
+    checkItenetConnection();
     _initPackageInfo();
     getDeviceData();
     mobileNumber = widget.mobileNumber;
@@ -89,7 +111,6 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   @override
   Widget build(BuildContext context) {
-    checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel?>(
         model: LoginViewModel(authenticationService: Provider.of(context)),
@@ -231,7 +252,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           SizedBox(
             height: 8,
           ),
-          OTPTextField(
+          otpWidget(),
+          /*OTPTextField(
             controller: otpController,
             contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
             length: 6,
@@ -244,10 +266,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             fieldStyle: FieldStyle.box,
             onCompleted: (pin) {
               otp = pin;
-              /* model.setBusy(true);
-              loginWithOTP(model);*/
+              *//* model.setBusy(true);
+              loginWithOTP(model);*//*
             },
-          ),
+          ),*/
           SizedBox(
             height: 16,
           ),
@@ -290,6 +312,92 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       ),
     );
   }
+
+  Widget otpWidget(){
+    return Directionality(
+      // Specify direction if desired
+      textDirection: TextDirection.ltr,
+      child: Pinput(
+        length: 6,
+        controller: otpController,
+        focusNode: focusNode,
+
+        androidSmsAutofillMethod:
+        AndroidSmsAutofillMethod.smsUserConsentApi,
+        listenForMultipleSmsOnAndroid: true,
+        defaultPinTheme: defaultPinTheme,
+       /* validator: (value) {
+          return value == '2222' ? null : 'Pin is incorrect';
+        },*/
+        // onClipboardFound: (value) {
+        //   debugPrint('onClipboardFound: $value');
+        //   pinController.setText(value);
+        // },
+        hapticFeedbackType: HapticFeedbackType.lightImpact,
+        onCompleted: (pin) {
+          otp = pin;
+          debugPrint('onCompleted: $pin');
+        },
+        onChanged: (value) {
+          debugPrint('onChanged: $value');
+        },
+        cursor: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 9),
+              width: 22,
+              height: 1,
+              color: focusedBorderColor,
+            ),
+          ],
+        ),
+        focusedPinTheme: defaultPinTheme.copyWith(
+          decoration: defaultPinTheme.decoration!.copyWith(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: focusedBorderColor),
+          ),
+        ),
+        submittedPinTheme: defaultPinTheme.copyWith(
+          decoration: defaultPinTheme.decoration!.copyWith(
+            color: fillColor,
+            borderRadius: BorderRadius.circular(19),
+            border: Border.all(color: focusedBorderColor),
+          ),
+        ),
+        errorPinTheme: defaultPinTheme.copyBorderWith(
+          border: Border.all(color: Colors.redAccent),
+        ),
+      ),
+    );
+  }
+
+
+  /*Widget otpWidget(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 60,
+          width: 390,
+          child: TextFormField(
+            controller: otpController,
+            maxLength: 6,
+            decoration: InputDecoration(
+              counterText: "",
+              labelStyle: TextStyle(
+                letterSpacing: 2.0,
+              ),
+            ),
+            keyboardType:
+            TextInputType.numberWithOptions(decimal: false, signed: false),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, letterSpacing: 48,),
+          ),
+        ),
+      ],
+    );
+  }*/
 
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
@@ -384,7 +492,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             'One-time PIN has been successfully sent on your mobile number',
             context);
         otpController.clear();
-        otpController.setFocus(0);
+        //otpController.setFocus(0);
         setState(() {});
         //model.setBusy(false);
       } else {

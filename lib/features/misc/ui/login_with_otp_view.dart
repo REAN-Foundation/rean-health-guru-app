@@ -68,6 +68,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();
     //}
+    UpdateChecker(context);
     cleanAllData();
     getRoleIdApi();
     firebase();
@@ -96,12 +97,16 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   cleanAllData(){
-    dailyCheckInDate = '';
-    carePlanEnrollmentForPatientGlobe = null;
-    _sharedPrefUtils.save('CarePlan', null);
-    _sharedPrefUtils.saveBoolean('login', null);
-    _sharedPrefUtils.clearAll();
-    chatList.clear();
+    try {
+      chatList.clear();
+      _sharedPrefUtils.clearAll();
+      dailyCheckInDate = '';
+      carePlanEnrollmentForPatientGlobe = null;
+      _sharedPrefUtils.save('CarePlan', null);
+      _sharedPrefUtils.saveBoolean('login', null);
+    }on FetchDataException catch(e){
+      debugPrint("Error ==> ${e.toString()}");
+    }
   }
 
   getRoleIdApi() async {
@@ -155,7 +160,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   @override
   Widget build(BuildContext context) {
     checkItenetConnection();
-    UpdateChecker(context);
     height = MediaQuery.of(context).size.height;
     //debugPrint('Height ==> $height');
     return BaseWidget<LoginViewModel?>(

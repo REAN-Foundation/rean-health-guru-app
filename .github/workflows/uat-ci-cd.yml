@@ -10,9 +10,6 @@ name: UAT Workflow
 # Controls when the workflow will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  
-  pull_request:
-    branches: main
     
   push:
     branches:
@@ -38,7 +35,6 @@ jobs:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   CodeScan-FlutterAnalyze:
-    if: ${{ github.event_name == 'push' }}
     environment: uat
     runs-on: ubuntu-latest
     steps:
@@ -66,23 +62,8 @@ jobs:
           flutter clean
           flutter analyze --preamble --congratulate
   
-  Label_Checks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          
-      - name: Check labels
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: docker://agilepathway/pull-request-label-checker:latest
-        with:
-           one_of: major,minor,patch
-           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   Android-BuildApp:
-    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest
@@ -146,7 +127,6 @@ jobs:
           retention-days: 14
 
   Android-Release-Alpha:
-    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: Android-BuildApp
     runs-on: ubuntu-latest
@@ -179,7 +159,6 @@ jobs:
           
 
   iOS-BuildApp:
-    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: macos-latest
@@ -243,7 +222,6 @@ jobs:
           retention-days: 14
 
   iOS-Release-Alpha:
-    if: ${{ github.event_name == 'push' }}
     environment: uat
     needs: iOS-BuildApp
     runs-on: macos-latest

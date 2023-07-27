@@ -35,7 +35,7 @@ class GetHealthData {
     startDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 11, 59, 59);
+        DateTime.now().day, 23, 59, 59);
     debugPrint('Start Date ==> $startDate');
     debugPrint('End Date ==> $endDate');
     if (Platform.isIOS) {
@@ -100,9 +100,9 @@ class GetHealthData {
       /// Filter out duplicates
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
-      /// Print the results
-      /* _healthDataList.forEach((x) {
-        //debugPrint('Data point:  ${x}');
+       //Print the results
+       /*_healthDataList.forEach((x) {
+        debugPrint('Data point:  ${x}');
         //steps += x.value.round();
       });*/
 
@@ -140,6 +140,7 @@ class GetHealthData {
         steps = steps + p.value.toInt();
       } else if (p.typeString == 'WEIGHT') {
         if (p.value.toDouble() != 0) {
+          if(weight == 0)
           weight = p.value.toDouble();
         }
       } else if (p.typeString == 'HEIGHT') {
@@ -161,8 +162,10 @@ class GetHealthData {
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
         bloodGlucose = p.value.toDouble();
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
+        if(bloodPressureDiastolic == 0)
         bloodPressureDiastolic = p.value.toDouble();
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
+        if(bloodPressureSystolic == 0)
         bloodPressureSystolic = p.value.toDouble();
       } else if (p.typeString == 'BODY_TEMPERATURE') {
         if (p.value.toDouble() != 0) {
@@ -227,7 +230,7 @@ class GetHealthData {
   }
 
   String getHeartRate() {
-    return heartRate.toString();
+    return heartRate.toInt().toString();
   }
 
   String getBodyTemprature() {
@@ -235,7 +238,7 @@ class GetHealthData {
   }
 
   String getBloodGlucose() {
-    return bloodGlucose.toString();
+    return bloodGlucose.toInt().toString();
   }
 
   String getBloodOxygen() {
@@ -243,11 +246,11 @@ class GetHealthData {
   }
 
   String getBPSystolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureSystolic.toInt().toString();
   }
 
   String getBPDiastolic() {
-    return bloodPressureSystolic.toString();
+    return bloodPressureDiastolic.toInt().toString();
   }
 
   int getExerciseTimeInMin() {
@@ -255,7 +258,7 @@ class GetHealthData {
   }
 
   String getWeight() {
-    return weight.toString();
+    return weight.toStringAsFixed(1);
   }
 
   String getHeight() {

@@ -909,7 +909,7 @@ class _BiometricBloodPresureVitalsViewState
                     Icons.delete_rounded,
                     color: primaryColor,
                     size: 24,
-                    semanticLabel: 'Blood Pressure Delete',
+                    semanticLabel: 'Blood Pressure Systolic '+ record.systolic.toString() + ' Diastolic ' + record.diastolic.toString()+' Delete',
                   ))
             ],
           ),

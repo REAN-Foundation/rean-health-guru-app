@@ -41,7 +41,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   AvailablePlans? carePlanTypes;
   String dob = '';
   String unformatedDOB = '';
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   String startDate = '';
   bool? carePlanEligibility = false;
@@ -89,6 +89,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       await model.getHealthSystemHospital(healthSystemId);
 
       if (systemHospitals.status == 'success') {
+        healthSystemHospitalList.clear();
         for (int i = 0;
         i < systemHospitals.data!.healthSystemHospitals!.length;
         i++) {
@@ -477,7 +478,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             height: 4,
           ),
           Semantics(
-            label: 'Select start date ' + dob,
+            label: 'Select start date format should be month, date, year ' + dob,
             button: true,
             hint: 'required',
             child: GestureDetector(

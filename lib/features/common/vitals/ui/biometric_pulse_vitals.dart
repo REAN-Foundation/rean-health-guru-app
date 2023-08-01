@@ -436,7 +436,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Pulse Rate Delete',
+                  semanticLabel: 'Pulse Rate '+record.pulse.toString() +' Delete',
                 ))
           ],
         ),

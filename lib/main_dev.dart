@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,6 +13,7 @@ import 'package:patient/infra/networking/chat_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_vitals_data.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +32,17 @@ Future<void> main() async {
   String? sponsor = prefs.getString('Sponsor');
   setSponsor(sponsor??'');
   runApp(MyApp(login));
+  if(login) {
+    GetVitalsData data =  GetVitalsData();
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      debugPrint("Inside 30 Sec");
+      if (Platform.isIOS) {
+        data.fetchData();
+      }
+    });
+  }
 }
+
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   bool? isLogin;

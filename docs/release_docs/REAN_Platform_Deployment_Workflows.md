@@ -59,9 +59,8 @@ The iOS-PublishAppInternally job will be performing the following steps:
 ## UAT-CI-CD
 Mode of trigger: ```Automated```
 
-There are two ways to use or trigger the uat-CI-CD workflow
-* By pushing code into the branch with a prefix of ``` release/** ```.
-* By raising Pull Request against the main branch.
+UAT Workflow is triggered automatically whenever the developer pushes code into the branch with a prefix of ```release/**```.
+
 
 Release Process Workflow Diagram.
 ![uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/uatWorkflow.png?raw=true)

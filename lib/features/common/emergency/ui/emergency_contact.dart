@@ -93,6 +93,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
           healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.add('None of the above');
         setState(() {});
       } else {
         //showToast(healthSystemPojo.message!, context);
@@ -345,12 +346,16 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           healthSystemGlobe = data.toString();
                           healthSystemHospitalGlobe = null;
                         });
-                        for(int i = 0 ; i < _healthSystems!.length ; i++ ){
-                          if(_healthSystems![i].name.toString() == data){
-                           getHealthSystemHospital(_healthSystems![i].id.toString());
+                        if(data == 'None of the above'){
+                          healthSystemHospitalList.add('None of the above');
+                        }else {
+                          for (int i = 0; i < _healthSystems!.length; i++) {
+                            if (_healthSystems![i].name.toString() == data) {
+                              getHealthSystemHospital(
+                                  _healthSystems![i].id.toString());
+                            }
                           }
                         }
-
                         setState(() {});
                       },
                     ),

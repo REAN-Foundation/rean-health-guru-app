@@ -113,7 +113,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         size: 24,
                         color: widget._currentIndex == 0
                             ? Colors.white
-                            : Colors.grey,
+                            : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -125,7 +125,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         style: TextStyle(
                             color: widget._currentIndex == 0
                                 ? Colors.white
-                                : Colors.grey,
+                                : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

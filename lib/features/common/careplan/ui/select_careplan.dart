@@ -1139,6 +1139,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                         });
 
                         if(data == 'None of the above'){
+                         healthSystemHospitalList.clear();
                          healthSystemHospitalList.add('None of the above');
                         }else {
                           for (int i = 0; i < _healthSystems!.length; i++) {

@@ -347,6 +347,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           healthSystemHospitalGlobe = null;
                         });
                         if(data == 'None of the above'){
+                          healthSystemHospitalList.clear();
                           healthSystemHospitalList.add('None of the above');
                         }else {
                           for (int i = 0; i < _healthSystems!.length; i++) {

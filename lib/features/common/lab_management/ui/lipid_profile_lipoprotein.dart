@@ -420,7 +420,7 @@ class _LipidProfileLipoproteinViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Lp(a) Delete',
+                  semanticLabel: 'Lp(a) '+ record.primaryValue.toString() +' Delete',
                 ))
           ],
         ),

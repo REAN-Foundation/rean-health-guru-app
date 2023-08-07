@@ -54,6 +54,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   var healthSystemHospitalList = <String>[];
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  var healthSystem;
+  var healthSystemHospital;
 
   getEmergencyTeam() async {
     try {
@@ -93,9 +95,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
           healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.add('None of the above');
         setState(() {});
       } else {
-        showToast(healthSystemPojo.message!, context);
+        //showToast(healthSystemPojo.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -111,7 +114,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       await model.getHealthSystemHospital(healthSystemId);
 
       if (systemHospitals.status == 'success') {
-
+        healthSystemHospitalList.clear();
         for(int i = 0 ; i < systemHospitals.data!.healthSystemHospitals!.length ; i++ ){
           healthSystemHospitalList.add(systemHospitals.data!.healthSystemHospitals![i].name.toString());
         }
@@ -167,6 +170,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   void initState() {
     if(carePlanEnrollmentForPatientGlobe != null) {
       getHealthSystem();
+      healthSystem = healthSystemGlobe;
+      healthSystemHospital = healthSystemHospitalGlobe;
     }
     loadSharedPrefs();
     getEmergencyTeam();
@@ -175,7 +180,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('##########################${RemoteConfigValues.hospitalSystemVisibility}');
     return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -213,7 +217,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       SizedBox(width: 8,),
                     ],
                   ),
-                  healthSystem(),
+                    healthSystemWidget(),
                   ],
                   Row(
                     children: [
@@ -296,7 +300,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     );
   }
 
-  Widget healthSystem(){
+  Widget healthSystemWidget(){
     debugPrint('Health System Globe ==> $healthSystemGlobe');
     debugPrint('Health System Hospital Globe ==> $healthSystemHospitalGlobe');
     return Padding(
@@ -329,29 +333,34 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     label: 'Select Health System',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: healthSystemGlobe,
+                      value: healthSystem,
                       items: healthSystemList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemGlobe ?? 'Choose an option'),
+                      hint: Text(healthSystem ?? 'Choose an option'),
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
                           'health_system': data,
                         },);
                         debugPrint(data);
                         setState(() {
-                          healthSystemGlobe = data.toString();
-                          healthSystemHospitalGlobe = null;
+                          healthSystem = data.toString();
+                          healthSystemHospital = null;
                         });
-                        for(int i = 0 ; i < _healthSystems!.length ; i++ ){
-                          if(_healthSystems![i].name.toString() == data){
-                           getHealthSystemHospital(_healthSystems![i].id.toString());
+                        if(data == 'None of the above'){
+                          healthSystemHospitalList.clear();
+                          healthSystemHospitalList.add('None of the above');
+                        }else {
+                          for (int i = 0; i < _healthSystems!.length; i++) {
+                            if (_healthSystems![i].name.toString() == data) {
+                              getHealthSystemHospital(
+                                  _healthSystems![i].id.toString());
+                            }
                           }
                         }
-
                         setState(() {});
                       },
                     ),
@@ -385,21 +394,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     label: 'Select Hospital',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: healthSystemHospitalGlobe,
+                      value: healthSystemHospital,
                       items: healthSystemHospitalList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value, maxLines: 2, overflow: TextOverflow.ellipsis,),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
+                      hint: Text(healthSystemHospital ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
                           'select_hospital': data,
                         },);
                         debugPrint(data);
                         setState(() {
-                          healthSystemHospitalGlobe = data.toString();
+                          healthSystemHospital = data.toString();
                         });
                         setState(() {});
                         updateHospitalSystem();
@@ -625,7 +634,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: Container(
-          height: 90,
+          height: 142,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -655,10 +664,103 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   ),
                 ),
               ),
+              SizedBox(height: 8,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel ',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'emergency_cancel_button_click');
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 32,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                  Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Save',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'emergency_submit_button_click');
+                              if (emergencyDetailsTextControler.text.trim().isEmpty) {
+                                showToastMsg('Please enter hospitalization details', context);
+                              } else {
+                                addMedicalEmergencyEvent(
+                                    emergencyDetailsTextControler.text.trim());
+                                Navigator.of(context, rootNavigator: true).pop();
+                                emergencyDetailsTextControler.clear();
+                              }
+                            },
+                            child: Container(
+                              height: 32,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                  Border.all(color: primaryColor, width: 1),
+                                  color: primaryColor),
+                              child: Center(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
             ],
           ),
         ),
-        actions: <Widget>[
+        /*actions: <Widget>[
           TextButton(
               child: const Text('Cancel'),
               onPressed: () {
@@ -678,7 +780,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   emergencyDetailsTextControler.clear();
                 }
               })
-        ],
+        ],*/
       ),
     );
   }
@@ -912,18 +1014,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            Semantics(
-                              label: "Phone: " +
-                                  details.contactPerson!.phone!
-                                      .replaceAllMapped(RegExp(r".{1}"),
-                                          (match) => "${match.group(0)} "),
-                              child: ExcludeSemantics(
-                                child: Text(details.contactPerson!.phone!,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: primaryColor)),
-                              ),
+                            Text(details.contactPerson!.phone!,
+                                semanticsLabel: "Phone: " +
+                                    details.contactPerson!.phone!
+                                        .replaceAllMapped(RegExp(r".{1}"),
+                                            (match) => "${match.group(0)} "),
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: primaryColor),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(
                               height: 4,
@@ -1850,8 +1951,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   updateHospitalSystem() async {
 
     final map = <String, dynamic>{};
-    map['HealthSystem'] = healthSystemGlobe;
-    map['AssociatedHospital'] = healthSystemHospitalGlobe;
+    map['HealthSystem'] = healthSystem;
+    map['AssociatedHospital'] = healthSystemHospital;
 
     try {
       final BaseResponse updateProfileSuccess = await model
@@ -1859,8 +1960,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
       if (updateProfileSuccess.status == 'success') {
         showSuccessToast('Patient Health System details updated successfully!', context);
-
-
+        healthSystemGlobe = healthSystem;
+        healthSystemHospitalGlobe = healthSystemHospital;
         getPatientDetails();
         //Navigator.pushNamed(context, RoutePaths.Home);
       } else {

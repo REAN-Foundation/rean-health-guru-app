@@ -794,7 +794,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Weight Delete',
+                  semanticLabel: 'Weight ' +unit == 'lbs'
+                      ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                      .toStringAsFixed(1)
+                      : record.bodyWeight.toString()+ 'Delete',
                 ))
           ],
         ),

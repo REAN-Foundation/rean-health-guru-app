@@ -852,23 +852,134 @@ class _MyReportsViewState extends State<MyReportsView> {
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: Container(
+          height: 116,
           width: MediaQuery.of(context).size.width,
-          child: Semantics(
-            label: 'renameText',
-            child: TextField(
-              controller: renameControler,
-              autofocus: true,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                  color: Colors.black),
-              decoration: InputDecoration(
-                  labelText: 'Enter new file name', hintText: ''),
-            ),
+          child: Column(
+            children: [
+              Semantics(
+                label: 'renameText',
+                child: TextField(
+                  controller: renameControler,
+                  autofocus: true,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0,
+                      color: Colors.black),
+                  decoration: InputDecoration(
+                      labelText: 'Enter new file name', hintText: ''),
+                ),
+              ),
+              SizedBox(height: 8,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel ',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'upload_report_rename_dialog_cancel_button_click');
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 32,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                  Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Save',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'upload_report_rename_dialog_save_button_click');
+                              final String enteredFileName = renameControler.text;
+                              final String fileExtention = enteredFileName.split('.').last;
+                              final String newFileName =
+                              renameControler.text.replaceAll('.' + fileExtention, '');
+
+                              debugPrint('New FileName ==> $newFileName');
+                              debugPrint('fileExtention ==> $fileExtention');
+                              debugPrint('enteredFileName ==> $enteredFileName');
+                              debugPrint('EnteredFileName Length ==> ${enteredFileName.length}');
+
+                              if (document.fileName == renameControler.text) {
+                                showSuccessToast('Document renamed successfully ', context);
+                                Navigator.of(context, rootNavigator: true).pop();
+                              } else if (newFileName == '') {
+                                showToastMsg('Please enter valid file name', context);
+                              } else if (enteredFileName.length > 64) {
+                                showToastMsg(
+                                    'Record name cannot be more than 64 character', context);
+                              } else {
+                                renameDocument(document.id!, renameControler.text);
+                                Navigator.of(context, rootNavigator: true).pop();
+                              }
+                            },
+                            child: Container(
+                              height: 32,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                  Border.all(color: primaryColor, width: 1),
+                                  color: primaryColor),
+                              child: Center(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        actions: <Widget>[
+        /*actions: <Widget>[
           TextButton(
               child: const Text('Cancel'),
               onPressed: () {
@@ -900,7 +1011,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   Navigator.of(context, rootNavigator: true).pop();
                 }
               })
-        ],
+        ],*/
       ),
     );
   }

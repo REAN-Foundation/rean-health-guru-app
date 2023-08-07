@@ -418,7 +418,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'HDL Delete',
+                  semanticLabel: 'HDL '+ record.primaryValue.toString() +' Delete',
                 ))
           ],
         ),

@@ -914,7 +914,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: primaryColor),
-                semanticsLabel: name,
+                semanticsLabel: 'Name ' + name,
               ),
             ),
             SizedBox(

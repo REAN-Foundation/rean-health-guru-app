@@ -503,6 +503,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
+                countries: getAppFlavour() == 'Heart & Stroke Helper™ ' ? ['US'] : getAppFlavour() == 'HF Helper' ? ['US']  :null,
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
                   debugPrint(phone.number);

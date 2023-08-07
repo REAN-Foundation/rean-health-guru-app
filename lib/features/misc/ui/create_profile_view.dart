@@ -771,7 +771,7 @@ class _CreateProfileState extends State<CreateProfile> {
             height: 10,
           ),
           Semantics(
-            label: 'Date of Birth ' + dob,
+            label: dob == '' ? 'Date of Birth format should be month, date, year' : 'Date of Birth ' + dob,
             button: true,
             hint: 'required',
             child: GestureDetector(

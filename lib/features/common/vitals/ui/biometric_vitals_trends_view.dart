@@ -108,7 +108,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_heart_biometric.png'),
                         size: 24,
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -117,7 +117,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         'Record Vitals',
                         style: TextStyle(
                             color:
-                                _currentIndex == 0 ? Colors.white : Colors.grey,
+                                _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

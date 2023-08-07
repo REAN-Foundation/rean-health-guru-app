@@ -41,7 +41,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   AvailablePlans? carePlanTypes;
   String dob = '';
   String unformatedDOB = '';
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   String startDate = '';
   bool? carePlanEligibility = false;
@@ -69,6 +69,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           healthSystemList
               .add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.add('None of the above');
         setState(() {});
       } else {
         progressDialog.close();
@@ -89,6 +90,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       await model.getHealthSystemHospital(healthSystemId);
 
       if (systemHospitals.status == 'success') {
+        healthSystemHospitalList.clear();
         for (int i = 0;
         i < systemHospitals.data!.healthSystemHospitals!.length;
         i++) {
@@ -477,7 +479,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             height: 4,
           ),
           Semantics(
-            label: 'Select start date ' + dob,
+            label: 'Select start date format should be month, date, year ' + dob,
             button: true,
             hint: 'required',
             child: GestureDetector(
@@ -879,8 +881,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           showToast('Please select Health Journey', context);
                         } else if (startDate == '') {
                           showToast('Please select start date', context);
-                        } else if (carePlanEligibility!) {
+                        } else if(healthSystemList.isNotEmpty && healthSystemGlobe == null){
+                          showToast('Please select Health System', context);
+                        }else if(healthSystemList.isNotEmpty && healthSystemHospitalGlobe == null ){
+                          showToast('Please select Hospital', context);
+                        }else if (carePlanEligibility!) {
                           startCarePlan();
+                          updateHospitalSystem();
                           _updatePatientMedicalProfile(carePlanTypes!.name.toString());
                         } else {
                           //showToast(carePlanEligibilityMsg.toString(), context);
@@ -1078,10 +1085,20 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Select Health System',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              Text(
+                'Select Health System',
+                style: TextStyle(
+                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           const SizedBox(
             height: 4,
@@ -1121,10 +1138,15 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           healthSystemHospitalGlobe = null;
                         });
 
-                        for (int i = 0; i < _healthSystems!.length; i++) {
-                          if (_healthSystems![i].name.toString() == data) {
-                            getHealthSystemHospital(
-                                _healthSystems![i].id.toString());
+                        if(data == 'None of the above'){
+                         healthSystemHospitalList.clear();
+                         healthSystemHospitalList.add('None of the above');
+                        }else {
+                          for (int i = 0; i < _healthSystems!.length; i++) {
+                            if (_healthSystems![i].name.toString() == data) {
+                              getHealthSystemHospital(
+                                  _healthSystems![i].id.toString());
+                            }
                           }
                         }
 
@@ -1139,10 +1161,20 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           SizedBox(
             height: 16,
           ),
-          Text(
-            'Select Hospital',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              Text(
+                'Select Hospital',
+                style: TextStyle(
+                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           const SizedBox(
             height: 4,
@@ -1181,7 +1213,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           healthSystemHospitalGlobe = data.toString();
                         });
                         setState(() {});
-                        updateHospitalSystem();
+                        //updateHospitalSystem();
                       },
                     ),
                   ),

@@ -21,6 +21,7 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_outlined_screen.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -54,7 +55,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
-
+  late ProgressDialog progressDialog;
 
 /*  Weight weight;
   BloodPressure bloodPressure;
@@ -86,6 +87,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     loadSharedPrefs();
     model.setBusy(true);
     Future.delayed(
@@ -387,6 +389,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              progressDialog.show(max: 100, msg: 'Loading...');
                               FirebaseAnalytics.instance.logEvent(name: 'symptoms_worse_button_click');
                               recordHowAreYouFeeling(-1);
                               //Navigator.pushNamed(context, RoutePaths.Symptoms);
@@ -3260,7 +3263,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
           await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.close();
+
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
           showSuccessToast('Good to hear that', context);
@@ -3270,12 +3273,13 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
           getSymptomAssesmentTemplete();
         }
       } else {
+        progressDialog.close();
         showToast(baseResponse.error!, context);
         //progressDialog.close();
         // showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      //progressDialog.close();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -3290,6 +3294,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
       debugPrint(
           'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
+        progressDialog.close();
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
                 .data!.symptomAssessmentTemplates!.items!
@@ -3297,9 +3302,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                 .id);
         setState(() {});
       } else {
+        progressDialog.close();
         //showToast(knowledgeTopicResponse.message);
       }
     } on FetchDataException catch (e) {
+      progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});

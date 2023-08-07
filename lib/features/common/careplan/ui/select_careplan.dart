@@ -1118,6 +1118,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ),
                   child: Semantics(
                     label: 'Select your health system',
+                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemGlobe,
@@ -1194,6 +1195,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ),
                   child: Semantics(
                     label: 'Select Hospital',
+                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemHospitalGlobe,

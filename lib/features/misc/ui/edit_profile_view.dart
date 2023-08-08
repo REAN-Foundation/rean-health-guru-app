@@ -1763,58 +1763,61 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: textGrey,
-                width: 1.0,
+    return MergeSemantics(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                border: Border.all(
+                  color: textGrey,
+                  width: 1.0,
+                ),
               ),
-            ),
-            child: Semantics(
-              label: 'First Name ' + _firstNameController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _firstNameController,
-                  focusNode: _firstNameFocus,
-                  maxLines: 1,
-                  keyboardType: TextInputType.name,
-                  enabled: false,
-                  style: TextStyle(
-                    color: textGrey,
-                  ),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
-            ),
-          )
-        ],
+              child: Semantics(
+                label:  _firstNameController.text.toString(),//'First Name ' +
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _firstNameController,
+                    focusNode: _firstNameFocus,
+                    maxLines: 1,
+                    keyboardType: TextInputType.name,
+                    enabled: false,
+                    style: TextStyle(
+                      color: textGrey,
+                    ),
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget _entryLastNameField(String title, {bool isPassword = false}) {
-    return Container(
+    return MergeSemantics(
+      child : Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1837,7 +1840,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Last Name ' + _lastNameController.text.toString(),
+              label:  _lastNameController.text.toString(), //'Last Name ' +
               child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   obscureText: isPassword,
@@ -1862,7 +1865,7 @@ class _EditProfileState extends State<EditProfile> {
           )
         ],
       ),
-    );
+    ));
   }
 
   Widget _entryLocalityField(String title, {bool isPassword = false}) {
@@ -1892,7 +1895,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'City ' + _cityController.text.toString(),
+              label: isEditable && _cityController.text.toString().isNotEmpty ?  'City ' + _cityController.text.toString() : '',
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2000,9 +2003,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Postal Code ' +
+              label: isEditable && _postalCodeController.text.toString().isNotEmpty ?  'Postal Code ' +
                   _postalCodeController.text.toString().replaceAllMapped(
-                      RegExp(r".{1}"), (match) => "${match.group(0)} "),
+                      RegExp(r".{1}"), (match) => "${match.group(0)} ") : '',
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2011,6 +2014,9 @@ class _EditProfileState extends State<EditProfile> {
                     controller: _postalCodeController,
                     focusNode: _postalFocus,
                     keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     maxLines: 1,
                     enabled: isEditable,
                     textInputAction: TextInputAction.done,
@@ -2056,7 +2062,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Address ' + _addressController.text.toString(),
+              label: isEditable && _addressController.text.toString().isNotEmpty ?  'Address ' + _addressController.text.toString() : '',
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2111,7 +2117,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: "Email " + _emailController.text.toString(),
+              label: isEditable && _emailController.text.toString().isNotEmpty ?  "Email " + _emailController.text.toString() : '',
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(

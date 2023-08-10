@@ -33,12 +33,11 @@ jobs:
     name: GitGuardian Scan
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         id: checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+          fetch-depth: 0
       - name: GitGuardian Scan
         uses: GitGuardian/gg-shield-action@master
         env:

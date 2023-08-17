@@ -694,6 +694,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
     healthData = GetIt.instance<GetHealthData>();
+
     if (dailyCheckInDate != dateFormat.format(DateTime.now()) || dailyCheckInDate == '') {
       debugPrint('Inside Daily Check Inside Date');
       showMaterialModalBottomSheet(

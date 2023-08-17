@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
@@ -24,11 +27,15 @@ class GetVitalsData {
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 23, 59, 59);
+    debugPrint('<== Vitals ==>');
     debugPrint('Start Date ==> $startDate');
     debugPrint('End Date ==> $endDate');
-    /*if (Platform.isIOS) {
-      fetchData();
-    }*/
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      debugPrint("Inside 30 Sec");
+      if (Platform.isIOS) {
+        fetchData();
+      }
+    });
   }
 
   Future<void> fetchData() async {

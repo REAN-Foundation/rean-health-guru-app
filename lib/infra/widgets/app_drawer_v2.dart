@@ -763,25 +763,22 @@ class _AppDrawerState extends State<AppDrawerV2> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(
-              flex: 4,
-              child: Container(
-                width: 68.0,
-                height: 68.0,
-                decoration: BoxDecoration(
-                  color: const Color(0xff7c94b6),
-                  image: DecorationImage(
-                    image: (profileImage == ''
-                        ? AssetImage('res/images/profile_placeholder.png')
-                        : CachedNetworkImageProvider(profileImage))
-                    as ImageProvider<Object>,
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  border: Border.all(
-                    color: primaryColor,
-                    width: 1.0,
-                  ),
+            Container(
+              width: 68.0,
+              height: 68.0,
+              decoration: BoxDecoration(
+                color: const Color(0xff7c94b6),
+                image: DecorationImage(
+                  image: (profileImage == ''
+                      ? AssetImage('res/images/profile_placeholder.png')
+                      : CachedNetworkImageProvider(profileImage))
+                  as ImageProvider<Object>,
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                border: Border.all(
+                  color: primaryColor,
+                  width: 1.0,
                 ),
               ),
             ),
@@ -789,7 +786,6 @@ class _AppDrawerState extends State<AppDrawerV2> {
               width: 16,
             ),
             Expanded(
-              flex: 9,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,

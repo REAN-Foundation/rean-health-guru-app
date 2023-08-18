@@ -1,0 +1,26 @@
+name: Tag Creation
+
+on:
+  push:
+    branches:
+      - feature/add_tag
+
+
+jobs:
+  Tag:
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+
+      - name: New Release Publish
+        id: new_publish
+        uses: release-drafter/release-drafter@v5
+        with:
+          tag: v1.8.267
+          publish : true
+        env:
+           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+      

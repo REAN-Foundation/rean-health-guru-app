@@ -105,10 +105,12 @@ class _AppDrawerState extends State<AppDrawerV2> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _createHeader(),
+              SizedBox(height: 16,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Divider(thickness: 0.2, color: textGrey,),
               ),
+              SizedBox(height: 16,),
               _menuItems(),
               _footer(),
 
@@ -158,7 +160,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_profile.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -190,7 +192,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_medical_profile.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -258,7 +260,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_medication.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -292,9 +294,8 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       children: <Widget>[
                         ImageIcon(
                           AssetImage('res/images/ic_drawer_profile.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
-                          semanticLabel: 'FAQ',
                         ),
                         SizedBox(
                           width: 8,
@@ -359,7 +360,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                         ExcludeSemantics(
                           child: ImageIcon(
                             AssetImage('res/images/ic_drawer_health_journey.png'),
-                            size: 32,
+                            size: 40,
                             color: primaryColor,
                           ),
                         ),
@@ -393,7 +394,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_achivement.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -496,12 +497,12 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_connect_health_device.png'),
-                          size: 24,
+                          size: 32,
                           color: primaryColor,
                         ),
                       ),
                       SizedBox(
-                        width: 14,
+                        width: 12,
                       ),
                       Text("Connect Health Device", style: TextStyle(
                           color: textBlack, fontWeight: FontWeight.w700),),
@@ -527,7 +528,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                         ExcludeSemantics(
                           child: ImageIcon(
                             AssetImage('res/images/ic_drawer_about_us.png'),
-                            size: 32,
+                            size: 40,
                             color: primaryColor,
                           ),
                         ),
@@ -560,7 +561,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_contact_us.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -594,7 +595,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                         ExcludeSemantics(
                           child: ImageIcon(
                             AssetImage('res/images/ic_drawer_contact_us.png'),
-                            size: 32,
+                            size: 40,
                           ),
                         ),
                         SizedBox(
@@ -626,7 +627,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       ExcludeSemantics(
                         child: ImageIcon(
                           AssetImage('res/images/ic_drawer_logout.png'),
-                          size: 32,
+                          size: 40,
                           color: primaryColor,
                         ),
                       ),
@@ -676,7 +677,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w200,
-                      color: primaryColor),
+                      color: textBlack),
                 ),
               ],
             ),

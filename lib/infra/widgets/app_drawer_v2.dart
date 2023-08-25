@@ -380,36 +380,39 @@ class _AppDrawerState extends State<AppDrawerV2> {
             ),
             Visibility(
               visible: true,
-              child: InkWell(
-                onTap: () {
-                  FirebaseAnalytics.instance.logEvent(name: 'navigation_achievement_button_click');
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.ACHIEVEMENT);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      ExcludeSemantics(
-                        child: ImageIcon(
-                          AssetImage('res/images/ic_drawer_achivement.png'),
-                          size: 40,
-                          color: primaryColor,
+              child: Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'navigation_achievement_button_click');
+                    Navigator.popAndPushNamed(
+                        context, RoutePaths.ACHIEVEMENT);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        ExcludeSemantics(
+                          child: ImageIcon(
+                            AssetImage('res/images/ic_drawer_achivement.png'),
+                            size: 40,
+                            color: primaryColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Hero(
-                        tag: 'header',
-                        child: Text(
-                          'Achievements',
-                          style: TextStyle(
-                              color: textBlack, fontWeight: FontWeight.w700),
+                        SizedBox(
+                          width: 8,
                         ),
-                      ),
-                    ],
+                        Hero(
+                          tag: 'header',
+                          child: Text(
+                            'Achievements',
+                            style: TextStyle(
+                                color: textBlack, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -478,35 +481,38 @@ class _AppDrawerState extends State<AppDrawerV2> {
 
             Visibility(
               visible: RemoteConfigValues.healthDeviceConnectionVisibility,
-              child: InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
-                  //progressDialog!.show(max: 100, msg: 'Loading...');
-                  //generateSeesionId();
-                  //initTerraWebView('https://widget.tryterra.co/session/ca5757dc-8297-4d8c-b1d8-c246239ac705');
-                  //initTerraFunctionState();
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 4,
-                      ),
-                      ExcludeSemantics(
-                        child: ImageIcon(
-                          AssetImage('res/images/ic_drawer_connect_health_device.png'),
-                          size: 32,
-                          color: primaryColor,
+              child: Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
+                    //progressDialog!.show(max: 100, msg: 'Loading...');
+                    //generateSeesionId();
+                    //initTerraWebView('https://widget.tryterra.co/session/ca5757dc-8297-4d8c-b1d8-c246239ac705');
+                    //initTerraFunctionState();
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 4,
                         ),
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text("Connect Health Device", style: TextStyle(
-                          color: textBlack, fontWeight: FontWeight.w700),),
-                    ],
+                        ExcludeSemantics(
+                          child: ImageIcon(
+                            AssetImage('res/images/ic_drawer_connect_health_device.png'),
+                            size: 32,
+                            color: primaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Connect Health Device", style: TextStyle(
+                            color: textBlack, fontWeight: FontWeight.w700),),
+                      ],
+                    ),
                   ),
                 ),
               ),

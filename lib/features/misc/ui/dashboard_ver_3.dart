@@ -1,7 +1,8 @@
 
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
@@ -1515,12 +1516,12 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       onTap: () async {
                         final String url =
                             'https://supportnetwork.heart.org/s/';
-
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url));
-                  } else {
-                    throw 'Could not launch $url';
-                  }
+                        initWebView(url);
+                  // if (await canLaunchUrl(Uri.parse(url))) {
+                  //   await launchUrl(Uri.parse(url));
+                  // } else {
+                  //   throw 'Could not launch $url';
+                  // }
                 },
                 child: RichText(
                   text: TextSpan(
@@ -1550,7 +1551,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                      : RichText(
+                      : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: topicName.toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 14),
+                            ),
+                          ),
+                          Linkify(
+                onOpen: (link) async {
+                  initWebView(link.url);
+                },
+                options: LinkifyOptions(humanize: false),
+                text: briefInformation.toString(),
+                maxLines: 2,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontFamily: 'Montserrat'),
+                linkStyle: TextStyle(color: hyperLinkTextColor),
+              ),
+                        ],
+                      ),
+              /*RichText(
                           text: TextSpan(
                             text: topicName.toString(),
                             style: TextStyle(
@@ -1568,12 +1599,42 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
-                        ),
+                        ),*/
             ),
           ],
         ),
       ),
     );
+  }
+
+  initWebView(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await custom_web_wiew.launch(url,
+        customTabsOption: custom_web_wiew.CustomTabsOption(
+          toolbarColor: primaryColor,
+          enableDefaultShare: true,
+          enableUrlBarHiding: true,
+          showPageTitle: true,
+          animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
+          extraCustomTabs: const <String>[
+            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+            'org.mozilla.firefox',
+            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+            'com.microsoft.emmx',
+          ],
+        ),
+        safariVCOption: custom_web_wiew.SafariViewControllerOption(
+          preferredBarTintColor: primaryColor,
+          preferredControlTintColor: Colors.white,
+          barCollapsingEnabled: false,
+          entersReaderIfAvailable: false,
+          dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } else {
+      showToast('Could not launch $url', context);
+      //throw 'Could not launch $url';
+    }
   }
 
   // Display My Biometric

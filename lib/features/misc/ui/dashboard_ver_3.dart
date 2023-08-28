@@ -1571,7 +1571,6 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                 },
                 options: LinkifyOptions(humanize: false),
                 text: briefInformation.toString(),
-                maxLines: 2,
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,

@@ -11,6 +11,7 @@ import 'package:health/health.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/core/dbUtils/database_helper.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
@@ -32,6 +33,7 @@ class SplashScreen extends StatefulWidget {
   final ImageProvider? imageBackground;
   final Gradient? gradientBackground;
   final String? baseUrl;
+  final dbHelper = DatabaseHelper.instance;
 
   SplashScreen(
       {this.loaderColor,
@@ -153,6 +155,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }*/
 
       if (getSessionFlag()) {
+        initilizaHealthDataServiecs();
         Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
       } else {
         if (getAppType() == 'AHA') {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/infra/db_utils/database_helper.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 
@@ -35,7 +34,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   final _consumedCaloriesController = TextEditingController();
   final _nutritionNameFocus = FocusNode();
   final __consumedCaloriesFocus = FocusNode();
-  final dbHelper = DatabaseHelper.instance;
+  //final dbHelper = DatabaseHelper.instance;
   int allNutritionCount = 0;
   var nutritionList = <Map<String, dynamic>>[];
   int selectedIndex = 30000;
@@ -43,8 +42,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   var hintFoodCalories = '44 calories';
 
   getNutririonEntry() async {
-    nutritionList = await dbHelper
-        .querySelectOrderByConsumedQuantity(widget._nutritionName);
+    /*nutritionList = await dbHelper
+        .querySelectOrderByConsumedQuantity(widget._nutritionName);*/
     print('Query row: ${nutritionList.length}');
     allNutritionCount = nutritionList.length;
 
@@ -309,7 +308,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Text(row[DatabaseHelper.columnNutritionFoodItemName],
+                child: Text('',//row[DatabaseHelper.columnNutritionFoodItemName],
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -461,7 +460,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(right: 24.0),
-                    child: Text(row[DatabaseHelper.columnNutritionFoodItemName],
+                    child: Text('',//row[DatabaseHelper.columnNutritionFoodItemName],
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -486,7 +485,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
               ),
             ),
             Semantics(
-              label: row[DatabaseHelper.columnNutritionFoodItemCalories]
+              label: ''//row[DatabaseHelper.columnNutritionFoodItemCalories]
                       .toString() +
                   ' Calories',
               child: ExcludeSemantics(
@@ -496,7 +495,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                       width: 4,
                     ),
                     Text(
-                      row[DatabaseHelper.columnNutritionFoodItemCalories]
+                      ''//row[DatabaseHelper.columnNutritionFoodItemCalories]
                           .toString(),
                       semanticsLabel: '',
                       style: TextStyle(
@@ -532,17 +531,17 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                 child: IconButton(
                   onPressed: () async {
                     selectedIndex = index;
-                    _nutritionNameController.text =
-                        row[DatabaseHelper.columnNutritionFoodItemName];
+                    /*_nutritionNameController.text =
+                        '',row[DatabaseHelper.columnNutritionFoodItemName];*/
                     _nutritionNameController.selection =
                         TextSelection.fromPosition(
                       TextPosition(
                           offset: _nutritionNameController.text.length),
                     );
 
-                    _consumedCaloriesController.text =
+                    /*_consumedCaloriesController.text =
                         row[DatabaseHelper.columnNutritionFoodItemCalories]
-                            .toString();
+                            .toString();*/
                     _consumedCaloriesController.selection =
                         TextSelection.fromPosition(
                       TextPosition(
@@ -555,7 +554,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                     index == selectedIndex ? Icons.check : Icons.add,
                     color: index == selectedIndex ? Colors.white : primaryColor,
                     semanticLabel: 'Add ' +
-                        row[DatabaseHelper.columnNutritionFoodItemName] +
+                        //row[DatabaseHelper.columnNutritionFoodItemName] +
                         ' in food name',
                     size: 32,
                   ),

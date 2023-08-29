@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 
 import 'common_utils.dart';
 
 class GetVitalsData {
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -23,13 +25,26 @@ class GetVitalsData {
   double heartRate = 0;
 
   GetVitalsData() {
-    startDate = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
-    endDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 23, 59, 59);
-    debugPrint('<== Vitals ==>');
+    setDate();
+  }
+
+  setDate() async {
+    DateTime savedDate;
+    try {
+      savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')) ;
+      debugPrint('Saved Date: $savedDate');
+    } catch (e) {
+      savedDate = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+      debugPrint('Saved Date Error: $e');
+    }
+
+    startDate = savedDate;
+
+
+    /*debugPrint('<== Vitals ==>');
     debugPrint('Start Date ==> $startDate');
-    debugPrint('End Date ==> $endDate');
+    debugPrint('End Date ==> $endDate');*/
     Timer.periodic(Duration(seconds: 10), (timer) {
       debugPrint("Inside 30 Sec");
       if (Platform.isIOS) {
@@ -62,6 +77,10 @@ class GetVitalsData {
 
     //this.steps = 0;
     if (accessWasGranted) {
+      endDate = DateTime.now();
+      debugPrint('<== Vitals ==>');
+      debugPrint('Start Date ==> $startDate');
+      debugPrint('End Date ==> $endDate');
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
@@ -88,6 +107,8 @@ class GetVitalsData {
 
       /// Update the UI to display the results
       _state = _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+      startDate = endDate;
+      _sharedPrefUtils.save('LastSyncDateAndTime', endDate.toIso8601String());
       _content();
     } else {
       debugPrint('Authorization not granted');

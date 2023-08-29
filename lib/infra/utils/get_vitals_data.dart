@@ -4,12 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import 'common_utils.dart';
 
 class GetVitalsData {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  var model = PatientVitalsViewModel();
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -134,8 +138,10 @@ class GetVitalsData {
       final HealthDataPoint p = _healthDataList[i];
        if (p.typeString == 'WEIGHT') {
         if (p.value.toDouble() != 0) {
-          if(weight == 0)
-          weight = p.value.toDouble();
+          if(weight == 0) {
+            weight = p.value.toDouble();
+            addWeightVitals();
+          }
         }
       } else if (p.typeString == 'HEIGHT') {
         if (p.value.toDouble() != 0) {
@@ -144,9 +150,11 @@ class GetVitalsData {
       } else if (p.typeString == 'BLOOD_OXYGEN') {
         if (p.value.toDouble() != 0) {
           bloodOxygen = p.value.toDouble() * 100;
+          //addBloodOxygenSaturationVitals();
         }
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
         bloodGlucose = p.value.toDouble();
+        addBloodGlucoseVitals();
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
         if(bloodPressureDiastolic == 0)
         bloodPressureDiastolic = p.value.toDouble();
@@ -156,12 +164,17 @@ class GetVitalsData {
       } else if (p.typeString == 'BODY_TEMPERATURE') {
         if (p.value.toDouble() != 0) {
           bodyTemprature = p.value.toDouble();
+          addTemperatureVitals();
         }
       } else if (p.typeString == 'HEART_RATE') {
         if (p.value.toDouble() != 0) {
           heartRate = p.value.toDouble();
         }
       }
+    }
+
+    if(bloodPressureDiastolic != 0 && bloodPressureSystolic != 0) {
+      addBPVitals();
     }
 
     debugPrint('========================############## Get Vitals Data ##############=============================');
@@ -208,6 +221,120 @@ class GetVitalsData {
 
   String getHeight() {
     return height.toString();
+  }
+
+  addWeightVitals() async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyWeight'] = weight.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "Kg";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-weights', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  addBPVitals() async {
+    try {
+      final map = <String, dynamic>{};
+      map['Systolic'] = bloodPressureSystolic.toInt().toString();
+      map['Diastolic'] = bloodPressureDiastolic.toInt().toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "mmHg";
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('blood-pressures', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  addBloodGlucoseVitals() async {
+    try {
+      final map = <String, dynamic>{};
+      map['BloodGlucose'] = bloodGlucose.toInt().toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "mg|dL";
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('blood-glucose', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  addBloodOxygenSaturationVitals() async {
+    try {
+      final map = <String, dynamic>{};
+      map['BloodOxygenSaturation'] = bloodOxygen.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "%";
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('blood-oxygen-saturations', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  addPulseVitals() async {
+    try {
+      final map = <String, dynamic>{};
+      map['Pulse'] = heartRate.toInt().toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "bpm";
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  addTemperatureVitals() async {
+    try {
+      final map = <String, dynamic>{};
+      map['BodyTemperature'] = bodyTemprature.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "Celsius";
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-temperatures', map);
+
+      if (baseResponse.status == 'success') {
+      } else {
+      }
+    } catch (e) {
+      debugPrint('Error ==> ' + e.toString());
+    }
   }
 
 }

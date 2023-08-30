@@ -338,7 +338,7 @@ class _BiometricBloodOxygenVitalsViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Blood Oxygen Delete',
+                  semanticLabel: 'Blood Oxygen '+ record.bloodOxygenSaturation.toString() +' Delete',
                 ))
           ],
         ),

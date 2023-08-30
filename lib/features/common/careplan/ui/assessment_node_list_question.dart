@@ -41,6 +41,7 @@ class _AssessmentNodeListQuestionViewState
 
   @override
   void initState() {
+    announceText(widget.assesment!.title.toString());
     for (int i = 0; i < widget.assesment!.childrenQuestions!.length; i++) {
       nodeAnswer.insert(i, 0);
     }

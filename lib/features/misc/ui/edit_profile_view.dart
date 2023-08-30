@@ -1710,7 +1710,7 @@ class _EditProfileState extends State<EditProfile> {
                     child: Visibility(
                       visible: isEditable,
                       child: Semantics(
-                        label: 'Add profile picture',
+                        label: profileImagePath == '' ? 'Add profile picture' : 'Update profile picture',
                         button: true,
                         child: InkWell(
                             onTap: () {

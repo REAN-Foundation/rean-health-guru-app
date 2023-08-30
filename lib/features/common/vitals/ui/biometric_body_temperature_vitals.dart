@@ -340,7 +340,7 @@ class _BiometricBodyTemperatureVitalsViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Body Temperature Delete',
+                  semanticLabel: 'Body Temperature '+ record.bodyTemperature.toString()+' Delete ',
                 ))
           ],
         ),

@@ -420,7 +420,7 @@ class _LipidProfileTriglyceridesViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Triglycerides Delete',
+                  semanticLabel: 'Triglycerides '+ record.primaryValue.toString() +' Delete',
                 ))
           ],
         ),

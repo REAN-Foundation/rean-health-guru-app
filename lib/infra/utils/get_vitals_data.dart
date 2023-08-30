@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -49,7 +50,7 @@ class GetVitalsData {
     /*debugPrint('<== Vitals ==>');
     debugPrint('Start Date ==> $startDate');
     debugPrint('End Date ==> $endDate');*/
-    Timer.periodic(Duration(seconds: 10), (timer) {
+    Timer.periodic(Duration(seconds: RemoteConfigValues.healthAppDataSyncTimer), (timer) {
       debugPrint("Inside 30 Sec");
       if (Platform.isIOS) {
         fetchData();
@@ -231,6 +232,8 @@ class GetVitalsData {
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Kg";
 
+      weight = 0;
+
       final BaseResponse baseResponse =
       await model.addMyVitals('body-weights', map);
 
@@ -251,6 +254,9 @@ class GetVitalsData {
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
 
+      bloodPressureSystolic = 0;
+      bloodPressureDiastolic = 0;
+
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-pressures', map);
 
@@ -269,6 +275,8 @@ class GetVitalsData {
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg|dL";
       //map['RecordedByUserId'] = null;
+
+      bloodGlucose = 0;
 
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-glucose', map);
@@ -289,6 +297,8 @@ class GetVitalsData {
       map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
+      bloodOxygen = 0;
+
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-oxygen-saturations', map);
 
@@ -308,6 +318,8 @@ class GetVitalsData {
       map['Unit'] = "bpm";
       //map['RecordedByUserId'] = null;
 
+      heartRate = 0;
+
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
@@ -325,6 +337,8 @@ class GetVitalsData {
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Celsius";
       //map['RecordedByUserId'] = null;
+
+      bodyTemprature = 0;
 
       final BaseResponse baseResponse =
       await model.addMyVitals('body-temperatures', map);

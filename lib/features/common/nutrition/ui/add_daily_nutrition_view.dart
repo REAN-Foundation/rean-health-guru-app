@@ -293,7 +293,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   }
 
   Widget _makeUndoListCard() {
-    final row = nutritionList.elementAt(selectedIndex);
+    //final row = nutritionList.elementAt(selectedIndex);
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width,
@@ -442,7 +442,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   }
 
   Widget _makeFoodListCard(BuildContext context, int index) {
-    final row = nutritionList.elementAt(index);
+    //final row = nutritionList.elementAt(index);
 
     return Card(
       semanticContainer: false,
@@ -553,9 +553,9 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   icon: Icon(
                     index == selectedIndex ? Icons.check : Icons.add,
                     color: index == selectedIndex ? Colors.white : primaryColor,
-                    semanticLabel: 'Add ' +
+                    semanticLabel: 'Add ',// +
                         //row[DatabaseHelper.columnNutritionFoodItemName] +
-                        ' in food name',
+                        //' in food name',
                     size: 32,
                   ),
                 ),

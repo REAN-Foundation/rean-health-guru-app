@@ -425,6 +425,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 ,
                 onChanged: (value) {
                   if(value == 'Heart Failure Motivator'){
+                    healthSystemList.clear();
                     RemoteConfigValues.hospitalSystemVisibility = false;
                   }else{
                     getHealthSystem(value.toString());
@@ -887,7 +888,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           showToast('Please select Hospital', context);
                         }else if (carePlanEligibility!) {
                           startCarePlan();
-                          updateHospitalSystem();
+                          if(healthSystemList.isNotEmpty) {
+                            updateHospitalSystem();
+                          }
                           _updatePatientMedicalProfile(carePlanTypes!.name.toString());
                         } else {
                           //showToast(carePlanEligibilityMsg.toString(), context);

@@ -40,7 +40,7 @@ import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-import 'package:patient/infra/widgets/app_drawer.dart';
+import 'package:patient/infra/widgets/app_drawer_v2.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../common/activity/models/movements_tracking.dart';
@@ -1056,7 +1056,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               ],
             ),
           ),
-          drawer: AppDrawer(),
+          drawer: AppDrawerV2(),
           body: SizedBox.expand(child: screen),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(

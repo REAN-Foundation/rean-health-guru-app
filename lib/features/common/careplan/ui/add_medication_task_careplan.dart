@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -14,6 +13,8 @@ import 'package:patient/features/common/medication/models/nih_medication_search_
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+
+import '../../../../infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class AddMedicationTaskView extends StatefulWidget {
@@ -36,6 +37,7 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
 
   @override
   void initState() {
+    announceText(widget.next!.title.toString());
     /*if (widget.task!.action!.description != null) {
       _textController.text = widget.task!.action!.description.toString();
       _textController.selection = TextSelection.fromPosition(

@@ -421,7 +421,7 @@ class _LipidProfileTotalCholesterolViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Total Cholesterol Delete',
+                  semanticLabel: 'Total Cholesterol '+ record.primaryValue.toString() +' Delete',
                 ))
           ],
         ),

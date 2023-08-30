@@ -73,7 +73,7 @@ class _ConnectHealthDevicesViewState extends State<ConnectHealthDevicesView> {
             backgroundColor: primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
-              'Health Device',
+              'Connect Health Device',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,

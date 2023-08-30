@@ -145,18 +145,15 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   Widget questionText() {
     return Container(
-      height: 100,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           color: primaryLightColor,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-      child: Center(
-        child: Text(
-          widget.task!.action!.description.toString(),
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.left,
-        ),
+      child: Text(
+        widget.task!.action!.description.toString().trim(),
+        style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+        textAlign: TextAlign.left,
       ),
     );
   }

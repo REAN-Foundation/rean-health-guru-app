@@ -35,11 +35,11 @@ class ApiProvider {
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
-      debugPrint('No Iternet Connection Isuue  ==> $url');
+      debugPrint("No Internet connection Socket ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
-      debugPrint('No Iternet Connection Isuue Time Out  ==> $url');
       // A timeout occurred.
+      debugPrint("No Internet connection TimeOut ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
@@ -66,11 +66,11 @@ class ApiProvider {
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
-      debugPrint('No Iternet Connection Isuue  ==> $url');
+      debugPrint("No Internet connection Socket ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
-      debugPrint('No Iternet Connection Isuue Time Out  ==> $url');
       // A timeout occurred.
+      debugPrint("No Internet connection TimeOut ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
@@ -103,11 +103,11 @@ class ApiProvider {
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
-      debugPrint('No Iternet Connection Isuue  ==> $url');
+      debugPrint("No Internet connection Socket ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
-      debugPrint('No Iternet Connection Isuue Time Out  ==> $url');
       // A timeout occurred.
+      debugPrint("No Internet connection TimeOut ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
@@ -132,9 +132,11 @@ class ApiProvider {
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
+      debugPrint("No Internet connection Socket ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
       // A timeout occurred.
+      debugPrint("No Internet connection TimeOut ==> ${_baseUrl! + url}");
       throw FetchDataException('No Internet connection');
     }
     return responseJson;

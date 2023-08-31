@@ -1,101 +1,120 @@
 # AHA Platform Deployment Workflows
 
 ## AHA-PROD-CI-CD
-Mode of trigger: ```On-Demand```
 
-Note: This workflow does not require any parameters to run.
+**Trigger Mode:** On-Demand
 
-This workflow uses two jobs: Android-App-Release-Prod and iOS-App-Release-Prod to deploy ```rean-health-guru``` release to ```aha-prod``` environment
+**Note:** This workflow can be triggered on demand and does not require any additional parameters to execute. It employs two distinct jobs, namely `Android-App-Release-Prod` and `iOS-App-Release-Prod`, to facilitate the deployment of the `rean-health-guru` release into the `aha-prod` environment.
 
-### AHA Prod Release Workflow
+### AHA Production Release Workflow
 
-Release Process Workflow Diagram.
-![aha-wokflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
+The diagram below illustrates the workflow of the release process:
 
-GitHub Action Workflow run.
-![aah_prod-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
+![AHA Production Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
 
-### JOBS
+The execution of the GitHub Action workflow is depicted below:
+
+![AHA Production GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
+
+### Jobs
 
 #### Android-App-Release-Prod
 
-The android-App-Release-Prod job will be performing the following steps:
+The `Android-App-Release-Prod` job executes the following steps:
 
-* This job sets up Fastlane and promotes the Android app from the beta release track to the production release track on the Google Play Store. It automates the process of promoting a tested and approved beta version of the app to the production environment
+- Sets up the environment for Fastlane.
+- Facilitates the transition of the Android app from the beta release track to the production release track on the Google Play Store.
+- Automates the process of promoting a thoroughly tested and approved beta version of the app to the production environment.
 
 #### iOS-App-Release-Prod
 
-iOS-App-Release-Prod job will be performing the following steps:
+The `iOS-App-Release-Prod` job performs the subsequent steps:
 
-* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new GitHub release with generated release notes. 
-
+- Configures the environment for Fastlane.
+- Promotes the iOS app to the App Store for review and eventual release.
+- Publishes a new GitHub release along with the generated release notes.
 
 ## AHA-UAT-CI-CD
-Mode of trigger: ```On-Demand```
 
-Parameters: 
-* ```Tag_name```: Please provide the GitHub tag name that the user wishes to use for deployment, For example ```v1.8.245```
+**Trigger Mode:** On-Demand
 
+**Parameters:**
 
-This workflow deploy ```rean-health-guru``` release to ```aha-uat``` environment
+- `Tag_name`: The user is required to provide the GitHub tag name for deployment (e.g., `v1.8.245`).
+
+This workflow is responsible for deploying the `rean-health-guru` release to the `aha-uat` environment.
 
 ### AHA UAT Release Workflow
 
-Release Process Workflow Diagram.
-![AHA-uat](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
+The following diagram represents the workflow for the UAT release process:
 
-GitHub Action Workflow run
-![aha-uat-workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
+![AHA UAT Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
 
-### JOBS
+The execution of the GitHub Action workflow is illustrated here:
+
+![AHA UAT GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
+
+### Jobs
 
 #### Gitguardian-scanning
 
-The Git Guardian-scanning job will be performing the following steps:
+The `Gitguardian-scanning` job includes the following steps:
 
-* This job uses [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action)
-* The GitGuardian shield CLI application will scan and detect potential secrets or issues in the code, as well as other potential security vulnerabilities or policy breaks.
+- Utilizes [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action).
+- Executes the GitGuardian shield CLI application to scan and identify potential secrets, code issues, security vulnerabilities, and policy violations within the codebase.
 
 #### Github-ECR-Tag-Check
 
-The Github-ECR-Tag-Check job will be performing the following steps:
+The `Github-ECR-Tag-Check` job encompasses the subsequent steps:
 
-* This job is designed to check if a specific tag exists in the repository, and if the tag is not found, it will result in a job failure.
-
+- Designed to verify the existence of a specific tag within the repository.
+- If the specified tag is not found, the job will result in a failure.
 
 #### CodeScan-FlutterAnalyze
 
-The CodeScan FlutterAnalyze job will be performing the following steps:
+The `CodeScan-FlutterAnalyze` job involves the following steps:
 
-* This job sets up the Flutter environment, configures AWS credentials, downloads an environment file, and performs static code analysis using Flutter's built-in analysis tools. It helps ensure code quality and consistency within the Flutter project.
-
+- Sets up the Flutter environment.
+- Configures AWS credentials.
+- Downloads an environment file.
+- Performs static code analysis using Flutter's built-in analysis tools to enhance code quality and maintain consistency within the Flutter project.
 
 #### Android-BuildApp
 
-The Android BuildApp job will be performing the following steps:
+The `Android-BuildApp` job performs the following steps:
 
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact)
-* This job sets up the built environment, including Flutter and Fastlane configurations, configures dependencies, and builds the Android app in the "uat" flavor. The resulting app bundle is then uploaded as an artifact for further use in the workflow or deployment processes.
-
+- Utilizes [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact) for artifact upload.
+- Configures the environment for Flutter and Fastlane.
+- Sets up dependencies.
+- Builds the Android app in the "uat" flavor.
+- Uploads the resulting app bundle as an artifact for further utilization in workflows and deployment processes.
 
 #### Android-Release-Alpha
 
-The Android-Release-Alpha job will be performing the following steps:
+The `Android-Release-Alpha` job involves the subsequent steps:
 
-* This job sets up Fastlane, downloads the build artifacts from the "Android-BuildApp" job, and publishes the Android App Bundle (AAB) to the alpha release track on the Google Play Store.
-
+- Configures Fastlane.
+- Downloads build artifacts from the `Android-BuildApp` job.
+- Publishes the Android App Bundle (AAB) to the alpha release track on the Google Play Store.
 
 #### iOS-BuildApp
 
-The iOS-BuildApp job will be performing the following steps:
+The `iOS-BuildApp` job includes the following steps:
 
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact)
-* This job sets up the built environment, including Flutter and Fastlane configurations, configures dependencies, and builds the IOS app in the "uat" flavor, signs the build using Fastlane, and uploads the artifacts for further use in the workflow or deployment process.
-
+- Utilizes [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact) for artifact upload.
+- Configures the environment for Flutter and Fastlane.
+- Sets up dependencies.
+- Builds the iOS app in the "uat" flavor.
+- Signs the build using Fastlane.
+- Uploads the artifacts for further utilization in workflows and deployment processes.
 
 #### iOS-Release-Alpha
 
-The iOS-Release-Alpha job will be performing the following steps:
+The `iOS-Release-Alpha` job encompasses the subsequent steps:
 
-* This job checks out the code, sets up Fastlane, downloads the previously built artifacts, and uses Fastlane to upload the app build to TestFlight for the UAT environment. It specifies the "uat" flavor and release mode and uses various environment variables for authentication and configuration, including the App Store Connect key ID, issuer ID, API key, and demo user credentials.
-
+- Checks out the code.
+- Configures Fastlane.
+- Downloads previously built artifacts.
+- Utilizes Fastlane to upload the app build to TestFlight for the UAT environment.
+- Specifies the "uat" flavor and release mode.
+- Utilizes various environment variables for authentication and configuration, including the App Store Connect key ID, issuer ID, API key, and demo user credentials.

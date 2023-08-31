@@ -1,155 +1,118 @@
-# REAN Platform Deployment workflows
+# REAN Platform Deployment Workflows
 
+## Dev CI/CD Workflow
 
-## Dev-CI-CD
-Mode of trigger: ```Automated```
+**Mode of Trigger:** Automated
 
-There are two ways to use or trigger the dev-CI-CD workflow
-1. By creating a Pull Request to merge into develop branch
-2. Whenever any PR is merged into the develop branch
+The Dev CI/CD workflow can be triggered in two ways:
 
+1. By creating a Pull Request to merge into the `develop` branch.
+2. Whenever any Pull Request is merged into the `develop` branch.
 
-Release Process Workflow Diagram.
+### Release Process Workflow Diagram
 ![dev workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/DevWorkflow.png?raw=true)
 
-GitHub Action Workflow run.
+### GitHub Action Workflow Run
 ![dev_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/dev_github_job.png?raw=true)
 
-### JOBS
+### Jobs
 
-#### GitGuardian-scanning
+#### GitGuardian Scanning
+The GitGuardian Scanning job performs the following steps:
+- Utilizes the [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action) tool.
+- Scans code for potential secrets, issues, security vulnerabilities, or policy breaches.
 
-The GitGuardian-scanning job will be performing the following steps:
+#### CodeScan Flutter Analyze
+The CodeScan Flutter Analyze job performs the following steps:
+- Sets up the Flutter environment, configures AWS credentials, and downloads an environment file.
+- Conducts static code analysis using Flutter's built-in analysis tools to ensure code quality and consistency.
 
-* This job uses [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action)
-* The GitGuardian shield CLI application will scan and detect potential secrets or issues in the code, as well as any other potential security vulnerabilities or policy breaches.
+#### Android Build App
+The Android Build App job performs the following steps:
+- Utilizes [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact) for artifact upload.
+- Sets up the Android app development environment, configuring Flutter and Fastlane.
+- Retrieves AWS credentials and environment files, imports build dependencies, and builds the Android APK for the development flavor.
+- Uploads the generated artifacts for further use.
 
-#### CodeScan-FlutterAnalyze
+#### Android Publish App Internally
+The Android Publish App Internally job performs the following steps:
+- Sets up Fastlane, publishes the app to Firebase, and conducts app distribution and testing.
+- For smoke testing, publishes the app to TestProject.io.
+- Uploads the app with specific parameters based on the branch name (different from 'develop') for smoke testing and regression.
 
-The CodeScan-FlutterAnalyze job will be performing the following steps:
+#### iOS Build App
+The iOS Build App job performs the following steps:
+- Utilizes [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact) for artifact upload.
+- Sets up necessary tools like Fastlane and Flutter.
+- Builds the iOS app using Flutter, signs the build with Fastlane for the 'dev' flavor and release mode.
+- Uploads the artifacts for further use.
 
-* This job sets up the Flutter environment, configures AWS credentials, downloads an environment file, and performs static code analysis using Flutter's built-in analysis tools. It helps to ensure code quality and consistency within the Flutter project.
+#### iOS Publish App Internally
+The iOS Publish App Internally job performs the following steps:
+- Checks out the code, sets up Fastlane, and downloads previously built artifacts.
+- Publishes the app to Firebase and uploads it to TestProject.io for smoke testing (conditionally based on branch name).
 
-#### Android-BuildApp
+## UAT CI/CD Workflow
 
-Android BuildApp job will be performing the following steps:
+**Mode of Trigger:** Automated
 
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job involves setting up the development environment for Android app building, which includes configuring Flutter and Fastlane. Additionally, It retrieves AWS credentials and environment files, imports build dependencies, and builds the Android APK for the development flavor. Finally, it uploads the generated artifacts for further use.
+The UAT Workflow is triggered automatically when developers push code into branches with a prefix of `release/**`.
 
-#### Android-PublishAppInternally
-
-The Android-PublishAppInternally job will be performing the following steps:
-
-* This job sets up Fastlane, publishes the app to Firebase, and performs app distribution and testing. For Smoke Testing, it will publish the app to TestProject.io. It uploads the app with specific parameters, such as the project ID, app ID, app name, and app path. The app is uploaded for smoke testing purposes, which is conditionally triggered based on the branch name being different from 'develop'. For regression, it will execute only when the branch name is 'develop'.
-
-#### iOS-BuildApp
-
-The iOS-BuildApp job will be performing the following steps:
- 
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job sets up the necessary tools like Fastlane and Flutter. It then builds the iOS app using Flutter, and signs the build using Fastlane, specifying the 'dev' flavor and release mode. Additionally, it utilizes various environment variables for authentication and configuration and uploads the artifacts for further use.
-
-#### iOS-PublishAppInternally
-
-The iOS-PublishAppInternally job will be performing the following steps:
-
-* This job checks out the code, sets up Fastlane, downloads the previously built artifacts, publishes the app to Firebase, and uploads it to TestProject.io for smoke testing purposes. These tests are conditionally triggered based on the branch name being different from 'develop.' For regression, it will execute only when the branch name is 'develop'.
-
-## UAT-CI-CD
-Mode of trigger: ```Automated```
-
-UAT Workflow is triggered automatically whenever the developer pushes code into the branch with a prefix of ```release/**```.
-
-
-Release Process Workflow Diagram.
+### Release Process Workflow Diagram
 ![uat workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/uatWorkflow.png?raw=true)
 
-GitHub Action Workflow run.
+### GitHub Action Workflow Run
 ![uat-github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/uat_github_action.png?raw=true)
 
-### JOBS
+### Jobs
 
-#### Gitguardian-scanning
+#### GitGuardian Scanning
+Same as in the Dev CI/CD Workflow.
 
-The GitGuardian-scanning job will be performing the following steps:
+#### CodeScan Flutter Analyze
+Same as in the Dev CI/CD Workflow.
 
-* This job uses [gitguardian-scanning](https://github.com/GitGuardian/ggshield-action)
-* The GitGuardian shield CLI application will scan and detect potential secrets or issues in the code, as well as other potential security vulnerabilities or policy breaks.
+#### Android Build App
+Same as in the Dev CI/CD Workflow.
 
-#### CodeScan-FlutterAnalyze
+#### Android Release Alpha
+The Android Release Alpha job performs the following steps:
+- Sets up Fastlane, downloads build artifacts, and publishes the Android App Bundle (AAB) to the alpha release track on Google Play Store.
 
-The CodeScan-FlutterAnalyze job will be performing the following steps:
+#### iOS Build App
+Same as in the Dev CI/CD Workflow.
 
-* This job sets up the Flutter environment, configures AWS credentials, downloads an environment file, and performs static code analysis using Flutter's built-in analysis tools. It helps ensure code quality and consistency within the Flutter project.
+#### iOS Release Alpha
+The iOS Release Alpha job performs the following steps:
+- Checks out code, sets up Fastlane, downloads built artifacts, and uploads the app build to TestFlight for UAT environment.
 
+## PROD CI/CD Workflow
 
-#### Android-BuildApp
+**Mode of Trigger:** On-Demand
 
-The Android-BuildApp job will be performing the following steps:
+This workflow can be manually triggered and is used for building applications and deploying changes to the RF Platform Production environment.
 
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job sets up the built environment, including Flutter and Fastlane configurations; configures dependencies; and builds the Android app in the 'uat' flavor. The resulting app bundle is then uploaded as an artifact for further use in the workflow or deployment processes.
+### Release Process Workflow Diagram
+![prod workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/prod_workflow.png?raw=true)
 
-#### Android-Release-Alpha
-
-Android-Release-Alpha job will be performing the following steps:
-
-* This job sets up Fastlane, downloads the build artifacts from the "Android-BuildApp" job, and publishes the Android App Bundle (AAB) to the alpha release track on the Google Play Store.
-
-#### iOS-BuildApp
-
-The iOS-BuildApp job will be performing the following steps:
-
-* For uploading artifact this job uses [upload-artifact@v2](https://github.com/marketplace/actions/upload-a-build-artifact).
-* This job sets up the built environment, including Flutter and Fastlane configurations; configures dependencies; builds the iOS app in the 'uat' flavor; signs the build using Fastlane and uploads the artifacts for further use in the workflow or deployment processes.
-
-
-#### iOS-Release-Alpha
-
-iOS-Release-Alpha job will be performing the following steps:
-
-* This job checks out the code, sets up Fastlane, downloads the previously built artifacts, and Uses Fastlane to upload the app build to TestFlight for the UAT environment. It specifies the "uat" flavor and release mode and uses various environment variables for authentication and configuration, including the App Store Connect key ID, issuer ID, API key, and demo user credentials.
-
-
-## PROD-CI-CD
-Mode of trigger: ```On-Demand```
-
-Note: This workflow does not require any parameters to run.
-
-Prod Workflow can be manually triggered. The workflow builds the applications and deploys the changes to the RF Platform Production environment.
-
-Release Process Workflow Diagram.
-![prod_workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/prod_workflow.png?raw=true)
-
-GitHub Action Workflow run.
+### GitHub Action Workflow Run
 ![prod_github](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/prod_github_action.png?raw=true)
 
-### JOBS
+### Jobs
 
-#### Android-App-Release-Prod
+#### Android App Release Prod
+The Android App Release Prod job performs the following steps:
+- Sets up Fastlane to promote the Android app from the beta release track to the production release track on the Google Play Store.
+- Automates the process of promoting a tested and approved beta version of the app to the production environment.
 
-The android-App-Release-Prod job will be performing the following steps:
+#### iOS App Release Prod
+The iOS App Release Prod job performs the following steps:
+- Sets up Fastlane to promote the app to the App Store for review and release.
+- Publishes a new GitHub release along with generated release notes.
 
-* This job sets up Fastlane and promotes the Android app from the beta release track to the production release track on the Google Play Store. It automates the process of promoting a tested and approved beta version of the app to the production environment.
-
-#### iOS-App-Release-Prod
-
-iOS-App-Release-Prod job will be performing the following steps:
-
-* This job sets up Fastlane, promotes the app to the App Store for review and release, and publishes a new GitHub release with generated release notes.
-
-#### Github-Tag-And-Realease
-
-The Github-Tag-And-Release job will be performing the following steps:
-
-* This job is used to automate the process of tagging and releasing a project. It fetches the code, extracts the version from a "pubspec.yaml" file, and then creates a new release draft with the obtained version tag, which will be automatically published.
-
-
-
-
-
- 
- 
- 
- 
+#### GitHub Tag and Release
+The GitHub Tag and Release job automates the process of tagging and releasing a project. It accomplishes the following steps:
+- Fetches the code from the repository.
+- Extracts the version information from the "pubspec.yaml" file.
+- Creates a new release draft with the obtained version tag.
+- The release draft is then automatically published.

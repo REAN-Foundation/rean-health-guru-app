@@ -39,19 +39,22 @@ class GetVitalsData {
       savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')) ;
       debugPrint('Saved Date: $savedDate');
     } catch (e) {
-      savedDate = DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+      savedDate = DateTime.now();/*DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);*/
       debugPrint('Saved Date Error: $e');
     }
 
     startDate = savedDate;
 
+    if (Platform.isIOS) {
+      fetchData();
+    }
 
-    /*debugPrint('<== Vitals ==>');
+    debugPrint('<== Vitals ==>');
     debugPrint('Start Date ==> $startDate');
-    debugPrint('End Date ==> $endDate');*/
+    debugPrint('End Date ==> $endDate');
     Timer.periodic(Duration(seconds: RemoteConfigValues.healthAppDataSyncTimer), (timer) {
-      debugPrint("Inside 30 Sec");
+      debugPrint("Inside ${RemoteConfigValues.healthAppDataSyncTimer} Sec");
       if (Platform.isIOS) {
         fetchData();
       }
@@ -140,8 +143,13 @@ class GetVitalsData {
        if (p.typeString == 'WEIGHT') {
         if (p.value.toDouble() != 0) {
           if(weight == 0) {
-            weight = p.value.toDouble();
-            addWeightVitals();
+            if(p.dateFrom.isAfter(startDate)) {
+              weight = p.value.toDouble();
+              debugPrint(
+                  'WEIGHT : $weight   DateFrom :  ${p.dateFrom} DateTo : ${p
+                      .dateTo} ');
+              addWeightVitals();
+            }
           }
         }
       } else if (p.typeString == 'HEIGHT') {
@@ -154,18 +162,40 @@ class GetVitalsData {
           //addBloodOxygenSaturationVitals();
         }
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
-        bloodGlucose = p.value.toDouble();
-        addBloodGlucoseVitals();
+         if(p.dateFrom.isAfter(startDate)) {
+           bloodGlucose = p.value.toDouble();
+           debugPrint('BLOOD_GLUCOSE : $bloodGlucose   DateFrom :  ${p
+               .dateFrom} DateTo : ${p.dateTo} ');
+           addBloodGlucoseVitals();
+         }
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
-        if(bloodPressureDiastolic == 0)
-        bloodPressureDiastolic = p.value.toDouble();
+        if(bloodPressureDiastolic == 0) {
+          if(p.dateFrom.isAfter(startDate)) {
+            bloodPressureDiastolic = p.value.toDouble();
+            debugPrint(
+                'BLOOD_PRESSURE_DIASTOLIC : $bloodPressureDiastolic   DateFrom :  ${p
+                    .dateFrom} DateTo : ${p.dateTo} ');
+          }
+        }
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
         if(bloodPressureSystolic == 0)
-        bloodPressureSystolic = p.value.toDouble();
+          if(p.dateFrom.isAfter(startDate)) {
+            bloodPressureSystolic = p.value.toDouble();
+            debugPrint(
+                'BLOOD_PRESSURE_SYSTOLIC : $bloodPressureSystolic   DateFrom :  ${p
+                    .dateFrom} DateTo : ${p.dateTo} ');
+          }
       } else if (p.typeString == 'BODY_TEMPERATURE') {
         if (p.value.toDouble() != 0) {
-          bodyTemprature = p.value.toDouble();
-          addTemperatureVitals();
+          if(p.dateFrom.isAfter(startDate)) {
+
+            double temp = p.value.toDouble() * 1.8;
+            double temperatureInFaranite = temp + 32;
+            bodyTemprature = temperatureInFaranite;
+            debugPrint('BODY_TEMPERATURE : $bodyTemprature   DateFrom :  ${p
+                .dateFrom} DateTo : ${p.dateTo} ');
+            addTemperatureVitals();
+          }
         }
       } else if (p.typeString == 'HEART_RATE') {
         if (p.value.toDouble() != 0) {

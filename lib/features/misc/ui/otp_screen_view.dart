@@ -114,10 +114,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   }
 
   initilizaHealthDataServiecs(){
-    GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
-    GetIt.instance.registerSingleton<GetVitalsData>(GetVitalsData());
-    GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
-    GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
+    try {
+      GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+      GetIt.instance.registerSingleton<GetVitalsData>(GetVitalsData());
+      GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
+      GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
+    }catch(e){
+      debugPrint("Error ==> $e");
+    }
   }
 
   @override

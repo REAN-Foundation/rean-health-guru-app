@@ -31,6 +31,7 @@ import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
@@ -662,6 +663,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    // Initialize the NotificationHandler
+    NotificationHandler().initialize(context);
     getDeviceData();
     loadAllHistoryData();
     getCarePlanSubscribe();

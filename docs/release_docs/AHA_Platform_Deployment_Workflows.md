@@ -10,11 +10,11 @@
 
 The diagram below illustrates the workflow of the release process:
 
-![AHA Production Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
+![AHA Production Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_prod_workflow.png?raw=true)
 
 The execution of the GitHub Action workflow is depicted below:
 
-![AHA Production GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
+![AHA Production GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_prod_githubjob.png?raw=true)
 
 ### Jobs
 
@@ -48,11 +48,11 @@ This workflow is responsible for deploying the `rean-health-guru` release to the
 
 The following diagram represents the workflow for the UAT release process:
 
-![AHA UAT Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
+![AHA UAT Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_uat_workflow.png?raw=true)
 
 The execution of the GitHub Action workflow is illustrated here:
 
-![AHA UAT GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
+![AHA UAT GitHub Workflow](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/aha_uat_githubjob.png?raw=true)
 
 ### Jobs
 
@@ -112,7 +112,7 @@ The `iOS-BuildApp` job includes the following steps:
 
 The `iOS-Release-Alpha` job encompasses the subsequent steps:
 
-- Checks out the code.
+- Check out the code.
 - Configures Fastlane.
 - Downloads previously built artifacts.
 - Utilizes Fastlane to upload the app build to TestFlight for the UAT environment.

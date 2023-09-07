@@ -28,7 +28,7 @@ We are following the GitFlow branching strategy. Please refer [here](https://www
 
 The diagram below explains the end-to-end process and stages for promoting the code from the develop branch to the master branch.
 
-![workflow_diagram](https://github.com/REAN-Foundation/rean-health-guru-app/blob/develop/res/images/release_docs_images/reanhealth-guru_workflow.png?raw=true)
+![workflow_diagram](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/res/images/release_docs_images/reanhealth-guru_workflow.png?raw=true)
 
 ### Develop Branch Workflow
 

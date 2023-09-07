@@ -1,6 +1,6 @@
-# About Release FLow
+# About Release Flow
 
-1. For general guidance about using GitHub actions, you can take a look at [Github Actions Guide](https://docs.github.com/en/actions/guides). 
+1. For general guidance about using GitHub actions, you can look at [Github Actions Guide](https://docs.github.com/en/actions/guides). 
 2. We have a total of 5 active release workflows. These are located under [Workflows](https://github.com/REAN-Foundation/reancare-service/tree/develop/.github/workflows).
 
 
@@ -11,22 +11,16 @@
   - [Main branch Workflow](#Main-branch-Workflow)
 - [Release Workflows](#Release-Workflows)
   - [REAN Foundation Platform Workflows](#REAN-Foundation-Platform-Workflows)
-     - [Dev-ci-cd](#Dev-ci-cd)
-     - [UAT-ci-cd](#UAT-ci-cd)
-     - [PROD-ci-cd](#PROD-ci-cd)
   - [Customer Workflows](#Customer-Workflows)
-     - [AHA-UAT-ci-cd](#AHA-UAT-ci-cd)
-     - [AHA-PROD-ci-cd](#AHA-PROD-ci-cd)
-
-
+    
 
 ## Branching Strategy
 
-We are using GitFlow Branching [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
+We are following the GitFlow branching strategy. Please refer [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
 
 * ```main``` : The main branch serves as the stable and production-ready branch, where all the changes from release branches are merged and tested before deployment.
 * ```develop``` : The develop branch, where all the changes from feature branches are merged 
-* ```feature/*``` : The feature branch, individual features or enhancements are developed on separate branches, allowing for isolated development and easy collaboration before merging.
+* ```feature/*``` : The feature branch, individual features, or enhancements are developed on separate branches, allowing for isolated development and easy collaboration before merging.
 * ```release/*``` : The release branch is a branch used for allowing isolated testing and preparation of the release before merging it into the main branch.
 * ```hotfix/*``` : The hotfix branch, hotfixes for critical issues are handled separately by creating dedicated branches and merging them directly into the main branch.
 
@@ -38,12 +32,12 @@ The diagram below explains the end-to-end process and stages for promoting the c
 
 ### Develop Branch Workflow
 
-1. Developer will create a Feature branch, create a Pull Request to develop branch or push code to develop branch, Which will trigger DEV-ci-cd workflow.
+1. The developer will create a Feature branch, create a Pull Request to the develop branch, or push code to the develop branch, Which will trigger the DEV-ci-cd workflow.
 
 ### Main branch Workflow
 
-1. Developer will create a Release branch, create a Pull Request to main branch which will trigger UAT-ci-cd workflow.
-2. After the Pull request merge into main branch then developer can manullay trigger the Prod-CI-CD workflow.
+1. The developer will create a Release branch and create a Pull Request to the main branch which will trigger the UAT-ci-cd workflow.
+2. After the Pull request merges into the main branch, the developer can manually trigger the Prod-CI-CD workflow.
  
  
 # Release Workflows 
@@ -52,11 +46,11 @@ There are different types of workflows designed for the type of source branch us
 
 ### REAN Foundation Platform Workflows
 
-* [Dev-CI-CD](./release_docs/REAN_Platform_Deployment_Workflows.md#Dev-CI-CD).
-* [UAT-CI-CD](./release_docs/REAN_Platform_Deployment_Workflows.md#UAT-CI-CD).
-* [PROD-CI-CD](./release_docs/REAN_Platform_Deployment_Workflows.md#PROD-CI-CD).
+* [Dev-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#Dev-CI-CD).
+* [UAT-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#UAT-CI-CD).
+* [PROD-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#PROD-CI-CD).
 
 ### Customer Workflows
 
-* [AHA-UAT-CI-CD](./release_docs/AHA_Platform_Deployment_Workflows.md#AHA-UAT-CI-CD).
-* [AHA-PROD-CI-CD](./release_docs/AHA_Platform_Deployment_Workflows.md#AHA-UAT-CI-CD#AHA-PROD-CI-CD).
+* [AHA-UAT-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/AHA_Platform_Deployment_Workflows.md#AHA-UAT-CI-CD).
+* [AHA-PROD-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/AHA_Platform_Deployment_Workflows.md#AHA-PROD-CI-CD).

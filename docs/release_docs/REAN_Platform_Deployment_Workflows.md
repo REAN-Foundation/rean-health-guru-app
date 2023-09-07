@@ -1,6 +1,6 @@
 # REAN Platform Deployment Workflows
 
-## Dev-CI/CD 
+## Dev-CI-CD 
 
 **Mode of Trigger:** Automated
 
@@ -52,7 +52,7 @@ The iOS Publish App Internally job performs the following steps:
 - Checks out the code, sets up Fastlane, and downloads previously built artifacts.
 - Publishes the app to Firebase and uploads it to TestProject.io for smoke testing (conditionally based on branch name).
 
-## UAT-CI/CD 
+## UAT-CI-CD 
 
 **Mode of Trigger:** Automated
 
@@ -86,7 +86,7 @@ Same as in the Dev CI/CD Workflow.
 The iOS Release Alpha job performs the following steps:
 - Checks out code, sets up Fastlane, downloads built artifacts, and uploads the app build to TestFlight for UAT environment.
 
-## PROD-CI/CD 
+## PROD-CI-CD 
 
 **Mode of Trigger:** On-Demand
 

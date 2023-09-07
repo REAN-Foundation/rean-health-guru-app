@@ -46,9 +46,9 @@ There are different types of workflows designed for the type of source branch us
 
 ### REAN Foundation Platform Workflows
 
-* [Dev-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#dev-ci/cd).
-* [UAT-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#uat-ci/cd).
-* [PROD-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#prod-ci/cd).
+* [Dev-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#dev-ci/cd-workflow).
+* [UAT-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#uat-ci/cd-workflow).
+* [PROD-CI-CD](https://github.com/REAN-Foundation/rean-health-guru-app/blob/feature/flow_documentation/docs/release_docs/REAN_Platform_Deployment_Workflows.md#prod-ci/cd-workflow).
 
 ### Customer Workflows
 

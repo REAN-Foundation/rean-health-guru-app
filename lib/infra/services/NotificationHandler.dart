@@ -4,16 +4,19 @@ import 'package:patient/core/constants/route_paths.dart';
 
 class NotificationHandler {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  late BuildContext _context;
 
   Future<void> initialize(BuildContext context) async {
+    _context = context;
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle when a notification is received while the app is in the foreground
-      debugPrint("Notification ==> ${message.data.toString()}");
+      debugPrint("Notification onMessage ==> ${message.data.toString()}");
       _handleNotification(message.data, context);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Handle when the app is opened from a notification
+      debugPrint("Notification onMessageOpenedApp ==> ${message.data.toString()}");
       _handleNotification(message.data, context);
     });
 
@@ -41,6 +44,8 @@ class NotificationHandler {
 
   Future<void> _handleBackgroundNotification(RemoteMessage message) async {
     // Handle background notifications here
+    debugPrint("Notification _handleBackgroundNotification ==> ${message.data.toString()}");
+    _handleNotification(message.data, _context);
   }
 
 }

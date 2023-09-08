@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -661,8 +662,47 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  // It is assumed that all messages contain a data field with the key 'type'
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+    await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      debugPrint("Notification onMessage ==> ${initialMessage.data.toString()}");
+      _handleMessage(initialMessage);
+    }else{
+      debugPrint("Notification onMessage ==> $initialMessage");
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    String routeName = message.data['type']; // Careplan registration reminder
+    if (routeName != null) {
+      switch (routeName) {
+        case "Careplan registration reminder":
+          debugPrint("<================== Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(
+              context, RoutePaths.Select_Care_Plan);
+          break;
+      }
+      // Use Navigator to navigate to the specified screen
+      // Navigator.pushNamed(context, routeName);
+    }
+  }
+
+
   @override
   void initState() {
+    setupInteractedMessage();
     // Initialize the NotificationHandler
     NotificationHandler().initialize(context);
     getDeviceData();

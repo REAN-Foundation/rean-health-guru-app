@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
@@ -16,12 +17,95 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  debugPrint("Notification _firebaseMessagingBackgroundHandler ==> ${message.data.toString()}");
+  showNotification(message);
+  debugPrint("Handling a background message: ${message.messageId}");
+}
+
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse)  {
+  if (notificationResponse != null) {
+    debugPrint('notification payload: $notificationResponse');
+  } else {
+    debugPrint("Notification Done");
+  }
+  //Get.to(()=>SecondScreen(payload));
+}
+
+Future<void> showNotification(RemoteMessage payload) async {
+
+  var android = AndroidInitializationSettings('reancare_logo.png');
+  //var initiallizationSettingsIOS = IOSInitializationSettings();
+  //Initialization Settings for iOS
+  const DarwinInitializationSettings initializationSettingsIOS =
+  DarwinInitializationSettings(
+
+    requestSoundPermission: true,
+    requestBadgePermission: true,
+    requestAlertPermission: true,
+  );
+  var initialSetting = new InitializationSettings(android: android, iOS: initializationSettingsIOS);
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  await flutterLocalNotificationsPlugin.initialize(initialSetting, onDidReceiveNotificationResponse:
+      (NotificationResponse notificationResponse) {
+    switch (notificationResponse.notificationResponseType) {
+      case NotificationResponseType.selectedNotification:
+      //selectNotificationStream.add(notificationResponse.payload);
+        break;
+      case NotificationResponseType.selectedNotificationAction:
+      /*if (notificationResponse.actionId == navigationActionId) {
+            //selectNotificationStream.add(notificationResponse.payload);
+          }*/
+        break;
+    }
+  },
+    onDidReceiveBackgroundNotificationResponse: notificationTapBackground,);
+
+
+
+
+  const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      'default_notification_channel_id',
+      'Notification',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      icon: "logo_rs",
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound("notification")
+  );
+  const iOSDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidDetails, iOS: iOSDetails);
+
+  await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
+}
+
 Future<void> main() async {
   //enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // Initialize Firebase Messaging
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -704,7 +704,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   void initState() {
     setupInteractedMessage();
     // Initialize the NotificationHandler
-    NotificationHandler().initialize(context);
+    NotificationHandler().initialize();
     getDeviceData();
     loadAllHistoryData();
     getCarePlanSubscribe();

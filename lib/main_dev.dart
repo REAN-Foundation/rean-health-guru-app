@@ -10,12 +10,16 @@ import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -38,11 +42,10 @@ void notificationTapBackground(NotificationResponse notificationResponse)  {
 }
 
 Future<void> showNotification(RemoteMessage payload) async {
-
-  var android = AndroidInitializationSettings('reancare_logo.png');
+  //var android = AndroidInitializationSettings('launch_background.xml');
   //var initiallizationSettingsIOS = IOSInitializationSettings();
   //Initialization Settings for iOS
-  const DarwinInitializationSettings initializationSettingsIOS =
+  /*const DarwinInitializationSettings initializationSettingsIOS =
   DarwinInitializationSettings(
 
     requestSoundPermission: true,
@@ -50,7 +53,7 @@ Future<void> showNotification(RemoteMessage payload) async {
     requestAlertPermission: true,
   );
   var initialSetting = new InitializationSettings(android: android, iOS: initializationSettingsIOS);
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
   await flutterLocalNotificationsPlugin.initialize(initialSetting, onDidReceiveNotificationResponse:
       (NotificationResponse notificationResponse) {
     switch (notificationResponse.notificationResponseType) {
@@ -58,14 +61,14 @@ Future<void> showNotification(RemoteMessage payload) async {
       //selectNotificationStream.add(notificationResponse.payload);
         break;
       case NotificationResponseType.selectedNotificationAction:
-      /*if (notificationResponse.actionId == navigationActionId) {
+      *//*if (notificationResponse.actionId == navigationActionId) {
             //selectNotificationStream.add(notificationResponse.payload);
-          }*/
+          }*//*
         break;
     }
   },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,);
-
+*/
 
 
 
@@ -75,7 +78,6 @@ Future<void> showNotification(RemoteMessage payload) async {
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
-      icon: "logo_rs",
       playSound: true,
       sound: RawResourceAndroidNotificationSound("notification")
   );
@@ -95,6 +97,13 @@ Future<void> main() async {
   await Firebase.initializeApp();
   // Initialize Firebase Messaging
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationHandler().initialize();
+  Permission.notification.request();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,

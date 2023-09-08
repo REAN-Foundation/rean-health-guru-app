@@ -1,32 +1,28 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/infra/utils/common_utils.dart';
 
 class NotificationHandler {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  late BuildContext _context;
 
-  Future<void> initialize(BuildContext context) async {
-    _context = context;
+  Future<void> initialize() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle when a notification is received while the app is in the foreground
       debugPrint("Notification onMessage ==> ${message.data.toString()}");
-      _handleNotification(message.data, context);
+      _handleNotification(message.data);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Handle when the app is opened from a notification
       debugPrint("Notification onMessageOpenedApp ==> ${message.data.toString()}");
-      _handleNotification(message.data, context);
+      _handleNotification(message.data);
     });
 
     // You can also handle background notifications here
     FirebaseMessaging.onBackgroundMessage(showNotification);
   }
 
-  void _handleNotification(Map<String, dynamic> data, BuildContext context) {
+  void _handleNotification(Map<String, dynamic> data) {
     // Handle the notification data and navigate to the desired screen
     // For example, you can extract a route name from the data and navigate accordingly
     String routeName = data['type']; // Careplan registration reminder
@@ -35,8 +31,8 @@ class NotificationHandler {
         case "Careplan registration reminder":
           debugPrint("<================== Notification Received ==============================>");
           debugPrint("Notification Type ===> $routeName");
-          Navigator.pushNamed(
-              context, RoutePaths.Select_Care_Plan);
+          /*Navigator.pushNamed(
+              context, RoutePaths.Select_Care_Plan);*/
           break;
       }
       // Use Navigator to navigate to the specified screen
@@ -47,12 +43,12 @@ class NotificationHandler {
   Future<void> _handleBackgroundNotification(RemoteMessage message) async {
     // Handle background notifications here
     debugPrint("Notification _handleBackgroundNotification ==> ${message.data.toString()}");
-    _handleNotification(message.data, _context);
+    _handleNotification(message.data);
   }
 
   @pragma('vm:entry-point')
   void notificationTapBackground(NotificationResponse notificationResponse)  {
-    showToast(notificationResponse.toString(), _context);
+
     if (notificationResponse != null) {
       debugPrint('notification payload: $notificationResponse');
     } else {
@@ -63,7 +59,7 @@ class NotificationHandler {
 
   Future<void> showNotification(RemoteMessage payload) async {
 
-    var android = AndroidInitializationSettings('logo_rs');
+    var android = AndroidInitializationSettings('');
     //var initiallizationSettingsIOS = IOSInitializationSettings();
     //Initialization Settings for iOS
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -77,7 +73,6 @@ class NotificationHandler {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin.initialize(initialSetting, onDidReceiveNotificationResponse:
         (NotificationResponse notificationResponse) {
-          showToast(notificationResponse.toString(), _context);
       switch (notificationResponse.notificationResponseType) {
         case NotificationResponseType.selectedNotification:
           //selectNotificationStream.add(notificationResponse.payload);
@@ -100,7 +95,6 @@ class NotificationHandler {
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker',
-        icon: "logo_rs",
         playSound: true,
         sound: RawResourceAndroidNotificationSound("notification")
     );

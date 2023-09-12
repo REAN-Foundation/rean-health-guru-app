@@ -119,7 +119,6 @@ Future<void> showNotification(RemoteMessage payload) async {
       priority: Priority.high,
       ticker: 'ticker',
       playSound: true,
-      sound: RawResourceAndroidNotificationSound("notification")
   );
   const iOSDetails = DarwinNotificationDetails(
     presentAlert: true,
@@ -144,6 +143,8 @@ Future<void> main() async {
       Permission.notification.request();
     }
   });
+  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()!.requestPermission();
 /*  NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,

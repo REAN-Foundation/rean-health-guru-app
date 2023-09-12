@@ -9,7 +9,7 @@ class NotificationHandler {
       // Handle when a notification is received while the app is in the foreground
       debugPrint("Notification onMessage ==> ${message.data.toString()}");
       //_handleNotification(message.data);
-      showNotification(message);
+      //showNotification(message);
     });
 
     /*FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {

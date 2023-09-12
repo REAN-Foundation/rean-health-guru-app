@@ -675,19 +675,29 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     // navigate to a chat screen
     if (initialMessage != null) {
       debugPrint("Notification initialMessage ==> ${initialMessage.data.toString()}");
+      if(pushNotificationAlreadyNavigated){
       _handleMessage(initialMessage);
+      pushNotificationAlreadyNavigated = true;
+      }
     }else{
       debugPrint("Notification onMessage ==> $initialMessage");
     }
 
     // Also handle any interaction when the app is in the background via a
     // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    //FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // Handle when the app is opened from a notification
+      debugPrint("Notification onMessageOpenedApp ==> ${message.data.toString()}");
+      pushNotificationAlreadyNavigated = false;
+      _handleMessage(message);
+    });
   }
 
   void _handleMessage(RemoteMessage message) {
     String routeName = message.data['type']; // Careplan registration reminder
     if (routeName != null) {
+
       switch (routeName) {
         case "Careplan registration reminder":
           debugPrint("<================== Careplan registration reminder Notification Received ==============================>");

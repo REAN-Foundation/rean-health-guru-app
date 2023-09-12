@@ -22,7 +22,7 @@ class NotificationHandler {
     //FirebaseMessaging.onBackgroundMessage(showNotification);
   }
 
-  void _handleNotification(Map<String, dynamic> data) {
+ /* void _handleNotification(Map<String, dynamic> data) {
     // Handle the notification data and navigate to the desired screen
     // For example, you can extract a route name from the data and navigate accordingly
     String routeName = data['type']; // Careplan registration reminder
@@ -31,14 +31,14 @@ class NotificationHandler {
         case "Careplan registration reminder":
           debugPrint("<================== Notification Received ==============================>");
           debugPrint("Notification Type ===> $routeName");
-          /*Navigator.pushNamed(
-              context, RoutePaths.Select_Care_Plan);*/
+          *//*Navigator.pushNamed(
+              context, RoutePaths.Select_Care_Plan);*//*
           break;
       }
       // Use Navigator to navigate to the specified screen
       // Navigator.pushNamed(context, routeName);
     }
-  }
+  }*/
 
   /*Future<void> _handleBackgroundNotification(RemoteMessage message) async {
     // Handle background notifications here

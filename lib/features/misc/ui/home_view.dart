@@ -8,6 +8,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -44,6 +45,7 @@ import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer_v2.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/activity/models/movements_tracking.dart';
 import '../../common/careplan/ui/careplan_task.dart';
@@ -672,8 +674,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
     if (initialMessage != null) {
-      debugPrint("Notification onMessage ==> ${initialMessage.data.toString()}");
-      _handleMessage(initialMessage);
+      debugPrint("Notification initialMessage ==> ${initialMessage.data.toString()}");
+      //_handleMessage(initialMessage);
     }else{
       debugPrint("Notification onMessage ==> $initialMessage");
     }
@@ -688,10 +690,39 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     if (routeName != null) {
       switch (routeName) {
         case "Careplan registration reminder":
-          debugPrint("<================== Notification Received ==============================>");
+          debugPrint("<================== Careplan registration reminder Notification Received ==============================>");
           debugPrint("Notification Type ===> $routeName");
           Navigator.pushNamed(
               context, RoutePaths.Select_Care_Plan);
+          break;
+        case "Medication reminder":
+          debugPrint("<================== Medication reminder Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.My_Medications, arguments: 0);
+          break;
+        case "Health report created":
+          debugPrint("<================== Health report created Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          setState(() {
+            _currentNav = 2;
+          });
+          break;
+        case "Daily Task":
+          debugPrint("<================== Daily Task Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          setState(() {
+            _currentNav = 1;
+          });
+          break;
+        case "Achievement received":
+          debugPrint("<================== Achievement received Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT, arguments: 0);
+          break;
+        case "Web":
+          debugPrint("<================== Web Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          _launchURL(message.data['url']);
           break;
       }
       // Use Navigator to navigate to the specified screen
@@ -699,6 +730,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  _launchURL(String url) async {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await tabs.launch(url);
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }
+  }
 
   @override
   void initState() {

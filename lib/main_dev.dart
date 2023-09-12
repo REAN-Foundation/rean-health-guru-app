@@ -19,20 +19,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-  debugPrint("Notification _firebaseMessagingBackgroundHandler ==> ${message.data.toString()}");
-  showNotification(message);
+  debugPrint(
+      "Notification _firebaseMessagingBackgroundHandler ==> ${message.data.toString()}");
+  //showNotification(message);
   debugPrint("Handling a background message: ${message.messageId}");
 }
 
 @pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse)  {
+void notificationTapBackground(NotificationResponse notificationResponse) {
   if (notificationResponse != null) {
     debugPrint('notification payload: $notificationResponse');
   } else {
@@ -42,10 +44,48 @@ void notificationTapBackground(NotificationResponse notificationResponse)  {
 }
 
 Future<void> showNotification(RemoteMessage payload) async {
+  debugPrint('Show Notification');
+  var android = AndroidInitializationSettings('reancare_logo');
+//var initiallizationSettingsIOS = IOSInitializationSettings();
+//Initialization Settings for iOS
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
+    requestSoundPermission: true,
+    requestBadgePermission: true,
+    requestAlertPermission: true,
+  );
+  var initialSetting =
+      InitializationSettings(android: android, iOS: initializationSettingsIOS);
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  await flutterLocalNotificationsPlugin.initialize(initialSetting);
+
+  const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    'fcm_default_channel',
+    'Urgent',
+    importance: Importance.high,
+    priority: Priority.high,
+    ticker: 'ticker',
+    playSound: true,
+  );
+  const iOSDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidDetails, iOS: iOSDetails);
+
+  await flutterLocalNotificationsPlugin.show(0, payload.notification!.title,
+      payload.notification!.body, platformChannelSpecifics,
+      payload: payload.toString());
+}
+
+/*Future<void> showNotification(RemoteMessage payload) async {
   //var android = AndroidInitializationSettings('launch_background.xml');
   //var initiallizationSettingsIOS = IOSInitializationSettings();
   //Initialization Settings for iOS
-  /*const DarwinInitializationSettings initializationSettingsIOS =
+  */ /*const DarwinInitializationSettings initializationSettingsIOS =
   DarwinInitializationSettings(
 
     requestSoundPermission: true,
@@ -61,14 +101,14 @@ Future<void> showNotification(RemoteMessage payload) async {
       //selectNotificationStream.add(notificationResponse.payload);
         break;
       case NotificationResponseType.selectedNotificationAction:
-      *//*if (notificationResponse.actionId == navigationActionId) {
+      */ /**/ /*if (notificationResponse.actionId == navigationActionId) {
             //selectNotificationStream.add(notificationResponse.payload);
-          }*//*
+          }*/ /**/ /*
         break;
     }
   },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,);
-*/
+*/ /*
 
 
 
@@ -89,14 +129,14 @@ Future<void> showNotification(RemoteMessage payload) async {
   const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
   await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
-}
+}*/
 
 Future<void> main() async {
   //enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // Initialize Firebase Messaging
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationHandler().initialize();
   Permission.notification.request();
   await Permission.notification.isDenied.then((value) {
@@ -104,7 +144,7 @@ Future<void> main() async {
       Permission.notification.request();
     }
   });
-  NotificationSettings settings = await messaging.requestPermission(
+/*  NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -112,7 +152,7 @@ Future<void> main() async {
     criticalAlert: false,
     provisional: false,
     sound: true,
-  );
+  );*/
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.requestPermission();
@@ -121,9 +161,10 @@ Future<void> main() async {
   bool? login = prefs.getBool('login1.8.167');
   login ??= false;
   String? sponsor = prefs.getString('Sponsor');
-  setSponsor(sponsor??'');
+  setSponsor(sponsor ?? '');
   runApp(MyApp(login));
 }
+
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   bool? isLogin;
@@ -132,7 +173,7 @@ class MyApp extends StatelessWidget {
   String? _awardBaseUrl;
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
-  FirebaseAnalyticsObserver(analytics: analytics);
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BASE_URL']}');
@@ -153,7 +194,6 @@ class MyApp extends StatelessWidget {
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
-
 
   @override
   Widget build(BuildContext context) {

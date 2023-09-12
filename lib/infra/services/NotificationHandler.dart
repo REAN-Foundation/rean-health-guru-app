@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationHandler {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initialize() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle when a notification is received while the app is in the foreground
       debugPrint("Notification onMessage ==> ${message.data.toString()}");
-      _handleNotification(message.data);
+      //_handleNotification(message.data);
+      showNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -19,7 +19,7 @@ class NotificationHandler {
     });
 
     // You can also handle background notifications here
-    FirebaseMessaging.onBackgroundMessage(showNotification);
+    //FirebaseMessaging.onBackgroundMessage(showNotification);
   }
 
   void _handleNotification(Map<String, dynamic> data) {
@@ -40,11 +40,11 @@ class NotificationHandler {
     }
   }
 
-  Future<void> _handleBackgroundNotification(RemoteMessage message) async {
+  /*Future<void> _handleBackgroundNotification(RemoteMessage message) async {
     // Handle background notifications here
     debugPrint("Notification _handleBackgroundNotification ==> ${message.data.toString()}");
     _handleNotification(message.data);
-  }
+  }*/
 
   @pragma('vm:entry-point')
   void notificationTapBackground(NotificationResponse notificationResponse)  {
@@ -57,9 +57,9 @@ class NotificationHandler {
     //Get.to(()=>SecondScreen(payload));
   }
 
-  Future<void> showNotification(RemoteMessage payload) async {
-
-    var android = AndroidInitializationSettings('');
+  static Future<void> showNotification(RemoteMessage payload) async {
+    debugPrint('Show Notification');
+    var android = AndroidInitializationSettings('reancare_logo');
     //var initiallizationSettingsIOS = IOSInitializationSettings();
     //Initialization Settings for iOS
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -69,34 +69,18 @@ class NotificationHandler {
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
-    var initialSetting = new InitializationSettings(android: android, iOS: initializationSettingsIOS);
+    var initialSetting = InitializationSettings(android: android, iOS: initializationSettingsIOS);
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    await flutterLocalNotificationsPlugin.initialize(initialSetting, onDidReceiveNotificationResponse:
-        (NotificationResponse notificationResponse) {
-      switch (notificationResponse.notificationResponseType) {
-        case NotificationResponseType.selectedNotification:
-          //selectNotificationStream.add(notificationResponse.payload);
-          break;
-        case NotificationResponseType.selectedNotificationAction:
-          /*if (notificationResponse.actionId == navigationActionId) {
-            //selectNotificationStream.add(notificationResponse.payload);
-          }*/
-          break;
-      }
-    },
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,);
-
-
+    await flutterLocalNotificationsPlugin.initialize(initialSetting);
 
 
     const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-        'default_notification_channel_id',
-        'Notification',
-        importance: Importance.max,
+        'fcm_default_channel',
+        'Urgent',
+        importance: Importance.high,
         priority: Priority.high,
         ticker: 'ticker',
         playSound: true,
-        sound: RawResourceAndroidNotificationSound("notification")
     );
     const iOSDetails = DarwinNotificationDetails(
       presentAlert: true,

@@ -675,7 +675,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     // navigate to a chat screen
     if (initialMessage != null) {
       debugPrint("Notification initialMessage ==> ${initialMessage.data.toString()}");
-      //_handleMessage(initialMessage);
+      _handleMessage(initialMessage);
     }else{
       debugPrint("Notification onMessage ==> $initialMessage");
     }

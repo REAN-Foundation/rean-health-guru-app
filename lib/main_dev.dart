@@ -29,7 +29,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   debugPrint(
       "Notification _firebaseMessagingBackgroundHandler ==> ${message.data.toString()}");
-  //showNotification(message);
+  showNotification(message);
   debugPrint("Handling a background message: ${message.messageId}");
 }
 
@@ -43,7 +43,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
   //Get.to(()=>SecondScreen(payload));
 }
 
-Future<void> showNotification(RemoteMessage payload) async {
+/*Future<void> showNotification(RemoteMessage payload) async {
   debugPrint('Show Notification');
   var android = AndroidInitializationSettings('reancare_logo');
 //var initiallizationSettingsIOS = IOSInitializationSettings();
@@ -79,13 +79,13 @@ Future<void> showNotification(RemoteMessage payload) async {
   await flutterLocalNotificationsPlugin.show(0, payload.notification!.title,
       payload.notification!.body, platformChannelSpecifics,
       payload: payload.toString());
-}
+}*/
 
-/*Future<void> showNotification(RemoteMessage payload) async {
+Future<void> showNotification(RemoteMessage payload) async {
   //var android = AndroidInitializationSettings('launch_background.xml');
   //var initiallizationSettingsIOS = IOSInitializationSettings();
   //Initialization Settings for iOS
-  */ /*const DarwinInitializationSettings initializationSettingsIOS =
+   /*const DarwinInitializationSettings initializationSettingsIOS =
   DarwinInitializationSettings(
 
     requestSoundPermission: true,
@@ -108,7 +108,7 @@ Future<void> showNotification(RemoteMessage payload) async {
     }
   },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,);
-*/ /*
+*/
 
 
 
@@ -129,7 +129,7 @@ Future<void> showNotification(RemoteMessage payload) async {
   const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
   await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
-}*/
+}
 
 Future<void> main() async {
   //enableFlutterDriverExtension();

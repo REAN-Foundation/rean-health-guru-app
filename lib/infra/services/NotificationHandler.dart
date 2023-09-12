@@ -12,11 +12,11 @@ class NotificationHandler {
       showNotification(message);
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    /*FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Handle when the app is opened from a notification
       debugPrint("Notification onMessageOpenedApp ==> ${message.data.toString()}");
-      _handleNotification(message.data);
-    });
+      //_handleNotification(message.data);
+    });*/
 
     // You can also handle background notifications here
     //FirebaseMessaging.onBackgroundMessage(showNotification);

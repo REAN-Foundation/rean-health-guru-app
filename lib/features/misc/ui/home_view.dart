@@ -705,8 +705,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           Navigator.pushNamed(
               context, RoutePaths.Select_Care_Plan);
           break;
-        case "Medication reminder":
-          debugPrint("<================== Medication reminder Notification Received ==============================>");
+        case "Upcoming medication":
+          debugPrint("<================== Upcoming medication Notification Received ==============================>");
           debugPrint("Notification Type ===> $routeName");
           Navigator.pushNamed(context, RoutePaths.My_Medications, arguments: 0);
           break;

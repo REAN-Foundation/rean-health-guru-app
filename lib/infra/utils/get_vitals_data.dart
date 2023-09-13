@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -47,18 +46,20 @@ class GetVitalsData {
     startDate = savedDate;
 
     if (Platform.isIOS) {
+      debugPrint('<== Vitals ==>');
+      debugPrint('Start Date ==> $startDate');
+      debugPrint('End Date ==> ${DateTime.now()}');
       fetchData();
     }
 
-    debugPrint('<== Vitals ==>');
-    debugPrint('Start Date ==> $startDate');
-    debugPrint('End Date ==> $endDate');
-    Timer.periodic(Duration(seconds: RemoteConfigValues.healthAppDataSyncTimer), (timer) {
-      debugPrint("Inside ${RemoteConfigValues.healthAppDataSyncTimer} Sec");
+    //2023-09-13 19:59:13.366123
+
+    /*Timer.periodic(Duration(seconds: 30), (timer) {
+      debugPrint("Inside ${30} Sec");
       if (Platform.isIOS) {
         fetchData();
       }
-    });
+    });*/
   }
 
   Future<void> fetchData() async {
@@ -205,7 +206,7 @@ class GetVitalsData {
     }
 
     if(bloodPressureDiastolic != 0 && bloodPressureSystolic != 0) {
-      addBPVitals();
+      //addBPVitals();
     }
 
     debugPrint('========================############## Get Vitals Data ##############=============================');

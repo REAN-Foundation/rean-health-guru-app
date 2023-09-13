@@ -29,7 +29,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   debugPrint(
       "Notification _firebaseMessagingBackgroundHandler ==> ${message.data.toString()}");
-  showNotification(message);
+  //showNotification(message);
   debugPrint("Handling a background message: ${message.messageId}");
 }
 

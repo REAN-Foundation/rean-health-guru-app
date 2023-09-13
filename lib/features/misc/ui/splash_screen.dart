@@ -12,12 +12,12 @@ import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/core/dbUtils/database_helper.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
-import 'package:patient/infra/utils/get_vitals_data.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;
@@ -135,6 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    NotificationHandler().initialize();
     setupFirebaseConfig();
     FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();

@@ -18,6 +18,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
+import 'package:patient/infra/utils/get_vitals_data.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;

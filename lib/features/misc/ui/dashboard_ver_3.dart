@@ -1613,7 +1613,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   initWebView(String url) async {
     if(url.contains('.pdf')){
-      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_pdf')
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge.pdf')
           .then((f) {
         progressDialog.close();
         Navigator.push(context,

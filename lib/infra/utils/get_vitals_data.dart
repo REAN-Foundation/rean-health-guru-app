@@ -38,8 +38,8 @@ class GetVitalsData {
       savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')) ;
       debugPrint('Saved Date: $savedDate');
     } catch (e) {
-      savedDate = DateTime.now();/*DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);*/
+      savedDate =DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0); //DateTime.now();
       debugPrint('Saved Date Error: $e');
     }
 

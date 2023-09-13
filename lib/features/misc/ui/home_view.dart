@@ -5,8 +5,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +33,7 @@ import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
@@ -42,6 +45,7 @@ import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer_v2.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/activity/models/movements_tracking.dart';
 import '../../common/careplan/ui/careplan_task.dart';
@@ -660,8 +664,123 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
+  // It is assumed that all messages contain a data field with the key 'type'
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+    await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      debugPrint("Notification initialMessage ==> ${initialMessage.data.toString()}");
+      if(pushNotificationAlreadyNavigated){
+      _handleMessage(initialMessage);
+      pushNotificationAlreadyNavigated = true;
+      }
+    }else{
+      debugPrint("Notification onMessage ==> $initialMessage");
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    //FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // Handle when the app is opened from a notification
+      debugPrint("Notification onMessageOpenedApp ==> ${message.data.toString()}");
+      pushNotificationAlreadyNavigated = false;
+      _handleMessage(message);
+    });
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    String routeName = message.data['type']; // Careplan registration reminder
+    if (routeName != null) {
+
+      switch (routeName) {
+        case "Careplan registration reminder":
+          debugPrint("<================== Careplan registration reminder Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(
+              context, RoutePaths.Select_Care_Plan, arguments: 0);
+          break;
+        case "Upcoming medication":
+          debugPrint("<================== Upcoming medication Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.My_Medications, arguments: 0);
+          break;
+        case "Health report created":
+          debugPrint("<================== Health report created Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          setState(() {
+            _currentNav = 2;
+          });
+          break;
+        case "Daily Task":
+          debugPrint("<================== Daily Task Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          setState(() {
+            _currentNav = 1;
+          });
+          break;
+        case "Achievement received":
+          debugPrint("<================== Achievement received Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT, arguments: 0);
+          break;
+        case "Alert Blood Pressure":
+          debugPrint("<================== Alert Blood Pressure Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS, arguments: 0);
+          break;
+        case "Web":
+          debugPrint("<================== Web Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          _launchURL(message.data['url']);
+          break;
+      }
+      // Use Navigator to navigate to the specified screen
+      // Navigator.pushNamed(context, routeName);
+    }
+  }
+
+  _launchURL(String url) async {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await custom_web_wiew.launch(url,
+          customTabsOption: custom_web_wiew.CustomTabsOption(
+            toolbarColor: primaryColor,
+            enableDefaultShare: true,
+            enableUrlBarHiding: true,
+            showPageTitle: true,
+
+            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
+            extraCustomTabs: const <String>[
+              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+              'org.mozilla.firefox',
+              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+              'com.microsoft.emmx',
+            ],
+          ),
+          safariVCOption: custom_web_wiew.SafariViewControllerOption(
+            preferredBarTintColor: primaryColor,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: false,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }
+  }
+
   @override
   void initState() {
+    setupInteractedMessage();
+    // Initialize the NotificationHandler
+    NotificationHandler().initialize();
     getDeviceData();
     loadAllHistoryData();
     getCarePlanSubscribe();

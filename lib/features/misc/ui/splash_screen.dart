@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
@@ -89,6 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    NotificationHandler().initialize();
     setupFirebaseConfig();
     FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();

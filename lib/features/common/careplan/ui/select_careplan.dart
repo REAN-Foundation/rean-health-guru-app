@@ -210,13 +210,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     _checkCareplanEligibility(carePlanTypes!.code.toString());
   }
 
-  Future<bool> _onWillPop() async {
+/*  Future<bool> _onWillPop() async {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) {
           return HomeView(0);
         }), (Route<dynamic> route) => false);
     return true;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

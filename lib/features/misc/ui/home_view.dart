@@ -729,6 +729,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           debugPrint("Notification Type ===> $routeName");
           Navigator.pushNamed(context, RoutePaths.ACHIEVEMENT, arguments: 0);
           break;
+        case "Alert Blood Pressure":
+          debugPrint("<================== Alert Blood Pressure Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          Navigator.pushNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS, arguments: 0);
+          break;
         case "Web":
           debugPrint("<================== Web Notification Received ==============================>");
           debugPrint("Notification Type ===> $routeName");

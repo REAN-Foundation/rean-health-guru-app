@@ -35,7 +35,7 @@ class GetVitalsData {
   setDate() async {
     DateTime savedDate;
     try {
-      savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')).subtract(Duration(minutes: 1)) ;
+      savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime'));
       /*savedDate = DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);*/
       debugPrint('Saved Date: $savedDate');
@@ -265,12 +265,13 @@ class GetVitalsData {
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Kg";
 
-      weight = 0;
+
 
       final BaseResponse baseResponse =
       await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
+        weight = 0;
       } else {
       }
     } catch (e) {
@@ -287,13 +288,14 @@ class GetVitalsData {
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
 
-      bloodPressureSystolic = 0;
-      bloodPressureDiastolic = 0;
+
 
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
+        bloodPressureSystolic = 0;
+        bloodPressureDiastolic = 0;
       } else {
       }
     } catch (e) {
@@ -309,12 +311,13 @@ class GetVitalsData {
       map['Unit'] = "mg|dL";
       //map['RecordedByUserId'] = null;
 
-      bloodGlucose = 0;
+
 
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-glucose', map);
 
       if (baseResponse.status == 'success') {
+        bloodGlucose = 0;
       } else {
       }
     } catch (e) {
@@ -330,12 +333,13 @@ class GetVitalsData {
       map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
-      bloodOxygen = 0;
+
 
       final BaseResponse baseResponse =
       await model.addMyVitals('blood-oxygen-saturations', map);
 
       if (baseResponse.status == 'success') {
+        bloodOxygen = 0;
       } else {
       }
     } catch (e) {
@@ -351,11 +355,12 @@ class GetVitalsData {
       map['Unit'] = "bpm";
       //map['RecordedByUserId'] = null;
 
-      heartRate = 0;
+
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
+        heartRate = 0;
       } else {
       }
     } catch (e) {
@@ -371,17 +376,18 @@ class GetVitalsData {
       map['Unit'] = "Celsius";
       //map['RecordedByUserId'] = null;
 
-      bodyTemprature = 0;
+
 
       final BaseResponse baseResponse =
       await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
+        bodyTemprature = 0;
       } else {
       }
     } catch (e) {
       debugPrint('Error ==> ' + e.toString());
     }
   }
-
+//2023-09-14 17:20:02.393565
 }

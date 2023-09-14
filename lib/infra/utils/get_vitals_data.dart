@@ -35,10 +35,12 @@ class GetVitalsData {
   setDate() async {
     DateTime savedDate;
     try {
-      savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')) ;
+      savedDate = DateTime.parse( await _sharedPrefUtils.read('LastSyncDateAndTime')).subtract(Duration(minutes: 1)) ;
+      /*savedDate = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);*/
       debugPrint('Saved Date: $savedDate');
     } catch (e) {
-      savedDate =DateTime(
+      savedDate = DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0); //DateTime.now();
       debugPrint('Saved Date Error: $e');
     }
@@ -116,8 +118,6 @@ class GetVitalsData {
 
       /// Update the UI to display the results
       _state = _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
-      startDate = endDate;
-      _sharedPrefUtils.save('LastSyncDateAndTime', endDate.toIso8601String());
       _content();
     } else {
       debugPrint('Authorization not granted');
@@ -147,7 +147,7 @@ class GetVitalsData {
             if(p.dateFrom.isAfter(startDate)) {
               weight = p.value.toDouble();
               debugPrint(
-                  'WEIGHT : $weight   DateFrom :  ${p.dateFrom} DateTo : ${p
+                  'WEIGHT : $weight Start Date : $startDate   DateFrom :  ${p.dateFrom} DateTo : ${p
                       .dateTo} ');
               addWeightVitals();
             }
@@ -206,7 +206,7 @@ class GetVitalsData {
     }
 
     if(bloodPressureDiastolic != 0 && bloodPressureSystolic != 0) {
-      //addBPVitals();
+      addBPVitals();
     }
 
     debugPrint('========================############## Get Vitals Data ##############=============================');
@@ -219,6 +219,8 @@ class GetVitalsData {
     debugPrint('BODY_TEMPERATURE : $bodyTemprature');
     debugPrint('HEART_RATE : $heartRate');
     debugPrint('===============================############## END ##############===================================');
+    startDate = endDate;
+    _sharedPrefUtils.save('LastSyncDateAndTime', endDate.toIso8601String());
   }
 
 

@@ -159,7 +159,7 @@ class GetSleepDataInBed {
     //debugPrint('CALORIES_BURNED : $totalBasalCalories');
     //debugPrint('WEIGHT : $weight');
     //debugPrint('Height : $height');
-    debugPrint('SLEEP_ASLEEP : $totalSleepInMin');
+    debugPrint('SLEEP_IN_BED : $totalSleepInMin');
     debugPrint(
         '========================############################=============================');
   }

@@ -3,20 +3,11 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patient/core/dbUtils/database_table_attribute.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseHelper {
-  static final _databaseName = "saksham.db";
-  static final _databaseVersion = 1;
+class DatabaseHelper extends DataBaseTableAttribute{
 
-  static final table = 'nutrition_records';
-
-  static final columnId = '_id';
-  static final columnNutritionFoodItemName = 'nutritionFoodItemName';
-  static final columnNutritionFoodItemCalories = 'nutritionFoodItemCalories';
-  static final columnNutritionFoodConsumedQuantity =
-      'nutritionFoodConsumedQuantity';
-  static final columnNutritionFoodConsumedTag = 'nutritionFoodConsumedTag';
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -39,20 +30,65 @@ class DatabaseHelper {
   _initDatabase() async {
     final Directory documentsDirectory =
     await getApplicationDocumentsDirectory();
-    final String path = join(documentsDirectory.path, _databaseName);
+    final String path = join(documentsDirectory.path, databaseName);
     return await openDatabase(path,
-        version: _databaseVersion, onUpgrade: _upgrade, onCreate: _onCreate);
+        version: databaseVersion, onUpgrade: _upgrade, onCreate: _onCreate);
   }
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $table (
+          CREATE TABLE $weightTable (
             $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
-            $columnNutritionFoodItemName TEXT,
-            $columnNutritionFoodItemCalories INTEGER,
-            $columnNutritionFoodConsumedQuantity INTEGER,
-            $columnNutritionFoodConsumedTag TEXT
+            $columnRecordedDate TEXT,
+            $columnWeightInKg TEXT,
+            $columnPlatformName TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE $heightTable (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnRecordedDate TEXT,
+            $columnheightInCm TEXT,
+            $columnPlatformName TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE $bloodPressureTable (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnRecordedDate TEXT,
+            $columnSystolicBP TEXT,
+            $columnDiastolicBP TEXT,
+            $columnPlatformName TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE $pulseTable (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnRecordedDate TEXT,
+            $columnPulseRate TEXT,
+            $columnPlatformName TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE $bloodGlucoseTable (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnRecordedDate TEXT,
+            $columnBloodGlucose TEXT,
+            $columnPlatformName TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE $bloodOxygenTable (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnRecordedDate TEXT,
+            $columnBloodSPO2Level TEXT,
+            $columnPlatformName TEXT
           )
           ''');
   }
@@ -70,26 +106,26 @@ class DatabaseHelper {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insert(Map<String, dynamic> row) async {
+  Future<int> insert(String tableName, Map<String, dynamic> row) async {
     final Database db = await (instance.database as FutureOr<Database>);
-    return db.insert(table, row);
+    return db.insert(tableName, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
-  Future<List<Map<String, dynamic>>> queryAllRows() async {
+  Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
     final Database db = await (instance.database as FutureOr<Database>);
-    return db.query(table);
+    return db.query(tableName);
   }
 
-  Future<List<Map<String, dynamic>>> querySelectFirstRow() async {
+  Future<List<Map<String, dynamic>>> querySelectFirstRow(String tableName) async {
     final Database db = await (instance.database as FutureOr<Database>);
-    return db.rawQuery('SELECT * FROM $table LIMIT 1');
+    return db.rawQuery('SELECT * FROM $tableName LIMIT 1');
   }
 
   //ORDER BY ROWID ASC
 
-  Future<List<Map<String, dynamic>>> querySelectWhereFoodName(String foodName) async {
+  /*Future<List<Map<String, dynamic>>> querySelectWhereFoodName(String foodName) async {
     final Database db = await (instance.database as FutureOr<Database>);
     return db.rawQuery(
         'SELECT * FROM $table WHERE $columnNutritionFoodItemName=?',
@@ -126,5 +162,5 @@ class DatabaseHelper {
   Future<int> delete(int id) async {
     final Database db = await (instance.database as FutureOr<Database>);
     return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
-  }
+  }*/
 }

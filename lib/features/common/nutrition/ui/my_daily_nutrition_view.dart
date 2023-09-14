@@ -12,7 +12,6 @@ import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/infra/db_utils/database_helper.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -54,7 +53,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   TobaccoConsumption? _tobaccoConsumption;
   late NutritionResponseStore nutritionResponseStore;
   DateTime? startDate;
-  final dbHelper = DatabaseHelper.instance;
+  //final dbHelper = DatabaseHelper.instance;
 
   loadSharedPref() async {
     try {
@@ -1250,7 +1249,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
         showToast(baseResponse.message!, context);
-        recordNutririonEntry(nutritionName, nutritionType, caloriesConsumed);
+        //recordNutririonEntry(nutritionName, nutritionType, caloriesConsumed);
       } else {}
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -1264,7 +1263,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
     }*/
   }
 
-  recordNutririonEntry(String nutritionName, String nutritionType,
+  /*recordNutririonEntry(String nutritionName, String nutritionType,
       double caloriesConsumed) async {
     final allRows = await dbHelper.querySelectWhereFoodName(nutritionName);
     print('Query first row: ${allRows.length}');
@@ -1295,7 +1294,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       //showToast('Data saved offline');
       print('Updated row id: $id');
     }
-  }
+  }*/
 
   recordMyWaterConsumptions() async {
     try {

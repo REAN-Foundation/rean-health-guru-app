@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -75,13 +74,13 @@ class _BiometricBloodPresureVitalsViewState
       );
     }*/
     try {
-      if(RemoteConfigValues.healthDataSync) {
+     /* if(RemoteConfigValues.healthDataSync) {
         if (getHealthData.getBPDiastolic() != '0' && getHealthData.getBPSystolic() != '0') {
-          /*debugPrint("If check ==> ${getHealthData.getBPDiastolic()} ${records
+          *//*debugPrint("If check ==> ${getHealthData.getBPDiastolic()} ${records
             .elementAt(0)
             .diastolic} ${getHealthData.getBPSystolic()} ${records
             .elementAt(0)
-            .systolic} ${records.length}");*/
+            .systolic} ${records.length}");*//*
           if (records.isEmpty) {
             progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
             addvitals(getHealthData.getBPSystolic().toString(),
@@ -98,7 +97,7 @@ class _BiometricBloodPresureVitalsViewState
                 getHealthData.getBPDiastolic().toString());
           }
         }
-      }
+      }*/
     }catch (e){
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

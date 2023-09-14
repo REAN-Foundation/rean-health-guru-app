@@ -19,6 +19,10 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
+import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
+import 'package:patient/infra/utils/get_vitals_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/primary_light_color_container.dart';
 import 'package:pinput/pinput.dart';
@@ -106,6 +110,17 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       iosInfo = await deviceInfo.iosInfo;
 
       print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+    }
+  }
+
+  initilizaHealthDataServiecs(){
+    try {
+      GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+      GetIt.instance.registerSingleton<GetVitalsData>(GetVitalsData());
+      GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
+      GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
+    }catch(e){
+      debugPrint("Error ==> $e");
     }
   }
 
@@ -572,6 +587,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       final UserData userData = UserData.fromJson(response);
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
+        initilizaHealthDataServiecs();
         if (userData.data!.isProfileComplete!) {
           /* _sharedPrefUtils.saveBoolean("login1.8.167", true);
           Navigator.pushAndRemoveUntil(context,

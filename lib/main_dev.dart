@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -162,6 +164,15 @@ Future<void> main() async {
   String? sponsor = prefs.getString('Sponsor');
   setSponsor(sponsor ?? '');
   runApp(MyApp(login));
+  /*if(login) {
+    GetVitalsData data =  GetVitalsData();
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      debugPrint("Inside 30 Sec");
+      if (Platform.isIOS) {
+        data.fetchData();
+      }
+    });
+  }*/
 }
 
 //ignore: must_be_immutable

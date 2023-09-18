@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
 import 'package:patient/features/common/activity/ui/add_height_ft_n_Inch_dialog.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
@@ -116,7 +115,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     try {
 
 
-      if(RemoteConfigValues.healthDataSync) {
+/*      if(RemoteConfigValues.healthDataSync) {
         if (getHealthData.getWeight() != '0.0') {
           if (records.isEmpty) {
             progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
@@ -133,7 +132,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             }
           }
         }
-      }
+      }*/
     }on FetchDataException catch (e){
       showToast(e.toString(), context);
       debugPrint('Error ==> 123 ' + e.toString());

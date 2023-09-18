@@ -80,6 +80,8 @@ PODS:
     - OrderedSet (~> 5.0)
   - flutter_keyboard_visibility (0.0.1):
     - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - flutter_sim_country_code (0.0.1):
     - Flutter
   - fluttertoast (0.0.2):
@@ -131,6 +133,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - permission_handler_apple (9.1.1):
+    - Flutter
   - phone_number (0.12.0):
     - Flutter
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
@@ -169,12 +173,14 @@ DEPENDENCIES:
   - flutter_document_picker (from `.symlinks/plugins/flutter_document_picker/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_sim_country_code (from `.symlinks/plugins/flutter_sim_country_code/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
@@ -229,6 +235,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_keyboard_visibility:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_sim_country_code:
     :path: ".symlinks/plugins/flutter_sim_country_code/ios"
   fluttertoast:
@@ -241,6 +249,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   phone_number:
     :path: ".symlinks/plugins/phone_number/ios"
   share:
@@ -282,6 +292,7 @@ SPEC CHECKSUMS:
   flutter_document_picker: 109ba1c4622e6e62bfced17c22ff544a9a3541f4
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_sim_country_code: 364e91e71f067cdec1dd1228eb4d1f13ab1a54e5
   fluttertoast: 74526702fea2c060ea55dde75895b7e1bde1c86b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -294,6 +305,7 @@ SPEC CHECKSUMS:
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   phone_number: 667dd76f1ae3ee67ac0cb95d6b603c3a5aa7077e
   PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef

@@ -210,140 +210,137 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     _checkCareplanEligibility(carePlanTypes!.code.toString());
   }
 
-  Future<bool> _onWillPop() async {
+/*  Future<bool> _onWillPop() async {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) {
           return HomeView(0);
         }), (Route<dynamic> route) => false);
     return true;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: _onWillPop,
-          child: Scaffold(
-            key: _scaffoldKey,
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: primaryColor,
+          appBar: AppBar(
+            elevation: 0,
             backgroundColor: primaryColor,
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: primaryColor,
-              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
-              title: Text(
-                '',//'Select Health Journey',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
-              ),
-              iconTheme: IconThemeData(color: Colors.white),
-              actions: <Widget>[
-                /*IconButton(
-                  icon: Icon(
-                    Icons.person_pin,
-                    color: Colors.black,
-                    size: 32.0,
-                  ),
-                  onPressed: () {
-                    debugPrint("Clicked on profile icon");
-                  },
-                )*/
-              ],
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+            title: Text(
+              '',//'Select Health Journey',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
             ),
-            body: Stack(
-              children: [
-                Positioned(
-                    top: 0,
-                    right: 0,
+            iconTheme: IconThemeData(color: Colors.white),
+            actions: <Widget>[
+              /*IconButton(
+                icon: Icon(
+                  Icons.person_pin,
+                  color: Colors.black,
+                  size: 32.0,
+                ),
+                onPressed: () {
+                  debugPrint("Clicked on profile icon");
+                },
+              )*/
+            ],
+          ),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
                     child: Container(
-                      color: primaryColor,
-                      height: 100,
+                      padding: const EdgeInsets.all(0.0),
                       width: MediaQuery.of(context).size.width,
-                    )),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: primaryColor,
-                      height: 0,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(0.0),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                topLeft: Radius.circular(12))),
-                        child: model!.busy
-                            ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Scrollbar(
-                                      thumbVisibility: true,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            SizedBox(height: 16,),
-                                            Semantics(
-                                              label: 'Health Journey image',
-                                              image: true,
-                                              child: Image.asset(
-                                                'res/images/ic_hf_care_plan.png',
-                                                color: primaryColor,
-                                                width: 120,
-                                                height: 120,
-                                              ),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: model!.busy
+                          ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Scrollbar(
+                                    thumbVisibility: true,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          SizedBox(height: 16,),
+                                          Semantics(
+                                            label: 'Health Journey image',
+                                            image: true,
+                                            child: Image.asset(
+                                              'res/images/ic_hf_care_plan.png',
+                                              color: primaryColor,
+                                              width: 120,
+                                              height: 120,
                                             ),
-                                            SizedBox(height: 8,),
-                                            Text(
-                                              'Health Journey',
-                                              style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
-                                            ),
-                                            SizedBox(height: 16,),
-                                            selectCarePlanDropDown(),
-                                            startCarePlanDate(),
-                                            SizedBox(height: 8,),
-                                            if(RemoteConfigValues.hospitalSystemVisibility)
-                                            healthSystem(),
-                                            //checkElegibility(),
-                                            /* if (selectedCarePlan == '')
-                                              Container()
-                                            else*/
-                                            decription != ''
-                                                ? descriptionOfCarePlan()
-                                                : Container(),
-                                            //eligibilityOfCarePlan(),
-                                            //recomandationForCarePlan(),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(height: 8,),
+                                          Text(
+                                            'Health Journey',
+                                            style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
+                                          ),
+                                          SizedBox(height: 16,),
+                                          selectCarePlanDropDown(),
+                                          startCarePlanDate(),
+                                          SizedBox(height: 8,),
+                                          if(RemoteConfigValues.hospitalSystemVisibility)
+                                          healthSystem(),
+                                          //checkElegibility(),
+                                          /* if (selectedCarePlan == '')
+                                            Container()
+                                          else*/
+                                          decription != ''
+                                              ? descriptionOfCarePlan()
+                                              : Container(),
+                                          //eligibilityOfCarePlan(),
+                                          //recomandationForCarePlan(),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  registerFooter(),
-                                ],
-                              ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                                ),
+                                registerFooter(),
+                              ],
+                            ),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -425,6 +422,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 ,
                 onChanged: (value) {
                   if(value == 'Heart Failure Motivator'){
+                    healthSystemList.clear();
                     RemoteConfigValues.hospitalSystemVisibility = false;
                   }else{
                     getHealthSystem(value.toString());
@@ -887,7 +885,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           showToast('Please select Hospital', context);
                         }else if (carePlanEligibility!) {
                           startCarePlan();
-                          updateHospitalSystem();
+                          if(healthSystemList.isNotEmpty) {
+                            updateHospitalSystem();
+                          }
                           _updatePatientMedicalProfile(carePlanTypes!.name.toString());
                         } else {
                           //showToast(carePlanEligibilityMsg.toString(), context);
@@ -1118,7 +1118,6 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ),
                   child: Semantics(
                     label: 'Select your health system',
-                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemGlobe,
@@ -1195,7 +1194,6 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ),
                   child: Semantics(
                     label: 'Select Hospital',
-                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemHospitalGlobe,

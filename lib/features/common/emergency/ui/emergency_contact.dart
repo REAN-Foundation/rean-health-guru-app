@@ -54,8 +54,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   var healthSystemHospitalList = <String>[];
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
-  var healthSystem;
-  var healthSystemHospital;
 
   getEmergencyTeam() async {
     try {
@@ -170,8 +168,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   void initState() {
     if(carePlanEnrollmentForPatientGlobe != null) {
       getHealthSystem();
-      healthSystem = healthSystemGlobe;
-      healthSystemHospital = healthSystemHospitalGlobe;
     }
     loadSharedPrefs();
     getEmergencyTeam();
@@ -217,7 +213,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       SizedBox(width: 8,),
                     ],
                   ),
-                    healthSystemWidget(),
+                  healthSystem(),
                   ],
                   Row(
                     children: [
@@ -300,7 +296,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     );
   }
 
-  Widget healthSystemWidget(){
+  Widget healthSystem(){
     debugPrint('Health System Globe ==> $healthSystemGlobe');
     debugPrint('Health System Hospital Globe ==> $healthSystemHospitalGlobe');
     return Padding(
@@ -333,22 +329,22 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     label: 'Select Health System',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: healthSystem,
+                      value: healthSystemGlobe,
                       items: healthSystemList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystem ?? 'Choose an option'),
+                      hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
                           'health_system': data,
                         },);
                         debugPrint(data);
                         setState(() {
-                          healthSystem = data.toString();
-                          healthSystemHospital = null;
+                          healthSystemGlobe = data.toString();
+                          healthSystemHospitalGlobe = null;
                         });
                         if(data == 'None of the above'){
                           healthSystemHospitalList.clear();
@@ -394,21 +390,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     label: 'Select Hospital',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: healthSystemHospital,
+                      value: healthSystemHospitalGlobe,
                       items: healthSystemHospitalList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value, maxLines: 2, overflow: TextOverflow.ellipsis,),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospital ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
                           'select_hospital': data,
                         },);
                         debugPrint(data);
                         setState(() {
-                          healthSystemHospital = data.toString();
+                          healthSystemHospitalGlobe = data.toString();
                         });
                         setState(() {});
                         updateHospitalSystem();
@@ -1951,8 +1947,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   updateHospitalSystem() async {
 
     final map = <String, dynamic>{};
-    map['HealthSystem'] = healthSystem;
-    map['AssociatedHospital'] = healthSystemHospital;
+    map['HealthSystem'] = healthSystemGlobe;
+    map['AssociatedHospital'] = healthSystemHospitalGlobe;
 
     try {
       final BaseResponse updateProfileSuccess = await model
@@ -1960,8 +1956,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
       if (updateProfileSuccess.status == 'success') {
         showSuccessToast('Patient Health System details updated successfully!', context);
-        healthSystemGlobe = healthSystem;
-        healthSystemHospitalGlobe = healthSystemHospital;
+
+
         getPatientDetails();
         //Navigator.pushNamed(context, RoutePaths.Home);
       } else {

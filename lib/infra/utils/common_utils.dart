@@ -55,6 +55,7 @@ List<String> createdGoalsIds = [];
 var healthSystemGlobe;
 var healthSystemHospitalGlobe;
 med.Items? globeMedication;
+bool pushNotificationAlreadyNavigated = true;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

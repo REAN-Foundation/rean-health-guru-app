@@ -1,9 +1,14 @@
 
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
@@ -13,6 +18,7 @@ import 'package:patient/features/misc/models/knowledge_topic_response.dart';
 import 'package:patient/features/misc/models/search_symptom_assessment_templete_response.dart';
 import 'package:patient/features/misc/models/task_summary_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -1515,12 +1521,12 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       onTap: () async {
                         final String url =
                             'https://supportnetwork.heart.org/s/';
-
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url));
-                  } else {
-                    throw 'Could not launch $url';
-                  }
+                        initWebView(url);
+                  // if (await canLaunchUrl(Uri.parse(url))) {
+                  //   await launchUrl(Uri.parse(url));
+                  // } else {
+                  //   throw 'Could not launch $url';
+                  // }
                 },
                 child: RichText(
                   text: TextSpan(
@@ -1550,7 +1556,36 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                      : RichText(
+                      : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: topicName.toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 14),
+                            ),
+                          ),
+                          Linkify(
+                onOpen: (link) async {
+                  initWebView(link.url);
+                },
+                options: LinkifyOptions(humanize: false),
+                text: briefInformation.toString(),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontFamily: 'Montserrat'),
+                linkStyle: TextStyle(color: hyperLinkTextColor),
+              ),
+                        ],
+                      ),
+              /*RichText(
                           text: TextSpan(
                             text: topicName.toString(),
                             style: TextStyle(
@@ -1568,12 +1603,74 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
-                        ),
+                        ),*/
             ),
           ],
         ),
       ),
     );
+  }
+
+  initWebView(String url) async {
+    if(url.contains('.pdf')){
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge.pdf')
+          .then((f) {
+        progressDialog.close();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PDFScreen(f.path,'Knowledge')));
+      });
+    }else {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await custom_web_wiew.launch(url,
+          customTabsOption: custom_web_wiew.CustomTabsOption(
+            toolbarColor: primaryColor,
+            enableDefaultShare: true,
+            enableUrlBarHiding: true,
+            showPageTitle: true,
+            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
+            extraCustomTabs: const <String>[
+              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+              'org.mozilla.firefox',
+              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+              'com.microsoft.emmx',
+            ],
+          ),
+          safariVCOption: custom_web_wiew.SafariViewControllerOption(
+            preferredBarTintColor: primaryColor,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: false,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew
+                .SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }
+    }
+  }
+
+  Future<File> createFileOfPdfUrl(String url, String? fileName) async {
+    //debugPrint('Base Url ==> ${url}');
+    //final url = "http://africau.edu/images/default/sample.pdf";
+    //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
+    //final filename = url.substring(url.lastIndexOf("/") + 1);
+    final map = <String, String>{};
+    //map["enc"] = "multipart/form-data";
+    map['Authorization'] = 'Bearer ' + auth!;
+    progressDialog.show(max: 100, msg: 'Loading...');
+    final request = await HttpClient().getUrl(Uri.parse(url));
+    final response = await request.close();
+
+    debugPrint('Base Url ==> ${request.uri}');
+    debugPrint('Headers ==> ${request.headers.toString()}');
+
+    final bytes = await consolidateHttpClientResponseBytes(response);
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final File file = File('$dir/$fileName');
+    await file.writeAsBytes(bytes);
+    return file;
   }
 
   // Display My Biometric

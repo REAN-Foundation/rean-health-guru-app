@@ -66,6 +66,7 @@ class _ViewMyAllDailyActivityTrendsState
   MovementsTracking? _exerciseMovemntsTracking;
   int exerciseMovements = 0;
   DateTime? todaysDate;
+  var stepcount = 0;
 
   getDeviceData() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -599,7 +600,11 @@ class _ViewMyAllDailyActivityTrendsState
       stepsToDisplay = stepsMovements;
     }
 
-    recordMySteps(stepsToDisplay);
+    if(stepsToDisplay != stepcount) {
+      recordMySteps(stepsToDisplay);
+    }
+
+    stepcount = stepsToDisplay;
     return Container(
       height: 200,
       decoration: BoxDecoration(

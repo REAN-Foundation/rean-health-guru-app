@@ -20,7 +20,7 @@ class BaseWidget<T extends ChangeNotifier?> extends StatefulWidget {
 }
 
 class _BaseWidgetState<T extends ChangeNotifier?>
-    extends State<BaseWidget<T?>> {
+    extends State<BaseWidget<T?>> with WidgetsBindingObserver{
   T? model;
 
   @override
@@ -30,8 +30,49 @@ class _BaseWidgetState<T extends ChangeNotifier?>
     if (widget.onModelReady != null) {
       widget.onModelReady!(model);
     }
-
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    debugPrint('App life cycle state ==> $state');
+    switch (state) {
+      case AppLifecycleState.resumed:
+        onResumed();
+        break;
+      case AppLifecycleState.inactive:
+        onPaused();
+        break;
+      case AppLifecycleState.paused:
+        onInactive();
+        break;
+      case AppLifecycleState.detached:
+        onDetached();
+        break;
+    }
+  }
+
+  void onResumed(){
+    debugPrint('<== Apps is in onResumed ==>');
+  }
+
+  void onPaused(){
+    debugPrint('<== Apps is in onPaused ==>');
+  }
+
+  void onInactive(){
+    debugPrint('<== Apps is in onInactive ==>');
+  }
+
+  void onDetached(){
+    debugPrint('<== Apps is in onDetached ==>');
   }
 
   @override

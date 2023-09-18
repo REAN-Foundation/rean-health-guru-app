@@ -74,7 +74,7 @@ class GetHealthData {
       HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
       HealthDataType.BODY_TEMPERATURE,
       HealthDataType.HEART_RATE,
-      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_IN_BED,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];

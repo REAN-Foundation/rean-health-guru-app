@@ -117,7 +117,7 @@ class PatientCarePlanViewModel extends BaseModel {
   }
 
   Future<BaseResponse> updatePatientMedicalProfile(Map body) async {
-    setBusy(true);
+    //setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -128,7 +128,7 @@ class PatientCarePlanViewModel extends BaseModel {
         body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     debugPrint(response.toString());
-    setBusy(false);
+    //setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
   }

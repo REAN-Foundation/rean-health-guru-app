@@ -599,9 +599,16 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ExcludeSemantics(
-                          child: ImageIcon(
-                            AssetImage('res/images/ic_drawer_contact_us.png'),
-                            size: 40,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            child: Center(
+                              child: ImageIcon(
+                                AssetImage('res/images/ic_support_network.png'),
+                                size: 34,
+                                color: primaryColor,
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(

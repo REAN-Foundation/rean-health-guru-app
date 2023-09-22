@@ -72,6 +72,12 @@
 @import flutter_local_notifications;
 #endif
 
+#if __has_include(<flutter_pdfview/FLTPDFViewFlutterPlugin.h>)
+#import <flutter_pdfview/FLTPDFViewFlutterPlugin.h>
+#else
+@import flutter_pdfview;
+#endif
+
 #if __has_include(<flutter_sim_country_code/FlutterSimCountryCodePlugin.h>)
 #import <flutter_sim_country_code/FlutterSimCountryCodePlugin.h>
 #else
@@ -188,6 +194,7 @@
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
+  [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];
   [FlutterSimCountryCodePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSimCountryCodePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
   [HealthPlugin registerWithRegistrar:[registry registrarForPlugin:@"HealthPlugin"]];

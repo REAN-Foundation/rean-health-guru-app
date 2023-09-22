@@ -1214,7 +1214,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     key: _keyMyTasks,
-                    label: 'daily task',
+                    label: 'daily tasks',
                     selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_daily_tasks_colored.png'),

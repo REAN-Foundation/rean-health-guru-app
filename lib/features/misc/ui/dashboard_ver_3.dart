@@ -1678,14 +1678,14 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     final String dir = (await getApplicationDocumentsDirectory()).path;
     debugPrint('directory ==> $dir');
     final File file = File('$dir/$fileName');
-    //await  file.writeAsBytes(bytes);
-    if (await Permission.storage.request().isGranted) {
+    await  file.writeAsBytes(bytes);
+    /*if (await Permission.storage.request().isGranted) {
       try {
         await file.writeAsBytes(bytes);
       } catch (e) {
         print(e);
       }
-    }
+    }*/
     return file;
   }
 

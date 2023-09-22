@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.284+196
+version: 1.8.285+196
 
 publish_to: none
 
@@ -107,7 +107,6 @@ dependencies:
   #in_app_update: ^4.0.1
   pinput: ^2.2.21
   flutter_local_notifications: ^12.0.4
-  flutter_cached_pdfview: ^0.4.2
 
 dev_dependencies:
   #test: any

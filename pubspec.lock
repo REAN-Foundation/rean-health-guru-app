@@ -407,13 +407,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_cached_pdfview:
-    dependency: "direct main"
-    description:
-      name: flutter_cached_pdfview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.2"
   flutter_custom_tabs:
     dependency: "direct main"
     description:
@@ -545,13 +538,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.2+2"
-  flutter_pdfview:
-    dependency: transitive
-    description:
-      name: flutter_pdfview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.3.1"
   flutter_picker:
     dependency: "direct main"
     description:

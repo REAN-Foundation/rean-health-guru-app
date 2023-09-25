@@ -599,9 +599,16 @@ class _AppDrawerState extends State<AppDrawerV2> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ExcludeSemantics(
-                          child: ImageIcon(
-                            AssetImage('res/images/ic_drawer_contact_us.png'),
-                            size: 40,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            child: Center(
+                              child: ImageIcon(
+                                AssetImage('res/images/ic_support_network.png'),
+                                size: 34,
+                                color: primaryColor,
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -666,26 +673,35 @@ class _AppDrawerState extends State<AppDrawerV2> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Semantics(
-          child: Container(
-            height: 56,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'V ' +
-                      (_baseUrl!.contains('dev')
-                          ? 'Dev_'
-                          : _baseUrl!.contains('uat')
-                              ? 'Alpha_'
-                              : '') +
-                      _packageInfo.version,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w200,
-                      color: textBlack),
-                ),
-              ],
+          label: 'Version ' +
+              (_baseUrl!.contains('dev')
+                  ? 'Dev_'
+                  : _baseUrl!.contains('uat')
+                  ? 'Alpha_'
+                  : '') +
+              _packageInfo.version,
+          child: ExcludeSemantics(
+            child: Container(
+              height: 56,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'V ' +
+                        (_baseUrl!.contains('dev')
+                            ? 'Dev_'
+                            : _baseUrl!.contains('uat')
+                                ? 'Alpha_'
+                                : '') +
+                        _packageInfo.version,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w200,
+                        color: textBlack),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

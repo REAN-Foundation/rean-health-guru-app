@@ -27,6 +27,7 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_outlined_screen.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -1615,9 +1616,16 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     if(url.contains('.pdf')){
       createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge.pdf')
           .then((f) {
-        progressDialog.close();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PDFScreen(f.path,'Knowledge')));
+
+        debugPrint("File Length ==> ${f.lengthSync().toString()}");
+        if(f.lengthSync() > 10000) {
+          progressDialog.close();
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => PDFScreen(f.path, 'Knowledge')));
+        }else{
+          initWebView(url);
+        }
       });
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
@@ -1652,24 +1660,32 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   }
 
   Future<File> createFileOfPdfUrl(String url, String? fileName) async {
-    //debugPrint('Base Url ==> ${url}');
-    //final url = "http://africau.edu/images/default/sample.pdf";
-    //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
-    //final filename = url.substring(url.lastIndexOf("/") + 1);
-    final map = <String, String>{};
-    //map["enc"] = "multipart/form-data";
-    map['Authorization'] = 'Bearer ' + auth!;
-    progressDialog.show(max: 100, msg: 'Loading...');
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    if(!progressDialog.isOpen()) {
+      progressDialog.show(max: 100, msg: 'Loading...');
+    }
     final request = await HttpClient().getUrl(Uri.parse(url));
     final response = await request.close();
 
     debugPrint('Base Url ==> ${request.uri}');
-    debugPrint('Headers ==> ${request.headers.toString()}');
+
 
     final bytes = await consolidateHttpClientResponseBytes(response);
     final String dir = (await getApplicationDocumentsDirectory()).path;
+    debugPrint('directory ==> $dir');
     final File file = File('$dir/$fileName');
-    await file.writeAsBytes(bytes);
+    await  file.writeAsBytes(bytes);
+    /*if (await Permission.storage.request().isGranted) {
+      try {
+        await file.writeAsBytes(bytes);
+      } catch (e) {
+        print(e);
+      }
+    }*/
     return file;
   }
 

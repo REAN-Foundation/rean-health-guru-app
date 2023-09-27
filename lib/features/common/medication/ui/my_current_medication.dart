@@ -73,43 +73,46 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget addButtonWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 20,
-          height: 40,
-          child: ElevatedButton(
-            //.icon
-            onPressed: () async {
-              Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
-                  .then((value) {
-                getMyMedications();
-              });
-            },
-            /*icon: Icon(
-              Icons.file_upload,
-              color: Colors.white,
-              size: 24,
-            ),*/
-            child: Text(
-              'Add Medication',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width - 20,
+            height: 40,
+            child: ElevatedButton(
+              //.icon
+              onPressed: () async {
+                Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
+                    .then((value) {
+                  getMyMedications();
+                });
+              },
+              /*icon: Icon(
+                Icons.file_upload,
+                color: Colors.white,
+                size: 24,
+              ),*/
+              child: Text(
+                'Add Medication',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+              style: ButtonStyle(
+                  foregroundColor:
+                  MaterialStateProperty.all<Color>(primaryLightColor),
+                  backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          side: BorderSide(color: primaryColor)))),
             ),
-            style: ButtonStyle(
-                foregroundColor:
-                MaterialStateProperty.all<Color>(primaryLightColor),
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        side: BorderSide(color: primaryColor)))),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -126,7 +129,6 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                addButtonWidget(),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
@@ -141,6 +143,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                             : listWidget()),
                   ),
                 ),
+                addButtonWidget(),
               ],
             ),
             /*floatingActionButton: Semantics(

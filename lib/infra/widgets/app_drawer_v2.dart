@@ -518,6 +518,47 @@ class _AppDrawerState extends State<AppDrawerV2> {
               ),
             ),
             Visibility(
+              visible: RemoteConfigValues.remainderVisibility,
+              child: Semantics(
+                button: true,
+                child: InkWell(
+                  onTap: () {
+                    FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_remainder_button_click');
+                    Navigator.popAndPushNamed(context, RoutePaths.Remainder);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        ExcludeSemantics(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            child: Center(
+                              child: ImageIcon(
+                                AssetImage('res/images/ic_drawer_remainder.png'),
+                                size: 22,
+                                color: primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          'Reminder',
+                          style: TextStyle(
+                              color: textBlack, fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
               visible: getAppName() != 'Heart & Stroke Helper™ ',
               child: Semantics(
                 button: true,

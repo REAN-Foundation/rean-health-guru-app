@@ -184,8 +184,11 @@ class _SplashScreenState extends State<SplashScreen> {
       "sample_string_value": "Hello, world!",
     });
 
-    await remoteConfig.fetchAndActivate();
-
+    try {
+      await remoteConfig.fetchAndActivate();
+    }catch (e){
+      debugPrint("Error ==> ${e.toString()}");
+    }
     //GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
 
     debugPrint(

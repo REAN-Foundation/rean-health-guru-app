@@ -25,7 +25,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'One Time';
-  var frequencyList = ['One Time', 'Daily', 'After Every', 'Only Weekdays', 'Weekdays'];
+  var frequencyList = ['One Time', 'Daily', 'After Every', 'All Weekdays', 'Weekdays'];
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
   var endDateReuiredFrequencyList = ['Daily'];
   String displayStartDate = '';
@@ -137,7 +137,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                                             ),
                                             dateAndTime(),
                                             frequencyValue == "After Every" ? repeatAfter() : SizedBox(),
-                                            frequencyValue == 'Only Weekdays' ? duration() : SizedBox(),
+                                            frequencyValue == 'All Weekdays' ? duration() : SizedBox(),
                                             frequencyValue == 'Weekdays' ? weekdayList() : SizedBox(),
                                             SizedBox(
                                               height: 24,
@@ -887,7 +887,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
         path = 'repeat-every-day';
       }else if(frequencyValue == 'After Every'){
         path = 'repeat-after-every-n';
-      }else if(frequencyValue == 'Only Weekdays'){
+      }else if(frequencyValue == 'All Weekdays'){
         path = 'repeat-every-weekday';
       }else if(frequencyValue == 'Weekdays'){
         path = 'repeat-every-week-on-days';

@@ -234,7 +234,7 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
 
   Widget _myReports(BuildContext context, int index) {
     final Items reminderItem = reminderList.elementAt(index);
-    debugPrint("Type ==> ${reminderItem.reminderType.toString()}");
+    //debugPrint("Type ==> ${reminderItem.reminderType.toString()}");
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: Container(

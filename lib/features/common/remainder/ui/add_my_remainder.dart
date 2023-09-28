@@ -25,7 +25,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'One Time';
-  var frequencyList = ['One Time', 'Daily', 'After Every', 'All Weekdays', 'Weekdays'];
+  var frequencyList = ['One Time', 'Daily', 'After Every', 'Weekdays']; //'All Weekdays',
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
   var endDateReuiredFrequencyList = ['Daily'];
   String displayStartDate = '';

@@ -548,7 +548,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                           width: 8,
                         ),
                         Text(
-                          'Reminder',
+                          'Reminders',
                           style: TextStyle(
                               color: textBlack, fontWeight: FontWeight.w700),
                         ),

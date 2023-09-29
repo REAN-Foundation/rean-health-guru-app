@@ -237,111 +237,115 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
     //debugPrint("Type ==> ${reminderItem.reminderType.toString()}");
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-      child: Container(
-        height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: buttonColor),
-            borderRadius: BorderRadius.all(Radius.circular(4.0))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 10,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(reminderItem.name.toString(),
-                          semanticsLabel: reminderItem.name.toString(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      SizedBox(height: 4,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(reminderItem.whenDate == null ? "Since " +dateFormat.format(DateTime.parse(reminderItem.startDate.toString())) : "On " + dateFormat.format(DateTime.parse(reminderItem.whenDate.toString())),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: textBlack)),
-                          SizedBox(width: 4,),
-                          reminderItem.endDate == null ? SizedBox() : Icon(Icons.arrow_forward, color: primaryColor, size: 16, semanticLabel: 'to',),
-                          SizedBox(width: 8,),
-                          reminderItem.endDate == null ? SizedBox() : Text("Till " + dateFormat.format(DateTime.parse(reminderItem.endDate.toString())),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: textBlack)),
-                        ],
-                      ),
-                      SizedBox(height: 4,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Text("At "+DateFormat("hh:mm a").format(DateTime.parse('2023-09-26T'+reminderItem.whenTime.toString())),
+      child: Card(
+        elevation: 0,
+        semanticContainer: false,
+        child: Container(
+          height: 100,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: buttonColor),
+              borderRadius: BorderRadius.all(Radius.circular(4.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 10,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(reminderItem.name.toString(),
+                            semanticsLabel: reminderItem.name.toString(),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack)),
+                        SizedBox(height: 4,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(reminderItem.whenDate == null ? "Since " +dateFormat.format(DateTime.parse(reminderItem.startDate.toString())) : "On " + dateFormat.format(DateTime.parse(reminderItem.whenDate.toString())),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                     color: textBlack)),
-                          ),
-
-                          Container(
-                            height: 20,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: buttonColor,
-                                border: Border.all(color: buttonColor),
-                                borderRadius: BorderRadius.all(Radius.circular(4.0))),
-                            child: Center(
-                              child: Text(getRemainderTag(reminderItem.reminderType.toString()),
+                            SizedBox(width: 4,),
+                            reminderItem.endDate == null ? SizedBox() : Icon(Icons.arrow_forward, color: primaryColor, size: 16, semanticLabel: 'to',),
+                            SizedBox(width: 8,),
+                            reminderItem.endDate == null ? SizedBox() : Text("Till " + dateFormat.format(DateTime.parse(reminderItem.endDate.toString())),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: textBlack)),
+                          ],
+                        ),
+                        SizedBox(height: 4,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Text("At "+DateFormat("hh:mm a").format(DateTime.parse('2023-09-26T'+reminderItem.whenTime.toString())),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
-                                      color: primaryColor)),
+                                      color: textBlack)),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+
+                            Container(
+                              height: 20,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  border: Border.all(color: buttonColor),
+                                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                              child: Center(
+                                child: Text(getRemainderTag(reminderItem.reminderType.toString()),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: primaryColor)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 8,),
-            Container(height: 60, width: 0.2, color: textGrey,),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(onPressed: (){_removeConfirmation(reminderItem);}, icon: Icon(Icons.delete, color: primaryColor, size: 24, semanticLabel: 'Delete '+reminderItem.name.toString(),))
-                ],
-              ),
-            )
-          ],
+              SizedBox(width: 8,),
+              Container(height: 60, width: 0.2, color: textGrey,),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(onPressed: (){_removeConfirmation(reminderItem);}, icon: Icon(Icons.delete, color: primaryColor, size: 24, semanticLabel: 'Delete '+reminderItem.name.toString(),))
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

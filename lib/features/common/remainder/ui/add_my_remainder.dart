@@ -37,7 +37,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var noteController = TextEditingController();
   var durationController = TextEditingController();
   var intervalController = TextEditingController();
-  List<bool> weekdaysValues = [false, false, true, false, false, true, true];//List.filled(7, false); //[false, true,true,false,true,false,false];
+  List<bool> weekdaysValues = List.filled(7, false);//[false, false, true, false, false, true, true];// //[false, true,true,false,true,false,false];
   var repeatValue = 'Hour';
 
   @override
@@ -200,7 +200,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                   border: Border.all(color: Colors.grey, width: 1),
                 ),
                 child: Semantics(
-                  label: 'Select your repeat frequency',
+                  label: 'Select frequency',
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: frequencyValue,
@@ -510,7 +510,8 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                     ),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Additional Comments ',
+                  label: 'Event',
+                  hint: 'required',
                   child: TextFormField(
                       controller: noteController,
                       keyboardType: TextInputType.multiline,
@@ -734,7 +735,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                   ),
                   color: Colors.white),
               child: Semantics(
-                label: 'How many times',
+                label: 'Duration',
                 child: TextFormField(
                     controller: durationController,
                     keyboardType: TextInputType.number,
@@ -856,20 +857,22 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   }
 
   validate(){
-    if(noteController.text.isEmpty){
-      showToast("Please enter event", context);
+    if(noteController.text.isEmpty || noteController.text.length <= 2){
+      showToast("Please enter valid event.", context);
     }else if(frequencyValue == null){
-      showToast("Please choose a repeat option", context);
+      showToast("Please choose a repeat option.", context);
     }else if(displayStartDate == ""){
-      showToast("Please select a start date", context);
+      showToast("Please select a start date.", context);
     }else if(endDateReuiredFrequencyList.contains(frequencyValue) && displayEndDate == "" ){
-      showToast("Please select a end date", context);
+      showToast("Please select a end date.", context);
     }else if(displayTime == ""){
-      showToast("Please select a time", context);
+      showToast("Please select a time.", context);
     }else if(frequencyValue == "After Every" && intervalController.text.isEmpty) {
-      showToast("Please enter a interval", context);
+      showToast("Please enter a interval.", context);
     }else if(frequencyValue == "After Every" && durationController.text.isEmpty) {
-      showToast("Please enter a duration", context);
+      showToast("Please enter a duration.", context);
+    }else  if(frequencyValue == "Weekdays" && durationController.text.isEmpty) {
+      showToast("Please enter a duration.", context);
     }else{
         _addPatientremainder();
     }
@@ -927,9 +930,12 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
       }
       map['RepeatAfterEvery'] = intervalController.text;
       map['RepeatAfterEveryNUnit'] = repeatValue;
-      map['EndAfterNRepetitions'] = durationController.text;
+      if(durationController.text.isNotEmpty) {
+        map['EndAfterNRepetitions'] = durationController.text;
+      }
       map['WhenTime'] = displayTime+':00';
       map['NotificationType'] = "SMS";
+      //map['NotificationType'] = "MobilePush";
 
 
 
@@ -942,7 +948,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
           showSuccessToast(baseResponse.message.toString(), context);
           Navigator.of(context).pop();
       }else{
-        showSuccessToast(baseResponse.error.toString(), context);
+        showSuccessToast(baseResponse.message.toString(), context);
       }
 
     } on FetchDataException catch (e) {

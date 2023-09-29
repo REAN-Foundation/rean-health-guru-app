@@ -35,7 +35,7 @@ class PatientRemainderViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response =
-    await apiProvider!.get('/reminders/search?UserId='+patientUserId.toString(), header: map);
+    await apiProvider!.get('/reminders/search?userId='+patientUserId.toString(), header: map);
     setBusy(false);
     // Convert and return
     return GetMyAllRemainders.fromJson(response);

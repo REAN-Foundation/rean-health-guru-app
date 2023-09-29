@@ -934,8 +934,8 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
         map['EndAfterNRepetitions'] = durationController.text;
       }
       map['WhenTime'] = displayTime+':00';
-      map['NotificationType'] = "SMS";
-      //map['NotificationType'] = "MobilePush";
+      //map['NotificationType'] = "SMS";
+      map['NotificationType'] = "MobilePush";
 
 
 

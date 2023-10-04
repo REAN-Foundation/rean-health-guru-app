@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.288+199
+version: 1.8.289+199
 
 publish_to: none
 
@@ -108,6 +108,7 @@ dependencies:
   pinput: ^2.2.21
   flutter_local_notifications: ^12.0.4
   weekday_selector: ^1.1.0
+  event: ^2.1.2
 
 dev_dependencies:
   #test: any

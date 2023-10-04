@@ -1,6 +1,8 @@
+import 'package:event/event.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class NotificationHandler {
 
@@ -8,6 +10,11 @@ class NotificationHandler {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle when a notification is received while the app is in the foreground
       debugPrint("Notification onMessage ==> ${message.data.toString()}");
+      String routeName = message.data['type'];
+      debugPrint("Route Name ==> $routeName");
+      if(routeName == "Reminder"){
+        myEvent.broadcast(NotificationBody(message.notification!.title.toString(), message.notification!.body.toString(), message.data['type']));
+      }
       //_handleNotification(message.data);
       //showNotification(message);
     });
@@ -94,3 +101,12 @@ class NotificationHandler {
 
 
 }
+
+// An example custom 'argument' class
+class NotificationBody extends EventArgs {
+  String? title;
+  String? body;
+  String? type;
+  NotificationBody(this.title, this.body, this.type);
+}
+

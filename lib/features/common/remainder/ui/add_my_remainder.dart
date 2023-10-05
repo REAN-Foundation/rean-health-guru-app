@@ -25,9 +25,9 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'Once';
-  var frequencyList = ['Once', 'Daily', 'Custom', 'Weekday']; //'All Weekday',
+  var frequencyList = ['Once', 'Daily', 'Repeat', 'Weekday']; //'All Weekday',
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
-  var endDateReuiredFrequencyList = ['Daily'];
+  var endDateReuiredFrequencyList = ['Daily', 'Repeat', 'Weekday'];
   String displayStartDate = '';
   String displayEndDate = '';
   String startDate = '';
@@ -37,14 +37,14 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var durationController = TextEditingController();
   var intervalController = TextEditingController();
   var repeatValue = 'Hour';
-  List<bool> weekdaysValues = List.filled(7, false);//[false, false, true, false, false, true, true];// //[false, true,true,false,true,false,false];
+  List<bool> weekdaysValues = List.filled(7, true);//[false, false, true, false, false, true, true];// //[false, true,true,false,true,false,false];
   String displayTime = '';
 
   @override
   void initState() {
     progressDialog = ProgressDialog(context: context);
     //model.setBusy(true);
-    displayTime = selectedTime.hour.toString().padLeft(2, '0')+":"+selectedTime.minute.toString();
+    displayTime = selectedTime.hour.toString().padLeft(2, '0')+":"+selectedTime.minute.toString().padLeft(2, '0');
     startDate = dateFormatStandard.format(DateTime.now());
     endDate = dateFormatStandard.format(DateTime.now());
     displayStartDate = dateFormat.format(DateTime.now());
@@ -135,13 +135,14 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                                               height: 24,
                                             ),
                                             selectReminderType(),
+                                            frequencyValue == 'Weekday' ? weekdayList() : SizedBox(),
+                                            frequencyValue == "Repeat" ? repeatAfter() : SizedBox(),
                                             SizedBox(
                                               height: 24,
                                             ),
                                             dateAndTime(),
-                                            frequencyValue == "Custom" ? repeatAfter() : SizedBox(),
-                                            frequencyValue == 'All Weekday' ? duration() : SizedBox(),
-                                            frequencyValue == 'Weekday' ? weekdayList() : SizedBox(),
+                                            //frequencyValue == 'All Weekday' ? duration() : SizedBox(),
+
                                             SizedBox(
                                               height: 24,
                                             ),
@@ -558,7 +559,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                flex: 4,
+                flex: 6,
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -566,7 +567,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                 Row(
                   children: [
                     Text(
-                      'Interval',
+                      'Repeat every',
                       style: TextStyle(
                           color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
                     ),
@@ -626,7 +627,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             )),
             SizedBox(width: 8,),
             Expanded(
-                flex: 6,
+                flex: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -696,7 +697,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                 ),
           ],
         ),
-        duration(),
+        //duration(),
       ],
     );
   }
@@ -714,7 +715,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             Row(
               children: [
                 Text(
-                  frequencyValue == "Weekday" ? "Number of Weeks" :'Duration',
+                  frequencyValue == "Weekday" ? "Number of Weeks" :'Ends after '+repeatValue.toLowerCase(),
                   style: TextStyle(
                       color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
                 ),
@@ -817,7 +818,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             )
           ],
         ),
-        duration(),
+        //duration(),
       ],
     );
   }
@@ -870,13 +871,13 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
       showToast("Please select a end date.", context);
     }else if(displayTime == ""){
       showToast("Please select a time.", context);
-    }else if(frequencyValue == "Custom" && intervalController.text.isEmpty) {
+    }else if(frequencyValue == "Repeat" && intervalController.text.isEmpty) {
       showToast("Please enter a interval.", context);
-    }else if(frequencyValue == "Custom" && durationController.text.isEmpty) {
+    }else/* if(frequencyValue == "Repeat" && durationController.text.isEmpty) {
       showToast("Please enter a duration.", context);
     }else  if(frequencyValue == "Weekday" && durationController.text.isEmpty) {
       showToast("Please enter a duration.", context);
-    }else{
+    }else*/{
         _addPatientremainder();
     }
 
@@ -891,7 +892,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
         path = 'one-time';
       }else if(frequencyValue == 'Daily'){
         path = 'repeat-every-day';
-      }else if(frequencyValue == 'Custom'){
+      }else if(frequencyValue == 'Repeat'){
         path = 'repeat-after-every-n';
       }else if(frequencyValue == 'All Weekday'){
         path = 'repeat-every-weekday';
@@ -911,6 +912,10 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
           selectedWeekdayList.add('Friday');
         if(weekdaysValues.elementAt(6))
           selectedWeekdayList.add('Saturday');
+
+
+        if(selectedWeekdayList.isEmpty)
+          showToastMsg("Please select from weekdays", context);
       }
 
 
@@ -951,7 +956,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
           showSuccessToast(baseResponse.message.toString(), context);
           Navigator.of(context).pop();
       }else{
-        showSuccessToast(baseResponse.message.toString(), context);
+        showToastMsg(baseResponse.message!.replaceAll('Input validation errors: [\n  \"', '').replaceAll('\"\n]', '').toString(), context);
       }
 
     } on FetchDataException catch (e) {

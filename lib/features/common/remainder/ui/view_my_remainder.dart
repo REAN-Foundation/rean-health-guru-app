@@ -394,7 +394,7 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
     if(type == 'Repeat-Every-Week-On-Days')
       return 'Weekdays';
     if(type == 'Repeat-After-Every-N')
-      return 'After Every';
+      return 'Repeat';
     return '';
   }
 

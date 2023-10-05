@@ -768,13 +768,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             ),
             Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SingleChildScrollView( scrollDirection: Axis.vertical, child: Text(message.notification!.title.toString(), style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w600), textAlign: TextAlign.left,)),
+              child: SingleChildScrollView( scrollDirection: Axis.vertical, child: Text(message.notification!.title.toString(), style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.left,)),
             )),
             Center(
               child: ElevatedButton(onPressed: () {
                 Navigator.of(context).pop();
               },
-                  child: Text('Got It!', style: TextStyle(color: Colors.white, fontSize: 18.0),)),
+                  child: Text('Got It!', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600),)),
             ),
             SizedBox(height: 16,)
           ],

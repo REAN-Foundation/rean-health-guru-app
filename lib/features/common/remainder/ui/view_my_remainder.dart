@@ -388,11 +388,11 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
     if(type == 'Repeat-Every-Day')
       return 'Daily';
     if(type == 'OneTime')
-      return 'One Time';
+      return 'Once';
     if(type == 'Repeat-Every-Weekday')
       return 'All Weekdays';
     if(type == 'Repeat-Every-Week-On-Days')
-      return 'Weekdays';
+      return 'Weekday';
     if(type == 'Repeat-After-Every-N')
       return 'Repeat';
     return '';

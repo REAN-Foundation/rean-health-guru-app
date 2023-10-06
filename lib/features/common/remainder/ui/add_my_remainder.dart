@@ -25,7 +25,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'Once';
-  var frequencyList = ['Once', 'Daily', 'Repeat', 'Weekday']; //'All Weekday',
+  var frequencyList = ['Once', 'Daily',  'Weekday']; //'Repeat', //'All Weekday',
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
   var endDateReuiredFrequencyList = ['Daily', 'Repeat', 'Weekday'];
   String displayStartDate = '';
@@ -60,7 +60,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: primaryColor,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
@@ -114,52 +114,48 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Scrollbar(
-                                    thumbVisibility: true,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            noteTextFeild(),
-                                            SizedBox(
-                                              height: 24,
-                                            ),
-                                            selectReminderType(),
-                                            frequencyValue == 'Weekday' ? weekdayList() : SizedBox(),
-                                            frequencyValue == "Repeat" ? repeatAfter() : SizedBox(),
-                                            SizedBox(
-                                              height: 24,
-                                            ),
-                                            dateAndTime(),
-                                            //frequencyValue == 'All Weekday' ? duration() : SizedBox(),
-
-                                            SizedBox(
-                                              height: 24,
-                                            ),
-                                            _submitButton(),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                //registerFooter(),
-                              ],
-                            ),
+                      child: body(),
                     ),
                   )
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget body(){
+    return Scrollbar(
+      thumbVisibility: true,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment:
+            MainAxisAlignment.start,
+            crossAxisAlignment:
+            CrossAxisAlignment.center,
+            children: <Widget>[
+              noteTextFeild(),
+              SizedBox(
+                height: 24,
+              ),
+              selectReminderType(),
+              frequencyValue == 'Weekday' ? weekdayList() : SizedBox(),
+              frequencyValue == "Repeat" ? repeatAfter() : SizedBox(),
+              SizedBox(
+                height: 24,
+              ),
+              dateAndTime(),
+              //frequencyValue == 'All Weekday' ? duration() : SizedBox(),
+
+              SizedBox(
+                height: 24,
+              ),
+              _submitButton(),
             ],
           ),
         ),

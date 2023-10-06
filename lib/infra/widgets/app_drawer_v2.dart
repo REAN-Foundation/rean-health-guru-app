@@ -496,18 +496,18 @@ class _AppDrawerState extends State<AppDrawerV2> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(
+                        /*SizedBox(
                           width: 4,
-                        ),
+                        ),*/
                         ExcludeSemantics(
                           child: ImageIcon(
                             AssetImage('res/images/ic_drawer_connect_health_device.png'),
-                            size: 32,
+                            size: 40,
                             color: primaryColor,
                           ),
                         ),
                         SizedBox(
-                          width: 12,
+                          width: 8,
                         ),
                         Text("Connect Health Device", style: TextStyle(
                             color: textBlack, fontWeight: FontWeight.w700),),
@@ -538,7 +538,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                             child: Center(
                               child: ImageIcon(
                                 AssetImage('res/images/ic_drawer_remainder.png'),
-                                size: 22,
+                                size: 40,
                                 color: primaryColor,
                               ),
                             ),

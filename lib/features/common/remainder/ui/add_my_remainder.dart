@@ -25,9 +25,9 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'Once';
-  var frequencyList = ['Once', 'Daily',  'Weekday']; //'Repeat', //'All Weekday',
+  var frequencyList = ['Once', 'Daily', 'Repeat', 'Weekly']; // //'All Weekday',
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
-  var endDateReuiredFrequencyList = ['Daily', 'Repeat', 'Weekday'];
+  var endDateReuiredFrequencyList = ['Daily', 'Repeat', 'Weekly'];
   String displayStartDate = '';
   String displayEndDate = '';
   String startDate = '';
@@ -144,7 +144,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                 height: 24,
               ),
               selectReminderType(),
-              frequencyValue == 'Weekday' ? weekdayList() : SizedBox(),
+              frequencyValue == 'Weekly' ? weekdayList() : SizedBox(),
               frequencyValue == "Repeat" ? repeatAfter() : SizedBox(),
               SizedBox(
                 height: 24,
@@ -711,7 +711,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             Row(
               children: [
                 Text(
-                  frequencyValue == "Weekday" ? "Number of Weeks" :'Ends after '+repeatValue.toLowerCase(),
+                  frequencyValue == "Weekly" ? "Number of Weeks" :'Ends after '+repeatValue.toLowerCase(),
                   style: TextStyle(
                       color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
                 ),
@@ -892,7 +892,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
         path = 'repeat-after-every-n';
       }else if(frequencyValue == 'All Weekday'){
         path = 'repeat-every-weekday';
-      }else if(frequencyValue == 'Weekday'){
+      }else if(frequencyValue == 'Weekly'){
         path = 'repeat-every-week-on-days';
         if(weekdaysValues.elementAt(0))
           selectedWeekdayList.add('Sunday');
@@ -929,7 +929,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             .difference(DateTime.parse(startDate))
             .inDays;
       }
-      if(frequencyValue == 'Weekday'){
+      if(frequencyValue == 'Weekly'){
         map['RepeatList'] = selectedWeekdayList;
       }
       map['RepeatAfterEvery'] = intervalController.text;

@@ -9,6 +9,7 @@ class RemoteConfigValues{
   static List<String> homeScreenTile = [ "Medications", "Nutrition", "Physical Activity", "Mental Well-Being",  "Vitals",  "Symptoms",  "Lab Values",  "Knowledge"  ];
   static List<String> vitalScreenTile = [ "Weight", "Blood Pressure", "Blood Glucose", "Blood Oxygen Sturation",  "Pulse Rate",  "Body Temprature" ];
   static List<String> carePlanCode = []; //[ "Cholesterol", "Stroke", "HeartFailure"]
+  static List<String> reminderFrequencyList = ["Once", "Daily", "Weekly"]; //'Repeat', //'All Weekday',
   static int carePlanTaskDurationInDays = 0;
   static bool hospitalSystemVisibility = true;
   static bool downloadReportButtonVisibility = false;
@@ -41,8 +42,10 @@ class RemoteConfigValues{
     vitalScreenTile = List<String>.from(jsonDecode(vitalTileJsonArray.asString()));
     var carePlanCodeJsonArray =  remoteConfig.getValue('careplan_code');
     carePlanCode = List<String>.from(jsonDecode(carePlanCodeJsonArray.asString()));
+    var reminderFrequencyJsonArray =  remoteConfig.getValue('reminder_frequencies');
+    reminderFrequencyList = List<String>.from(jsonDecode(reminderFrequencyJsonArray.asString()));
     debugPrint('############################################################################################');
-    debugPrint('$downloadReportButtonVisibility');
+    debugPrint('$reminderFrequencyList');
     debugPrint('############################################################################################');
   }
 

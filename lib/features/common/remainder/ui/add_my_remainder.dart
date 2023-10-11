@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/remainder/view_models/patients_remainder.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -25,7 +26,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   late ProgressDialog progressDialog;
   var frequencyValue = 'Once';
-  var frequencyList = ['Once', 'Daily', 'Repeat', 'Weekly']; // //'All Weekday',
+  var frequencyList = RemoteConfigValues.reminderFrequencyList;
   var repeatUnit = ['Hour', 'Day', 'Month', 'Quarter', 'Year'];
   var endDateReuiredFrequencyList = ['Daily', 'Repeat', 'Weekly'];
   String displayStartDate = '';
@@ -593,6 +594,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                             color: Colors.white),
                         child: Semantics(
                           label: 'Repeat every',
+                          hint: 'required',
                           child: TextFormField(
                               controller: intervalController,
                               keyboardType: TextInputType.number,

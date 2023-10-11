@@ -11,8 +11,8 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/utils/weekday_selector/custom_weekday_selector.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
-import 'package:weekday_selector/weekday_selector.dart';
 
 class AddMyRemainderView extends StatefulWidget {
   @override
@@ -798,7 +798,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
             ),
             Semantics(
               label: 'Repeat On',
-              child: WeekdaySelector(
+              child: CustomWeekdaySelector(
                 onChanged: (int day) {
                   setState(() {
                     // Use module % 7 as Sunday's index in the array is 0 and

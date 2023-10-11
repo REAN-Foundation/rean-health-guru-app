@@ -59,6 +59,7 @@ var healthSystemHospitalGlobe;
 med.Items? globeMedication;
 bool pushNotificationAlreadyNavigated = true;
 var myEvent = Event<NotificationBody>();
+bool displayAlertOnces = true;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

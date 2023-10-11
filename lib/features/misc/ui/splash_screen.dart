@@ -136,13 +136,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    NotificationHandler().initialize();
     setupFirebaseConfig();
     FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();
     getHealthAppPermission();
     _initPackageInfo();
     getDailyCheckInDate();
+    NotificationHandler().initialize();
     super.initState();
     Timer(Duration(seconds: widget.seconds), () {
       /*if (widget.navigateAfterSeconds is String) {

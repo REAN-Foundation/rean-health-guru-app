@@ -241,7 +241,6 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
         elevation: 0,
         semanticContainer: false,
         child: Container(
-          height: 100,
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -294,6 +293,60 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
                           ],
                         ),
                         SizedBox(height: 4,),
+                        if(reminderItem.reminderType == "Repeat-Every-Week-On-Days")...[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(//
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text("On every : ",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  Expanded(
+                                    child: Text(reminderItem.repeatList!.join(", "),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 4,),
+                            ],
+                          )
+                        ],
+                        if(reminderItem.reminderType == "Repeat-After-Every-N")...[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(//
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text("Repeat after every ",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  Expanded(
+                                    child: Text(reminderItem.repeatAfterEvery.toString()+" "+reminderItem.repeatAfterEveryNUnit.toString(),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 4,),
+                            ],
+                          )
+                        ],
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -392,7 +445,7 @@ class _ViewMyRemainderViewState extends State<ViewMyRemainderView> {
     if(type == 'Repeat-Every-Weekday')
       return 'All Weekdays';
     if(type == 'Repeat-Every-Week-On-Days')
-      return 'Weekday';
+      return 'Weekly';
     if(type == 'Repeat-After-Every-N')
       return 'Repeat';
     return '';

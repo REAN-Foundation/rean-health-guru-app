@@ -441,7 +441,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          selectedTime.hour.toString().padLeft(2, '0')+":"+selectedTime.minute.toString(),
+                          selectedTime.hour.toString().padLeft(2, '0')+":"+selectedTime.minute.toString().padLeft(2, '0'),
                           style: TextStyle(
                               fontWeight: FontWeight.normal, fontSize: 16),
                         ),

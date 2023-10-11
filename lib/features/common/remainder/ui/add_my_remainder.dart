@@ -200,7 +200,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                   border: Border.all(color: Colors.grey, width: 1),
                 ),
                 child: Semantics(
-                  label: 'Select frequency',
+                  label: 'Select Frequency',
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: frequencyValue,
@@ -510,7 +510,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                     ),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Event',
+                  label: 'Reminder Title',
                   hint: 'required',
                   child: TextFormField(
                       controller: noteController,
@@ -592,7 +592,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                             ),
                             color: Colors.white),
                         child: Semantics(
-                          label: 'Interval',
+                          label: 'Repeat every',
                           child: TextFormField(
                               controller: intervalController,
                               keyboardType: TextInputType.number,
@@ -660,7 +660,8 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                               border: Border.all(color: Colors.grey, width: 1),
                             ),
                             child: Semantics(
-                              label: 'Select your repeat frequency',
+                              label: 'Select Unit',
+                              hint: "required",
                               child: DropdownButton<String>(
                                 isExpanded: true,
                                 value: repeatValue,
@@ -794,7 +795,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
               height: 4,
             ),
             Semantics(
-              label: 'select Weekday',
+              label: 'Repeat On',
               child: WeekdaySelector(
                 onChanged: (int day) {
                   setState(() {
@@ -868,7 +869,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
     }else if(displayTime == ""){
       showToast("Please select a time.", context);
     }else if(frequencyValue == "Repeat" && intervalController.text.isEmpty) {
-      showToast("Please enter a interval.", context);
+      showToast("Please enter a repeat every value.", context);
     }else/* if(frequencyValue == "Repeat" && durationController.text.isEmpty) {
       showToast("Please enter a duration.", context);
     }else  if(frequencyValue == "Weekday" && durationController.text.isEmpty) {
@@ -910,8 +911,10 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
           selectedWeekdayList.add('Saturday');
 
 
-        if(selectedWeekdayList.isEmpty)
-          showToastMsg("Please select from weekdays", context);
+        if(selectedWeekdayList.isEmpty) {
+          showToastMsg("Please select weekdays", context);
+          return ;
+        }
       }
 
 

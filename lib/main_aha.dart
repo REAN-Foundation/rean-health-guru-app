@@ -10,6 +10,7 @@ import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -139,6 +140,7 @@ class MyApp extends StatelessWidget {
         title: 'HF Helper',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
+        navigatorKey: NavigationService.navigatorKey,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml
         //initialRoute: RoutePaths.Login,

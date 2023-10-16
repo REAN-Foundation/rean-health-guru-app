@@ -741,11 +741,49 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           debugPrint("Notification Type ===> $routeName");
           _launchURL(message.data['url']);
           break;
+        case "Reminder":
+          debugPrint("<================== Web Notification Received ==============================>");
+          debugPrint("Notification Type ===> $routeName");
+          reminderAlert(message);
+          break;
       }
       // Use Navigator to navigate to the specified screen
       // Navigator.pushNamed(context, routeName);
     }
   }
+
+  reminderAlert(RemoteMessage message){
+    Dialog errorDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here
+      child: Container(
+        width: 300.0,
+        height: 200,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding:  EdgeInsets.all(16.0),
+              child: Center(child: Text('Reminder', style: TextStyle(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),)),
+            ),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: SingleChildScrollView( scrollDirection: Axis.vertical, child: Text(message.notification!.title.toString(), style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.left,)),
+            )),
+            Center(
+              child: ElevatedButton(onPressed: () {
+                Navigator.of(context).pop();
+              },
+                  child: Text('Got It!', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600),)),
+            ),
+            SizedBox(height: 16,)
+          ],
+        ),
+      ),
+    );
+    showDialog(context: context, builder: (BuildContext context) => errorDialog);
+  }
+
 
   _launchURL(String url) async {
       if (await canLaunchUrl(Uri.parse(url))) {

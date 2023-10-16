@@ -136,13 +136,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    NotificationHandler().initialize();
     setupFirebaseConfig();
     FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();
     getHealthAppPermission();
     _initPackageInfo();
     getDailyCheckInDate();
+    NotificationHandler().initialize();
     super.initState();
     Timer(Duration(seconds: widget.seconds), () {
       /*if (widget.navigateAfterSeconds is String) {
@@ -184,8 +184,11 @@ class _SplashScreenState extends State<SplashScreen> {
       "sample_string_value": "Hello, world!",
     });
 
-    await remoteConfig.fetchAndActivate();
-
+    try {
+      await remoteConfig.fetchAndActivate();
+    }catch (e){
+      debugPrint("Error ==> ${e.toString()}");
+    }
     //GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
 
     debugPrint(

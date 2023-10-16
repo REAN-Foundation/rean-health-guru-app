@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiver/core.dart';
 
 /// Defines the appearance of [MaterialWeekdayButton] widgets.
 ///
@@ -132,6 +133,32 @@ class WeekdaySelectorThemeData with Diagnosticable {
   final ShapeBorder? disabledShape;
 
   @override
+  int get hashCode => hashObjects([
+    enableFeedback,
+    color,
+    selectedColor,
+    disabledColor,
+    fillColor,
+    selectedFillColor,
+    disabledFillColor,
+    elevation,
+    selectedElevation,
+    disabledElevation,
+    focusColor,
+    selectedFocusColor,
+    hoverColor,
+    selectedHoverColor,
+    splashColor,
+    selectedSplashColor,
+    textStyle,
+    selectedTextStyle,
+    disabledTextStyle,
+    shape,
+    selectedShape,
+    disabledShape,
+  ]);
+
+/* @override
   int get hashCode {
     return hashList([
       enableFeedback,
@@ -157,12 +184,14 @@ class WeekdaySelectorThemeData with Diagnosticable {
       selectedShape,
       disabledShape,
     ]);
-  }
+  }*/
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other))
+      return true;
+    if (other.runtimeType != runtimeType)
+      return false;
     // ignore: test_types_in_equals
     final typedOther = other as WeekdaySelectorThemeData;
     return typedOther.enableFeedback == enableFeedback &&

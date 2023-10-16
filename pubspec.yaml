@@ -109,6 +109,7 @@ dependencies:
   flutter_local_notifications: ^12.0.4
   weekday_selector: ^1.1.0
   event: ^2.1.2
+  quiver: ^3.1.0
 
 dev_dependencies:
   #test: any

@@ -1,13 +1,17 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,10 +19,55 @@ import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/chat_api_provider.dart';
 
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  if (notificationResponse != null) {
+    debugPrint('notification payload: $notificationResponse');
+  } else {
+    debugPrint("Notification Done");
+  }
+}
+
+
+Future<void> showNotification(RemoteMessage payload) async {
+  const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    'default_notification_channel_id',
+    'Notification',
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+    playSound: true,
+  );
+  const iOSDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidDetails, iOS: iOSDetails);
+
+  await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
+}
+
 Future<void> main() async {
-  //enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  NotificationHandler().initialize();
+  Permission.notification.request();
+  await Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.167');
@@ -47,6 +96,7 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
+    setAppName('REAN HealthGuru');
     setAppFlavour('RHG-UAT');
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance

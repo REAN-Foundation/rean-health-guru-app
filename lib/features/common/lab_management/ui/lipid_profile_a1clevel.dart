@@ -398,7 +398,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'A1C Level Delete',
+                  semanticLabel: 'A1C Level '+ record.primaryValue.toString() +' Delete',
                 ))
           ],
         ),

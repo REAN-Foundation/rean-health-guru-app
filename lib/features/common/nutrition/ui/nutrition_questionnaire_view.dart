@@ -458,7 +458,7 @@ class _NutritionQuestionnaireViewState
                 top: 0,
                 right: 0,
                 child: CustomTooltip(
-                  message: '1 serving = 1/2 cup.',
+                  message: '1 serving = 1/2 cup.\n\nBell pepper: Half of a large \nBroccoli or cauliflower: 5 to 8 florets \nCarrot: 6 baby or 1 whole medium \nLeafy vegetable: 1 cup raw or ½ cup cooked \nPotato: Half of a medium \nZucchini: Half of a large.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -641,7 +641,7 @@ class _NutritionQuestionnaireViewState
                 top: 0,
                 right: 0,
                 child: CustomTooltip(
-                  message: '1 serving = 1/2 cup.',
+                  message: '1 serving = 1/2 cup. \n\nApple, pear, orange, peach or nectarine: 1 medium \nAvocado: Half of a medium \nBanana: 1 small \nGrape: 16 \nKiwifruit: 1 medium \nMelon: Half-inch thick wedge of sliced watermelon, honeydew, cantaloupe.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),

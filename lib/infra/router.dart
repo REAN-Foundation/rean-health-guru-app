@@ -58,6 +58,7 @@ import 'package:patient/features/common/careplan/ui/successfully_setup_careplan.
 import 'package:patient/features/common/careplan/ui/video_more_careplan.dart';
 import 'package:patient/features/common/careplan/ui/word_of_the_week_careplan.dart';
 import 'package:patient/features/common/chat_bot/ui/faq_chat_screen.dart';
+import 'package:patient/features/common/health_device/ui/connect_health_devices.dart';
 import 'package:patient/features/common/lab_management/ui/biometric_cholesterol_trends_view.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_a1clevel.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_hdl.dart';
@@ -67,6 +68,7 @@ import 'package:patient/features/common/lab_management/ui/lipid_profile_triglyce
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/nutrition_questionnaire_view.dart';
+import 'package:patient/features/common/remainder/ui/add_my_remainder.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
@@ -93,6 +95,8 @@ import 'package:patient/features/misc/ui/support_view.dart';
 import 'package:patient/features/misc/ui/symptoms_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+
+import '../features/common/remainder/ui/view_my_remainder.dart';
 
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -130,6 +134,10 @@ class Routers {
         return MaterialPageRoute(builder: (_) => SupportView());
       case RoutePaths.SUPPORT_NETWORK:
         return MaterialPageRoute(builder: (_) => SupportNetworkView());
+      case RoutePaths.Remainder:
+        return MaterialPageRoute(builder: (_) => ViewMyRemainderView());
+      case RoutePaths.Add_Remainder:
+        return MaterialPageRoute(builder: (_) => AddMyRemainderView());
       case RoutePaths.Payment_Confirmation_View:
         return MaterialPageRoute(builder: (_) => PaymentConfirmationView());
       case RoutePaths.Booking_Appoinment_Confirmation_View:
@@ -358,6 +366,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => MyReportsView());
       case RoutePaths.FAQ_BOT:
         return MaterialPageRoute(builder: (_) => FAQChatScreen());
+      case RoutePaths.Connect_Health_Device:
+        return MaterialPageRoute(builder: (_) => ConnectHealthDevicesView());
       case RoutePaths.ACHIEVEMENT:
         return MaterialPageRoute(builder: (_) => AllAchievementView());
       /* case RoutePaths.Order_Medicine:

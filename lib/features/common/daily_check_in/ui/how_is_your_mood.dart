@@ -429,11 +429,11 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     ),
                   ),
                   Semantics(
-                    label: 'Fearfull',
+                    label: 'Fearful',
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 6;
-                        dailyMood = 'Fearfull';
+                        dailyMood = 'Fearful';
                         setState(() {});
                         Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
@@ -578,11 +578,11 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     ),
                   ),
                   Semantics(
-                    label: 'Hopefull',
+                    label: 'Hopeful',
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 8;
-                        dailyMood = 'Hopefull';
+                        dailyMood = 'Hopeful';
                         setState(() {});
                         Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());

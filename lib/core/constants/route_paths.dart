@@ -14,6 +14,8 @@ class RoutePaths {
   static const String ABOUT_REAN_CARE = 'aboutReanCare';
   static const String CONTACT_US = 'contactUs';
   static const String SUPPORT_NETWORK = 'supportNetwork';
+  static const String Remainder = 'remainder';
+  static const String Add_Remainder = 'add_remainder';
   static const String Edit_Profile = 'editProfile';
   static const String Select_Date_And_Time_Book_Appoinment =
       'selectDateAndTimeForBookAppoinment';
@@ -117,4 +119,5 @@ class RoutePaths {
   static const String Lipid_Profile_A1CLevel = 'lipid_Profile_A1CLevel';
   static const String Lipid_Profile = 'lipid_Profile';
   static const String ACHIEVEMENT = 'achievement';
+  static const String Connect_Health_Device = 'connectHealthDevice';
 }

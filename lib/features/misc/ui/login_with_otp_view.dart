@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/check_user_exists_or_not_resonse.dart';
@@ -52,6 +54,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   bool? isPrivacyPolicyChecked = false;
   bool privacyPolicyErrorVisibility = false;
   String privacySemanticsLabel = '';
+  final remoteConfig = FirebaseRemoteConfig.instance;
 
   @override
   void initState() {
@@ -65,19 +68,45 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();
     //}
+    UpdateChecker(context);
     cleanAllData();
     getRoleIdApi();
     firebase();
     super.initState();
   }
 
+  setupFirebaseConfig() async {
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(seconds: 10),
+    ));
+
+    await remoteConfig.setDefaults(const {
+      "sample_string_value": "Hello, world!",
+    });
+
+    await remoteConfig.fetchAndActivate();
+
+    //GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
+
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');
+
+    RemoteConfigValues.getValues(remoteConfig);
+
+  }
+
   cleanAllData(){
-    dailyCheckInDate = '';
-    carePlanEnrollmentForPatientGlobe = null;
-    _sharedPrefUtils.save('CarePlan', null);
-    _sharedPrefUtils.saveBoolean('login', null);
-    _sharedPrefUtils.clearAll();
-    chatList.clear();
+    try {
+      chatList.clear();
+      _sharedPrefUtils.clearAll();
+      dailyCheckInDate = '';
+      carePlanEnrollmentForPatientGlobe = null;
+      _sharedPrefUtils.save('CarePlan', null);
+      _sharedPrefUtils.saveBoolean('login', null);
+    }on FetchDataException catch(e){
+      debugPrint("Error ==> ${e.toString()}");
+    }
   }
 
   getRoleIdApi() async {
@@ -131,7 +160,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   @override
   Widget build(BuildContext context) {
     checkItenetConnection();
-    UpdateChecker(context);
     height = MediaQuery.of(context).size.height;
     //debugPrint('Height ==> $height');
     return BaseWidget<LoginViewModel?>(
@@ -634,6 +662,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
+      progressDialog.close();
       model.setBusy(false);
       setState(() {});
       showToast(e.toString(), context);
@@ -759,6 +788,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         showToast(doctorListApiResponse.message!, context);
       }
     } on FetchDataException catch (e) {
+      progressDialog.close();
       showToast('Opps! Something went wrong, Please try again', context);
       model.setBusy(false);
       showToast(e.toString(), context);

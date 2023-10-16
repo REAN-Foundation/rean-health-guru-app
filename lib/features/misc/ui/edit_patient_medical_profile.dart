@@ -153,8 +153,8 @@ class _EditPatientMedicalProfileViewState
     if(widget.healthProfile!.isDiabetic != null)
     isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
 
-    if(widget.healthProfile!.isSmoker != null)
-    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+    if(widget.healthProfile!.tobaccoQuestionAns != null)
+    isSmoker = yesOrNo(widget.healthProfile!.tobaccoQuestionAns!);
 
     if(widget.healthProfile!.hasHeartAilment != null)
     hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
@@ -1149,6 +1149,7 @@ class _EditPatientMedicalProfileViewState
                                   },
                                   child: Text(
                                     height == 0 ? 'Select' : 'Change',
+                                    semanticsLabel:height == 0 ? 'Select Height' : 'Change height',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -1526,7 +1527,7 @@ class _EditPatientMedicalProfileViewState
       data['BloodGroup'] = _bloodgroupValue;
       data['MajorAilment'] = _majorAilmentController.text;
       data['IsDiabetic'] = isDiabetic == '' ? null : isDiabetic == 'Yes' ? true : false;
-      data['IsSmoker'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
+      data['TobaccoQuestionAns'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
       data['HasHeartAilment'] = hasHeartAilment == '' ? null : hasHeartAilment == 'Yes' ? true : false;
       /*data['Ethnicity'] = _ethnicityValue;
       data['Race'] = _raceValue;*/

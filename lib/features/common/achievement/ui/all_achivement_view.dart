@@ -156,7 +156,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                         Expanded(
                             flex: 3,
                             child: Semantics(
-                              label: awardsList.length.toString()+' Badges Earned',
+                              label: awardsList.isNotEmpty == 0 ? '0 Badges Earned' : awardsList.length == 1 ? awardsList.length.toString()+' Badge Earned': awardsList.length.toString()+' Badges Earned',
                               child: ExcludeSemantics(
                                 child: Container(
                                   height: 80,
@@ -200,7 +200,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
                                           /*SizedBox(
                                             width: 2,
                                           ),*/
-                                          Text('Badge Earned',
+                                          Text(awardsList.length == 1 ? 'Badge Earned': 'Badges Earned',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14,
@@ -1152,7 +1152,7 @@ class _AllAchievementViewState extends State<AllAchievementView> {
               barrierDismissible: false,
               context: context,
               builder: (_) {
-                return _badgesDialog(context, image, 'Vital', description);
+                return _badgesDialog(context, image, 'Vitals', description);
               });
         },
         child: Container(

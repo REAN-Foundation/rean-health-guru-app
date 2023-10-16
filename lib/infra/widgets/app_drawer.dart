@@ -1,7 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -11,7 +18,13 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../features/common/health_device/models/terra_session_id.dart';
+import '../networking/custom_exception.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -32,6 +45,8 @@ class _AppDrawerState extends State<AppDrawer> {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String? _baseUrl = '';
   String imageResourceId = '';
+  ProgressDialog? progressDialog;
+  late BuildContext buildContext;
 
   loadSharedPrefs() async {
     try {
@@ -61,6 +76,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   void initState() {
+    //checkForUpdate();
     _initPackageInfo();
     super.initState();
   }
@@ -76,6 +92,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    buildContext = context;
     loadSharedPrefs();
     return Drawer(
       child: Card(
@@ -415,20 +432,29 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-              /* InkWell(
-                onTap: (){
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("Helpdesk", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
-                    ],
-                  ),
+          Visibility(
+            visible: RemoteConfigValues.healthDeviceConnectionVisibility,
+            child: InkWell(
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
+                //progressDialog!.show(max: 100, msg: 'Loading...');
+                //generateSeesionId();
+                //initTerraWebView('https://widget.tryterra.co/session/ca5757dc-8297-4d8c-b1d8-c246239ac705');
+                //initTerraFunctionState();
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(width: 40,),
+                    Text("Connect Health Device", style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),),
+                  ],
                 ),
-              ),*/
+              ),
+            ),
+          ),
           Visibility(
             visible: getAppName() != 'Heart & Stroke Helper™ ',
             child: Semantics(
@@ -517,6 +543,179 @@ class _AppDrawerState extends State<AppDrawer> {
       ),
     ));
   }
+
+  Future<dynamic> generateSeesionId() async {
+    Map<String, String>? headers = <String, String>{};
+    headers['x-api-key'] = dotenv.env['TERRA_API_KEY'].toString();
+    headers['Dev-Id'] = dotenv.env['TERRA_DEVELOPER_ID'].toString();
+    headers['Content-Type'] = 'application/json';
+    headers['accept'] = 'application/json';
+
+    /*if(dotenv.env['TERRA_API_KEY'].toString().isNotEmpty && dotenv.env['TERRA_DEVELOPER_ID'].toString().isNotEmpty){
+      showToast('Terra Keys Imported', buildContext);
+    }*/
+
+
+    Map<String, String>? body = <String, String>{};
+    body['reference_id'] = patientUserId.toString();
+    body['providers'] = 'GARMIN,WITHINGS,FITBIT,OURA,WAHOO,PELOTON,ZWIFT,TRAININGPEAKS,FREESTYLELIBRE,DEXCOM,COROS,HUAWEI,OMRON,RENPHO,POLAR,SUUNTO,EIGHT,CONCEPT2,WHOOP,IFIT,TEMPO,CRONOMETER,FATSECRET,NUTRACHECK,UNDERARMOUR';
+    body['language'] = 'en';
+
+    debugPrint('Base Url ==> POST https://api.tryterra.co/v2/auth/generateWidgetSession');
+    debugPrint('Request Body ==> ${json.encode(body).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+
+    var responseJson;
+    try {
+      final response = await http
+          .post(Uri.parse('https://api.tryterra.co/v2/auth/generateWidgetSession'),
+          body: json.encode(body), headers: headers)
+          .timeout(const Duration(seconds: 40));
+      /*if(progressDialog!.isOpen()) {
+        progressDialog!.close();
+      }
+      progressDialog!.close();*/
+      debugPrint('Terra Response Body ==> ${response.body}');
+      debugPrint('Terra Response Code ==> ${response.statusCode}');
+      responseJson = json.decode(response.body.toString());
+      TerraSessionId sessionId = TerraSessionId.fromJson(responseJson);
+
+      if(response.statusCode == 201) {
+        debugPrint('Terra Session URL ==> ${sessionId.url}');
+        initTerraWebView(sessionId.url.toString());
+      }else{
+        showToast(sessionId.message.toString(), buildContext);
+        //showToast('Opps, something wents wrong!\nPlease try again', context);
+      }
+    } on SocketException {
+      showToast('SocketException', buildContext);
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+      showToast('TimeoutException', buildContext);
+      throw FetchDataException('No Internet connection');
+    } on Exception catch (e) {
+      showToast(e.toString(), buildContext);
+      print("throwing new error");
+      throw Exception("Error on server");
+    }
+    return responseJson;
+  }
+
+  initTerraWebView(String url) async {
+    Navigator.pop(context);
+    if (await canLaunchUrl(Uri.parse(url))) {
+    await tabs.launch(url,
+      customTabsOption: tabs.CustomTabsOption(
+        toolbarColor: primaryColor,
+        enableDefaultShare: true,
+        enableUrlBarHiding: true,
+        showPageTitle: true,
+        animation: tabs.CustomTabsSystemAnimation.slideIn(),
+        extraCustomTabs: const <String>[
+          // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+          'org.mozilla.firefox',
+          // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+          'com.microsoft.emmx',
+        ],
+      ),
+      safariVCOption: tabs.SafariViewControllerOption(
+        preferredBarTintColor: primaryColor,
+        preferredControlTintColor: Colors.white,
+        barCollapsingEnabled: false,
+        entersReaderIfAvailable: false,
+        dismissButtonStyle: tabs.SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+    } else {
+    showToast('Could not launch $url', context);
+    //throw 'Could not launch $url';
+    }
+  }
+
+/*  Future<void> initTerraFunctionState() async {
+    bool initialised = false;
+    bool connected = false;
+    bool daily = false;
+    String testText;
+    Connection c = Connection.appleHealth;
+    // Function messages may fail, so we use a try/catch Exception.
+    // We also handle the message potentially returning null.
+    // USE YOUR OWN CATCH BLOCKS
+    // HAVING ALL FUNCTIONS IN THE SAME CATCH IS NOT A GOOD IDEA
+    try {
+      DateTime now = DateTime.now().toUtc();
+      DateTime lastMidnight = DateTime(now.year, now.month, now.day);
+      initialised = await TerraFlutter.initTerra('rean-healthguru-dev-8sCumnMOFl', patientUserId!) ??
+          false;
+      print('Intialised ==> $initialised');
+      connected = await TerraFlutter.initConnection(c, '2849e1b68e0b9843cbd53e5bc1cf1c599310f14f04a565cd956fb5c77acad7cd', false, []) ??
+          false;
+
+      testText = await TerraFlutter.getUserId(c) ?? "";
+      print('TerraUserId ==> $testText');
+      daily = await TerraFlutter.getDaily(
+          c, lastMidnight, now) ??
+          false;
+      *//*daily = await TerraFlutter.getAthlete(c) ?? false;
+      daily = await TerraFlutter.getMenstruation(
+          c, DateTime(2022, 9, 25), DateTime(2022, 9, 30)) ??
+          false;
+      daily = await TerraFlutter.getNutrition(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;
+      daily = await TerraFlutter.getSleep(
+          c, now.subtract(Duration(days: 1)), now) ??
+          false;
+      daily = await TerraFlutter.getActivity(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;*//*
+    } on Exception catch (e) {
+      print('error caught: $e');
+      testText = "Some exception went wrong";
+      initialised = false;
+      connected = false;
+      daily = false;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+
+
+    setState(() {
+      debugPrint(
+          'Daily Data :\nInitialised ==> $initialised \nConnected ==> $connected \nDaily ==> $daily');
+    });
+    if (!mounted)
+      return;
+  }
+
+  AppUpdateInfo? _updateInfo;
+  //bool _flexibleUpdateAvailable = false;
+
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showToast(e.toString(), context);
+    });
+  }
+
+  immediateUpdate() {
+
+
+
+    if(_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+      InAppUpdate.performImmediateUpdate().catchError((e){
+        showToast(e.toString(), context);
+      });
+    }
+  }
+  */
+
 
   Widget _footer() {
     return Column(
@@ -715,7 +914,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: primaryColor),
-                semanticsLabel: name,
+                semanticsLabel: 'Name ' + name,
               ),
             ),
             SizedBox(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +11,7 @@ import 'package:patient/features/common/careplan/models/get_user_task_details.da
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/features/common/medication/models/my_current_medication.dart' as med;
+import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:phone_number/phone_number.dart';
@@ -55,6 +57,9 @@ List<String> createdGoalsIds = [];
 var healthSystemGlobe;
 var healthSystemHospitalGlobe;
 med.Items? globeMedication;
+bool pushNotificationAlreadyNavigated = true;
+var myEvent = Event<NotificationBody>();
+bool displayAlertOnces = true;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -351,6 +356,11 @@ setKnowdledgeLinkLastViewDate(String viewedDate) async {
     // do something
   }
   //return knowledgeLinkDisplayedDate ?? '';
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 }
 
 getDailyCheckInDate() async {

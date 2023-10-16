@@ -51,7 +51,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 

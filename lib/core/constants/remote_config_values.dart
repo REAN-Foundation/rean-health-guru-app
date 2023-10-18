@@ -9,12 +9,14 @@ class RemoteConfigValues{
   static List<String> homeScreenTile = [ "Medications", "Nutrition", "Physical Activity", "Mental Well-Being",  "Vitals",  "Symptoms",  "Lab Values",  "Knowledge"  ];
   static List<String> vitalScreenTile = [ "Weight", "Blood Pressure", "Blood Glucose", "Blood Oxygen Sturation",  "Pulse Rate",  "Body Temprature" ];
   static List<String> carePlanCode = []; //[ "Cholesterol", "Stroke", "HeartFailure"]
+  static List<String> reminderFrequencyList = ["Once", "Daily", "Weekly"]; //'Repeat', //'All Weekday',
   static int carePlanTaskDurationInDays = 0;
   static bool hospitalSystemVisibility = true;
   static bool downloadReportButtonVisibility = false;
   static bool dashboardSymptomsVisibility = true;
   static bool dashboardVitalsVisibility = true;
   static bool healthDeviceConnectionVisibility = false;
+  static bool remainderVisibility = false;
   static bool healthDataSync = false;
   static String minimumAppVersionRequired = '1.0.0';
   static String softUpdateNewAppVersion = '1.0.0';
@@ -27,6 +29,7 @@ class RemoteConfigValues{
     downloadReportButtonVisibility = remoteConfig.getBool('download_report_button_visibility');
     carePlanTaskDurationInDays = remoteConfig.getInt('careplan_task_duration_in_days');
     hospitalSystemVisibility = remoteConfig.getBool('hospital_system_visibility');
+    remainderVisibility = remoteConfig.getBool('remainder_visibility');
     minimumAppVersionRequired = remoteConfig.getString('minimum_app_version_required');
     softUpdateNewAppVersion = remoteConfig.getString('soft_update_new_app_version');
     healthDeviceConnectionVisibility = remoteConfig.getBool('health_device_connection_visibility');
@@ -39,8 +42,10 @@ class RemoteConfigValues{
     vitalScreenTile = List<String>.from(jsonDecode(vitalTileJsonArray.asString()));
     var carePlanCodeJsonArray =  remoteConfig.getValue('careplan_code');
     carePlanCode = List<String>.from(jsonDecode(carePlanCodeJsonArray.asString()));
+    var reminderFrequencyJsonArray =  remoteConfig.getValue('reminder_frequencies');
+    reminderFrequencyList = List<String>.from(jsonDecode(reminderFrequencyJsonArray.asString()));
     debugPrint('############################################################################################');
-    debugPrint('$downloadReportButtonVisibility');
+    debugPrint('$reminderFrequencyList');
     debugPrint('############################################################################################');
   }
 

@@ -1,6 +1,10 @@
+import 'package:event/event.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:patient/infra/services/NavigationService.dart';
+import 'package:patient/infra/utils/CommonAlerts.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class NotificationHandler {
 
@@ -8,6 +12,26 @@ class NotificationHandler {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle when a notification is received while the app is in the foreground
       debugPrint("Notification onMessage ==> ${message.data.toString()}");
+      String routeName = message.data['type'];
+      debugPrint("Route Name ==> $routeName");
+      if(routeName == "Reminder"){
+        debugPrint("Display Onces ==> $displayAlertOnces");
+        //myEvent.broadcast(NotificationBody(message.notification!.title.toString(), message.notification!.body.toString(), message.data['type']));
+        if(displayAlertOnces) {
+          displayAlertOnces = false;
+          CommonAlerts.reminderAlert(
+              message: message.notification!.title.toString(),
+              context: NavigationService.navigatorKey.currentContext!);
+          changeDisplayOnceFlag();
+        }
+      }else if(routeName == "Careplan registration reminder"){
+        if(displayAlertOnces) {
+          displayAlertOnces = false;
+          CommonAlerts.showHealthJourneyDialog(
+              context: NavigationService.navigatorKey.currentContext!);
+          changeDisplayOnceFlag();
+        }
+      }
       //_handleNotification(message.data);
       //showNotification(message);
     });
@@ -21,6 +45,15 @@ class NotificationHandler {
     // You can also handle background notifications here
     //FirebaseMessaging.onBackgroundMessage(showNotification);
   }
+
+  changeDisplayOnceFlag(){
+    Future.delayed(
+        const Duration(seconds: 10), () {
+        displayAlertOnces = true;
+    });
+  }
+
+
 
  /* void _handleNotification(Map<String, dynamic> data) {
     // Handle the notification data and navigate to the desired screen
@@ -94,3 +127,12 @@ class NotificationHandler {
 
 
 }
+
+// An example custom 'argument' class
+class NotificationBody extends EventArgs {
+  String? title;
+  String? body;
+  String? type;
+  NotificationBody(this.title, this.body, this.type);
+}
+

@@ -21,7 +21,7 @@ class SupportView extends StatefulWidget {
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
   String msg = 'We are here to help you so please get in touch.';
-  String msgAHA = 'Please email us for technical help.';
+  String msgAHA = 'We WANT to hear from you! Please email us for technical help or feedback about the app.';
   String subtitle =
       'For medical help, please contact your health care professional.';
   String phone = '+12025397323';

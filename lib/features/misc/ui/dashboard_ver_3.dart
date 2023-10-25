@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
@@ -1668,17 +1669,21 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     if(!progressDialog.isOpen()) {
       progressDialog.show(max: 100, msg: 'Loading...');
     }
-    final request = await HttpClient().getUrl(Uri.parse(url));
-    final response = await request.close();
+    Map<String, String>? headers = <String, String>{};
+    headers['Content-Type'] = 'application/pdf';
+    var response = await await http
+        .get(Uri.parse(url), headers: headers);
+    //final response = await request.close();
 
-    debugPrint('Base Url ==> ${request.uri}');
+    debugPrint('Base Url ==> ${Uri.parse(url)}');
+    debugPrint('Response Code ==> ${response.statusCode}');
 
 
-    final bytes = await consolidateHttpClientResponseBytes(response);
+    //final bytes = await response.bodyBytes//consolidateHttpClientResponseBytes(response);
     final String dir = (await getApplicationDocumentsDirectory()).path;
     debugPrint('directory ==> $dir');
     final File file = File('$dir/$fileName');
-    await  file.writeAsBytes(bytes);
+    await  file.writeAsBytes(response.bodyBytes);
     /*if (await Permission.storage.request().isGranted) {
       try {
         await file.writeAsBytes(bytes);

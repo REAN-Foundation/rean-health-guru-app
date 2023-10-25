@@ -381,7 +381,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           }
 
         }else{
+          _sharedPrefUtils.save(
+              'CarePlan', null);
           //RemoteConfigValues.hospitalSystemVisibility = true;
+          _sharedPrefUtils.save('Sponsor', '');
+          carePlanEnrollmentForPatientGlobe = null;
         }
         //showToast(startCarePlanResponse.message);
       } else {

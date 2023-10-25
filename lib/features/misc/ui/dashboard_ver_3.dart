@@ -1614,7 +1614,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   initWebView(String url) async {
     if(url.contains('.pdf')){
-      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge.pdf')
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
           .then((f) {
 
         debugPrint("File Length ==> ${f.lengthSync().toString()}");

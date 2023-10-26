@@ -11,33 +11,16 @@ name: AHA-BETA-Workflow
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   workflow_dispatch:
-    inputs:
-      Tag_name:
-        description: Github Tag name (please include "v" example:v1.8.245)
-        required: true
 
 jobs:
-
-  # Github-ECR-Tag-Check:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: check tag
-  #      uses: mukunku/tag-exists-action@v1.2.0
-  #      id: checkTag
-  #      with: 
-  #        tag: ${{ github.event.inputs.Tag_name }}
-  #    - run: if [[ ${{ steps.checkTag.outputs.exists }} == 'false' ]]; then exit 1; fi
-
   gitguardian-scanning:
-    # needs: Github-ECR-Tag-Check
     name: GitGuardian Scan
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        id: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
       - name: GitGuardian Scan
         uses: GitGuardian/gg-shield-action@master
         env:
@@ -48,17 +31,14 @@ jobs:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   CodeScan-FlutterAnalyze:
-    # needs: Github-ECR-Tag-Check
     environment: aha-prod
     runs-on: ubuntu-latest
     steps:
       # Checkout Code
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.inputs.Tag_name }}
-        #   fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
@@ -77,19 +57,15 @@ jobs:
         run: |
           flutter clean
           flutter analyze --preamble --congratulate
-
   Android-BuildApp:
-    # needs: Github-ECR-Tag-Check
     environment: aha-prod
     runs-on: ubuntu-latest
     steps:
       # Checkout Code
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.inputs.Tag_name }}
-        #   fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -127,7 +103,6 @@ jobs:
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/aha/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
-
       - name: Flutter Build
         run: flutter build appbundle --release --flavor aha -t "lib/main_aha.dart"
 
@@ -144,7 +119,7 @@ jobs:
 
   Android-Release-Alpha:
     environment: aha-prod
-    # needs: Android-BuildApp
+    needs: Android-BuildApp
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -152,12 +127,10 @@ jobs:
         working-directory: android
     steps:
       # Checkout Code
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.inputs.Tag_name }}
-        #   fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -177,17 +150,14 @@ jobs:
 
 
   iOS-BuildApp:
-    # needs: Github-ECR-Tag-Check
     environment: aha-prod
     runs-on: macos-latest
     steps:
       # Checkout Code
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.inputs.Tag_name }}
-        #   fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -211,10 +181,8 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
         run: |
-
           mkdir -p ./ios/config/aha/
           echo $FIREBASE_CONFIG > ./ios/config/aha/GoogleService-Info.plist
-
       # Flutter Build Artifact
       - name: Flutter Build
         run: flutter build ios --release --no-codesign --flavor aha -t "lib/main_aha.dart"
@@ -251,12 +219,10 @@ jobs:
         working-directory: ios
     steps:
       # Checkout Code
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.inputs.Tag_name }}
-        #   fetch-depth: 1
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane

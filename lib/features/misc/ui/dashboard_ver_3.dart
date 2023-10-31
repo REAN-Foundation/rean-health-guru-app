@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -1671,7 +1670,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     }
     Map<String, String>? headers = <String, String>{};
     headers['Content-Type'] = 'application/pdf';
-    var response = await await http
+    var response = await http
         .get(Uri.parse(url), headers: headers);
     //final response = await request.close();
 

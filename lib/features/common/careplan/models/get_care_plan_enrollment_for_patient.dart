@@ -95,7 +95,7 @@ class PatientEnrollments {
   PatientEnrollments({
     String? id,
     String? patientUserId,
-    int? enrollmentId,
+    String? enrollmentId,
     int? participantId,
     String? planCode,
     String? provider,

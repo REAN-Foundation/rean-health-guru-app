@@ -637,6 +637,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
         _sharedPrefUtils.save(
             'exerciseTime', _exerciseMovemntsTracking!.toJson());
       }
+      recordMyExcercise();
       _exerciseController.text = '';
       _exerciseController.selection = TextSelection.fromPosition(
         TextPosition(offset: _exerciseController.text.length),
@@ -701,6 +702,23 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMyStand(map);
+      if (baseResponse.status == 'success') {
+      } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyExcercise() async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Exercise'] = radioItem;
+      map['DurationInMin'] = _exerciseController.text.toString();
+
+      final BaseResponse baseResponse = await model.recordMyExcercise(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {

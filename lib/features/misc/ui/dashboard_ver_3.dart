@@ -1,9 +1,14 @@
 
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
@@ -13,6 +18,7 @@ import 'package:patient/features/misc/models/knowledge_topic_response.dart';
 import 'package:patient/features/misc/models/search_symptom_assessment_templete_response.dart';
 import 'package:patient/features/misc/models/task_summary_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -21,6 +27,8 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_outlined_screen.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -54,7 +62,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
-
+  late ProgressDialog progressDialog;
 
 /*  Weight weight;
   BloodPressure bloodPressure;
@@ -86,6 +94,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     loadSharedPrefs();
     model.setBusy(true);
     Future.delayed(
@@ -387,6 +396,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
+                              progressDialog.show(max: 100, msg: 'Loading...');
                               FirebaseAnalytics.instance.logEvent(name: 'symptoms_worse_button_click');
                               recordHowAreYouFeeling(-1);
                               //Navigator.pushNamed(context, RoutePaths.Symptoms);
@@ -1512,12 +1522,12 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       onTap: () async {
                         final String url =
                             'https://supportnetwork.heart.org/s/';
-
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url));
-                  } else {
-                    throw 'Could not launch $url';
-                  }
+                        initWebView(url);
+                  // if (await canLaunchUrl(Uri.parse(url))) {
+                  //   await launchUrl(Uri.parse(url));
+                  // } else {
+                  //   throw 'Could not launch $url';
+                  // }
                 },
                 child: RichText(
                   text: TextSpan(
@@ -1547,7 +1557,36 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                      : RichText(
+                      : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: topicName.toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 14),
+                            ),
+                          ),
+                          Linkify(
+                onOpen: (link) async {
+                  initWebView(link.url);
+                },
+                options: LinkifyOptions(humanize: false),
+                text: briefInformation.toString(),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontFamily: 'Montserrat'),
+                linkStyle: TextStyle(color: hyperLinkTextColor),
+              ),
+                        ],
+                      ),
+              /*RichText(
                           text: TextSpan(
                             text: topicName.toString(),
                             style: TextStyle(
@@ -1565,12 +1604,89 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
-                        ),
+                        ),*/
             ),
           ],
         ),
       ),
     );
+  }
+
+  initWebView(String url) async {
+    if(url.contains('.pdf')){
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge.pdf')
+          .then((f) {
+
+        debugPrint("File Length ==> ${f.lengthSync().toString()}");
+        if(f.lengthSync() > 10000) {
+          progressDialog.close();
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => PDFScreen(f.path, 'Knowledge')));
+        }else{
+          initWebView(url);
+        }
+      });
+    }else {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await custom_web_wiew.launch(url,
+          customTabsOption: custom_web_wiew.CustomTabsOption(
+            toolbarColor: primaryColor,
+            enableDefaultShare: true,
+            enableUrlBarHiding: true,
+            showPageTitle: true,
+            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
+            extraCustomTabs: const <String>[
+              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+              'org.mozilla.firefox',
+              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+              'com.microsoft.emmx',
+            ],
+          ),
+          safariVCOption: custom_web_wiew.SafariViewControllerOption(
+            preferredBarTintColor: primaryColor,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: false,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew
+                .SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }
+    }
+  }
+
+  Future<File> createFileOfPdfUrl(String url, String? fileName) async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    if(!progressDialog.isOpen()) {
+      progressDialog.show(max: 100, msg: 'Loading...');
+    }
+    final request = await HttpClient().getUrl(Uri.parse(url));
+    final response = await request.close();
+
+    debugPrint('Base Url ==> ${request.uri}');
+
+
+    final bytes = await consolidateHttpClientResponseBytes(response);
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    debugPrint('directory ==> $dir');
+    final File file = File('$dir/$fileName');
+    await  file.writeAsBytes(bytes);
+    /*if (await Permission.storage.request().isGranted) {
+      try {
+        await file.writeAsBytes(bytes);
+      } catch (e) {
+        print(e);
+      }
+    }*/
+    return file;
   }
 
   // Display My Biometric
@@ -3260,7 +3376,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
           await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.close();
+
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
           showSuccessToast('Good to hear that', context);
@@ -3270,12 +3386,13 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
           getSymptomAssesmentTemplete();
         }
       } else {
+        progressDialog.close();
         showToast(baseResponse.error!, context);
         //progressDialog.close();
         // showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      //progressDialog.close();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -3290,6 +3407,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
       debugPrint(
           'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
+        progressDialog.close();
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
                 .data!.symptomAssessmentTemplates!.items!
@@ -3297,9 +3415,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                 .id);
         setState(() {});
       } else {
+        progressDialog.close();
         //showToast(knowledgeTopicResponse.message);
       }
     } on FetchDataException catch (e) {
+      progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});

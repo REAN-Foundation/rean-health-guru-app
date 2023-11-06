@@ -2210,7 +2210,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   _launchURL(String url) async {
     if(url.contains('.pdf')){
-      createFileOfPdfUrl(Uri.parse(url).toString(), 'careplan_pdf')
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'careplan.pdf')
           .then((f) {
         progressDialog.close();
         Navigator.push(context,

@@ -44,7 +44,7 @@ class _BiometricBloodSugarVitalsViewState
   @override
   void initState() {
     getVitalsHistory();
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 
@@ -444,7 +444,7 @@ class _BiometricBloodSugarVitalsViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Blood Glucose Delete',
+                  semanticLabel: 'Blood Glucose '+record.bloodGlucose.toString()+' Delete',
                 ))
           ],
         ),

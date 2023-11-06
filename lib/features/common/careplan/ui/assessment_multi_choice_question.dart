@@ -40,6 +40,7 @@ class _AssessmentMultiChoiceQuestionViewState
 
   @override
   void initState() {
+    announceText(widget.assesment!.title.toString());
     super.initState();
   }
 

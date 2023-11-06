@@ -68,6 +68,7 @@ import 'package:patient/features/common/lab_management/ui/lipid_profile_triglyce
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/nutrition_questionnaire_view.dart';
+import 'package:patient/features/common/remainder/ui/add_my_remainder.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
@@ -94,6 +95,8 @@ import 'package:patient/features/misc/ui/support_view.dart';
 import 'package:patient/features/misc/ui/symptoms_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+
+import '../features/common/remainder/ui/view_my_remainder.dart';
 
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -131,6 +134,10 @@ class Routers {
         return MaterialPageRoute(builder: (_) => SupportView());
       case RoutePaths.SUPPORT_NETWORK:
         return MaterialPageRoute(builder: (_) => SupportNetworkView());
+      case RoutePaths.Remainder:
+        return MaterialPageRoute(builder: (_) => ViewMyRemainderView());
+      case RoutePaths.Add_Remainder:
+        return MaterialPageRoute(builder: (_) => AddMyRemainderView());
       case RoutePaths.Payment_Confirmation_View:
         return MaterialPageRoute(builder: (_) => PaymentConfirmationView());
       case RoutePaths.Booking_Appoinment_Confirmation_View:

@@ -44,17 +44,22 @@ class _BiometricBloodPresureVitalsViewState
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   int sytolicBloodPressure = 0;
   int diastolicBloodPressure = 0;
-
+  bool dataSyncCheck = true;
   late ProgressDialog progressDialog;
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
-    getVitalsFromDevice();
+    //getVitalsFromDevice();
     super.initState();
   }
 
   getVitalsFromDevice() {
+
+    /*debugPrint("BP Device Data ==> Dia => ${getHealthData.getBPDiastolic()}  Sys => ${getHealthData.getBPSystolic()}");
+
+
     if (getHealthData.getBPDiastolic() != '0.0') {
       _diastolicController.text = getHealthData.getBPDiastolic();
       _diastolicController.selection = TextSelection.fromPosition(
@@ -67,12 +72,40 @@ class _BiometricBloodPresureVitalsViewState
       _systolicController.selection = TextSelection.fromPosition(
         TextPosition(offset: _systolicController.text.length),
       );
+    }*/
+    try {
+     /* if(RemoteConfigValues.healthDataSync) {
+        if (getHealthData.getBPDiastolic() != '0' && getHealthData.getBPSystolic() != '0') {
+          *//*debugPrint("If check ==> ${getHealthData.getBPDiastolic()} ${records
+            .elementAt(0)
+            .diastolic} ${getHealthData.getBPSystolic()} ${records
+            .elementAt(0)
+            .systolic} ${records.length}");*//*
+          if (records.isEmpty) {
+            progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+            addvitals(getHealthData.getBPSystolic().toString(),
+                getHealthData.getBPDiastolic().toString());
+          } else if (getHealthData.getBPDiastolic() != records
+              .elementAt(0)
+              .diastolic
+              .toString() && getHealthData.getBPSystolic() != records
+              .elementAt(0)
+              .systolic
+              .toString()) {
+            progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+            addvitals(getHealthData.getBPSystolic().toString(),
+                getHealthData.getBPDiastolic().toString());
+          }
+        }
+      }*/
+    }catch (e){
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -332,7 +365,7 @@ class _BiometricBloodPresureVitalsViewState
                         showToast('Please enter your diastolic blood pressure',
                             context);
                       } else {
-                        addvitals();
+                        addvitals(_systolicController.text.toString(),_diastolicController.text.toString());
                       }
                     },
                     child: ExcludeSemantics(
@@ -875,7 +908,7 @@ class _BiometricBloodPresureVitalsViewState
                     Icons.delete_rounded,
                     color: primaryColor,
                     size: 24,
-                    semanticLabel: 'Blood Pressure Delete',
+                    semanticLabel: 'Blood Pressure Systolic '+ record.systolic.toString() + ' Diastolic ' + record.diastolic.toString()+' Delete',
                   ))
             ],
           ),
@@ -1335,19 +1368,19 @@ class _BiometricBloodPresureVitalsViewState
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  addvitals() async {
+  addvitals(String systolicValue, String diastolicValue) async {
     try {
       //progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['Systolic'] = _systolicController.text.toString();
-      map['Diastolic'] = _diastolicController.text.toString();
+      map['Systolic'] = systolicValue;
+      map['Diastolic'] = diastolicValue;
       map['PatientUserId'] = "";
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressures', map);
-      progressDialog.close();
+      //progressDialog.close();
       if (baseResponse.status == 'success') {
         if(progressDialog.isOpen()) {
           progressDialog.close();
@@ -1401,7 +1434,13 @@ class _BiometricBloodPresureVitalsViewState
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('blood-pressures');
+      if(progressDialog.isOpen()) {
+        progressDialog.close();
+      }
       if (getMyVitalsHistory.status == 'success') {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         model.setBusy(false);
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bloodPressureRecords!.items!);
@@ -1412,10 +1451,20 @@ class _BiometricBloodPresureVitalsViewState
           calculateBPRange();
         }
 
+        if(dataSyncCheck) {
+          dataSyncCheck = false;
+          getVitalsFromDevice();
+        }
       } else {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
+      if(progressDialog.isOpen()) {
+        progressDialog.close();
+      }
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

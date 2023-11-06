@@ -1149,6 +1149,7 @@ class _EditPatientMedicalProfileViewState
                                   },
                                   child: Text(
                                     height == 0 ? 'Select' : 'Change',
+                                    semanticsLabel:height == 0 ? 'Select Height' : 'Change height',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,

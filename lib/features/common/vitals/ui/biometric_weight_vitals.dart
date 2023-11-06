@@ -12,6 +12,7 @@ import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
@@ -55,6 +56,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   int heightInInch = 0;
   String heightInDouble = '0.0';
   late var heightArry;
+  bool dataSyncCheck = true;
 
   @override
   void initState() {
@@ -66,8 +68,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     }
 
     loadSharedPref();
-
-    getVitalsFromDevice();
     super.initState();
   }
 
@@ -106,12 +106,38 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   getVitalsFromDevice() {
-    if (getHealthData.getWeight() != '0.0') {
+    /*if (getHealthData.getWeight() != '0.0') {
       _weightController.text = getHealthData.getWeight();
       _weightController.selection = TextSelection.fromPosition(
         TextPosition(offset: _weightController.text.length),
       );
+    }*/
+    try {
+
+
+/*      if(RemoteConfigValues.healthDataSync) {
+        if (getHealthData.getWeight() != '0.0') {
+          if (records.isEmpty) {
+            progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+            addvitals(getHealthData.getWeight().toString());
+          } else{
+            double roundValueByHealthApp = double.parse(getHealthData.getWeight()).roundToDouble();
+            double roundValueByDB = double.parse(records.elementAt(0).bodyWeight.toString()).roundToDouble();
+
+            //debugPrint("Check ${roundValueByHealthApp.toString()} ${roundValueByDB.toString()}");
+
+            if (roundValueByHealthApp.toString() != roundValueByDB.toString()) {
+              progressDialog.show(max: 100, msg: 'Please wait, data is syncing.', msgMaxLines: 2);
+              addvitals(getHealthData.getWeight().toString());
+            }
+          }
+        }
+      }*/
+    }on FetchDataException catch (e){
+      showToast(e.toString(), context);
+      debugPrint('Error ==> 123 ' + e.toString());
     }
+
   }
 
   @override
@@ -556,7 +582,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
                   } else if(isNumeric(_weightController.text)) {
-                    addvitals();
+                    progressDialog.show(max: 100, msg: 'Loading...');
+                    double entertedWeight = double.parse(_weightController.text.toString());
+
+                    if (unit == 'lbs') {
+                      entertedWeight = entertedWeight / 2.20462;
+                    }
+                    addvitals(entertedWeight.toStringAsFixed(1));
                   } else{
                     showToast('Please enter valid input', context);
                   }
@@ -761,7 +793,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Weight Delete',
+                  semanticLabel: 'Weight ' +unit == 'lbs'
+                      ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                      .toStringAsFixed(1)
+                      : record.bodyWeight.toString()+ 'Delete',
                 ))
           ],
         ),
@@ -1241,18 +1276,17 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     }
   }
 
-  addvitals() async {
+  addvitals(String bodyWeight) async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
 
-      double entertedWeight = double.parse(_weightController.text.toString());
+      /*double entertedWeight = double.parse(bodyWeight);
 
       if (unit == 'lbs') {
         entertedWeight = entertedWeight / 2.20462;
-      }
+      }*/
 
       final map = <String, dynamic>{};
-      map['BodyWeight'] = entertedWeight.toString();
+      map['BodyWeight'] = bodyWeight;
       map['PatientUserId'] = "";
       map['Unit'] = "kg";
 
@@ -1265,7 +1299,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         }
         _weightController.clear();
         _sharedPrefUtils.saveDouble(
-            'weight', double.parse(entertedWeight.toString()));
+            'weight', double.parse(bodyWeight.toString()));
         showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
@@ -1314,6 +1348,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       final GetMyVitalsHistory getMyVitalsHistory =
       await model.getMyVitalsHistory('body-weights');
       if (getMyVitalsHistory.status == 'success') {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bodyWeightRecords!.items!);
 
@@ -1328,7 +1365,16 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           debugPrint('Inside');
           calculetBMI();
         }
+
+        if(dataSyncCheck) {
+          dataSyncCheck = false;
+          getVitalsFromDevice();
+        }
+
       } else {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
         showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {

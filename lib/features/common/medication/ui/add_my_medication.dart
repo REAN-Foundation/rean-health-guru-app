@@ -608,6 +608,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     hint: Text('Choose an option'),
                     onChanged: (data) {
                       debugPrint(data);
+                      if(data == 'Other'){
+                        announceText('Note You will not get reminder for this option');
+                      }
                       setState(() {
                         _frequencyUnit = data;
                       });

@@ -1128,7 +1128,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   bool validateMyDecimalInput(String value) {
-    RegExp regex = new RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+    RegExp regex = RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
     if (!regex.hasMatch(value))
       return true;
     else

@@ -2011,6 +2011,9 @@ class _EditProfileState extends State<EditProfile> {
                     controller: _postalCodeController,
                     focusNode: _postalFocus,
                     keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     maxLines: 1,
                     enabled: isEditable,
                     textInputAction: TextInputAction.done,

@@ -425,6 +425,15 @@ String removeLeadingZeros(String num) {
   return "0";
 }
 
+bool isValueInBetweenRange(num minValue, num maxValue, String value){
+  num i = num.parse(value);
+  if(minValue <= i && i <= maxValue){
+    return true;
+  }
+    return false;
+}
+
+
 void autoLogout(){
   showToast('Your session has expired, please login', NavigationService.navigatorKey.currentContext!);
   dailyCheckInDate = '';

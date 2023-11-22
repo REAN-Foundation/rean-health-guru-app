@@ -12,6 +12,7 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
+import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
@@ -147,6 +148,9 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   if (mindfulnessController.text
                                       .toString()
                                       .isNotEmpty) {
+                                    if(!isValueInBetweenRange(MinMaxRanges.minValueInMinutes, MinMaxRanges.maxValueInMinutes, mindfulnessController.text.toString())){
+                                      showToast('Please enter valid input', context);
+                                    }
                                     saveMindfulnessTime(int.parse(
                                         mindfulnessController.text.toString()));
                                   }
@@ -597,7 +601,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     setState(() {});
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
-    map['DurationInMins'] = Duration(minutes: newSec).inMinutes.toString();
+    map['DurationInMins'] = minutes.toString();
     map['RecordDate'] = dateFormat.format(DateTime.now());
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);

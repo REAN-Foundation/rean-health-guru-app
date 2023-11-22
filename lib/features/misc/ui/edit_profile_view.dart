@@ -550,14 +550,15 @@ class _EditProfileState extends State<EditProfile> {
         passwordController: _passwordController,
       ),
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: () async {
+        child: PopScope(
+          canPop:true,//When false, blocks the current route from being popped.
+          onPopInvoked: (didPop) async {
             if (isEditable) {
-              final result = await _onBackPressed();
-              return result;
+               _onBackPressed();
+              return;
             } else {
               Navigator.of(context).pop();
-              return true;
+              return;
             }
           },
               child: Scaffold(

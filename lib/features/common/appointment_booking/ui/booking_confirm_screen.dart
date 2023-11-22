@@ -41,8 +41,14 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
     return BaseWidget<AppoinmentViewModel?>(
         model: AppoinmentViewModel(),
         builder: (context, model, child) => Container(
-                child: WillPopScope(
-              onWillPop: _onBackPressed,
+                child: PopScope(
+                  canPop:true,//When false, blocks the current route from being popped.
+                  onPopInvoked:(didPop) {
+                    //do your logic here
+                    _onBackPressed();
+                    // do your logic ends
+                    return;
+                  },
               child: Scaffold(
                 backgroundColor: Colors.white,
                 body: Column(

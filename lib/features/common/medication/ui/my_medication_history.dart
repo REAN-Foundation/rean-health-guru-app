@@ -318,7 +318,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  for (var item in summary.summaryForMonth!) ...[
+                  for (final item in summary.summaryForMonth!) ...[
                     MergeSemantics(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

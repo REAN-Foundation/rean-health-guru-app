@@ -145,8 +145,14 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: _onWillPop,
+        child: PopScope(
+          canPop:true,//When false, blocks the current route from being popped.
+          onPopInvoked:(didPop) {
+            //do your logic here
+            _onWillPop();
+            // do your logic ends
+            return;
+          },
           child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: primaryColor,

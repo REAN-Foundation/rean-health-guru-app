@@ -72,10 +72,7 @@ class CoachMarkUtilites {
         onCoachMartkClickTarget(target);
         //debugPrint('onClickTarget: $target');
       },
-      onSkip: () {
-        onCoachMartkSkip();
-        //debugPrint("skip");
-      },
+      onSkip: onCoachMartkSkip(),
       onClickOverlay: (target) {
         onCoachMartkClickOverlay(target);
         //debugPrint('onClickOverlay: $target');

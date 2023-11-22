@@ -101,6 +101,8 @@ class _BaseWidgetState<T extends ChangeNotifier?>
       case AppLifecycleState.detached:
         onDetached();
         break;
+      default:
+        break;
     }
   }
 

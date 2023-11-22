@@ -972,8 +972,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     if (!task.action!.isTaken! && !task.action!.isMissed!) ...[
                       Visibility(
                         visible:
-                            !(DateTime.parse(task.action!.timeScheduleStart!)
-                                    .toLocal())
+                            !DateTime.parse(task.action!.timeScheduleStart!)
+                                    .toLocal()
                                 .isAfter(DateTime.now()),
                         child: Expanded(
                           flex: 2,

@@ -385,11 +385,11 @@ setDailyCheckInDate(String viewedDate) async {
   //return knowledgeLinkDisplayedDate ?? '';
 }
 
-Future<bool> isValidPhoneNumber(String phone, String code) async {
+/*Future<bool> isValidPhoneNumber(String phone, String code) async {
   debugPrint(
       "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
   return plugin.validate(code + '-' + phone, code);
-}
+}*/
 
 extension EmailValidator on String {
   bool isValidEmail() {

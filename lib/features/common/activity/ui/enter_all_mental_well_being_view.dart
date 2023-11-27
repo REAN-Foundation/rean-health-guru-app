@@ -150,9 +150,11 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                       .isNotEmpty) {
                                     if(!isValueInBetweenRange(MinMaxRanges.minValueInMinutes, MinMaxRanges.maxValueInMinutes, mindfulnessController.text.toString())){
                                       showToast('Please enter valid input', context);
+                                    }else {
+                                      saveMindfulnessTime(int.parse(
+                                          mindfulnessController.text
+                                              .toString()));
                                     }
-                                    saveMindfulnessTime(int.parse(
-                                        mindfulnessController.text.toString()));
                                   }
                                 }
                               },

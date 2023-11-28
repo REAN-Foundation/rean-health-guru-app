@@ -570,7 +570,7 @@ class _BiometricBodyTemperatureVitalsViewState
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "Celsius";
+      map['Unit'] = "Farenheit";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

@@ -719,7 +719,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Exercise'] = radioItem;
+      map['Category'] = radioItem;
       map['DurationInMin'] = _exerciseController.text.toString();
 
       final BaseResponse baseResponse = await model.recordMyExcercise(map);

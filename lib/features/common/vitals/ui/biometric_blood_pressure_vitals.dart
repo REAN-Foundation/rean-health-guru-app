@@ -11,7 +11,6 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
-import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
@@ -365,11 +364,11 @@ class _BiometricBloodPresureVitalsViewState
                       } else if (_diastolicController.text.toString().isEmpty) {
                         showToast('Please enter your diastolic blood pressure',
                             context);
-                      } else if(!isValueInBetweenRange(MinMaxRanges.minValueInBP, MinMaxRanges.maxValueInBP, _systolicController.text.toString())){
+                      }/* else if(!isValueInBetweenRange(MinMaxRanges.minValueInBP, MinMaxRanges.maxValueInBP, _systolicController.text.toString())){
                         showToast('Please enter valid input', context);
                       }else if(!isValueInBetweenRange(MinMaxRanges.minValueInBP, MinMaxRanges.maxValueInBP, _diastolicController.text.toString())){
                         showToast('Please enter valid input', context);
-                      }else {
+                      }*/else {
                         addvitals(_systolicController.text.toString(),_diastolicController.text.toString());
                       }
                     },

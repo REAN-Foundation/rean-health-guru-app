@@ -11,7 +11,6 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
-import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
@@ -227,9 +226,9 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                   FirebaseAnalytics.instance.logEvent(name: 'lab_values_ldl_save_button_click');
                   if (_controller.text.toString().isEmpty) {
                     showToast('Please enter your LDL', context);
-                  } else if(!isValueInBetweenRange(MinMaxRanges.minValueInLDL, MinMaxRanges.maxValueInLDL, _controller.text.toString())){
+                  } /*else if(!isValueInBetweenRange(MinMaxRanges.minValueInLDL, MinMaxRanges.maxValueInLDL, _controller.text.toString())){
                     showToast('Please enter valid input', context);
-                  }  else {
+                  } */ else {
                     addvitals();
                   }
                 },

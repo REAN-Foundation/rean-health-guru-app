@@ -146,7 +146,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save('CarePlan', null);
-        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.saveBoolean('login1.8.167', null);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return LoginWithOTPView();
@@ -394,7 +394,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           dailyCheckInDate = '';
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);
-          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.saveBoolean('login1.8.167', null);
           _sharedPrefUtils.clearAll();
           chatList.clear();
           Navigator.pushAndRemoveUntil(context,
@@ -486,7 +486,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     } else {
       /*GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
       healthData = GetIt.instance<GetHealthData>();*/
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+      //Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
 
@@ -595,13 +595,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
       } else {
-        debugPrint('Daily Check-In');
+        /*debugPrint('Daily Check-In');
         Future.delayed(
-            const Duration(seconds: 2), () => showDailyCheckIn());
+            const Duration(seconds: 2), () => showDailyCheckIn());*/
       }
     }else{
-      Future.delayed(
-          const Duration(seconds: 2), () => showDailyCheckIn());
+      /*Future.delayed(
+          const Duration(seconds: 2), () => showDailyCheckIn());*/
     }
   }
 

@@ -1612,6 +1612,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     );
   }
 
+  int pdfLoadingCount = 0;
+
   initWebView(String url) async {
     if(url.contains('.pdf')){
       createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
@@ -1620,11 +1622,19 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         debugPrint("File Length ==> ${f.lengthSync().toString()}");
         if(f.lengthSync() > 10000) {
           progressDialog.close();
+          pdfLoadingCount = 0;
           Navigator.push(context,
               MaterialPageRoute(
                   builder: (context) => PDFScreen(f.path, 'Knowledge')));
         }else{
-          initWebView(url);
+          pdfLoadingCount++;
+          if(pdfLoadingCount <= 5) {
+            initWebView(url);
+          }else{
+            pdfLoadingCount = 0;
+            showToastMsg("Unable to load pdf, please try again.", context);
+            progressDialog.close();
+          }
         }
       });
     }else {

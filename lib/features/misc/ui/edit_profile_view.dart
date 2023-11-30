@@ -435,7 +435,7 @@ class _EditProfileState extends State<EditProfile> {
         showDeleteDialog();
         carePlanEnrollmentForPatientGlobe = null;
         _sharedPrefUtils.save('CarePlan', null);
-        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.saveBoolean('login1.8.167', null);
         _sharedPrefUtils.clearAll();
         chatList.clear();
       } else {

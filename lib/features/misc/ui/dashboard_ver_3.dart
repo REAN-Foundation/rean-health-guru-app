@@ -1679,7 +1679,9 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
       progressDialog.show(max: 100, msg: 'Loading...');
     }
     Map<String, String>? headers = <String, String>{};
-    headers['Content-Type'] = 'application/pdf';
+    headers['Accept'] = '*/*';
+    headers['Accept-Encoding'] = 'gzip, deflate, br';
+    headers['Connection'] = 'keep-alive';
     var response = await http
         .get(Uri.parse(url), headers: headers);
     //final response = await request.close();

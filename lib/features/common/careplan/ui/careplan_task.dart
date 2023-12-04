@@ -1,9 +1,11 @@
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
@@ -2210,13 +2212,35 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
+  int pdfLoadingCount = 0;
+
   _launchURL(String url) async {
     if(url.contains('.pdf')){
-      createFileOfPdfUrl(Uri.parse(url).toString(), 'careplan.pdf')
+     /* if (await canLaunchUrl(Uri.parse(url))) {
+        await tabs.launch('https://docs.google.com/gview?embedded=true&url='+url);
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }*/
+      createFileOfPdfUrl(url.toString(), 'careplan.pdf')
           .then((f) {
-        progressDialog.close();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PDFScreen(f.path,'')));
+        debugPrint("File Length ==> ${f.lengthSync().toString()}");
+        if(f.lengthSync() > 10000) {
+          progressDialog.close();
+          pdfLoadingCount = 0;
+          Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (context) => PDFScreen(f.path, '')));
+        }else{
+          pdfLoadingCount++;
+          if(pdfLoadingCount <= 5) {
+            _launchURL(url);
+          }else{
+            pdfLoadingCount = 0;
+            showToastMsg("Unable to load pdf, please try again.", context);
+            progressDialog.close();
+          }
+        }
       });
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
@@ -2233,20 +2257,24 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
-    final map = <String, String>{};
-    //map["enc"] = "multipart/form-data";
-    map['Authorization'] = 'Bearer ' + auth!;
     progressDialog.show(max: 100, msg: 'Loading...');
-    final request = await HttpClient().getUrl(Uri.parse(url));
-    final response = await request.close();
+    Map<String, String>? headers = <String, String>{};
+    headers['Accept'] = '*/*';
+    headers['Accept-Encoding'] = 'gzip, deflate, br';
+    headers['Connection'] = 'keep-alive';
+    var response = await http
+        .get(Uri.parse(url), headers: headers);
+    //final response = await request.close();
 
-    debugPrint('Base Url ==> ${request.uri}');
-    debugPrint('Headers ==> ${request.headers.toString()}');
+    debugPrint('Base Url ==> ${Uri.parse(url)}');
+    debugPrint('Response Code ==> ${response.statusCode}');
 
-    final bytes = await consolidateHttpClientResponseBytes(response);
+
+    //final bytes = await response.bodyBytes//consolidateHttpClientResponseBytes(response);
     final String dir = (await getApplicationDocumentsDirectory()).path;
+    debugPrint('directory ==> $dir');
     final File file = File('$dir/$fileName');
-    await file.writeAsBytes(bytes);
+    await  file.writeAsBytes(response.bodyBytes);
     return file;
   }
 

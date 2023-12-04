@@ -800,7 +800,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 340.0,
+          height: 300.0,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -816,10 +816,10 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 ),
                 child: Center(
                   child: Container(
-                    height: 120,
+                    height: 80,
                     child: ExcludeSemantics(
                       child: Icon(Icons.notifications_outlined,
-                        size: 80,
+                        size: 60,
                         color: primaryColor,
                       ),
                     ),

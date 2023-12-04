@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
@@ -1615,8 +1616,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int pdfLoadingCount = 0;
 
   initWebView(String url) async {
-    if(url.contains('.pdf')){
-      createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
+    if(url.contains('.pdf') && Platform.isAndroid){
+      /*createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
           .then((f) {
 
         debugPrint("File Length ==> ${f.lengthSync().toString()}");
@@ -1636,7 +1637,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             progressDialog.close();
           }
         }
-      });
+      });*/
+        downloadPDFWithDio(url, 'knowledge_${DateTime
+            .now()
+            .microsecondsSinceEpoch}.pdf');
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
         await custom_web_wiew.launch(url,
@@ -1666,6 +1670,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';
       }
+    }
+  }
+
+  Future<void> downloadPDFWithDio(String pdfUrl, String? fileName) async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    if(!progressDialog.isOpen()) {
+      progressDialog.show(max: 100, msg: 'Loading...');
+    }
+    try {
+      // Create a Dio instance
+      final dio = Dio();
+
+      // Get the external storage directory
+      final dir = await getExternalStorageDirectory();
+      final filePath = '${dir?.path}/$fileName';
+
+      // Download the PDF file
+      await dio.download(pdfUrl, filePath);
+      progressDialog.close();
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) => PDFScreen(filePath, 'Knowledge')));
+      // Open the PDF file using the open_file package
+      //OpenFile.open(filePath);
+    } catch (e) {
+      // Handle the error if the PDF download fails
+      debugPrint('Error downloading PDF: $e');
     }
   }
 

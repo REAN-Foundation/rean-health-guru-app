@@ -65,12 +65,12 @@ class DashboardSummaryModel extends BaseModel {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
-    /*final response = await apiProvider!.get(
-        '/educational/knowledge-nuggets/71020ffc-c83b-46b1-9015-4a647059c689', //+ patientUserId!,
-        header: map);*/
     final response = await apiProvider!.get(
-        '/educational/knowledge-nuggets/today/' + patientUserId!,
+        '/educational/knowledge-nuggets/6b37b604-0157-426a-93e4-ecc0ba2b0ef3', //+ patientUserId!,
         header: map);
+    /*final response = await apiProvider!.get(
+        '/educational/knowledge-nuggets/today/' + patientUserId!,
+        header: map);*/
     setBusy(false);
     // Convert and return
     return KnowledgeTopicResponse.fromJson(response);

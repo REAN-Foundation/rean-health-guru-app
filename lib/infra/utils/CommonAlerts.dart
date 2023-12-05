@@ -162,14 +162,14 @@ class CommonAlerts{
         margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 340.0,
+          height: 248.0,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 200,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(4),
@@ -178,10 +178,13 @@ class CommonAlerts{
                 ),
                 child: Center(
                   child: Container(
-                    height: 160,
+                    height: 80,
                     child: ExcludeSemantics(
                       child: Image.asset(
-                        getAppType() == 'AHA' ? 'res/images/ic_health_journey.png' : 'res/images/ic_health_journey_blue.png',
+                        'res/images/ic_hf_care_plan.png',
+                        color: primaryColor,
+                        width: 80,
+                        height: 80,
                       ),
                     ),
                   ),
@@ -197,7 +200,7 @@ class CommonAlerts{
                     fontStyle: FontStyle.normal,
                     fontSize: 18.0),
               ),
-              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(padding: EdgeInsets.only(top: 32.0)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -214,6 +217,7 @@ class CommonAlerts{
                             onTap: () {
                               FirebaseAnalytics.instance.logEvent(name: 'cancel_health_journey_button_click');
                               Navigator.pop(context);
+                              //Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
                             },
                             child: Container(
                               height: 48,

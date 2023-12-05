@@ -2,8 +2,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -22,6 +23,7 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -2214,14 +2216,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   int pdfLoadingCount = 0;
 
   _launchURL(String url) async {
-    if(url.contains('.pdf')){
+    if(url.contains('.pdf') && Platform.isAndroid){
      /* if (await canLaunchUrl(Uri.parse(url))) {
         await tabs.launch('https://docs.google.com/gview?embedded=true&url='+url);
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';
       }*/
-      createFileOfPdfUrl(url.toString(), 'careplan.pdf')
+      /*createFileOfPdfUrl(url.toString(), 'careplan.pdf')
           .then((f) {
         debugPrint("File Length ==> ${f.lengthSync().toString()}");
         if(f.lengthSync() > 10000) {
@@ -2240,14 +2242,70 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             progressDialog.close();
           }
         }
-      });
+      });*/
+      downloadPDFWithDio(url, 'careplan_${DateTime
+          .now()
+          .microsecondsSinceEpoch}.pdf');
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
-        await tabs.launch(url);
+        await custom_web_wiew.launch(url,
+          customTabsOption: custom_web_wiew.CustomTabsOption(
+            toolbarColor: primaryColor,
+            enableDefaultShare: true,
+            enableUrlBarHiding: true,
+            showPageTitle: true,
+            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
+            extraCustomTabs: const <String>[
+              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+              'org.mozilla.firefox',
+              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+              'com.microsoft.emmx',
+            ],
+          ),
+          safariVCOption: custom_web_wiew.SafariViewControllerOption(
+            preferredBarTintColor: primaryColor,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: false,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew
+                .SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';
       }
+    }
+  }
+
+  Future<void> downloadPDFWithDio(String pdfUrl, String? fileName) async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+
+    if(!progressDialog.isOpen()) {
+      progressDialog.show(max: 100, msg: 'Loading...');
+    }
+    try {
+      // Create a Dio instance
+      final dio = Dio();
+
+      // Get the external storage directory
+      final dir = await getExternalStorageDirectory();
+      final filePath = '${dir?.path}/$fileName';
+
+      // Download the PDF file
+      await dio.download(pdfUrl, filePath);
+      progressDialog.close();
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) => PDFScreen(filePath, 'Knowledge')));
+      // Open the PDF file using the open_file package
+      //OpenFile.open(filePath);
+    } catch (e) {
+      // Handle the error if the PDF download fails
+      debugPrint('Error downloading PDF: $e');
     }
   }
 

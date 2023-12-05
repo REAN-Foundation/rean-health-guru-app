@@ -10,6 +10,7 @@ import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -73,6 +74,8 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.167');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor ?? '');
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
   primaryExtraLightColor =  Color(0XFFFF8B90);
@@ -139,6 +142,7 @@ class MyApp extends StatelessWidget {
         title: 'HF Helper',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
+        navigatorKey: NavigationService.navigatorKey,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml
         //initialRoute: RoutePaths.Login,

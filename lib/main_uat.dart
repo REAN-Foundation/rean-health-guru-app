@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -119,7 +120,9 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         title: 'REAN HealthGuru',
+        showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
+        navigatorKey: NavigationService.navigatorKey,
         theme: ThemeData(
             primarySwatch: Colors.deepPurple, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml

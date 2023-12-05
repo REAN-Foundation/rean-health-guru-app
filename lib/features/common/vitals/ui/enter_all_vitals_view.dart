@@ -1185,7 +1185,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _bodyTempratureController.text.toString();
       map['PatientUserId'] = patientUserId;
-      map['Unit'] = "Celsius";
+      //map['Unit'] = "Farenheit";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

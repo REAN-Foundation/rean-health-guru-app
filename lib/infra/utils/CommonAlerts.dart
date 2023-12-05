@@ -19,14 +19,14 @@ class CommonAlerts{
         margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 300.0,
+          height: 280.0,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 120,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(4),
@@ -37,9 +37,11 @@ class CommonAlerts{
                   child: Container(
                     height: 80,
                     child: ExcludeSemantics(
-                      child: Icon(Icons.notifications_outlined,
-                        size: 60,
+                      child: Image.asset(
+                        'res/images/ic_drawer_remainder.png',
                         color: primaryColor,
+                        width: 80,
+                        height: 80,
                       ),
                     ),
                   ),

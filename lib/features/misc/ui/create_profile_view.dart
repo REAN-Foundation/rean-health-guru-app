@@ -487,6 +487,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   map['Gender'] = selectedGender;
                   map['DefaultTimeZone'] =
                       DateTime.now().timeZoneOffset.toString();
+                  map['CurrentTimeZone'] =
+                      DateTime.now().timeZoneOffset.toString();
 
                   try {
                     final BaseResponse updateProfileSuccess = await model

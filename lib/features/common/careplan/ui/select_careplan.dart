@@ -421,7 +421,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ]*/
                 ,
                 onChanged: (value) {
-                  if(value == 'Heart Failure Motivator'){
+                  if(value == 'Heart Failure Motivator' || value == 'SMBP'){
                     healthSystemList.clear();
                     RemoteConfigValues.hospitalSystemVisibility = false;
                   }else{

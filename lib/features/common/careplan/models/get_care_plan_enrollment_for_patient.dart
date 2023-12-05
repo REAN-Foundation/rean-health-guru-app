@@ -95,7 +95,7 @@ class PatientEnrollments {
   PatientEnrollments({
     String? id,
     String? patientUserId,
-    int? enrollmentId,
+    String? enrollmentId,
     int? participantId,
     String? planCode,
     String? provider,
@@ -119,7 +119,7 @@ class PatientEnrollments {
   PatientEnrollments.fromJson(dynamic json) {
     _id = json['id'];
     _patientUserId = json['PatientUserId'];
-    _enrollmentId = json['EnrollmentId'];
+    _enrollmentId = json['EnrollmentStringId'];
     _participantId = json['ParticipantId'];
     _planCode = json['PlanCode'];
     _provider = json['Provider'];
@@ -131,7 +131,7 @@ class PatientEnrollments {
 
   String? _id;
   String? _patientUserId;
-  int? _enrollmentId;
+  String? _enrollmentId;
   int? _participantId;
   String? _planCode;
   String? _provider;
@@ -144,7 +144,7 @@ class PatientEnrollments {
 
   String? get patientUserId => _patientUserId;
 
-  int? get enrollmentId => _enrollmentId;
+  String? get enrollmentId => _enrollmentId;
 
   int? get participantId => _participantId;
 

@@ -806,7 +806,7 @@ class _AppDrawerState extends State<AppDrawer> {
             onPressed: () {
               carePlanEnrollmentForPatientGlobe = null;
               _sharedPrefUtils.save('CarePlan', null);
-              _sharedPrefUtils.saveBoolean('login', null);
+              _sharedPrefUtils.saveBoolean('login1.8.167', null);
               _sharedPrefUtils.clearAll();
               chatList.clear();
               Navigator.pushAndRemoveUntil(context,
@@ -831,7 +831,7 @@ class _AppDrawerState extends State<AppDrawer> {
           debugPrint('Positive Button Click');
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);
-          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.saveBoolean('login1.8.167', null);
           _sharedPrefUtils.clearAll();
           chatList.clear();
           Navigator.pushAndRemoveUntil(context,

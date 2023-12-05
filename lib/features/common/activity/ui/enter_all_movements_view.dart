@@ -8,6 +8,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
@@ -204,6 +205,9 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                   debugPrint(
                                       'Exercise ==> ${_exerciseController.text}');
                                   validationToastDisplay = false;
+                                  if(!isValueInBetweenRange(MinMaxRanges.minValueInMinutes, MinMaxRanges.maxValueInMinutes, _exerciseController.text.toString())){
+                                    showToast('Please enter valid input', context);
+                                  }
                                   recordMyExcerciseTimeInMinutes(
                                       int.parse(_exerciseController.text));
                                 }
@@ -637,6 +641,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
         _sharedPrefUtils.save(
             'exerciseTime', _exerciseMovemntsTracking!.toJson());
       }
+      recordMyExcercise();
       _exerciseController.text = '';
       _exerciseController.selection = TextSelection.fromPosition(
         TextPosition(offset: _exerciseController.text.length),
@@ -701,6 +706,23 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMyStand(map);
+      if (baseResponse.status == 'success') {
+      } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyExcercise() async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Category'] = radioItem;
+      map['DurationInMin'] = _exerciseController.text.toString();
+
+      final BaseResponse baseResponse = await model.recordMyExcercise(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {

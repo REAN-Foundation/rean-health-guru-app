@@ -435,7 +435,7 @@ class _EditProfileState extends State<EditProfile> {
         showDeleteDialog();
         carePlanEnrollmentForPatientGlobe = null;
         _sharedPrefUtils.save('CarePlan', null);
-        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.saveBoolean('login1.8.167', null);
         _sharedPrefUtils.clearAll();
         chatList.clear();
       } else {
@@ -2011,6 +2011,9 @@ class _EditProfileState extends State<EditProfile> {
                     controller: _postalCodeController,
                     focusNode: _postalFocus,
                     keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     maxLines: 1,
                     enabled: isEditable,
                     textInputAction: TextInputAction.done,

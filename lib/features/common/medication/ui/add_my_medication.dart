@@ -1072,11 +1072,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     showToast('Please select frequency.', context);
                   } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule.', context);
-                  } else if (_frequencyUnit == 'Daily' && int.parse(_durationController.text.toString()) >= 91) {
+                  } else if (_frequencyUnit == 'Daily' && _durationController.text.isNotEmpty && int.parse(_durationController.text.toString()) >= 91) {
                     showToast('Please enter a duration less than 90 days.', context);
-                  } else if (_frequencyUnit == 'Weekly' && int.parse(_durationController.text.toString()) >= 13) {
+                  } else if (_frequencyUnit == 'Weekly' && _durationController.text.isNotEmpty && int.parse(_durationController.text.toString()) >= 13) {
                     showToast('Please enter a duration less than 12 weeks.', context);
-                  } else if (_frequencyUnit == 'Monthly' && int.parse(_durationController.text.toString()) >= 4) {
+                  } else if (_frequencyUnit == 'Monthly' && _durationController.text.isNotEmpty && int.parse(_durationController.text.toString()) >= 4) {
                     showToast('Please enter a duration less than 3 months.', context);
                   } /* else if (_durationController.text.trim() == '' &&
                           _frequencyUnit != 'Other') {

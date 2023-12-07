@@ -609,6 +609,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     onChanged: (data) {
                       debugPrint(data);
                       if(data == 'Other'){
+                        _durationController.text = '';
                         announceText('Note You will not get reminder for this option');
                       }
                       setState(() {
@@ -1066,12 +1067,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     }
                   }
                   if (_typeAheadController.text == '') {
-                    showToast('Please select drug', context);
+                    showToast('Please select drug.', context);
                   } else if (_frequencyUnit == '') {
-                    showToast('Please select frequency', context);
+                    showToast('Please select frequency.', context);
                   } else if (_frequencyUnit == 'Daily' && frequency == 0) {
-                        showToast('Please select daily time schedule', context);
-                      }/* else if (_durationController.text.trim() == '' &&
+                        showToast('Please select daily time schedule.', context);
+                  } else if (_frequencyUnit == 'Daily' && int.parse(_durationController.text.toString()) >= 91) {
+                    showToast('Please enter a duration less than 90 days.', context);
+                  } else if (_frequencyUnit == 'Weekly' && int.parse(_durationController.text.toString()) >= 13) {
+                    showToast('Please enter a duration less than 12 weeks.', context);
+                  } else if (_frequencyUnit == 'Monthly' && int.parse(_durationController.text.toString()) >= 4) {
+                    showToast('Please enter a duration less than 3 months.', context);
+                  } /* else if (_durationController.text.trim() == '' &&
                           _frequencyUnit != 'Other') {
                         showToast('Please enter duration', context);
                       } else if (validationForDuration()) {
@@ -1091,12 +1098,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                  }*/ else if (validationForUnit()) {
-                    showToast('Please enter vaild unit', context);
+                  }*/
+                  else if (validationForUnit()) {
+                    showToast('Please enter vaild unit.', context);
                   }  else if (_unitController.text.trim() == '') {
-                    showToast('Please enter unit quantity', context);
+                    showToast('Please enter unit quantity.', context);
                   } else if (_dosageUnit == '') {
-                        showToast('Please Select dosage unit', context);
+                        showToast('Please Select dosage unit.', context);
                       }
                       /*else if (startOn == '') {
                         showToast('Please select start date', context);

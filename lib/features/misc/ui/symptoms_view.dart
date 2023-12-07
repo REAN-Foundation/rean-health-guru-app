@@ -398,7 +398,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               });*/
           //return res;
         } else {
-          addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, true);
+          addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, false);
           setState(() {
             assessmentTemplate!.templateSymptomTypes!.removeAt(index);
           });

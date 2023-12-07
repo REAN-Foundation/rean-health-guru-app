@@ -171,7 +171,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       debugPrint(Excepetion.toString());
     }*/
   }
-
+//[Tablet, Capsule, Drop, Tube, Metric drop, Milligram, Milliliter, Gram, Microgram, Syringe, Spray, Tablespoon, Teaspoon, Unit, Nebulizer, Ampule(s), Application, Bar, Biscuit wafer, Can, Container, Enema, Suppository, Fluid ounce, Gallon, Gum, Inch, International units, Kilogram, Liter, Lozenge, Milliequivalent, Milligram per meter squared, Million units, Pad, Patch, Pint, Puff, Ring pessary, Scoopful, Vial]
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForDosageUnit(List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
@@ -509,9 +509,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontFamily: 'Montserrat',
                         fontSize: 14),
                     textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -1091,7 +1091,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                  }*/ else if (_unitController.text.trim() == '') {
+                  }*/ else if (validationForUnit()) {
+                    showToast('Please enter vaild unit', context);
+                  }  else if (_unitController.text.trim() == '') {
                     showToast('Please enter unit quantity', context);
                   } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
@@ -1107,6 +1109,30 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         ),
       ],
     );
+  }
+
+  bool validationForUnit() {
+    if(_unitController.text.isNotEmpty) {
+      if(validateMyDecimalInput(_unitController.text)){
+        return true;
+      }else if(_unitController.text.toString() == "0"){
+        return true;
+      }else if(_unitController.text.toString() == "0"){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true;
+    }
+  }
+
+  bool validateMyDecimalInput(String value) {
+    RegExp regex = RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+    if (!regex.hasMatch(value))
+      return true;
+    else
+      return false;
   }
 
   bool validationForDuration() {

@@ -44,6 +44,7 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
         TextPosition(offset: _textController.text.length),
       );
     }*/
+    announceText(widget.next!.title.toString());
     super.initState();
   }
 

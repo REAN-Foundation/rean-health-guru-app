@@ -103,7 +103,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       dailyCheckInDate = '';
       carePlanEnrollmentForPatientGlobe = null;
       _sharedPrefUtils.save('CarePlan', null);
-      _sharedPrefUtils.saveBoolean('login', null);
+      _sharedPrefUtils.saveBoolean('login1.8.167', null);
     }on FetchDataException catch(e){
       debugPrint("Error ==> ${e.toString()}");
     }

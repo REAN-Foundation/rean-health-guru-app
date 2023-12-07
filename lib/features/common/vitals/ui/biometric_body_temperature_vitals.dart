@@ -151,7 +151,9 @@ class _BiometricBodyTemperatureVitalsViewState
               onTap: () {
                 if (_controller.text.toString().isEmpty) {
                   showToast('Please enter your body temperature', context);
-                } else {
+                // } else if(!isValueInBetweenRange(MinMaxRanges.minValueInTemp, MinMaxRanges.maxValueInTemp, _controller.text.toString())){
+                //   showToast('Please enter valid input', context);
+                // }  else {
                   addvitals();
                 }
               },
@@ -567,7 +569,7 @@ class _BiometricBodyTemperatureVitalsViewState
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "Celsius";
+      //map['Unit'] = "Farenheit";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

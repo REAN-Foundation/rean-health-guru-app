@@ -146,7 +146,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save('CarePlan', null);
-        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.saveBoolean('login1.8.167', null);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return LoginWithOTPView();
@@ -381,7 +381,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           }
 
         }else{
+          _sharedPrefUtils.save(
+              'CarePlan', null);
           //RemoteConfigValues.hospitalSystemVisibility = true;
+          _sharedPrefUtils.save('Sponsor', '');
+          carePlanEnrollmentForPatientGlobe = null;
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -390,7 +394,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           dailyCheckInDate = '';
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);
-          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.saveBoolean('login1.8.167', null);
           _sharedPrefUtils.clearAll();
           chatList.clear();
           Navigator.pushAndRemoveUntil(context,
@@ -482,7 +486,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     } else {
       /*GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
       healthData = GetIt.instance<GetHealthData>();*/
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+      //Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
 
@@ -591,13 +595,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
       } else {
-        debugPrint('Daily Check-In');
+        /*debugPrint('Daily Check-In');
         Future.delayed(
-            const Duration(seconds: 2), () => showDailyCheckIn());
+            const Duration(seconds: 2), () => showDailyCheckIn());*/
       }
     }else{
-      Future.delayed(
-          const Duration(seconds: 2), () => showDailyCheckIn());
+      /*Future.delayed(
+          const Duration(seconds: 2), () => showDailyCheckIn());*/
     }
   }
 
@@ -752,7 +756,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
-  reminderAlert(RemoteMessage message){
+  /*reminderAlert(RemoteMessage message){
     Dialog errorDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here
       child: Container(
@@ -782,8 +786,152 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       ),
     );
     showDialog(context: context, builder: (BuildContext context) => errorDialog);
-  }
+  }*/
 
+  reminderAlert(RemoteMessage message){
+    FirebaseAnalytics.instance.logEvent(name: 'remainder_popup_displayed');
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.all(24),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        margin: EdgeInsets.zero,
+        semanticContainer: false,
+        child: Container(
+          height: 280.0,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4)),
+                  color: getAppType() == 'AHA' ? redLightAha : primaryLightColor,
+                ),
+                child: Center(
+                  child: Container(
+                    height: 80,
+                    child: ExcludeSemantics(
+                      child: Image.asset(
+                        'res/images/ic_drawer_remainder.png',
+                        color: primaryColor,
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:  EdgeInsets.all(16.0),
+                child: Center(child: Text('Reminder', style: TextStyle(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),)),
+              ),
+              Expanded(child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView( scrollDirection: Axis.vertical, child: Text(message.notification!.title.toString(), style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.left,)),
+              )),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    /*Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel health journey',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: 'cancel_health_journey_button_click');
+                              Navigator.pop(context);
+                              Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                  Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),*/
+                    Semantics(
+                      button: true,
+                      label: 'Got It',
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'remainder_got_it_button_click');
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: 48,
+                            width: 160,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                border:
+                                Border.all(color: primaryColor, width: 1),
+                                color: primaryColor),
+                            child: Center(
+                              child: Text(
+                                'Got It!',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => sucsessDialog);
+  }
 
   _launchURL(String url) async {
       if (await canLaunchUrl(Uri.parse(url))) {
@@ -881,14 +1029,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 340.0,
+          height: 248.0,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 200,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(4),
@@ -897,10 +1045,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 ),
                 child: Center(
                   child: Container(
-                    height: 160,
+                    height: 80,
                     child: ExcludeSemantics(
                       child: Image.asset(
-                        getAppType() == 'AHA' ? 'res/images/ic_health_journey.png' : 'res/images/ic_health_journey_blue.png',
+                        'res/images/ic_hf_care_plan.png',
+                        color: primaryColor,
+                        width: 80,
+                        height: 80,
                       ),
                     ),
                   ),
@@ -916,7 +1067,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     fontStyle: FontStyle.normal,
                     fontSize: 18.0),
               ),
-              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(padding: EdgeInsets.only(top: 32.0)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -933,7 +1084,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                             onTap: () {
                               FirebaseAnalytics.instance.logEvent(name: 'cancel_health_journey_button_click');
                               Navigator.pop(context);
-                              Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+                              //Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
                             },
                             child: Container(
                               height: 48,
@@ -1054,7 +1205,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   autoLogOut(PatientApiDetails apiResponse){
     //debugPrint('apiResponse.message ==> ${apiResponse.message}');
-    if(apiResponse.message! == "Forbidden user access" || apiResponse.message! == "Forebidden user access"){
+    if(apiResponse.message! == "Forbidden user access" || apiResponse.message! == "Forebidden user access" || apiResponse.message! == "Forbidden user access: jwt expired"){
       showToast('Your session has expired, please login', context);
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {

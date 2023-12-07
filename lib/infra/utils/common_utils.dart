@@ -11,6 +11,8 @@ import 'package:patient/features/common/careplan/models/get_user_task_details.da
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/features/common/medication/models/my_current_medication.dart' as med;
+import 'package:patient/features/misc/ui/login_with_otp_view.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -421,4 +423,27 @@ String removeLeadingZeros(String num) {
   // that means it didn't have a single
   // non-zero character, hence return "0"
   return "0";
+}
+
+bool isValueInBetweenRange(num minValue, num maxValue, String value){
+  num i = num.parse(value);
+  if(minValue <= i && i <= maxValue){
+    return true;
+  }
+    return false;
+}
+
+
+void autoLogout(){
+  showToast('Your session has expired, please login', NavigationService.navigatorKey.currentContext!);
+  dailyCheckInDate = '';
+  carePlanEnrollmentForPatientGlobe = null;
+  _sharedPrefUtils.save('CarePlan', null);
+  _sharedPrefUtils.saveBoolean('login1.8.167', null);
+  _sharedPrefUtils.clearAll();
+  chatList.clear();
+  Navigator.pushAndRemoveUntil(NavigationService.navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (context) {
+        return LoginWithOTPView();
+      }), (Route<dynamic> route) => false);
 }

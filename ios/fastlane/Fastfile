@@ -2,7 +2,8 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "~> 14.1")
+    # xcversion(version: "~> 14.1")
+    xcversion(version: "~> 15.0.1")
     setup_ci
   end
 
@@ -14,7 +15,7 @@ platform :ios do
       # key_filepath: "AuthKey_7RT93VJT72.p8"
       key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
       is_key_content_base64: true,
-      duration: 200
+      duration: 1200
     )
   end
 
@@ -229,7 +230,7 @@ platform :ios do
   lane :submit_beta_to_app_store_aha do |options|
     submit_beta_to_app_store(app_identifier: "org.heart.hfpatient", metadata_path: "./fastlane/metadata/aha_prod")
   end
-  
+
   lane :submit_beta_to_app_store_aha_chol do |options|
     submit_beta_to_app_store(app_identifier: "org.heart.lipidhelper", metadata_path: "./fastlane/metadata/aha_prod_chol")
   end

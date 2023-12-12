@@ -385,11 +385,11 @@ setDailyCheckInDate(String viewedDate) async {
   //return knowledgeLinkDisplayedDate ?? '';
 }
 
-/*Future<bool> isValidPhoneNumber(String phone, String code) async {
+Future<bool> isValidPhoneNumber(String phone, String code) async {
   debugPrint(
       "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
   return plugin.validate(code + '-' + phone, code);
-}*/
+}
 
 extension EmailValidator on String {
   bool isValidEmail() {
@@ -425,12 +425,21 @@ String removeLeadingZeros(String num) {
   return "0";
 }
 
+bool isValueInBetweenRange(num minValue, num maxValue, String value){
+  num i = num.parse(value);
+  if(minValue <= i && i <= maxValue){
+    return true;
+  }
+    return false;
+}
+
+
 void autoLogout(){
   showToast('Your session has expired, please login', NavigationService.navigatorKey.currentContext!);
   dailyCheckInDate = '';
   carePlanEnrollmentForPatientGlobe = null;
   _sharedPrefUtils.save('CarePlan', null);
-  _sharedPrefUtils.saveBoolean('login', null);
+  _sharedPrefUtils.saveBoolean('login1.8.167', null);
   _sharedPrefUtils.clearAll();
   chatList.clear();
   Navigator.pushAndRemoveUntil(NavigationService.navigatorKey.currentContext!,

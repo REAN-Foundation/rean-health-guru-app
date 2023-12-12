@@ -236,7 +236,9 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   FirebaseAnalytics.instance.logEvent(name: 'vitals_pulse_save_button_click');
                   if (_controller.text.toString().isEmpty) {
                     showToast('Please enter your Pulse Rate', context);
-                  } else {
+                  }/* else if(!isValueInBetweenRange(MinMaxRanges.minValueInPulseRate, MinMaxRanges.maxValueInPulseRate, _controller.text.toString())){
+                    showToast('Please enter valid input', context);
+                  } */else {
                     addvitals();
                   }
                 },

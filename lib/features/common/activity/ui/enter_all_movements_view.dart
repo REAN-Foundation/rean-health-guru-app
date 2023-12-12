@@ -8,6 +8,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
@@ -204,6 +205,9 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                   debugPrint(
                                       'Exercise ==> ${_exerciseController.text}');
                                   validationToastDisplay = false;
+                                  if(!isValueInBetweenRange(MinMaxRanges.minValueInMinutes, MinMaxRanges.maxValueInMinutes, _exerciseController.text.toString())){
+                                    showToast('Please enter valid input', context);
+                                  }
                                   recordMyExcerciseTimeInMinutes(
                                       int.parse(_exerciseController.text));
                                 }
@@ -715,7 +719,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Exercise'] = radioItem;
+      map['Category'] = radioItem;
       map['DurationInMin'] = _exerciseController.text.toString();
 
       final BaseResponse baseResponse = await model.recordMyExcercise(map);

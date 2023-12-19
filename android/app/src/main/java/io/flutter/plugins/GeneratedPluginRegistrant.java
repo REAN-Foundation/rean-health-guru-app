@@ -111,11 +111,6 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin permission_handler_android, com.baseflow.permissionhandler.PermissionHandlerPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.julienvignali.phone_number.PhoneNumberPlugin());
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin phone_number, com.julienvignali.phone_number.PhoneNumberPlugin", e);
-    }
-    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.share.SharePlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin share, io.flutter.plugins.share.SharePlugin", e);

@@ -290,6 +290,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.6"
   dots_indicator:
     dependency: transitive
     description:
@@ -511,14 +519,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  flutter_datetime_picker:
+  flutter_datetime_picker_plus:
     dependency: "direct main"
     description:
-      name: flutter_datetime_picker
-      sha256: "8e695c63c769350e541951227c2775190ec73ceda774a315b1dc9a99d5facfe5"
+      name: flutter_datetime_picker_plus
+      sha256: "3b2ebcd7b4d2c253171dc6ba78a850af7dcb68fd965b9133dd254ff662a9023b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.1"
+    version: "2.1.0"
   flutter_document_picker:
     dependency: "direct main"
     description:
@@ -983,10 +991,10 @@ packages:
     dependency: "direct main"
     description:
       name: modal_bottom_sheet
-      sha256: ef533916a2c3089571c32bd34e410faca77a6849a3f28f748e0794525c5658a0
+      sha256: "3bba63c62d35c931bce7f8ae23a47f9a05836d8cb3c11122ada64e0b2f3d718f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "3.0.0-pre"
   multiselect_formfield:
     dependency: "direct main"
     description:
@@ -1179,14 +1187,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
-  phone_number:
-    dependency: "direct main"
-    description:
-      name: phone_number
-      sha256: "509033faaed1e95f778b9dd6679a458d4e2641c579d40bee0db1cb674de8efac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   photo_view:
     dependency: "direct main"
     description:

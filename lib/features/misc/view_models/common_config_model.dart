@@ -34,7 +34,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + patientUserId! + '/enrollments?isActive=true',
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isActives=true',
         header: map);
     setBusy(false);
     // Convert and return

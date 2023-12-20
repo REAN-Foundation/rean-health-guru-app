@@ -26,7 +26,7 @@ class CommonConfigModel extends BaseModel {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   AwardApiProvider? awardApiProvider = GetIt.instance<AwardApiProvider>();
 
-  Future<GetCarePlanEnrollmentForPatient> getCarePlan() async {
+  Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
     // Get user profile for id
 
     final map = <String, String>{};
@@ -34,7 +34,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + patientUserId! + '/enrollments?isActives=true',
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isActive='+isActive.toString(),
         header: map);
     setBusy(false);
     // Convert and return

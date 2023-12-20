@@ -14,6 +14,7 @@ import 'package:patient/features/common/careplan/models/create_health_priority_r
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_action_plan_list.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_my_response.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
@@ -35,6 +36,21 @@ class PatientCarePlanViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+
+  Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isActive='+isActive.toString(),
+        header: map);
+    setBusy(false);
+    // Convert and return
+    return GetCarePlanEnrollmentForPatient.fromJson(response);
+  }
 
   Future<GetAHACarePlansResponse> getAHACarePlans() async {
     // Get user profile for id

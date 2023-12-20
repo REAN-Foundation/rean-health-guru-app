@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
@@ -88,6 +89,52 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
+  getPreviousCarePlan() async {
+    try {
+      final GetCarePlanEnrollmentForPatient oldCarePlanEnrollmentForPatient =
+      await model.getCarePlan(false);
+      debugPrint(
+          'Previous Registered Care Plan ==> ${oldCarePlanEnrollmentForPatient.toJson()}');
+      if (oldCarePlanEnrollmentForPatient.status == 'success') {
+        if (oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          if(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName != carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName){
+           getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
+          }
+        }else{
+
+        }
+        //showToast(startCarePlanResponse.message);
+      } else {
+
+      }
+
+
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getAllUserTaskForPreviousHJ(var dateFrom, var dateTill) async {
+    try {
+      userTaskResponse = await model.getUserTasks(
+          'pending', dateQueryFormat.format(dateFrom) ,dateQueryFormat.format(dateTill));
+
+      if (userTaskResponse.status == 'success') {
+        debugPrint(
+            'Previous HJ Task Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
+        tasksList.addAll(userTaskResponse.data!.userTasks!.items!.toList());
+      } else {
+
+        showToast(userTaskResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      showToast(e.toString(), context);
+    }
+  }
+
   getAllUserTask() async {
     try {
       var dateTill;
@@ -129,6 +176,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
+        if(query == 'completed'){
+          getPreviousCarePlan();
+        }
         /* debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');

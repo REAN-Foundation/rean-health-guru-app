@@ -11,6 +11,8 @@ import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
 import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
@@ -110,6 +112,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   @override
   void initState() {
+    RemoteConfigValues.hospitalSystemVisibility = false;
     progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
     /*if(carePlanEnrollmentForPatientGlobe != null) {
@@ -940,6 +943,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         if(progressDialog.isOpen()){
           progressDialog.close();
         }
+        getCarePlan();
         showSuccessDialog();
         //showToast(response.message!, context);
       } else {
@@ -953,6 +957,81 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       if(progressDialog.isOpen()){
         progressDialog.close();
       }
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getCarePlan() async {
+    try {
+      final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
+      await model.getCarePlan(true);
+      debugPrint(
+          'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
+      if (carePlanEnrollmentForPatient.status == 'success') {
+        if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          debugPrint('Care Plan');
+          carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+          _sharedPrefUtils.save(
+              'CarePlan', carePlanEnrollmentForPatient.toJson());
+          getCarePlanWeeklyStatus(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0)
+              .id
+              .toString());
+
+          if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Stroke'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
+            debugPrint('CarePlan ==> Stroke');
+            _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Cholesterol'){
+            RemoteConfigValues.hospitalSystemVisibility = true;
+            debugPrint('CarePlan ==> Cholesterol');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s Integrated ASCVD Management Initiative.');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'HFMotivator'){
+            RemoteConfigValues.hospitalSystemVisibility = false;
+            debugPrint('CarePlan ==> HFMotivator');
+            _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
+          }
+
+        }else{
+          _sharedPrefUtils.save(
+              'CarePlan', null);
+          //RemoteConfigValues.hospitalSystemVisibility = true;
+          _sharedPrefUtils.save('Sponsor', '');
+          carePlanEnrollmentForPatientGlobe = null;
+        }
+        //showToast(startCarePlanResponse.message);
+      } else {
+        //showToast(startCarePlanResponse.message);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getCarePlanWeeklyStatus(String carePlanId) async {
+    try {
+      final GetWeeklyCarePlanStatus weeklyCarePlanStatus =
+      await model.getCarePlanWeeklyStatus(carePlanId);
+      debugPrint('Weekly Care Plan ==> ${weeklyCarePlanStatus.toJson()}');
+      if (weeklyCarePlanStatus.status == 'success') {
+        weeklyCarePlanStatusGlobe = weeklyCarePlanStatus;
+        _sharedPrefUtils.save('CarePlanWeekly', weeklyCarePlanStatus.toJson());
+        //showToast(startCarePlanResponse.message);
+      } else {
+        //showToast(startCarePlanResponse.message);
+      }
+    } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

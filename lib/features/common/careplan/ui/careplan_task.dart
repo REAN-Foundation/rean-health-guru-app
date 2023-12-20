@@ -37,7 +37,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd, hh:mm a');
-  var dateFormatOnlyDate = DateFormat('MMM dd');
+  var dateFormatOnlyDate = DateFormat('MMM dd yyyy');
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
   late UserTaskResponse userTaskResponse;
   List<Items> tasksList = <Items>[];
@@ -47,6 +47,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
+  Color buttonColor = primaryLightColor;
 
   getEducationUserTask() async {
     try {
@@ -97,20 +98,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           'Previous Registered Care Plan ==> ${oldCarePlanEnrollmentForPatient.toJson()}');
       if (oldCarePlanEnrollmentForPatient.status == 'success') {
         if (oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
-          if(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName != carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName){
-           getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
+          if(carePlanEnrollmentForPatientGlobe == null){
+            getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
+          }else if(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName != carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName){
+            getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
           }
         }else{
-
         }
         //showToast(startCarePlanResponse.message);
       } else {
-
       }
-
-
     } catch (CustomException) {
-      model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
@@ -119,7 +117,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTaskForPreviousHJ(var dateFrom, var dateTill) async {
     try {
       userTaskResponse = await model.getUserTasks(
-          'pending', dateQueryFormat.format(dateFrom) ,dateQueryFormat.format(dateTill));
+          'pending', dateQueryFormat.format(DateTime.parse(dateFrom)) ,dateQueryFormat.format(DateTime.parse(dateTill)));
 
       if (userTaskResponse.status == 'success') {
         debugPrint(
@@ -250,6 +248,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void initState() {
+    if (getAppType() == 'AHA') {
+      buttonColor = redLightAha;
+    }
     WidgetsBinding.instance.addObserver(this);
     progressDialog = ProgressDialog(context: context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
@@ -355,7 +356,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     Expanded(
                       flex: 1,
                       child: Semantics(
-                        label: 'Completed 2 of 2',
+                        label: 'Task Status 2 of 2',
                         child: InkWell(
                           onTap: () {
                             query = 'completed';
@@ -371,7 +372,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   height: 6,
                                 ),
                                 Text(
-                                  'Completed',
+                                  'Task Status',
                                   style: TextStyle(
                                       color: isUpCommingSelected
                                           ? textBlack
@@ -417,7 +418,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 //isSubscribe ?  model!.busy ? Center(child: CircularProgressIndicator(),) : tasks.length == 0 ? noTaskFound() : listWidget() : noDoctorFound(),
   Widget noTaskFound() {
     return Center(
-      child: Text('No tasks for today',
+      child: Text('No tasks found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -673,6 +674,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       }
     }*/
 
+    debugPrint("Task Status ==> ${task.status}");
+
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return Semantics(
@@ -839,7 +842,30 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         decorationColor: Colors.blue,
                                         decorationThickness: 1,)),
                               )
-                                  : Container()
+                                  : Container(),
+                              query == 'completed' && task.status == 'Delayed' ?
+                              MergeSemantics(
+                                child: Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: buttonColor,
+                                      border: Border.all(color: buttonColor),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                                  child: Center(
+                                    child: Text('Pending',
+                                        maxLines: 1,
+                                        semanticsLabel: 'Pending task',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: primaryColor)),
+                                  ),
+                                ),
+                              )
+                                  :Container(),
+
                             ],
                           ),
                         ),

@@ -21,6 +21,7 @@ import 'package:patient/features/common/careplan/models/get_goal_priorities.dart
 import 'package:patient/features/common/careplan/models/get_goals_by_priority.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
@@ -39,7 +40,7 @@ class PatientCarePlanViewModel extends BaseModel {
 
   Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
     // Get user profile for id
-
+    setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -50,6 +51,20 @@ class PatientCarePlanViewModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return GetCarePlanEnrollmentForPatient.fromJson(response);
+  }
+
+  Future<GetWeeklyCarePlanStatus> getCarePlanWeeklyStatus(String carePlanId) async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .get('/care-plans/' + carePlanId + '/weekly-status', header: map);
+    setBusy(false);
+    // Convert and return
+    return GetWeeklyCarePlanStatus.fromJson(response);
   }
 
   Future<GetAHACarePlansResponse> getAHACarePlans() async {
@@ -315,7 +330,7 @@ class PatientCarePlanViewModel extends BaseModel {
             dateFrom +
             '&scheduledTo=' +
             dateTo +
-            '&itemsPerPage=400',
+            '&itemsPerPage=410',
         header: map);
 
     setBusy(false);

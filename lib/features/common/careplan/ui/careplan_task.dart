@@ -683,6 +683,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           ? task.action != null
               ? task.action!.type.toString() + ' task is already completed'
               : task.category.toString() + ' task is already completed'
+          : query == 'completed' && task.status == 'Delayed' ? task.action!.type.toString() + ' Pending task double click to activate'
           : task.action != null
               ? task.action!.type.toString() + ' task double click to activate'
               : task.category.toString() + ' task double click to activate',
@@ -1348,6 +1349,28 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
+                              query == 'completed' && task.status == 'Delayed' ?
+                              MergeSemantics(
+                                child: Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: buttonColor,
+                                      border: Border.all(color: buttonColor),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                                  child: Center(
+                                    child: Text('Pending',
+                                        maxLines: 1,
+                                        semanticsLabel: 'Pending task',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: primaryColor)),
+                                  ),
+                                ),
+                              )
+                                  :Container(),
                             ],
                           ),
                         ),

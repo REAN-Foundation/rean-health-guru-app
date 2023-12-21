@@ -509,9 +509,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontFamily: 'Montserrat',
                         fontSize: 14),
                     textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                      //FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(

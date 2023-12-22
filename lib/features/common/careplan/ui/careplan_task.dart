@@ -426,7 +426,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     Expanded(
                       flex: 1,
                       child: Semantics(
-                        label: 'Task Status 2 of 2',
+                        label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
                             query = 'completed';
@@ -589,24 +589,30 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         });
         setTaskList(tasksList);
       },
-      child: Container(
-        height: 32,
-        margin: EdgeInsets.symmetric(horizontal: 2.0),
-        padding: EdgeInsets.symmetric(
-          horizontal: 8.0,
-        ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6.0),
-            border:
-            Border.all(color: primaryColor , width: 1),
-            color: (value == index) ? primaryColor : Colors.white),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: (value == index) ? Colors.white : primaryColor,
-                fontSize: 12),
+      child: Semantics(
+        label: text,
+        button: true,
+        child: ExcludeSemantics(
+          child: Container(
+            height: 32,
+            margin: EdgeInsets.symmetric(horizontal: 2.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.0,
+            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6.0),
+                border:
+                Border.all(color: primaryColor , width: 1),
+                color: (value == index) ? primaryColor : Colors.white),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: (value == index) ? Colors.white : primaryColor,
+                    fontSize: 12),
+              ),
+            ),
           ),
         ),
       ),

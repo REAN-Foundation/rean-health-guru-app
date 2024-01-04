@@ -470,7 +470,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   ],
                 ),
               ),
-              Visibility(
+              model!.busy ? SizedBox() :Visibility(
                 visible: query == "completed",
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -554,7 +554,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     });
   }*/
 
-  setTaskList(List<Items> tasks){
+  setTaskList(List<Items> tasks)  {
     displayList.clear();
     String selectedValue = fliterTagList.elementAt(value);
     debugPrint('Selected Value ==> $selectedValue');
@@ -584,10 +584,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget CustomRadioButton(String text, int index) {
     return InkWell(
       onTap: () {
+        if(!model.busy){
+        displayList.clear();
         setState(() {
           value = index;
         });
         setTaskList(tasksList);
+        }
       },
       child: Semantics(
         label: text,

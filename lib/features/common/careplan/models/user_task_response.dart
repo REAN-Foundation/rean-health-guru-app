@@ -533,7 +533,7 @@ class Action {
     String? medicationId,
     String? drugName,
     String? drugId,
-    dynamic? dose,
+    dynamic dose,
     String? details,
     String? timeScheduleStart,
     String? timeScheduleEnd,
@@ -644,7 +644,7 @@ class Action {
   String? _medicationId;
   String? _drugName;
   String? _drugId;
-  dynamic? _dose;
+  dynamic _dose;
   String? _details;
   String? _timeScheduleStart;
   String? _timeScheduleEnd;
@@ -687,7 +687,7 @@ class Action {
 
   String? get drugId => _drugId;
 
-  dynamic? get dose => _dose;
+  dynamic get dose => _dose;
 
   String? get details => _details;
 

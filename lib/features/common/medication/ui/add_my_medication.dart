@@ -1588,7 +1588,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         if(globeMedication == null) {
           showSuccessToast('Medication was added successfully.', context);
         }else{
-          showSuccessToast('Medication was updated successfully.', context);
+          showSuccessToast('Medication was updated successfully.\nMedication consumption details will be available shortly.', context);
         }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){

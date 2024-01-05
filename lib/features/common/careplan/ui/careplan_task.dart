@@ -263,6 +263,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
       }
 
+      if(task.actionType == 'Medication' && task.action == null){
+        displayList.remove(task);
+      }
+
 
 
     }
@@ -497,7 +501,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: model!.busy
+                      child: model.busy
                           ? Center(child: CircularProgressIndicator())
                           : displayList.isEmpty
                               ? noTaskFound()

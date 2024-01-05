@@ -263,8 +263,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
       }
 
-      if(task.actionType == 'Medication' && task.action == null){
+      if(task.actionType == 'Medication' && task.action!.isTaken == null){
         displayList.remove(task);
+        tasksList.remove(task);
       }
 
 

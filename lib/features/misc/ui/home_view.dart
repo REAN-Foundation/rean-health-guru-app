@@ -345,7 +345,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   getCarePlan() async {
     try {
       final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
-          await model.getCarePlan();
+          await model.getCarePlan(true);
       debugPrint(
           'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
       if (carePlanEnrollmentForPatient.status == 'success') {

@@ -9,7 +9,6 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
-import '../../../misc/ui/home_view.dart';
 
 //ignore: must_be_immutable
 class ChallengeCarePlanView extends StatefulWidget {
@@ -245,10 +244,11 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
         model.setBusy(false);
         setState(() {});
         assrotedUICount = 0;
-        Navigator.pushAndRemoveUntil(context,
+        Navigator.pop(context);
+        /*Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
-        }), (Route<dynamic> route) => false);
+        }), (Route<dynamic> route) => false);*/
         debugPrint('AHA Care Plan ==> ${response.toJson()}');
       } else {
         model.setBusy(false);

@@ -721,10 +721,12 @@ class _AssesmentTaskNavigatorViewState
                       Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
                       arguments: widget.task!.action!.assessment!.id);
                   }else {
-                    Navigator.pushAndRemoveUntil(context,
+                    int count = 0;
+                    Navigator.of(context).popUntil((_) => count++ >= 2);
+                   /* Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
                           return HomeView(1);
-                        }), (Route<dynamic> route) => false);
+                        }), (Route<dynamic> route) => false);*/
                   }
                 },
                 child: Container(

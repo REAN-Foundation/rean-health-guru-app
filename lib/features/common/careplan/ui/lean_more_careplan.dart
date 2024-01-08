@@ -7,7 +7,6 @@ import 'package:patient/features/common/careplan/models/get_user_task_details.da
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -454,10 +453,11 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       if (response.status == 'success') {
         showSuccessToast('Task completed successfully!', context);
         assrotedUICount = 0;
-        Navigator.pushAndRemoveUntil(context,
+        Navigator.pop(context);
+        /*Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
-        }), (Route<dynamic> route) => false);
+        }), (Route<dynamic> route) => false);*/
         debugPrint('AHA Care Plan ==> ${response.toJson()}');
       } else {
         showToast(response.message!, context);

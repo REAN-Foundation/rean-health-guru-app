@@ -241,7 +241,7 @@ jobs:
 
       # Flutter Build Artifact
       - name: Flutter Build
-        run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
+        run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart" -v
 
       - name: Generate Signed Build
         run: bundle exec fastlane build_rf flavor:dev mode:release

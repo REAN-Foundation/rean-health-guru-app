@@ -1588,7 +1588,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         if(globeMedication == null) {
           showSuccessToast('Medication was added successfully.', context);
         }else{
-          showSuccessToast('Medication has been updated successfully and Medication Reminders details will be available shortly.', context);
+          showSuccessToast('Medication has been updated successfully and Medication Reminders will be available shortly.', context);
         }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){

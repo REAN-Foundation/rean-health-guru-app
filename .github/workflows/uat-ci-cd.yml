@@ -224,7 +224,7 @@ jobs:
   iOS-Release-Alpha:
     environment: uat
     needs: iOS-BuildApp
-    runs-on: macos-latest
+    runs-on: macos-13
     defaults:
       run:
         shell: bash

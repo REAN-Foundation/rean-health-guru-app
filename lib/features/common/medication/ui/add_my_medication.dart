@@ -509,7 +509,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontFamily: 'Montserrat',
                         fontSize: 14),
                     textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.numberWithOptions(signed: true),
+                    keyboardType: Platform.isAndroid ? TextInputType.phone : TextInputType.numberWithOptions(signed: true, decimal: true),
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp("[0-9./]")),
                     ],
@@ -1588,7 +1588,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         if(globeMedication == null) {
           showSuccessToast('Medication was added successfully.', context);
         }else{
-          showSuccessToast('Medication was updated successfully.\nMedication consumption details will be available shortly.', context);
+          showSuccessToast('Medication has been updated successfully and Medication Reminders details will be available shortly.', context);
         }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){

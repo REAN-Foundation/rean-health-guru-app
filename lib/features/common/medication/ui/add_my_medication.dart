@@ -509,9 +509,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontFamily: 'Montserrat',
                         fontSize: 14),
                     textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: Platform.isAndroid ? TextInputType.phone : TextInputType.numberWithOptions(signed: true, decimal: true),
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9./]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -1091,9 +1091,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                  }*/ else if (validationForUnit()) {
+                  } else if (validationForUnit()) {
                     showToast('Please enter vaild unit', context);
-                  }  else if (_unitController.text.trim() == '') {
+                  }*/  else if (_unitController.text.trim() == '') {
                     showToast('Please enter unit quantity', context);
                   } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
@@ -1555,7 +1555,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       //map["DoctorUserId"] = doctorUserId;
       //map["VisitId"] = widget._visitInformation.visitInfo.id;
       map['DrugName'] = _typeAheadController.text;
-      map['Dose'] = int.parse(_unitController.text);
+      map['Dose'] = _unitController.text;
       map['DosageUnit'] = _dosageUnit;
       if(_frequencyUnit != "Other"){
         map['TimeSchedules'] = timeShedule;
@@ -1588,7 +1588,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         if(globeMedication == null) {
           showSuccessToast('Medication was added successfully.', context);
         }else{
-          showSuccessToast('Medication was updated successfully.', context);
+          showSuccessToast('Medication has been updated successfully and Medication Reminders will be available shortly.', context);
         }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){

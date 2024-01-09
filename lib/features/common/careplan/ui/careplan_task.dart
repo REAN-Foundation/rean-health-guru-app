@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
@@ -36,16 +37,23 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd, hh:mm a');
-  var dateFormatOnlyDate = DateFormat('MMM dd');
+  var dateFormatOnlyDate = DateFormat('MMM dd yyyy');
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
   late UserTaskResponse userTaskResponse;
   List<Items> tasksList = <Items>[];
+  List<Items> medicationHJTasksList = <Items>[];
+  List<String> fliterTagList = <String>[];
+  List<Items> displayList = <Items>[];
   bool isSubscribe = false;
   late ProgressDialog progressDialog;
   bool isUpCommingSelected = true;
   String query = 'pending';
   final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: 50.0);
+      ScrollController(initialScrollOffset: 00.0);
+  Color buttonColor = primaryLightColor;
+  String currentCarePlan = carePlanEnrollmentForPatientGlobe != null ? carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName.toString() : "";
+  String oldCarePlan = '';
+
 
   getEducationUserTask() async {
     try {
@@ -78,12 +86,71 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');*/
       } else {
         tasksList.clear();
+        displayList.clear();
         showToast(userTaskResponse.message!, context);
       }
     } on FetchDataException catch (e) {
       tasksList.clear();
+      displayList.clear();
       debugPrint('error caught: $e');
       model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getPreviousCarePlan() async {
+    try {
+      final GetCarePlanEnrollmentForPatient oldCarePlanEnrollmentForPatient =
+      await model.getCarePlan(false);
+      debugPrint(
+          'Previous Registered Care Plan ==> ${oldCarePlanEnrollmentForPatient.toJson()}');
+      if (oldCarePlanEnrollmentForPatient.status == 'success') {
+        if (oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          if(carePlanEnrollmentForPatientGlobe == null){
+            getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
+            if(oldCarePlanEnrollmentForPatient != null){
+              oldCarePlan = oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName.toString();
+              fliterTagList.add(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName.toString());
+              fliterTagList = fliterTagList.toSet().toList();
+            }
+          }else if(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName != carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName){
+            getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
+            if(oldCarePlanEnrollmentForPatient != null){
+              oldCarePlan = oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName.toString();
+              fliterTagList.add(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).planName.toString());
+              fliterTagList = fliterTagList.toSet().toList();
+            }
+          }
+        }else{
+        }
+        //showToast(startCarePlanResponse.message);
+      } else {
+      }
+    } catch (CustomException) {
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getAllUserTaskForPreviousHJ(var dateFrom, var dateTill) async {
+    try {
+      var oldUserTaskResponse = await model.getUserTasks(
+          'pending', dateQueryFormat.format(DateTime.parse(dateFrom)) ,dateQueryFormat.format(DateTime.parse(dateTill))+'&actionType=Careplan');
+
+      if (oldUserTaskResponse.status == 'success') {
+        debugPrint(
+            'Old HJ Task Count ==> $oldUserTaskResponse');
+        debugPrint(
+            'Previous HJ Task Count ==> ${oldUserTaskResponse.data!.userTasks!.items!.length}');
+        tasksList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
+        displayList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
+        //_sortOldHjUserTask(userTaskResponse.data!.userTasks!.items!.toList());
+      } else {
+
+        showToast(oldUserTaskResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       showToast(e.toString(), context);
     }
   }
@@ -129,6 +196,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
+        if(carePlanEnrollmentForPatientGlobe != null){
+          fliterTagList.add(carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).planName.toString());
+          fliterTagList = fliterTagList.toSet().toList();
+        }
+        if(query == 'completed'){
+          getPreviousCarePlan();
+        }
+
         /* debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
@@ -152,6 +227,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   getUserTask() async {
+    value = 0;
+    tasksList.clear();
+    displayList.clear();
+    medicationHJTasksList.clear();
+    fliterTagList.clear();
+    fliterTagList.add("All");
+    fliterTagList = fliterTagList.toSet().toList();
     /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
         getAppName() == 'Heart & Stroke Helper™ ') {
       getEducationUserTask();
@@ -169,18 +251,64 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             task.status == 'Upcoming' ||
             task.status == 'Overdue') {
           tasksList.add(task);
+          displayList.add(task);
         }
       } else {
         if (task.status == 'Completed' || task.status == 'Cancelled') {
           tasksList.add(task);
+          displayList.add(task);
+          if(task.actionType == 'Medication'){
+            medicationHJTasksList.add(task);
+          }
         }
       }
+
+      try {
+        if (task.actionType == 'Medication' && task.action!.isTaken == null) {
+          displayList.remove(task);
+          tasksList.remove(task);
+        }
+      }catch (e){
+        displayList.remove(task);
+        tasksList.remove(task);
+      }
+
+
+
+    }
+
+    if(medicationHJTasksList.isNotEmpty){
+      fliterTagList.add("Medication");
+      fliterTagList = fliterTagList.toSet().toList();
     }
 
     if (fromMethod == 'Educational' && tasksList.length == 1) {
       getAllUserTask();
     }
   }
+
+/*  _sortOldHjUserTask(List<Items> tasks) {
+    for (final task in tasks) {
+      debugPrint(
+          'Previous Task Name ==> ${task.task}');
+      *//*if(task.actionType == 'Medication'){
+        medicationHJTasksList.add(task);
+      }else{
+        oldHJTasksList.add(task);
+      }*//*
+
+    }
+    // if(medicationHJTasksList.isNotEmpty){
+    //   fliterTagList.add("Medication");
+    //   fliterTagList = fliterTagList.toSet().toList();
+    // }
+
+    debugPrint(
+        'Previous Medication Task Count ==> ${medicationHJTasksList.length}');
+    debugPrint(
+        'Previous HJ Task Count ==> ${oldHJTasksList.length}');
+
+  }*/
 
   @override
   void dispose() {
@@ -200,6 +328,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void initState() {
+    if (getAppType() == 'AHA') {
+      buttonColor = redLightAha;
+    }
     WidgetsBinding.instance.addObserver(this);
     progressDialog = ProgressDialog(context: context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
@@ -305,7 +436,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     Expanded(
                       flex: 1,
                       child: Semantics(
-                        label: 'Completed 2 of 2',
+                        label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
                             query = 'completed';
@@ -321,7 +452,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   height: 6,
                                 ),
                                 Text(
-                                  'Completed',
+                                  'Progress',
                                   style: TextStyle(
                                       color: isUpCommingSelected
                                           ? textBlack
@@ -349,12 +480,36 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   ],
                 ),
               ),
+              model!.busy ? SizedBox() :Visibility(
+                visible: query == "completed",
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8,),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 18,),
+                            // CustomRadioButton("All", 1),
+                            // CustomRadioButton("SMBP", 2),
+                            // CustomRadioButton("Cholesterol", 3),
+                            for (var i = 0; i < fliterTagList.length; i++) CustomRadioButton(fliterTagList.elementAt(i), i),
+                          ],
+                        )
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: model!.busy
+                      child: model.busy
                           ? Center(child: CircularProgressIndicator())
-                          : tasksList.isEmpty
+                          : displayList.isEmpty
                               ? noTaskFound()
                               : listWidget())),
             ],
@@ -367,7 +522,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 //isSubscribe ?  model!.busy ? Center(child: CircularProgressIndicator(),) : tasks.length == 0 ? noTaskFound() : listWidget() : noDoctorFound(),
   Widget noTaskFound() {
     return Center(
-      child: Text('No tasks for today',
+      child: Text('No tasks found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -387,6 +542,96 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }
 
+  /*setTaskList(){
+    displayList.clear();
+    String selectedValue = fliterTagList.elementAt(value);
+    debugPrint('Selected Value ==> $selectedValue');
+    debugPrint('Old CarePlan Value ==> $oldCarePlan');
+    if(selectedValue == "All"){
+      displayList.addAll(tasksList);
+    }else if(selectedValue == currentCarePlan){
+      debugPrint('Current Plan Task Count ==> ${currentHJTasksList.length}');
+      displayList.addAll(currentHJTasksList);
+    }else if(selectedValue == oldCarePlan){
+      debugPrint('old Plan Task Count ==> ${previousHJTasksList.length}');
+      displayList.addAll(previousHJTasksList);
+      debugPrint('displayList Task Count ==> ${displayList.length}');
+    }else{
+      displayList.addAll(medicationHJTasksList);
+    }
+    setState(() {
+
+    });
+  }*/
+
+  setTaskList(List<Items> tasks)  {
+    displayList.clear();
+    String selectedValue = fliterTagList.elementAt(value);
+    debugPrint('Selected Value ==> $selectedValue');
+    if(selectedValue == "All"){
+      displayList.addAll(tasksList);
+    }else if(selectedValue == "Medication"){
+      displayList.addAll(medicationHJTasksList);
+    }else {
+      for (final task in tasks) {
+        if(task.action != null && task.action!.planName == selectedValue ) {
+          debugPrint('Plan Name ==> ${task.action!.planName},   && Task Name ==> ${task.task}');
+          displayList.add(task);
+        }
+      }
+    }
+    _scrollController.animateTo( //go to top of scroll
+        0,  //scroll offset to go
+        duration: Duration(milliseconds: 500), //duration of scroll
+        curve:Curves.fastOutSlowIn //scroll type
+    );
+    setState(() {
+
+    });
+  }
+
+  int value = 0;
+  Widget CustomRadioButton(String text, int index) {
+    return InkWell(
+      onTap: () {
+        if(!model.busy){
+        displayList.clear();
+        setState(() {
+          value = index;
+        });
+        setTaskList(tasksList);
+        }
+      },
+      child: Semantics(
+        label: text,
+        button: true,
+        child: ExcludeSemantics(
+          child: Container(
+            height: 32,
+            margin: EdgeInsets.symmetric(horizontal: 2.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.0,
+            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6.0),
+                border:
+                Border.all(color: primaryColor , width: 1),
+                color: (value == index) ? primaryColor : Colors.white),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: (value == index) ? Colors.white : primaryColor,
+                    fontSize: 12),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget listWidget() {
     return Scrollbar(
       thumbVisibility: true,
@@ -398,14 +643,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               height: 8,
             );
           },
-          itemCount: tasksList.length,
+          itemCount: displayList.length,
           scrollDirection: Axis.vertical,
+          controller: _scrollController,
           shrinkWrap: true),
     );
   }
 
   Widget _createToDos(BuildContext context, int index) {
-    final Items task = tasksList.elementAt(index);
+    final Items task = displayList.elementAt(index);
     debugPrint('Type ==> ${task.actionType}');
     return /*task.task == 'News feed'
         ? Container()
@@ -614,7 +860,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }*/
 
   Widget _makeTaskCard(BuildContext context, int index) {
-    final Items task = tasksList.elementAt(index);
+    final Items task = displayList.elementAt(index);
 
     /*  if(DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
       if (task.category!.contains('Educational') && !task.category!.contains('Educational-NewsFeed')) {
@@ -623,16 +869,23 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       }
     }*/
 
+    debugPrint("Task Status ==> ${task.status}");
+
+    var taskName = '';
+    if(task.action != null){
+      taskName = task.action!.type.toString();
+    }else{
+      taskName = task.category.toString();
+    }
+
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return Semantics(
       hint: task.finished
-          ? task.action != null
-              ? task.action!.type.toString() + ' task is already completed'
-              : task.category.toString() + ' task is already completed'
-          : task.action != null
-              ? task.action!.type.toString() + ' task double click to activate'
-              : task.category.toString() + ' task double click to activate',
+          ? taskName + ' task is already completed'
+          : query == 'completed' && task.status == 'Delayed'
+          ? taskName + 'Pending task double click to activate'
+          : taskName + ' task double click to activate',
       child: InkWell(
         onTap: () {
           debugPrint(
@@ -789,7 +1042,30 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         decorationColor: Colors.blue,
                                         decorationThickness: 1,)),
                               )
-                                  : Container()
+                                  : Container(),
+                              query == 'completed' && task.status == 'Delayed' ?
+                              MergeSemantics(
+                                child: Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: buttonColor,
+                                      border: Border.all(color: buttonColor),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                                  child: Center(
+                                    child: Text('Pending',
+                                        maxLines: 1,
+                                        semanticsLabel: 'Pending task',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: primaryColor)),
+                                  ),
+                                ),
+                              )
+                                  :Container(),
+
                             ],
                           ),
                         ),
@@ -826,7 +1102,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final Items task = tasksList.elementAt(index);
+    final Items task = displayList.elementAt(index);
     //debugPrint('Medication Pojo ${task.toJson().toString()}');
     /*if (task.scheduledStartTime == null) {
       return Container();
@@ -1109,7 +1385,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _makeCustomTaskCard(BuildContext context, int index) {
-    final Items task = tasksList.elementAt(index);
+    final Items task = displayList.elementAt(index);
     return Semantics(
       hint: task.finished
           ? task.action != null
@@ -1272,6 +1548,28 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
+                              query == 'completed' && task.status == 'Delayed' ?
+                              MergeSemantics(
+                                child: Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: buttonColor,
+                                      border: Border.all(color: buttonColor),
+                                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                                  child: Center(
+                                    child: Text('Pending',
+                                        maxLines: 1,
+                                        semanticsLabel: 'Pending task',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: primaryColor)),
+                                  ),
+                                ),
+                              )
+                                  :Container(),
                             ],
                           ),
                         ),

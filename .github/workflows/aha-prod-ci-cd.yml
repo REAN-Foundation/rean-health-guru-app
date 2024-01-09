@@ -39,7 +39,7 @@ jobs:
 
   iOS-App-Release-Prod:
     environment: aha-prod
-    runs-on: macos-latest
+    runs-on: macos-13
     defaults:
       run:
         shell: bash

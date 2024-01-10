@@ -2188,7 +2188,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         case 'Survey':
           _launchURL(task.action!.details!.link!.replaceAll(' ', '%20'))
               .then((value) {
-            //getUserTask();
+            getUserTask();
             //showToast('Task completed successfully');
           });
           //}
@@ -2513,7 +2513,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
         showSuccessToast('Task completed successfully!', context);
-        getUserTask();
+        //getUserTask();
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {

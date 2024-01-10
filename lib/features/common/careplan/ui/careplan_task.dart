@@ -144,6 +144,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             'Previous HJ Task Count ==> ${oldUserTaskResponse.data!.userTasks!.items!.length}');
         tasksList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
         displayList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
+        displayList = displayList.toSet().toList();
         //_sortOldHjUserTask(userTaskResponse.data!.userTasks!.items!.toList());
       } else {
 
@@ -194,6 +195,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
+        displayList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
         if(carePlanEnrollmentForPatientGlobe != null){
@@ -238,11 +240,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         getAppName() == 'Heart & Stroke Helper™ ') {
       getEducationUserTask();
     } else {*/
+    debugPrint('Display Count ==> ${displayList.length} Task List ==> ${tasksList.length}');
     getAllUserTask();
     //}
   }
 
   _sortUserTask(List<Items> tasks, String fromMethod) {
+    displayList.clear();
     for (final task in tasks) {
       if (query == 'pending') {
         if (task.status == 'Delayed' ||
@@ -276,6 +280,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
 
     }
+
+    displayList = displayList.toSet().toList();
+
+    setState(() {
+
+    });
 
     if(medicationHJTasksList.isNotEmpty){
       fliterTagList.add("Medication");
@@ -395,9 +405,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'To Do 1 of 2',
                         child: InkWell(
                           onTap: () {
-                            query = 'pending';
-                            getUserTask();
-                            isUpCommingSelected = true;
+                            if(!model!.busy) {
+                              query = 'pending';
+                              getUserTask();
+                              isUpCommingSelected = true;
+                            }
                           },
                           child: ExcludeSemantics(
                             child: Column(
@@ -410,7 +422,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 Text(
                                   "To Do",
                                   style: TextStyle(
-                                      color: isUpCommingSelected
+                                      color: model!.busy ? textGrey : isUpCommingSelected
                                           ? primaryColor
                                           : textBlack,
                                       fontWeight: isUpCommingSelected
@@ -423,7 +435,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   width: 40,
                                   child: Divider(
                                     thickness: 2,
-                                    color: primaryColor,
+                                    color: model.busy ? textGrey : primaryColor,
                                   ),
                                 )
                                     : Container(),
@@ -439,9 +451,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
-                            query = 'completed';
-                            getUserTask();
-                            isUpCommingSelected = false;
+                            if(!model.busy) {
+                              query = 'completed';
+                              getUserTask();
+                              isUpCommingSelected = false;
+                            }
                           },
                           child: ExcludeSemantics(
                             child: Column(
@@ -454,7 +468,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 Text(
                                   'Progress',
                                   style: TextStyle(
-                                      color: isUpCommingSelected
+                                      color: model.busy ? textGrey : isUpCommingSelected
                                           ? textBlack
                                           : primaryColor,
                                       fontWeight: isUpCommingSelected
@@ -468,7 +482,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   width: 40,
                                   child: Divider(
                                     thickness: 2,
-                                    color: primaryColor,
+                                    color: model.busy ? textGrey : primaryColor,
                                   ),
                                 ),
                               ],
@@ -480,7 +494,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   ],
                 ),
               ),
-              model!.busy ? SizedBox() :Visibility(
+              model.busy ? SizedBox() :Visibility(
                 visible: query == "completed",
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -1879,8 +1893,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     progressDialog.show(max: 100, msg: 'Loading...');
     try {
       GetUserTaskDetails response = await model.getUserTaskDetails(userTaskId);
-      debugPrint('User Tasks Details ==> ${userTaskResponse.toJson()}');
-      if (userTaskResponse.status == 'success') {
+      debugPrint('User Tasks Details ==> ${response.toJson()}');
+      if (response.status == 'success') {
+        debugPrint('User Tasks Details ==> ');
         if (response.data!.userTask!.actionType == 'Custom') {
           _customTaskNavigator(response.data!.userTask!);
         } else {
@@ -1890,7 +1905,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       } else {
         tasksList.clear();
         progressDialog.close();
-        showToast(userTaskResponse.message!, context);
+        showToast(response.message!, context);
       }
     } on FetchDataException catch (e) {
       tasksList.clear();
@@ -2173,7 +2188,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         case 'Survey':
           _launchURL(task.action!.details!.link!.replaceAll(' ', '%20'))
               .then((value) {
-            //getUserTask();
+            getUserTask();
             //showToast('Task completed successfully');
           });
           //}
@@ -2498,7 +2513,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
         showSuccessToast('Task completed successfully!', context);
-        getUserTask();
+        //getUserTask();
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {

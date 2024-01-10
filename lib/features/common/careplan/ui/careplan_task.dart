@@ -395,9 +395,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'To Do 1 of 2',
                         child: InkWell(
                           onTap: () {
-                            query = 'pending';
-                            getUserTask();
-                            isUpCommingSelected = true;
+                            if(!model!.busy) {
+                              query = 'pending';
+                              getUserTask();
+                              isUpCommingSelected = true;
+                            }
                           },
                           child: ExcludeSemantics(
                             child: Column(
@@ -410,7 +412,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 Text(
                                   "To Do",
                                   style: TextStyle(
-                                      color: isUpCommingSelected
+                                      color: model!.busy ? textGrey : isUpCommingSelected
                                           ? primaryColor
                                           : textBlack,
                                       fontWeight: isUpCommingSelected
@@ -423,7 +425,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   width: 40,
                                   child: Divider(
                                     thickness: 2,
-                                    color: primaryColor,
+                                    color: model.busy ? textGrey : primaryColor,
                                   ),
                                 )
                                     : Container(),
@@ -439,9 +441,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
-                            query = 'completed';
-                            getUserTask();
-                            isUpCommingSelected = false;
+                            if(!model.busy) {
+                              query = 'completed';
+                              getUserTask();
+                              isUpCommingSelected = false;
+                            }
                           },
                           child: ExcludeSemantics(
                             child: Column(
@@ -454,7 +458,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 Text(
                                   'Progress',
                                   style: TextStyle(
-                                      color: isUpCommingSelected
+                                      color: model.busy ? textGrey : isUpCommingSelected
                                           ? textBlack
                                           : primaryColor,
                                       fontWeight: isUpCommingSelected
@@ -468,7 +472,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   width: 40,
                                   child: Divider(
                                     thickness: 2,
-                                    color: primaryColor,
+                                    color: model.busy ? textGrey : primaryColor,
                                   ),
                                 ),
                               ],
@@ -480,7 +484,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   ],
                 ),
               ),
-              model!.busy ? SizedBox() :Visibility(
+              model.busy ? SizedBox() :Visibility(
                 visible: query == "completed",
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

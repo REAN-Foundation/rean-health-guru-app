@@ -660,7 +660,7 @@ class _ViewMyAllDailyActivityTrendsState
                           semanticsLabel: 'Steps',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: secondaryTextBlack,
+                            color: textBlack,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal,
@@ -862,7 +862,7 @@ class _ViewMyAllDailyActivityTrendsState
                           semanticsLabel: 'Duration',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: secondaryTextBlack,
+                            color: textBlack,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal,

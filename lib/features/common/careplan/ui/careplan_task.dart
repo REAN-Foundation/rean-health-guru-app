@@ -330,7 +330,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   void didChangeAppLifecycleState(final AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       setState(() {
-        triggerApiCall();
+        //triggerApiCall();
         // ...your code goes here...
       });
     }
@@ -1903,12 +1903,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
         progressDialog.close();
       } else {
-        tasksList.clear();
         progressDialog.close();
         showToast(response.message!, context);
       }
     } on FetchDataException catch (e) {
-      tasksList.clear();
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -2301,6 +2299,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           break;
         case 'Article':
         case 'Link':
+
+          debugPrint("Inside Link Task");
+
           _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
             getUserTask();
             //showToast('Task completed successfully');

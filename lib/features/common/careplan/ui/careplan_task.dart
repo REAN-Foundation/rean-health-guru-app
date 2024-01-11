@@ -361,6 +361,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   Widget build(BuildContext context) {
+    displayList = displayList.toSet().toList();
+    setState(() {
+
+    });
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(

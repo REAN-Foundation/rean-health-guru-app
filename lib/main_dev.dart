@@ -18,6 +18,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
@@ -137,6 +138,7 @@ Future<void> main() async {
   //enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  initUniLinks();
   // Initialize Firebase Messaging
   //FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationHandler().initialize();
@@ -174,6 +176,20 @@ Future<void> main() async {
       }
     });
   }*/
+}
+
+void initUniLinks() async {
+  // Ensure that the app is ready to handle deep links
+  await getInitialUri();
+
+  try{
+    Uri? initialLink = await getInitialUri();
+    print(initialLink);
+  } on PlatformException {
+    print('platfrom exception unilink');
+  }
+  // Set up a stream subscription to handle deep links when the app is running
+
 }
 
 //ignore: must_be_immutable

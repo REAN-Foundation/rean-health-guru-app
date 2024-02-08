@@ -610,12 +610,14 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       debugPrint(data);
                       if(data == 'Other'){
                         announceText('Note You will not get reminder for this option');
+                        if(Platform.isIOS){
+                          Future.delayed(Duration(seconds: 4), () => announceText('Note You will not get reminder for this option'));
+                        }
                       }
+                      _durationFocus.requestFocus();
                       setState(() {
                         _frequencyUnit = data;
                       });
-                      _durationFocus.requestFocus();
-                      setState(() {});
                     },
                   ),
                 ),

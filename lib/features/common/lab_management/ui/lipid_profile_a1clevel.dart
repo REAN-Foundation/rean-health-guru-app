@@ -410,7 +410,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

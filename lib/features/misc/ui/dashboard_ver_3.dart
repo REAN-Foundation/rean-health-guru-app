@@ -2113,7 +2113,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Semantics(
-                          label: 'Add total cholestrol',
+                          label: 'Add Total Cholesterol',
                           button: true,
                           child: InkWell(
                             onTap: () {

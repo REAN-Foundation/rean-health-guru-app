@@ -136,6 +136,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               body: Container(
                 height: height,
                 child: Stack(children: <Widget>[
+                  Positioned(top: 40, left: 0, child: _backButton()),
                   Positioned(
                       top: -90,
                       right: 40,
@@ -180,7 +181,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                       ),
                     ],
                   ),
-                  Positioned(top: 40, left: 0, child: _backButton()),
+
                 ]),
               ),
             )));

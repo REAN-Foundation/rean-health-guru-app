@@ -221,6 +221,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                         _timer!.isActive
                                                             ? Semantics(
                                                                 button: true,
+                                                                label: 'Play',
                                                                 child:
                                                                     ExcludeSemantics(
                                                                   child:
@@ -285,6 +286,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                 70.0))),
                                                 child: Semantics(
                                                   button: true,
+                                                  label: 'Pause',
                                                   child: ExcludeSemantics(
                                                     child: Container(
                                                       height: 100,

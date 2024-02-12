@@ -791,23 +791,25 @@ class _CreateProfileState extends State<CreateProfile> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          dob,
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 16),
+                  child: ExcludeSemantics(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            dob,
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 16),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: 32,
-                          width: 32,
-                          child: ImageIcon(
-                              AssetImage('res/images/ic_calender.png'),
-                              color: Colors.black12)),
-                    ],
+                        SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: ImageIcon(
+                                AssetImage('res/images/ic_calender.png'),
+                                color: Colors.black12)),
+                      ],
+                    ),
                   ),
                 ),
               ),

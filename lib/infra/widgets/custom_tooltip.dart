@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class CustomTooltip extends StatelessWidget {
   final Widget? child;
@@ -34,5 +35,12 @@ class CustomTooltip extends StatelessWidget {
   void _onTap(GlobalKey key) {
     final dynamic tooltip = key.currentState;
     tooltip?.ensureTooltipVisible();
+    announceText(message ?? '');
+    Future.delayed(
+        Duration(seconds: 10),
+            () {
+          tooltip?.deactivate();
+        }
+    );
   }
 }

@@ -29,6 +29,7 @@ import 'package:patient/features/common/emergency/models/health_syetem_hospital_
 import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../../infra/view_models/base_model.dart';
@@ -579,7 +580,8 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .get('/types/priorities?tags=HeartFailure', header: map);
+        .get('/types/priorities?tags=' + carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+        .elementAt(0).planName.toString(), header: map);
 
     debugPrint(response.toString());
     setBusy(false);

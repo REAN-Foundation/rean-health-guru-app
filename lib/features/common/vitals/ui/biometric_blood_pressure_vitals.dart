@@ -610,7 +610,9 @@ class _BiometricBloodPresureVitalsViewState
         valeTextColor = Color(0XFF991112);
       }*/
     }
-    announceText('Your recent Blood Pressure is $value');
+    if(widget.allUIViewsVisible) {
+       announceText('Your recent Blood Pressure is $value');
+    }
 
     setState(() {
 

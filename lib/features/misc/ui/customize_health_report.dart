@@ -24,10 +24,10 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
 
   var _frequencyValue = '';
   bool _hJValue = false;
-  bool _medicationAdherenceValue = false;
-  bool _weightValue = false;
-  bool _glucoseValue = false;
-  bool _bPValue = false;
+  bool _medicationAdherenceValue = true;
+  bool _weightValue = true;
+  bool _glucoseValue = true;
+  bool _bPValue = true;
   bool _sleepValue = false;
   bool _labValuesValue = false;
   bool _physicalActivityValue = false;
@@ -121,7 +121,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
           children: [
             SizedBox(height: 16,),
             Text(
-              'Select Frequency of Health Report',
+              'Select Duration of Health Report',
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w600),
@@ -140,14 +140,14 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
                         border: Border.all(color: Color(0XFF909CAC), width: 0.80),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Freuency',
+                      label: 'Duration',
                       child: DropdownButton<String>(
                         isExpanded: true,
                         value: _frequencyValue == '' ? null : _frequencyValue,
                         items: <String>[
-                          'Weekly',
-                          'Monthly',
-                          'Yearly'
+                          'Week',
+                          'Month',
+                          //'Yearly'
                         ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

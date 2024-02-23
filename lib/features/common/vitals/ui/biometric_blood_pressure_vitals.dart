@@ -267,6 +267,7 @@ class _BiometricBloodPresureVitalsViewState
                           controller: _systolicController,
                           focusNode: _systolicFocus,
                           maxLines: 1,
+                          maxLength: 3,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
@@ -323,6 +324,7 @@ class _BiometricBloodPresureVitalsViewState
                           controller: _diastolicController,
                           focusNode: _diastolicFocus,
                           maxLines: 1,
+                          maxLength: 3,
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(RegExp("[0-9]")),

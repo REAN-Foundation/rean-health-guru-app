@@ -82,11 +82,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     try {
       healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo =
-      await model.getHealthSystem(carePlanEnrollmentForPatientGlobe!
-          .data!.patientEnrollments!
-          .elementAt(0)
-          .planName
-          .toString());
+      await model.getHealthSystem('');
 
       if (healthSystemPojo.status == 'success') {
         _healthSystems = healthSystemPojo.data!.healthSystems;
@@ -169,10 +165,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   @override
   void initState() {
     //if(carePlanEnrollmentForPatientGlobe != null) {
-      getHealthSystem();
+
     //}
     loadSharedPrefs();
     getEmergencyTeam();
+    getHealthSystem();
     super.initState();
   }
 

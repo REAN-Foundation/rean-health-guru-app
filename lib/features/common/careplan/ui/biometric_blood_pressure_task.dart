@@ -5,6 +5,7 @@ import 'package:patient/features/common/careplan/models/assesment_response.dart'
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -300,11 +301,17 @@ class _BiomatricBloodPressureTaskViewState extends State<BiomatricBloodPressureT
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              var map = <String, dynamic>{};
-              map['Systolic'] =  int.parse(_systolicController.text.toString());
-              map['Diastolic'] = int.parse(_diastolicController.text.toString());
-              map['Unit'] = "mmHg";
-              Navigator.pop(context, map);
+              if(_systolicController.text.toString().isEmpty || _diastolicController.text.toString().isEmpty){
+                showToastMsg("Please enter blood presure values", context);
+              }else {
+                var map = <String, dynamic>{};
+                map['Systolic'] =
+                    int.parse(_systolicController.text.toString());
+                map['Diastolic'] =
+                    int.parse(_diastolicController.text.toString());
+                map['Unit'] = "mmHg";
+                Navigator.pop(context, map);
+              }
             },
           ),
         ),

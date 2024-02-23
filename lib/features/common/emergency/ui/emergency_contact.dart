@@ -93,6 +93,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
           healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.sort();
         healthSystemList.add('None of the above');
         setState(() {});
       } else {
@@ -116,6 +117,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         for(int i = 0 ; i < systemHospitals.data!.healthSystemHospitals!.length ; i++ ){
           healthSystemHospitalList.add(systemHospitals.data!.healthSystemHospitals![i].name.toString());
         }
+        healthSystemHospitalList.sort();
         setState(() {});
       } else {
         showToast(systemHospitals.message!, context);
@@ -166,9 +168,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   void initState() {
-    if(carePlanEnrollmentForPatientGlobe != null) {
+    //if(carePlanEnrollmentForPatientGlobe != null) {
       getHealthSystem();
-    }
+    //}
     loadSharedPrefs();
     getEmergencyTeam();
     super.initState();
@@ -191,7 +193,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  if(RemoteConfigValues.hospitalSystemVisibility && carePlanEnrollmentForPatientGlobe != null && healthSystemList.isNotEmpty)...[
+                  if(RemoteConfigValues.hospitalSystemVisibility && healthSystemList.isNotEmpty)...[
                   Row(
                     children: [
                       Padding(

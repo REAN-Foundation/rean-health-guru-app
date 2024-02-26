@@ -59,8 +59,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   getHealthSystem(String planName) async {
     try {
       //progressDialog.show(max: 100, msg: 'Loading...');
-      healthSystemGlobe = null;
-      healthSystemHospitalGlobe = null;
+      //healthSystemGlobe = null;
+      //healthSystemHospitalGlobe = null;
       healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo = await model.getHealthSystem(planName);
 
@@ -1296,7 +1296,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           healthSystemHospitalGlobe = data.toString();
                         });
                         setState(() {});
-                        //updateHospitalSystem();
+                        updateHospitalSystem();
                       },
                     ),
                   ),

@@ -436,6 +436,7 @@ class _AppDrawerState extends State<AppDrawer> {
             visible: RemoteConfigValues.healthDeviceConnectionVisibility,
             child: InkWell(
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_health_device_button_click');
                 Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
                 //progressDialog!.show(max: 100, msg: 'Loading...');
                 //generateSeesionId();

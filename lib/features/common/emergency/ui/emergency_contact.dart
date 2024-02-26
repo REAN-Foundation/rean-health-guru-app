@@ -33,7 +33,7 @@ class EmergencyContactView extends StatefulWidget {
   _EmergencyContactViewState createState() => _EmergencyContactViewState();
 }
 
-class _EmergencyContactViewState extends State<EmergencyContactView> {
+class _EmergencyContactViewState extends State<EmergencyContactView> with WidgetsBindingObserver{
   var model = CommonConfigModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController =
@@ -54,6 +54,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   var healthSystemHospitalList = <String>[];
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    debugPrint('Emergency ==> $state');
+    if (state == AppLifecycleState.resumed) {
+      //do your stuff
+
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   getEmergencyTeam() async {
     try {
@@ -167,6 +182,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     //if(carePlanEnrollmentForPatientGlobe != null) {
 
     //}
+    WidgetsBinding.instance.addObserver(this);
     loadSharedPrefs();
     getEmergencyTeam();
     getHealthSystem();

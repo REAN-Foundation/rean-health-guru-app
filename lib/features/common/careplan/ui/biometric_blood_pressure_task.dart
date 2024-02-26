@@ -302,7 +302,7 @@ class _BiomatricBloodPressureTaskViewState extends State<BiomatricBloodPressureT
                     fontWeight: FontWeight.normal)),
             onPressed: () {
               if(_systolicController.text.toString().isEmpty || _diastolicController.text.toString().isEmpty){
-                showToastMsg("Please enter blood presure values", context);
+                showToastMsg("Please enter blood pressure values", context);
               }else {
                 var map = <String, dynamic>{};
                 map['Systolic'] =

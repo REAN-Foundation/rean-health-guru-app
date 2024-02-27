@@ -42,6 +42,10 @@ class _SetPrioritiesGoalsForCarePlanViewState
             .elementAt(0)
             .enrollmentId
             .toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .planName
+              .toString()
       );
 
       if (_getGoalPriorities.status == 'success') {

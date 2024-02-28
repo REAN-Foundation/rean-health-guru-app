@@ -58,27 +58,28 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   getHealthSystem(String planName) async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-      healthSystemGlobe = null;
-      healthSystemHospitalGlobe = null;
+      //progressDialog.show(max: 100, msg: 'Loading...');
+      //healthSystemGlobe = null;
+      //healthSystemHospitalGlobe = null;
       healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo = await model.getHealthSystem(planName);
 
       if (healthSystemPojo.status == 'success') {
-        progressDialog.close();
+        //progressDialog.close();
         _healthSystems = healthSystemPojo.data!.healthSystems;
         for (int i = 0; i < healthSystemPojo.data!.healthSystems!.length; i++) {
           healthSystemList
               .add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.sort();
         healthSystemList.add('None of the above');
         setState(() {});
       } else {
-        progressDialog.close();
+        //progressDialog.close();
         showToast(healthSystemPojo.message!, context);
       }
     } on FetchDataException catch (e) {
-      progressDialog.close();
+      //progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -99,6 +100,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           healthSystemHospitalList.add(
               systemHospitals.data!.healthSystemHospitals![i].name.toString());
         }
+        healthSystemHospitalList.sort();
         setState(() {});
       } else {
         showToast(systemHospitals.message!, context);
@@ -112,9 +114,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   @override
   void initState() {
-    RemoteConfigValues.hospitalSystemVisibility = false;
+    getHealthSystem('');
+    //RemoteConfigValues.hospitalSystemVisibility = false;
     progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
+
     /*if(carePlanEnrollmentForPatientGlobe != null) {
       getHealthSystem();
     }*/
@@ -424,13 +428,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ]*/
                 ,
                 onChanged: (value) {
-                  if(value == 'Heart Failure Motivator' || value == 'SMBP'){
+                  /*if(value == 'Heart Failure Motivator' || value == 'SMBP'){
                     healthSystemList.clear();
                     RemoteConfigValues.hospitalSystemVisibility = false;
-                  }else{
-                    getHealthSystem(value.toString());
-                    RemoteConfigValues.hospitalSystemVisibility = true;
-                  }
+                  }else{*/
+
+                    //RemoteConfigValues.hospitalSystemVisibility = true;
+                  //}
 
                   setState(() {
                     selectedCarePlan = value;
@@ -996,7 +1000,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           }else if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'HFMotivator'){
-            RemoteConfigValues.hospitalSystemVisibility = false;
+            //RemoteConfigValues.hospitalSystemVisibility = false;
             debugPrint('CarePlan ==> HFMotivator');
             _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
           }
@@ -1292,7 +1296,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           healthSystemHospitalGlobe = data.toString();
                         });
                         setState(() {});
-                        //updateHospitalSystem();
+                        updateHospitalSystem();
                       },
                     ),
                   ),

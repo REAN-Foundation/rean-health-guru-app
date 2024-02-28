@@ -140,7 +140,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems?planName='+planName,
+        '/patient-emergency-contacts/health-systems',//?planName='+planName
         header: map);
 
     setBusy(false);

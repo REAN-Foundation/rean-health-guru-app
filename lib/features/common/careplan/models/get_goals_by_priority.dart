@@ -143,7 +143,7 @@ class Goals {
   String? _title;
   int? _sequence;
   String? _healthPriorityId;
-  bool? isCheck;
+  bool? isCheck = false;
   bool? _goalAchieved;
   bool? _goalAbandoned;
 

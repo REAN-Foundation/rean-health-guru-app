@@ -110,7 +110,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems?planName='+planName,
+        '/patient-emergency-contacts/health-systems',//?planName='+planName
         header: map);
 
     setBusy(false);
@@ -570,7 +570,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
-  Future<GetGoalPriorities> getGoalsPriority(String planId) async {
+  Future<GetGoalPriorities> getGoalsPriority(String planId, String carePlanName) async {
     // Get user profile for id
     setBusy(true);
 
@@ -579,7 +579,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .get('/types/priorities?tags=HeartFailure', header: map);
+        .get('/types/priorities?tags='+carePlanName, header: map);
 
     debugPrint(response.toString());
     setBusy(false);

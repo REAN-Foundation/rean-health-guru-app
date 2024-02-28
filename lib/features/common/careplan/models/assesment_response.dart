@@ -53,22 +53,30 @@ class AssesmentResponse {
 class Data {
   Data({
     Next? next,
+    AnswerResponse? answerResponse,
   }) {
     _next = next;
+    _answerResponse = answerResponse;
   }
 
   Data.fromJson(dynamic json) {
     _next = json['Next'] != null ? Next.fromJson(json['Next']) : null;
+    _answerResponse = json['AnswerResponse'] != null ? AnswerResponse.fromJson(json['AnswerResponse']) : null;
   }
 
   Next? _next;
+  AnswerResponse? _answerResponse;
 
   Next? get next => _next;
+  AnswerResponse? get answerResponse => _answerResponse;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_next != null) {
       map['Next'] = _next?.toJson();
+    }
+    if (_answerResponse != null) {
+      map['AnswerResponse'] = _answerResponse?.toJson();
     }
     return map;
   }
@@ -87,6 +95,37 @@ class Data {
 /// ExpectedResponseType : "Single Choice Selection"
 /// Options : [{"id":"6c8b5f10-f1ed-4b60-a8ad-9ad53b50cf0b","NodeId":"53127220-ac1b-4fd9-8249-3a5e194e0fdb","DisplayCode":"QNode#0s7i1pvph15cviayw7iir1t4:Option#1","ProviderGivenCode":"yes","Text":"Yes","ImageUrl":null,"Sequence":1},{"id":"36d7f839-ed8a-4c06-a8ae-17aa0d96950e","NodeId":"53127220-ac1b-4fd9-8249-3a5e194e0fdb","DisplayCode":"QNode#0s7i1pvph15cviayw7iir1t4:Option#2","ProviderGivenCode":"no","Text":"No","ImageUrl":null,"Sequence":2}]
 /// ProviderGivenCode : "q6"
+
+class AnswerResponse{
+  AnswerResponse({
+    Next? next,
+    String? messageBeforeNext,
+  }) {
+    _next = next;
+    _messageBeforeNext = messageBeforeNext;
+  }
+
+  AnswerResponse.fromJson(dynamic json) {
+    _next = json['Next'] != null ? Next.fromJson(json['Next']) : null;
+    _messageBeforeNext = json['MessageBeforeNext'];
+  }
+
+  Next? _next;
+  String? _messageBeforeNext;
+
+  Next? get next => _next;
+  String? get messageBeforeNext => _messageBeforeNext;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_next != null) {
+      map['Next'] = _next?.toJson();
+    }
+    map['MessageBeforeNext'] = _messageBeforeNext;
+    return map;
+  }
+
+}
 
 class Next {
   Next({

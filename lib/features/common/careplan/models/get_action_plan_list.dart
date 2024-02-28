@@ -123,7 +123,7 @@ class ActionPlans {
   String? _providerCareplanCode;
   String? _goalId;
   String? _title;
-  bool? isCheck;
+  bool? isCheck = false;
 
   String? get patientUserId => _patientUserId;
 

@@ -33,6 +33,7 @@ class _SelectGoalsForCarePlanViewState
   String radioButtonItem1 = '';
   late ProgressDialog progressDialog;
   List<Goals> goals = <Goals>[];
+  var scrollController = ScrollController();
 
   @override
   void initState() {
@@ -75,7 +76,7 @@ class _SelectGoalsForCarePlanViewState
             backgroundColor: primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
-              'Set Care Plan Goals',
+              'Goal',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -220,21 +221,44 @@ class _SelectGoalsForCarePlanViewState
 
   Widget behaviouralGoal() {
     return Expanded(
-      child: ListView.builder(
-          itemCount: goals.length,
-          itemBuilder: (BuildContext context, int index) {
-            return CheckboxListTile(
-                value: goals[index].isChecked,
-                title: Text(goals[index].title.toString()),
-                controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (bool? val) {
-                  goals[index].isCheck = true;
-                  setState(() {});
-                  setPriorityGoal(goals[index]);
-                  /*behaviouralGoalItemChange(val, index);*/
-                });
-          }),
+      child: Scrollbar(
+        controller: scrollController,
+        thumbVisibility: true,
+        child: ListView.builder(
+            itemCount: goals.length,
+            controller: scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              return CheckboxListTile(
+                  value: goals[index].isChecked,
+                  title: Text(goals[index].title.toString()),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: (bool? val) {
+                    goals[index].isCheck = val;
+                    setState(() {});
+                    //setPriorityGoal(goals[index]);
+                    /*behaviouralGoalItemChange(val, index);*/
+                  });
+            }),
+      ),
     );
+  }
+
+  createPriorityGoal(){
+    bool isSelected = false;
+    goals.forEach((element) {
+      if(element.isCheck!){
+        setPriorityGoal(element);
+        isSelected = true;
+      }
+    });
+
+    if(isSelected){
+      Navigator.pushNamed(
+          context, RoutePaths.Determine_Action_For_Care_Plan);
+    }else{
+      showToast('Please select atleast one goal.', context);
+    }
+
   }
 
   Widget submitButton() {
@@ -244,12 +268,11 @@ class _SelectGoalsForCarePlanViewState
           )
         : InkWell(
             onTap: () {
-              Navigator.pushNamed(
-                  context, RoutePaths.Determine_Action_For_Care_Plan);
+              createPriorityGoal();
             },
             child: Container(
               height: 40,
-              width: 160,
+              width: 120,
               padding: EdgeInsets.symmetric(
                 horizontal: 16.0,
               ),
@@ -259,25 +282,15 @@ class _SelectGoalsForCarePlanViewState
                 color: primaryColor,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: primaryColor,
-                    size: 16,
-                  ),
                   Text(
                     'Next',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 14),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 16,
                   ),
                 ],
               ),

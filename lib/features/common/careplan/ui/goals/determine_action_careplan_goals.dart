@@ -21,6 +21,7 @@ class _DeterminActionPlansForCarePlanViewState
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<ActionPlans> list = <ActionPlans>[];
+  var scrollController = ScrollController();
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _DeterminActionPlansForCarePlanViewState
             backgroundColor: primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
-              'Set Action for Goals',
+              'Goal',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -209,21 +210,43 @@ class _DeterminActionPlansForCarePlanViewState
 
   Widget behaviouralGoal() {
     return Expanded(
-      child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return CheckboxListTile(
-                value: list[index].isChecked,
-                title: Text(list[index].title.toString()),
-                controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (bool? val) {
-                  list[index].isCheck = true;
-                  setState(() {});
-                  setActionPlan(list[index]);
-                  /*behaviouralGoalItemChange(val, index);*/
-                });
-          }),
+      child: Scrollbar(
+              thumbVisibility: true,
+              controller: scrollController,
+        child: ListView.builder(
+            itemCount: list.length,
+            controller: scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              return CheckboxListTile(
+                  value: list[index].isChecked,
+                  title: Text(list[index].title.toString()),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: (bool? val) {
+                    list[index].isCheck = val;
+                    setState(() {});
+                    //setActionPlan(list[index]);
+                    /*behaviouralGoalItemChange(val, index);*/
+                  });
+            }),
+      ),
     );
+  }
+
+  createActionPlan(){
+    bool isSelected = false;
+    list.forEach((element) {
+      if(element.isCheck!){
+        setActionPlan(element);
+        isSelected = true;
+      }
+    });
+
+    if(isSelected){
+      completeMessageTaskOfAHACarePlan();
+    }else{
+      showToast('Please select atleast one action plan.', context);
+    }
+
   }
 
   setActionPlan(ActionPlans actionPlans) async {
@@ -270,11 +293,11 @@ class _DeterminActionPlansForCarePlanViewState
   Widget submitButton() {
     return InkWell(
       onTap: () {
-        completeMessageTaskOfAHACarePlan();
+        createActionPlan();
       },
       child: Container(
         height: 40,
-        width: 160,
+        width: 120,
         padding: EdgeInsets.symmetric(
           horizontal: 16.0,
         ),
@@ -306,7 +329,7 @@ class _DeterminActionPlansForCarePlanViewState
           await model.finishUserTask(getTask().action!.userTaskId.toString());
 
       if (response.status == 'success') {
-        showToast('Task completed successfully!', context);
+        //showToast('Task completed successfully!', context);
         assrotedUICount = 0;
         showSuccessDialog();
       } else {

@@ -38,6 +38,7 @@ class _SelectGoalsForCarePlanViewState
   @override
   void initState() {
     model.setBusy(true);
+    createdGoalsIds.clear();
     getBiometricGoal();
     super.initState();
   }
@@ -243,18 +244,20 @@ class _SelectGoalsForCarePlanViewState
     );
   }
 
+  int priorityGoalSelected = 0;
+
   createPriorityGoal(){
     bool isSelected = false;
     goals.forEach((element) {
       if(element.isCheck!){
+        priorityGoalSelected++;
         setPriorityGoal(element);
         isSelected = true;
       }
     });
 
     if(isSelected){
-      Navigator.pushNamed(
-          context, RoutePaths.Determine_Action_For_Care_Plan);
+
     }else{
       showToast('Please select atleast one goal.', context);
     }
@@ -268,6 +271,8 @@ class _SelectGoalsForCarePlanViewState
           )
         : InkWell(
             onTap: () {
+              priorityGoalSelected = 0;
+              priorityCount = 0;
               createPriorityGoal();
             },
             child: Container(
@@ -297,6 +302,8 @@ class _SelectGoalsForCarePlanViewState
             ),
           );
   }
+
+  var priorityCount = 0;
 
   setPriorityGoal(Goals goal) async {
     try {
@@ -335,6 +342,11 @@ class _SelectGoalsForCarePlanViewState
 
       if (baseResponse.status == 'success') {
         createdGoalsIds.add(baseResponse.data!.goal!.id.toString());
+        priorityCount++;
+        if(priorityCount == priorityGoalSelected){
+          Navigator.pushNamed(
+              context, RoutePaths.Determine_Action_For_Care_Plan);
+        }
         debugPrint('CreatedGoalsIds size ==> ${createdGoalsIds.length}');
       } else {
         showToast(baseResponse.message!, context);

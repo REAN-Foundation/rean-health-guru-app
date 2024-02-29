@@ -330,7 +330,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   void didChangeAppLifecycleState(final AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       setState(() {
-        //triggerApiCall();
+        triggerApiCall();
         // ...your code goes here...
       });
     }

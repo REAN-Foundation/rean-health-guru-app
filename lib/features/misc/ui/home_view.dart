@@ -375,7 +375,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           }else if(carePlanEnrollmentForPatient
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'HFMotivator'){
-            RemoteConfigValues.hospitalSystemVisibility = false;
+            RemoteConfigValues.hospitalSystemVisibility = true;
             debugPrint('CarePlan ==> HFMotivator');
             _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
           }

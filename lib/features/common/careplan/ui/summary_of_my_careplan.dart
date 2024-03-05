@@ -108,7 +108,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                         .data!.patientEnrollments!
                                         .elementAt(0)
                                         .planName
-                                        .toString() == "SMBP")...[
+                                        .toString() == "Cholesterol" )...[
                                       _buildCarePlanViewFor13Weeks(),
                                     ]else...[
                                       _buildCarePlanViewFor12Weeks(),

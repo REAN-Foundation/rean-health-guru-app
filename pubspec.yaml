@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.339+2022
+version: 1.8.340+2022
 
 publish_to: none
 
@@ -36,8 +36,8 @@ dependencies:
   toggle_switch: ^2.0.1
   font_awesome_flutter: ^10.1.0
   flutter_datetime_picker: ^1.5.1
-  location: ^3.0.0
-  geocoder: ^2.0.0
+  location: 4.4.0
+  geocoding: any
   #date_util: ^0.2.0
   #month_picker_strip: ^0.0.3
   #calendar_strip: ^1.0.7

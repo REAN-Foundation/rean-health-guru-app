@@ -11,8 +11,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:location/location.dart' as loc;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
@@ -67,12 +69,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
-  /*Location location = new Location();
-  bool _serviceEnabled;
-  PermissionStatus _permissionGranted;
-  LocationData _locationData;
-  List<Address> addresses;
-  Address first;*/
+  loc.Location location =  loc.Location();
+  late bool serviceEnabled;
+  late loc.PermissionStatus permissionGranted;
+  late loc.LocationData locationData;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String? name = '';
   int _currentNav = 0;
@@ -432,37 +432,40 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
-  void getLocation() {
-    /*_serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+  getLocation() async {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == loc.PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != loc.PermissionStatus.granted) {
         return;
       }
     }
 
-    _locationData = await location.getLocation();
-    location.onLocationChanged.listen((LocationData currentLocation) {
+    locationData =  await location.getLocation();
+    findOutCityFromGeoCord(
+        locationData.latitude!.toDouble(), locationData.longitude!.toDouble());
+    /*location.onLocationChanged.listen((loc.LocationData currentLocation) {
       debugPrint(
           'Latitude = ${currentLocation.latitude} Longitude = ${currentLocation.longitude}');
-      findOutCityFromGeoCord(
-          currentLocation.latitude, currentLocation.longitude);
+
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) {
-    /*final coordinates = new Coordinates(lat, long);
-    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    first = addresses.first;
-    debugPrint("${first.featureName} : ${first.locality}");*/
+  findOutCityFromGeoCord(double lat, double long) async {
+    //final coordinates = new Coordinates(latitude: lat, longitude: long);
+    //final Address addresses = await  geoCode.reverseGeocoding(longitude: long, latitude: lat);
+    //first = addresses;0
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+    debugPrint("Name: = ${placemarks.elementAt(0).name} City: = ${placemarks.elementAt(0).locality}");
+    showToastMsg("Name: = ${placemarks.elementAt(0).name} City: = ${placemarks.elementAt(0).locality}", context);
   }
 
   void _selectedTab(int index) {
@@ -978,6 +981,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
+    getLocation();
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();

@@ -46,7 +46,7 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Integrating your Apple Health data with $(APP_DISPLAY_NAME) will make it easy for you to track and manage all health goals!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(APP_DISPLAY_NAME) requires access to your device&apos;s location and timezone in order to provide you with accurate and relevant information based on your current location. </string>
+	<string>$(APP_DISPLAY_NAME) requires access to your device&apos;s location and timezone in order to provide you with updated medication reminders tailored to your current timezone. </string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In $(APP_DISPLAY_NAME) you can upload your Profile picture / Medical reports using Photo Library for ease of use. Your photos / Documents won&apos;t be shared without your permission.</string>
 	<key>UIBackgroundModes</key>

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:location/location.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -18,9 +20,11 @@ import 'package:patient/features/misc/models/check_user_exists_or_not_resonse.da
 import 'package:patient/features/misc/models/get_role_id_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/location_permission_request.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -38,6 +42,9 @@ class LoginWithOTPView extends StatefulWidget {
 }
 
 class _LoginWithOTPViewState extends State<LoginWithOTPView> {
+  Location location =  Location();
+  late bool serviceEnabled;
+  late PermissionStatus permissionGranted;
   String? mobileNumber = '';
   String? countryCode = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -72,7 +79,42 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     cleanAllData();
     getRoleIdApi();
     firebase();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      requestLocationPermission();
+    });
     super.initState();
+  }
+
+  requestLocationPermission() async {
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      debugPrint("~~~~~~~~~~~Location Permission Denied~~~~~~~~~~~~~~~~");
+      final id = await Navigator.push(
+        NavigationService.navigatorKey.currentContext!,
+        CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => LocationPermissionRequest()),
+      );
+      debugPrint("~~~~~~~~~~~Location Permission id $id~~~~~~~~~~~~~~~~");
+      if(id == 1) {
+        debugPrint("~~~~~~~~~~~Location Permission Requested~~~~~~~~~~~~~~~~");
+        permissionGranted = await location.requestPermission();
+        if (permissionGranted != PermissionStatus.granted) {
+          return;
+        }
+      }
+    }
+
   }
 
   setupFirebaseConfig() async {

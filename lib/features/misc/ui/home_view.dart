@@ -32,6 +32,7 @@ import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
+import 'package:patient/features/misc/ui/update_your_city_location.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -465,7 +466,23 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //first = addresses;0
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
     debugPrint("Name: = ${placemarks.elementAt(0).name} City: = ${placemarks.elementAt(0).locality}");
-    showToastMsg("Name: = ${placemarks.elementAt(0).name} City: = ${placemarks.elementAt(0).locality}", context);
+    currentCity = placemarks.elementAt(0).locality.toString();
+    //showToastMsg("Name: = ${placemarks.elementAt(0).name} City: = ${placemarks.elementAt(0).locality}", context);
+  }
+
+  String currentCity = "";
+
+  checkforUpdatedCity(){
+    if(patient.user!.person!.addresses!.elementAt(0).city! != currentCity){
+      showMaterialModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          context: context,
+          builder: (context) => UpdateYourCityLocation(currentCity)).then((value) => getPatientDetails());
+    }
   }
 
   void _selectedTab(int index) {
@@ -598,11 +615,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
       } else {
+        checkforUpdatedCity();
         /*debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());*/
       }
     }else{
+      checkforUpdatedCity();
       /*Future.delayed(
           const Duration(seconds: 2), () => showDailyCheckIn());*/
     }
@@ -1195,6 +1214,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             .toString()}");
         await _sharedPrefUtils.save(
             'patientDetails', apiResponse.data!.patient!.toJson());
+        loadSharedPrefs();
         userDiviceData();
       } else {
         autoLogOut(apiResponse);

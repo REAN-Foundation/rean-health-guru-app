@@ -5,10 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/health_device/models/health_device_list_with_status.dart';
-import 'package:patient/features/common/health_device/view_models/health_device_view_model.dart';
+import 'package:patient/features/misc/models/get_health_report_settings_pojo.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class CustomizeHealthReportView extends StatefulWidget {
@@ -18,7 +20,7 @@ class CustomizeHealthReportView extends StatefulWidget {
 
 class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
   late ProgressDialog progressDialog;
-  var model = HealthDeviceViewModel();
+  var model = CommonConfigModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<WearableDeviceDetails> deviceList = <WearableDeviceDetails>[];
 
@@ -36,6 +38,8 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
   bool _moodNsymptomsValue = false;
   final _scrollController = ScrollController();
 
+  bool loader = false;
+
 
   @override
   void initState() {
@@ -43,9 +47,46 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
     super.initState();
   }
 
+  getAllRecords() async {
+    try {
+
+      loader = true;
+      setState(() {});
+
+      final GetHealthReportSettingsPojo reportSettingsPojo =
+      await model.getHealthReportSettings();
+      debugPrint('Reports Settings ==> ${reportSettingsPojo.toJson()}');
+      if (reportSettingsPojo.status == 'success') {
+        _hJValue = reportSettingsPojo.data!.settings!.preference!.healthJourney!;
+        _medicationAdherenceValue = reportSettingsPojo.data!.settings!.preference!.medicationAdherence!;
+        _weightValue = reportSettingsPojo.data!.settings!.preference!.bodyWeight!;
+        _glucoseValue = reportSettingsPojo.data!.settings!.preference!.bloodGlucose!;
+        _bPValue = reportSettingsPojo.data!.settings!.preference!.bloodPressure!;
+        _sleepValue = reportSettingsPojo.data!.settings!.preference!.sleepHistory!;
+        _labValuesValue = reportSettingsPojo.data!.settings!.preference!.labValues!;
+        _physicalActivityValue = reportSettingsPojo.data!.settings!.preference!.exerciseAndPhysicalActivity!;
+        _nutritionValue = reportSettingsPojo.data!.settings!.preference!.foodAndNutrition!;
+        _dailyTaskValue = reportSettingsPojo.data!.settings!.preference!.dailyTaskStatus!;
+        _moodNsymptomsValue = reportSettingsPojo.data!.settings!.preference!.moodAndSymptoms!;
+        loader = false;
+        setState(() {});
+        //showToast(startCarePlanResponse.message);
+      } else {
+        loader = false;
+        setState(() {});
+        //showToast(startCarePlanResponse.message);
+      }
+    } catch (CustomException) {
+      loader = false;
+      setState(() {});
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<HealthDeviceViewModel?>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -99,7 +140,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: model!.busy ? Center(child: Container( height: 32, width: 32, child: CircularProgressIndicator())) : body(),
+                      child: loader ? Center(child: Container( height: 32, width: 32, child: CircularProgressIndicator())) : body(),
                     ),
                   )
                 ],
@@ -413,8 +454,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
               ),
             ),
             SizedBox(height: 8,),
-            savingSettingsWidget(),
-
+            model.busy ? Center(child: CircularProgressIndicator(color: primaryColor),) : savingSettingsWidget(),
           ],
       ),
     );
@@ -432,11 +472,9 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
             if(_frequencyValue.isEmpty){
               showToast('Please select frequency.', context);
             }else{
-              Navigator.pop(context);
+              setHealthReportSettings();
             }
-
           },
-
           child: Text(
             'Save',
             style: TextStyle(
@@ -457,7 +495,53 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
     );
   }
 
+  /// HealthJourney : true
+  /// MedicationAdherence : true
+  /// BodyWeight : false
+  /// BloodGlucose : true
+  /// BloodPressure : true
+  /// SleepHistory : true
+  /// LabValues : true
+  /// ExerciseAndPhysicalActivity : true
+  /// FoodAndNutrition : true
+  /// DailyTaskStatus : true
+  /// MoodAndSymptoms : true
 
+  setHealthReportSettings() async {
+    try {
+      final body = <String, dynamic>{};
+      body["PatientUserId"] = patientUserId!;
+
+      final preference = <String, bool>{};
+      preference['HealthJourney'] = _hJValue;
+      preference['MedicationAdherence'] = _medicationAdherenceValue;
+      preference['BodyWeight'] = _weightValue;
+      preference['BloodGlucose'] = _glucoseValue;
+      preference['BloodPressure'] = _bPValue;
+      preference['SleepHistory'] = _sleepValue;
+      preference['LabValues'] = _labValuesValue;
+      preference['ExerciseAndPhysicalActivity'] = _physicalActivityValue;
+      preference['FoodAndNutrition'] = _nutritionValue;
+      preference['DailyTaskStatus'] = _dailyTaskValue;
+      preference['MoodAndSymptoms'] = _moodNsymptomsValue;
+      body["Preference"] = preference;
+
+
+      final GetHealthReportSettingsPojo baseResponse =
+          await model.setHealthReportSettings(body);
+      debugPrint('Records ==> ${baseResponse.toJson()}');
+      if (baseResponse.status == 'success') {
+        showSuccessToast('Patient health report settings updated successfully.', context);
+        Navigator.pop(context);
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
 
 
 

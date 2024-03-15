@@ -510,7 +510,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
   setHealthReportSettings() async {
     try {
       final body = <String, dynamic>{};
-      body["PatientUserId"] = patientUserId!;
+      body["PatientUserId"] = patientUserId;
 
       final preference = <String, bool>{};
       preference['HealthJourney'] = _hJValue;

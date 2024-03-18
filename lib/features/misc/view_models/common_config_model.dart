@@ -359,7 +359,7 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await awardApiProvider!.get(
+    final response = await apiProvider!.get(
         '/patient-statistics/health-report/'+patientUserId.toString()+'/settings',
         header: map);
     //setBusy(false);
@@ -374,7 +374,7 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await awardApiProvider!.post(
+    final response = await apiProvider!.post(
         '/patient-statistics/health-report',
         header: map, body: body);
     setBusy(false);

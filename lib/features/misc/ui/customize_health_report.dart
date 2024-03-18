@@ -44,6 +44,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
   @override
   void initState() {
     progressDialog = ProgressDialog(context: context);
+    getAllRecords();
     super.initState();
   }
 

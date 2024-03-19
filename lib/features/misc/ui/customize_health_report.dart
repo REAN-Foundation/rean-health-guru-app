@@ -58,6 +58,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
       await model.getHealthReportSettings();
       debugPrint('Reports Settings ==> ${reportSettingsPojo.toJson()}');
       if (reportSettingsPojo.status == 'success') {
+        _frequencyValue = reportSettingsPojo.data!.settings!.preference!.reportFrequency!;
         _hJValue = reportSettingsPojo.data!.settings!.preference!.healthJourney!;
         _medicationAdherenceValue = reportSettingsPojo.data!.settings!.preference!.medicationAdherence!;
         _weightValue = reportSettingsPojo.data!.settings!.preference!.bodyWeight!;
@@ -513,7 +514,8 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
       final body = <String, dynamic>{};
       body["PatientUserId"] = patientUserId;
 
-      final preference = <String, bool>{};
+      final preference = <String, dynamic>{};
+      preference['ReportFrequency'] = _frequencyValue;
       preference['HealthJourney'] = _hJValue;
       preference['MedicationAdherence'] = _medicationAdherenceValue;
       preference['BodyWeight'] = _weightValue;

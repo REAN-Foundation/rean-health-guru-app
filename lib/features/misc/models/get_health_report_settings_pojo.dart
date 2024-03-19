@@ -107,7 +107,7 @@ class Settings {
   }
 
 }
-
+///"ReportFrequency": "Week",
 /// HealthJourney : true
 /// MedicationAdherence : true
 /// BodyWeight : false
@@ -122,6 +122,7 @@ class Settings {
 
 class Preference {
   Preference({
+      String? reportFrequency,
       bool? healthJourney, 
       bool? medicationAdherence, 
       bool? bodyWeight, 
@@ -133,6 +134,7 @@ class Preference {
       bool? foodAndNutrition, 
       bool? dailyTaskStatus, 
       bool? moodAndSymptoms,}){
+    _reportFrequency = reportFrequency;
     _healthJourney = healthJourney;
     _medicationAdherence = medicationAdherence;
     _bodyWeight = bodyWeight;
@@ -147,6 +149,7 @@ class Preference {
 }
 
   Preference.fromJson(dynamic json) {
+    _reportFrequency = json['ReportFrequency'];
     _healthJourney = json['HealthJourney'];
     _medicationAdherence = json['MedicationAdherence'];
     _bodyWeight = json['BodyWeight'];
@@ -159,6 +162,8 @@ class Preference {
     _dailyTaskStatus = json['DailyTaskStatus'];
     _moodAndSymptoms = json['MoodAndSymptoms'];
   }
+
+  String? _reportFrequency;
   bool? _healthJourney;
   bool? _medicationAdherence;
   bool? _bodyWeight;
@@ -171,6 +176,7 @@ class Preference {
   bool? _dailyTaskStatus;
   bool? _moodAndSymptoms;
 
+  String? get reportFrequency => _reportFrequency;
   bool? get healthJourney => _healthJourney;
   bool? get medicationAdherence => _medicationAdherence;
   bool? get bodyWeight => _bodyWeight;
@@ -185,6 +191,7 @@ class Preference {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['ReportFrequency'] = _reportFrequency;
     map['HealthJourney'] = _healthJourney;
     map['MedicationAdherence'] = _medicationAdherence;
     map['BodyWeight'] = _bodyWeight;

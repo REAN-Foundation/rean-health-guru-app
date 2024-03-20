@@ -11,6 +11,7 @@ import 'package:patient/features/common/emergency/models/health_system_pojo.dart
 import 'package:patient/features/misc/models/awards_user_details.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
+import 'package:patient/features/misc/models/get_health_report_settings_pojo.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
@@ -349,6 +350,36 @@ class CommonConfigModel extends BaseModel {
     //setBusy(false);
     // Convert and return
     return HowToEarnBadges.fromJson(response);
+  }
+
+  Future<GetHealthReportSettingsPojo> getHealthReportSettings() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/patient-statistics/health-report/'+patientUserId.toString()+'/settings',
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return GetHealthReportSettingsPojo.fromJson(response);
+  }
+
+  Future<GetHealthReportSettingsPojo> setHealthReportSettings(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.post(
+        '/patient-statistics/health-report',
+        header: map, body: body);
+    setBusy(false);
+    // Convert and return
+    return GetHealthReportSettingsPojo.fromJson(response);
   }
 
 }

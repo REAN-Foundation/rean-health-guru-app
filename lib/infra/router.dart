@@ -80,6 +80,7 @@ import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/ui/about_rean_care.dart';
 import 'package:patient/features/misc/ui/after_splash_screen.dart';
 import 'package:patient/features/misc/ui/create_profile_view.dart';
+import 'package:patient/features/misc/ui/customize_health_report.dart';
 import 'package:patient/features/misc/ui/edit_patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/edit_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
@@ -368,6 +369,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => FAQChatScreen());
       case RoutePaths.Connect_Health_Device:
         return MaterialPageRoute(builder: (_) => ConnectHealthDevicesView());
+      case RoutePaths.Customize_Health_Report:
+        return MaterialPageRoute(builder: (_) => CustomizeHealthReportView());
       case RoutePaths.ACHIEVEMENT:
         return MaterialPageRoute(builder: (_) => AllAchievementView());
       /* case RoutePaths.Order_Medicine:

@@ -8,6 +8,7 @@ import 'package:patient/features/common/health_device/models/health_device_list_
 import 'package:patient/features/misc/models/get_health_report_settings_pojo.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -58,7 +59,6 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
       await model.getHealthReportSettings();
       debugPrint('Reports Settings ==> ${reportSettingsPojo.toJson()}');
       if (reportSettingsPojo.status == 'success') {
-        _frequencyValue = reportSettingsPojo.data!.settings!.preference!.reportFrequency!;
         _hJValue = reportSettingsPojo.data!.settings!.preference!.healthJourney!;
         _medicationAdherenceValue = reportSettingsPojo.data!.settings!.preference!.medicationAdherence!;
         _weightValue = reportSettingsPojo.data!.settings!.preference!.bodyWeight!;
@@ -72,13 +72,15 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
         _moodNsymptomsValue = reportSettingsPojo.data!.settings!.preference!.moodAndSymptoms!;
         loader = false;
         setState(() {});
+        _frequencyValue = reportSettingsPojo.data!.settings!.preference!.reportFrequency!;
+        setState(() {});
         //showToast(startCarePlanResponse.message);
       } else {
         loader = false;
         setState(() {});
         //showToast(startCarePlanResponse.message);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (CustomException) {
       loader = false;
       setState(() {});
       showToast(CustomException.toString(), context);

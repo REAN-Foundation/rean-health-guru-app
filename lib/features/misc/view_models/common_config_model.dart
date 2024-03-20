@@ -360,7 +360,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-statistics/health-report/'+patientUserId.toString()+'/settings',
+        '/patient-statistics/'+patientUserId.toString()+'/settings',
         header: map);
     //setBusy(false);
     // Convert and return

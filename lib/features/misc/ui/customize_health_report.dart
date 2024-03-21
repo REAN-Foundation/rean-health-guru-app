@@ -533,7 +533,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
 
 
       final GetHealthReportSettingsPojo baseResponse =
-          await model.setHealthReportSettings(body);
+          await model.setHealthReportSettings(preference);
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         showSuccessToast('Patient health report settings updated successfully.', context);

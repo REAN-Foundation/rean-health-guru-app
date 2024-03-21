@@ -374,8 +374,8 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!.post(
-        '/patient-statistics/health-report',
+    final response = await apiProvider!.put(
+        '/patient-statistics/'+patientUserId.toString()+'/settings',
         header: map, body: body);
     setBusy(false);
     // Convert and return

@@ -1212,7 +1212,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       map['authorization'] = 'Bearer ' + auth!;
 
       final body = <String, String>{};
-      body['CurrentTimeZone'] = DateTime.now().timeZoneOffset.toString();
+      body['CurrentTimeZone'] = getMyTimeZone();
 
       final response =
       await apiProvider!.put('/patients/' + patientUserId!, body: body, header: map);

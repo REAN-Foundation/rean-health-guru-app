@@ -69,7 +69,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
         _physicalActivityValue = reportSettingsPojo.data!.settings!.preference!.exerciseAndPhysicalActivity!;
         _nutritionValue = reportSettingsPojo.data!.settings!.preference!.foodAndNutrition!;
         _dailyTaskValue = reportSettingsPojo.data!.settings!.preference!.dailyTaskStatus!;
-        _moodNsymptomsValue = reportSettingsPojo.data!.settings!.preference!.moodAndSymptoms!;
+        //_moodNsymptomsValue = reportSettingsPojo.data!.settings!.preference!.moodAndSymptoms!;
         loader = false;
         setState(() {});
         _frequencyValue = reportSettingsPojo.data!.settings!.preference!.reportFrequency!;
@@ -431,7 +431,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
                             ),
                           ],
                         ),
-                        Row(
+                        /*Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -450,7 +450,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
                               },
                             ),
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -528,7 +528,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
       preference['ExerciseAndPhysicalActivity'] = _physicalActivityValue;
       preference['FoodAndNutrition'] = _nutritionValue;
       preference['DailyTaskStatus'] = _dailyTaskValue;
-      preference['MoodAndSymptoms'] = _moodNsymptomsValue;
+      //preference['MoodAndSymptoms'] = _moodNsymptomsValue;
       body["Preference"] = preference;
 
 

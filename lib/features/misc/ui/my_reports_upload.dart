@@ -31,6 +31,7 @@ import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
+import '../../../core/constants/route_paths.dart';
 import '../../../infra/networking/custom_exception.dart';
 
 class MyReportsView extends StatefulWidget {
@@ -237,16 +238,27 @@ class _MyReportsViewState extends State<MyReportsView> {
                   SizedBox(
                     height: 8,
                   ),
-                  Row(
+                  uploadWidget(),
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if(RemoteConfigValues.downloadReportButtonVisibility)...[
+
+                      ],
+
+                    ],
+                  ),*/
+                  if(RemoteConfigValues.downloadReportButtonVisibility)...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        customizeHealthReportWidget(),
                         downloadReportWidget(),
                       ],
-                      uploadWidget(),
+                    ),
                     ],
-                  ),
                   SizedBox(
                     height: 8,
                   ),
@@ -267,6 +279,29 @@ class _MyReportsViewState extends State<MyReportsView> {
               fontSize: 14,
               fontFamily: 'Montserrat',
               color: primaryColor)),
+    );
+  }
+
+
+  Widget customizeHealthReportText() {
+    return SizedBox(
+      height: 24,
+      child: Center(
+        child: Text('Customize Health Report',
+            style: TextStyle(
+                shadows: [
+                  Shadow(
+                      color: Colors.lightBlueAccent,
+                      offset: Offset(0, -5))
+                ],
+                color: Colors.transparent,
+                decorationColor: Colors.lightBlueAccent,
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.underline,
+                fontSize: 14,
+                fontFamily: 'Montserrat',
+                )),
+      ),
     );
   }
 
@@ -318,50 +353,83 @@ class _MyReportsViewState extends State<MyReportsView> {
     );
   }
 
-  Widget uploadWidget() {
+  Widget customizeHealthReportWidget() {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2.2,
       child: ElevatedButton(
         //.icon
         onPressed: () async {
-          /*String type = await _askForDocsType();
-          debugPrint('File Type ${type}');
-          if (type != null) {
-            getFile(type);
-          } else {
-            showToast('Please select document type');
-          }*/
-          FirebaseAnalytics.instance.logEvent(name: 'upload_my_report_button_click');
-          showMaterialModalBottomSheet(
-              isDismissible: true,
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(25.0)),
-              ),
-              context: context,
-              builder: (context) => _uploadImageSelector());
+          FirebaseAnalytics.instance.logEvent(name: 'customize_download_report_button_click');
+          Navigator.pushNamed(context, RoutePaths.Customize_Health_Report);
         },
-        /*icon: Icon(
-          Icons.file_upload,
-          color: Colors.white,
-          size: 24,
-        ),*/
         child: Text(
-          'Upload records',
+          'Customize report',
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: TextStyle(
               fontSize: 14.0,
-              color: Colors.white,
+              color: primaryColor,
               fontWeight: FontWeight.w600),
         ),
         style: ButtonStyle(
             foregroundColor:
-                MaterialStateProperty.all<Color>(primaryLightColor),
-            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                     side: BorderSide(color: primaryColor)))),
+      ),
+    );
+  }
+
+  Widget uploadWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: ElevatedButton(
+          //.icon
+          onPressed: () async {
+            /*String type = await _askForDocsType();
+            debugPrint('File Type ${type}');
+            if (type != null) {
+              getFile(type);
+            } else {
+              showToast('Please select document type');
+            }*/
+            FirebaseAnalytics.instance.logEvent(name: 'upload_my_report_button_click');
+            showMaterialModalBottomSheet(
+                isDismissible: true,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                context: context,
+                builder: (context) => _uploadImageSelector());
+          },
+          /*icon: Icon(
+            Icons.file_upload,
+            color: Colors.white,
+            size: 24,
+          ),*/
+          child: Text(
+            'Upload records',
+            style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w600),
+          ),
+          style: ButtonStyle(
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      side: BorderSide(color: primaryColor)))),
+        ),
       ),
     );
   }

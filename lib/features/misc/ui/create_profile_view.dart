@@ -485,10 +485,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   map['LastName'] = _lastNameController.text.toString().trim();
                   map['BirthDate'] = unformatedDOB;
                   map['Gender'] = selectedGender;
-                  map['DefaultTimeZone'] =
-                      DateTime.now().timeZoneOffset.toString();
-                  map['CurrentTimeZone'] =
-                      DateTime.now().timeZoneOffset.toString();
+                  map['DefaultTimeZone'] = getMyTimeZone();
+                  map['CurrentTimeZone'] = getMyTimeZone();
 
                   try {
                     final BaseResponse updateProfileSuccess = await model

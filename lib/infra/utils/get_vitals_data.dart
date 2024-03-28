@@ -26,6 +26,7 @@ class GetVitalsData {
   double bloodGlucose = 0;
   double bloodPressureSystolic = 0;
   double bloodPressureDiastolic = 0;
+  late DateTime bpDateTime;
   double heartRate = 0;
 
   GetVitalsData() {
@@ -149,7 +150,7 @@ class GetVitalsData {
               debugPrint(
                   'WEIGHT : $weight Start Date : $startDate   DateFrom :  ${p.dateFrom} DateTo : ${p
                       .dateTo} ');
-              addWeightVitals();
+              addWeightVitals(p.dateFrom.toIso8601String());
             }
           }
         }
@@ -167,7 +168,7 @@ class GetVitalsData {
            bloodGlucose = p.value.toDouble();
            debugPrint('BLOOD_GLUCOSE : $bloodGlucose   DateFrom :  ${p
                .dateFrom} DateTo : ${p.dateTo} ');
-           addBloodGlucoseVitals();
+           addBloodGlucoseVitals(p.dateFrom.toIso8601String());
          }
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
         if(bloodPressureDiastolic == 0) {
@@ -176,6 +177,7 @@ class GetVitalsData {
             debugPrint(
                 'BLOOD_PRESSURE_DIASTOLIC : $bloodPressureDiastolic   DateFrom :  ${p
                     .dateFrom} DateTo : ${p.dateTo} ');
+            bpDateTime = p.dateFrom;
           }
         }
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
@@ -195,7 +197,7 @@ class GetVitalsData {
             bodyTemprature = temperatureInFaranite;
             debugPrint('BODY_TEMPERATURE : $bodyTemprature   DateFrom :  ${p
                 .dateFrom} DateTo : ${p.dateTo} ');
-            addTemperatureVitals();
+            addTemperatureVitals(p.dateFrom.toIso8601String());
           }
         }
       } else if (p.typeString == 'HEART_RATE') {
@@ -206,7 +208,7 @@ class GetVitalsData {
     }
 
     if(bloodPressureDiastolic != 0 && bloodPressureSystolic != 0) {
-      addBPVitals();
+      addBPVitals(bpDateTime.toIso8601String());
     }
 
     debugPrint('========================############## Get Vitals Data ##############=============================');
@@ -257,12 +259,14 @@ class GetVitalsData {
     return height.toString();
   }
 
-  addWeightVitals() async {
+  addWeightVitals(String date) async {
     try {
 
       final map = <String, dynamic>{};
       map['BodyWeight'] = weight.toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "Kg";
 
 
@@ -279,12 +283,14 @@ class GetVitalsData {
     }
   }
 
-  addBPVitals() async {
+  addBPVitals(String date) async {
     try {
       final map = <String, dynamic>{};
       map['Systolic'] = bloodPressureSystolic.toInt().toString();
       map['Diastolic'] = bloodPressureDiastolic.toInt().toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
 
@@ -303,11 +309,13 @@ class GetVitalsData {
     }
   }
 
-  addBloodGlucoseVitals() async {
+  addBloodGlucoseVitals(String date) async {
     try {
       final map = <String, dynamic>{};
       map['BloodGlucose'] = bloodGlucose.toInt().toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "mg|dL";
       //map['RecordedByUserId'] = null;
 
@@ -325,11 +333,13 @@ class GetVitalsData {
     }
   }
 
-  addBloodOxygenSaturationVitals() async {
+  addBloodOxygenSaturationVitals(String date) async {
     try {
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] = bloodOxygen.toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
@@ -347,11 +357,13 @@ class GetVitalsData {
     }
   }
 
-  addPulseVitals() async {
+  addPulseVitals(String date) async {
     try {
       final map = <String, dynamic>{};
       map['Pulse'] = heartRate.toInt().toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "bpm";
       //map['RecordedByUserId'] = null;
 
@@ -368,11 +380,13 @@ class GetVitalsData {
     }
   }
 
-  addTemperatureVitals() async {
+  addTemperatureVitals(String date) async {
     try {
       final map = <String, dynamic>{};
       map['BodyTemperature'] = bodyTemprature.toString();
       map['PatientUserId'] = patientUserId;
+      map['Provider'] = "Apple Health";
+      map['RecordDate'] = date;
       map['Unit'] = "Celsius";
       //map['RecordedByUserId'] = null;
 

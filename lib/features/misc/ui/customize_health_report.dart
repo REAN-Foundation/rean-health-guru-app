@@ -36,7 +36,7 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
   bool _physicalActivityValue = false;
   bool _nutritionValue = false;
   bool _dailyTaskValue = false;
-  bool _moodNsymptomsValue = false;
+  //bool _moodNsymptomsValue = false;
   final _scrollController = ScrollController();
 
   bool loader = false;

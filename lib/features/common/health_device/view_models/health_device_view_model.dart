@@ -18,8 +18,8 @@ class HealthDeviceViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/wearable-device-details/patients/' + patientUserId!,
-        header: map);
+        '/wearable-device-details/patients/'+ patientUserId!,
+        header: map); //'/devices/wearables/patients/'
 
     setBusy(false);
     // Convert and return

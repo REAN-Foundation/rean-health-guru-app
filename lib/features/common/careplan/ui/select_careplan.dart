@@ -892,9 +892,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           showToast('Please select Hospital', context);
                         }else if (carePlanEligibility!) {
                           startCarePlan();
-                          if(healthSystemList.isNotEmpty) {
-                            updateHospitalSystem();
-                          }
+                          /*if(healthSystemList.isNotEmpty) {
+                            //updateHospitalSystem();
+                          }*/
                           _updatePatientMedicalProfile(carePlanTypes!.name.toString());
                         } else {
                           //showToast(carePlanEligibilityMsg.toString(), context);

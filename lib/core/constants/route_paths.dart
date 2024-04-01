@@ -120,4 +120,5 @@ class RoutePaths {
   static const String Lipid_Profile = 'lipid_Profile';
   static const String ACHIEVEMENT = 'achievement';
   static const String Connect_Health_Device = 'connectHealthDevice';
+  static const String Customize_Health_Report = 'customizeHealthreport';
 }

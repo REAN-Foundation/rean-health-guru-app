@@ -231,205 +231,225 @@ class _CustomizeHealthReportViewState extends State<CustomizeHealthReportView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Health Journey',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _hJValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _hJValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Health Journey',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _hJValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _hJValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Medication Adherence',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _medicationAdherenceValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _medicationAdherenceValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Medication Adherence',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _medicationAdherenceValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _medicationAdherenceValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Body Weight',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _weightValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _weightValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Body Weight',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _weightValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _weightValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Blood Glucose',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _glucoseValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _glucoseValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Blood Glucose',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _glucoseValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _glucoseValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Blood Pressure',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _bPValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _bPValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Blood Pressure',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _bPValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _bPValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Sleep History',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _sleepValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _sleepValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Sleep History',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _sleepValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _sleepValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Lab Values',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _labValuesValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _labValuesValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Lab Values',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _labValuesValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _labValuesValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Exercise and Physical Activity',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _physicalActivityValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _physicalActivityValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Exercise and Physical Activity',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _physicalActivityValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _physicalActivityValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Food and Nutrition - Questionnaire',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _nutritionValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _nutritionValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Food and Nutrition - Questionnaire',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _nutritionValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _nutritionValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Daily Task Status',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            CupertinoSwitch(
-                              value: _dailyTaskValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _dailyTaskValue = value;
-                                });
-                              },
-                            ),
-                          ],
+                        MergeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Daily Task Status',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              CupertinoSwitch(
+                                value: _dailyTaskValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _dailyTaskValue = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                         /*Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

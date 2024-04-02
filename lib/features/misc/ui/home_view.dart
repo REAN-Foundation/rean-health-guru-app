@@ -186,6 +186,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       Timer(Duration(seconds: 2), () {
         getPatientDetails();
         getCarePlan();
+        updateTimeZone();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -195,6 +196,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       Timer(Duration(seconds: 2), () {
         getPatientDetails();
         getCarePlan();
+        updateTimeZone();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -1197,6 +1199,33 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         model.setBusy(false);
       }
     } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
+  }
+
+  updateTimeZone() async {
+    try {
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final body = <String, String>{};
+      body['CurrentTimeZone'] = getMyTimeZone();
+
+      final response =
+      await apiProvider!.put('/patients/' + patientUserId!, body: body, header: map);
+
+      final BaseResponse apiResponse =
+      BaseResponse.fromJson(response);
+
+      if (apiResponse.status == 'success') {
+        debugPrint('***************** Current TimeZone Updated ********************');
+      } else {
+
+      }
+     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());

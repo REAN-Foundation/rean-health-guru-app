@@ -433,6 +433,19 @@ bool isValueInBetweenRange(num minValue, num maxValue, String value){
     return false;
 }
 
+String getMyTimeZone(){
+  DateTime now = DateTime.now();
+  Duration offset = now.timeZoneOffset;
+  debugPrint("TimeZone offset $offset");
+  String utcHourOffset = (offset.isNegative ? '-' : '+') +
+      offset.inHours.abs().toString().padLeft(2, '0');
+  String utcMinuteOffset = (offset.inMinutes - offset.inHours * 60)
+      .toString().padLeft(2, '0');
+  String dateTimeWithOffset = '$utcHourOffset:$utcMinuteOffset';
+  debugPrint("Timezone ==> $dateTimeWithOffset");
+  return dateTimeWithOffset;
+}
+
 
 void autoLogout(){
   showToast('Your session has expired, please login', NavigationService.navigatorKey.currentContext!);

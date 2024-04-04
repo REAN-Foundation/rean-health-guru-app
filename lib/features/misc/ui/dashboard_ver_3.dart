@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/careplan/models/user_task_response.dart' as task_pojo;
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
@@ -64,7 +65,9 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
   late ProgressDialog progressDialog;
-
+  var dateQueryFormat = DateFormat('yyyy-MM-dd');
+  List<task_pojo.Items> pendingTasksList = <task_pojo.Items>[];
+  List<task_pojo.Items> completedTasksList = <task_pojo.Items>[];
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -82,7 +85,6 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
-
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -102,7 +104,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
       Duration(seconds: 4),
       () {
         getTodaysKnowledgeTopic();
-        //getTaskPlanSummary();
+        getPendingUserTask("pending");
         getMyMedications();
         //getMedicationSummary();
         //getLatestBiometrics();
@@ -114,6 +116,76 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     }
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  getPendingUserTask(String query) async {
+    try {
+      var dateTill;
+      var dateFrom;
+      /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
+          getAppName() == 'Heart & Stroke Helper™ ') {
+        dateTill = DateTime.now();
+      } else {*/
+      /*if(getBaseUrl()!.contains('reancare-api-dev')){
+        dateTill = DateTime.now().add(Duration(days: 91));
+      }else{*/
+      dateTill = DateTime.now().add(Duration(days: RemoteConfigValues.carePlanTaskDurationInDays));
+      //}
+
+      if(carePlanEnrollmentForPatientGlobe != null){
+        DateTime startDate = DateTime.parse(
+            carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                .elementAt(0)
+                .startAt
+                .toString());
+        if(startDate.isAfter(DateTime.now())){
+          dateFrom = dateQueryFormat.format(DateTime.now());
+        }else {
+          dateFrom = dateQueryFormat.format(startDate);
+        }
+      }else{
+        dateFrom = dateQueryFormat.format(DateTime.now());
+      }
+
+      //}
+      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
+      task_pojo.UserTaskResponse userTaskResponse = await model.getUserTasks(
+          query, dateFrom,
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(dateTill)
+              : dateQueryFormat.format(DateTime.now()));
+
+      if (userTaskResponse.status == 'success') {
+        _sortUserTask(userTaskResponse.data!.userTasks!.items!.toList());
+      } else {
+
+      }
+    } on FetchDataException catch (e) {
+
+      debugPrint('error caught: $e');
+      showToast(e.toString(), context);
+    }
+    /*catch (Exception e) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }*/
+  }
+
+  _sortUserTask(List<task_pojo.Items> tasks) {
+    for (final task in tasks) {
+      if (task.status == 'Delayed' ||
+          task.status == 'InProgress' ||
+          task.status == 'Pending' ||
+          task.status == 'Upcoming' ||
+          task.status == 'Overdue') {
+        pendingTasksList.add(task);
+        incompleteTaskCount = pendingTasksList.length;
+      } else if (task.status == 'Completed' || task.status == 'Cancelled') {
+        completedTasksList.add(task);
+        completedTaskCount = completedTasksList.length;
+      }
+    }
   }
 
   @override
@@ -250,10 +322,397 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                     mylipidProfile(),
                   if(RemoteConfigValues.homeScreenTile[i] == 'Knowledge')
                     knowledgeTree(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Health Journey')
+                    healthJourney(),
                 ],
                 SizedBox(
                   height: 32,
                 )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  healtJourneyDelay(){
+    Future.delayed(const Duration(seconds: 5), () {
+      healthJourney();
+      setState(() {});
+    });
+  }
+
+  Widget healthJourney() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 8,
+                  ),
+                  ImageIcon(
+                    AssetImage('res/images/health_journey.png'),
+                    size: 28,
+                    color: iconColor,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text('Health Journey',
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat')),
+                  Expanded(
+                    child: InfoOutlinedScreen(
+                      tittle: 'Health Journey',
+                      description:
+                      'Start a health journey to boost your well-being. ',
+                      height: 200,
+                      infoIconcolor: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(width: 8,),
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                        semanticLabel: 'Add Lab records',
+                      ),
+                      onPressed: () {
+                        FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');
+                        if (carePlanEnrollmentForPatientGlobe == null) {
+                          Navigator.pushNamed(
+                              context, RoutePaths.Select_Care_Plan);
+                        } else {
+                          Navigator.pushNamed(context, RoutePaths.My_Care_Plan);
+                        }
+                      }),
+                ],
+              ),
+            ),
+            Container(
+              color: primaryLightColor,
+              padding: const EdgeInsets.all(16),
+              child: carePlanEnrollmentForPatientGlobe == null ? Column(//
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Text('Start a health journey to boost your well-being.',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Montserrat')),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: Semantics(
+                      button: true,
+                      label: 'Get Started health journey',
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');
+                            if (carePlanEnrollmentForPatientGlobe == null) {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.Select_Care_Plan);
+                            } else {
+                              Navigator.pushNamed(context, RoutePaths.My_Care_Plan);
+                            }
+                          },
+                          child: Container(
+                            height: 32,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                border:
+                                Border.all(color: primaryColor, width: 1),
+                                color: primaryColor),
+                            child: Center(
+                              child: Text(
+                                'Get Started',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ]
+              ) :
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            /*height: 32,
+                            width: 32,
+                            decoration: new BoxDecoration(
+                                color: Color(0XFF007E1A),
+                                border: Border.all(color: Colors.white),
+                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
+                            child: Center(
+                              child: model.busy
+                                  ? SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(),
+                                  )
+                                  : Semantics(
+                                label: 'completedTask',
+                                child: Text(
+                                  completedTaskCount.toString(),
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Montserrat',
+                                      color: Color(0XFF007E1A)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            'Completed',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat',
+                                color: Color(0XFF007E1A)),
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: (){
+                          widget.positionToChangeNavigationBar(1);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              /*height: 32,
+                              width: 32,
+                              decoration: new BoxDecoration(
+                                  color: Colors.orange,
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
+                              child: Center(
+                                child: model.busy
+                                    ? SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator())
+                                    : Semantics(
+                                  label: 'pendingTask',
+                                  child: Text(
+                                    incompleteTaskCount.toString(),
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat',
+                                        color: primaryColor),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              'Pending',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Montserrat',
+                                  color: primaryColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget myTasks() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: InkWell(
+        onTap: () {
+          widget.positionToChangeNavigationBar(1);
+        },
+        child: Container(
+          height: 80,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              color: widgetBackgroundColor,
+              border: Border.all(color: widgetBorderColor),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ImageIcon(
+                      AssetImage('res/images/ic_daily_tasks_colored.png'),
+                      size: 24,
+                      color: iconColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text('My Tasks',
+                        style: TextStyle(
+                            color: textColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Montserrat')),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          /*height: 32,
+                            width: 32,
+                            decoration: new BoxDecoration(
+                                color: Colors.orange,
+                                border: Border.all(color: Colors.white),
+                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
+                          child: Center(
+                            child: model.busy
+                                ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
+                                : Semantics(
+                              label: 'pendingTask',
+                              child: Text(
+                                incompleteTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.orange),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          'Pending',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat',
+                              color: textColor),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          /*height: 32,
+                            width: 32,
+                            decoration: new BoxDecoration(
+                                color: Color(0XFF007E1A),
+                                border: Border.all(color: Colors.white),
+                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
+                          child: Center(
+                            child: model.busy
+                                ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
+                                : Semantics(
+                              label: 'completedTask',
+                              child: Text(
+                                completedTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0XFF007E1A)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          'Completed',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat',
+                              color: textColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -300,7 +759,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                   Expanded(
                     child: InfoOutlinedScreen(
@@ -674,154 +1133,6 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     );
   }
 
-  Widget myTasks() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
-      child: InkWell(
-        onTap: () {
-          widget.positionToChangeNavigationBar(1);
-        },
-        child: Container(
-          height: 80,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: widgetBackgroundColor,
-              border: Border.all(color: widgetBorderColor),
-              borderRadius: BorderRadius.all(Radius.circular(8.0))),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ImageIcon(
-                      AssetImage('res/images/ic_daily_tasks_colored.png'),
-                      size: 24,
-                      color: iconColor,
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text('My Tasks',
-                        style: TextStyle(
-                            color: textColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat')),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          /*height: 32,
-                            width: 32,
-                            decoration: new BoxDecoration(
-                                color: Colors.orange,
-                                border: Border.all(color: Colors.white),
-                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
-                          child: Center(
-                            child: model.busy
-                                ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
-                                : Semantics(
-                                    label: 'pendingTask',
-                                    child: Text(
-                                      incompleteTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          'Pending',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
-                              color: textColor),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          /*height: 32,
-                            width: 32,
-                            decoration: new BoxDecoration(
-                                color: Color(0XFF007E1A),
-                                border: Border.all(color: Colors.white),
-                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
-                          child: Center(
-                            child: model.busy
-                                ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
-                                : Semantics(
-                                    label: 'completedTask',
-                                    child: Text(
-                                      completedTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Color(0XFF007E1A)),
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          'Completed',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
-                              color: textColor),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget myMedication() {
     return Padding(
@@ -865,7 +1176,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1054,7 +1365,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1508,7 +1819,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1784,7 +2095,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2071,7 +2382,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2641,7 +2952,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2962,7 +3273,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),

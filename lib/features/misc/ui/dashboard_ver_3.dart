@@ -81,6 +81,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   var emergencyDetailsTextControler = TextEditingController();
   List<Schedules> currentMedicationList = <Schedules>[];
   DashboardTile? emergencyDashboardTile;
+  bool isTaskLoading = true;
 
   loadSharedPrefs() async {
     try {
@@ -120,6 +121,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   getPendingUserTask(String query) async {
     try {
+      isTaskLoading = true;
+      setState(() {
+
+      });
       var dateTill;
       var dateFrom;
       /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
@@ -186,6 +191,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         completedTaskCount = completedTasksList.length;
       }
     }
+    isTaskLoading = false;
+    setState(() {
+
+    });
   }
 
   @override
@@ -398,7 +407,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
-                        semanticLabel: 'Add Lab records',
+                        semanticLabel: 'Enroll for Health Journey',
                       ),
                       onPressed: () {
                         FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');
@@ -483,11 +492,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                 border: Border.all(color: Colors.white),
                                 borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
                             child: Center(
-                              child: model.busy
+                              child: isTaskLoading
                                   ? SizedBox(
                                   width: 24,
                                   height: 24,
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator( color: Color(0XFF007E1A)),
                                   )
                                   : Semantics(
                                 label: 'completedTask',
@@ -531,7 +540,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                   border: Border.all(color: Colors.white),
                                   borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
                               child: Center(
-                                child: model.busy
+                                child: isTaskLoading
                                     ? SizedBox(
                                     width: 24,
                                     height: 24,

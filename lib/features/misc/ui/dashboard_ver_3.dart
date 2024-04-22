@@ -179,16 +179,18 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   _sortUserTask(List<task_pojo.Items> tasks) {
     for (final task in tasks) {
-      if (task.status == 'Delayed' ||
-          task.status == 'InProgress' ||
-          task.status == 'Pending' ||
-          task.status == 'Upcoming' ||
-          task.status == 'Overdue') {
-        pendingTasksList.add(task);
-        incompleteTaskCount = pendingTasksList.length;
-      } else if (task.status == 'Completed' || task.status == 'Cancelled') {
-        completedTasksList.add(task);
-        completedTaskCount = completedTasksList.length;
+      if(task.actionType != 'Medication') {
+        if (task.status == 'Delayed' ||
+            task.status == 'InProgress' ||
+            task.status == 'Pending' ||
+            task.status == 'Upcoming' ||
+            task.status == 'Overdue') {
+          pendingTasksList.add(task);
+          incompleteTaskCount = pendingTasksList.length;
+        } else if (task.status == 'Completed' || task.status == 'Cancelled') {
+          completedTasksList.add(task);
+          completedTaskCount = completedTasksList.length;
+        }
       }
     }
     isTaskLoading = false;
@@ -208,6 +210,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     if (state == AppLifecycleState.resumed) {
       //do your stuff
       getMyMedications();
+      getPendingUserTask("pending");
       debugPrint('Dashboard ==> Homesceen');
     }
   }

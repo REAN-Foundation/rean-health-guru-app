@@ -18,6 +18,8 @@ class RemoteConfigValues{
   static bool healthDeviceConnectionVisibility = false;
   static bool remainderVisibility = false;
   static bool healthDataSync = false;
+  static bool forceUserAppMerger = false;
+  static bool userAppMerger = false;
   static String minimumAppVersionRequired = '1.0.0';
   static String softUpdateNewAppVersion = '1.0.0';
   static int healthAppDataSyncTimer = 60;
@@ -35,6 +37,8 @@ class RemoteConfigValues{
     healthDeviceConnectionVisibility = remoteConfig.getBool('health_device_connection_visibility');
     healthDataSync = remoteConfig.getBool('health_data_sync');
     healthAppDataSyncTimer = remoteConfig.getInt('health_app_data_sync_timer');
+    userAppMerger = remoteConfig.getBool('user_app_merger');
+    forceUserAppMerger = remoteConfig.getBool('force_user_app_merger');
 
     var dashboardTileJsonArray =  remoteConfig.getValue('home_screen_tile');
     homeScreenTile = List<String>.from(jsonDecode(dashboardTileJsonArray.asString()));

@@ -973,7 +973,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     NotificationHandler().initialize();
     vitalsData = GetIt.instance<GetVitalsData>();
     getDeviceData();
-    if(RemoteConfigValues.forceUserAppMerger) {
+    if(RemoteConfigValues.userAppMerger) {
       navigateToInstallNewApp();
     }
     loadAllHistoryData();

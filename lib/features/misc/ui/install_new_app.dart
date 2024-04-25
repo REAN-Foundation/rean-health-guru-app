@@ -1,6 +1,7 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 
@@ -93,7 +94,7 @@ class _InstallNewAppState extends State<InstallNewApp> {
                     height: 32,
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 220,
                     height: 48,
                     child: ElevatedButton(
                         onPressed: () async {
@@ -117,6 +118,24 @@ class _InstallNewAppState extends State<InstallNewApp> {
                               fontWeight: FontWeight.w600),
                         )),
                   ),
+
+                  SizedBox(height: 16,),
+                  Visibility(
+                    visible: RemoteConfigValues.forceUserAppMerger,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.0,
+                            decoration: TextDecoration.underline,
+                            color: primaryColor),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

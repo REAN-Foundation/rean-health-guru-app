@@ -3,7 +3,7 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:patient/infra/utils/common_utilsutility.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class InstallNewApp extends StatefulWidget {
   @override

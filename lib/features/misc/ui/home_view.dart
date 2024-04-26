@@ -990,7 +990,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
 
   navigateToInstallNewApp(){
-    Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamedAndRemoveUntil(context, RoutePaths.InstallNewApp, (Route<dynamic> route) => false)});
+    //Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamedAndRemoveUntil(context, RoutePaths.InstallNewApp, (Route<dynamic> route) => false)});
+    Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamed(context, RoutePaths.InstallNewApp)});
   }
 
   @override

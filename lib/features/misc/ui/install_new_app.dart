@@ -3,7 +3,7 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/common_utilsutility.dart';
 
 class InstallNewApp extends StatefulWidget {
   @override
@@ -124,6 +124,11 @@ class _InstallNewAppState extends State<InstallNewApp> {
                     visible: RemoteConfigValues.forceUserAppMerger,
                     child: TextButton(
                       onPressed: () {
+                        /*if(auth!.isNotEmpty){
+                          Navigator.pushNamedAndRemoveUntil(context, RoutePaths.Home, (Route<dynamic> route) => false);
+                        }else{
+                          Navigator.pushNamedAndRemoveUntil(context, RoutePaths.Login, (Route<dynamic> route) => false);
+                        }*/
                         Navigator.pop(context);
                       },
                       child: Text(

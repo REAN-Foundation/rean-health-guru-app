@@ -106,6 +106,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           'Previous Registered Care Plan ==> ${oldCarePlanEnrollmentForPatient.toJson()}');
       if (oldCarePlanEnrollmentForPatient.status == 'success') {
         if (oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.reversed;
           if(carePlanEnrollmentForPatientGlobe == null){
             getAllUserTaskForPreviousHJ(oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).startAt, oldCarePlanEnrollmentForPatient.data!.patientEnrollments!.elementAt(0).endAt);
             if(oldCarePlanEnrollmentForPatient != null){

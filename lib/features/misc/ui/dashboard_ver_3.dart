@@ -161,6 +161,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               : dateQueryFormat.format(DateTime.now()));
 
       if (userTaskResponse.status == 'success') {
+        pendingTasksList.clear();
+        completedTasksList.clear();
         _sortUserTask(userTaskResponse.data!.userTasks!.items!.toList());
       } else {
 

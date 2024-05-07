@@ -377,52 +377,60 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 8,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/health_journey.png'),
-                    size: 28,
-                    color: iconColor,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text('Health Journey',
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
-                  Expanded(
-                    child: InfoOutlinedScreen(
-                      tittle: 'Health Journey',
-                      description:
-                      'Start a health journey to boost your well-being. ',
-                      height: 200,
-                      infoIconcolor: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(width: 8,),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Enroll for Health Journey',
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 8,
                       ),
-                      onPressed: () {
-                        FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');
-                        if (carePlanEnrollmentForPatientGlobe == null) {
-                          Navigator.pushNamed(
-                              context, RoutePaths.Select_Care_Plan);
-                        } else {
-                          Navigator.pushNamed(context, RoutePaths.My_Care_Plan);
-                        }
-                      }),
+                      ImageIcon(
+                        AssetImage('res/images/health_journey.png'),
+                        size: 28,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Health Journey',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Health Journey',
+                        description:
+                        'Start your health journey to boost your well-being. Keep track of your progress with completed and pending tasks. If you want to view pending tasks, simply click on the count of pending, and you\'ll be redirected to the \'My Tasks\' screen on the \'To-Do\'s\' tab. Let\'s begin your journey towards a healthier you.',
+                        height: 280,
+                        infoIconcolor: Colors.grey,
+                      ),
+                      SizedBox(width: 8,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Enroll for Health Journey',
+                          ),
+                          onPressed: () {
+                            FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');
+                            if (carePlanEnrollmentForPatientGlobe == null) {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.Select_Care_Plan);
+                            } else {
+                              Navigator.pushNamed(context, RoutePaths.My_Care_Plan);
+                            }
+                          }),
+                    ],
+                  ),
+
                 ],
               ),
             ),
@@ -485,49 +493,51 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            /*height: 32,
-                            width: 32,
-                            decoration: new BoxDecoration(
-                                color: Color(0XFF007E1A),
-                                border: Border.all(color: Colors.white),
-                                borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
-                            child: Center(
-                              child: isTaskLoading
-                                  ? SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator( color: Color(0XFF007E1A)),
-                                  )
-                                  : Semantics(
-                                label: 'completedTask',
-                                child: Text(
-                                  completedTaskCount.toString(),
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat',
-                                      color: Color(0XFF007E1A)),
+                      MergeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              /*height: 32,
+                              width: 32,
+                              decoration: new BoxDecoration(
+                                  color: Color(0XFF007E1A),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
+                              child: Center(
+                                child: isTaskLoading
+                                    ? SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator( color: Color(0XFF007E1A)),
+                                    )
+                                    : Semantics(
+                                  label: 'completedTask',
+                                  child: Text(
+                                    completedTaskCount.toString(),
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat',
+                                        color: Color(0XFF007E1A)),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            'Completed',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat',
-                                color: Color(0XFF007E1A)),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              'Completed',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Montserrat',
+                                  color: Color(0XFF007E1A)),
+                            ),
+                          ],
+                        ),
                       ),
                       InkWell(
                         onTap: (){
@@ -552,6 +562,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     child: CircularProgressIndicator())
                                     : Semantics(
                                   label: 'pendingTask',
+                                  hint: 'navigate to my task',
                                   child: Text(
                                     incompleteTaskCount.toString(),
                                     style: TextStyle(

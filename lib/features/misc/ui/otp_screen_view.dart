@@ -629,7 +629,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + userId + '/enrollments',
+        '/care-plans/patients/' + userId + '/enrollments?isActive=true',
         header: map);
     // Convert and return
     GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =  GetCarePlanEnrollmentForPatient.fromJson(response);

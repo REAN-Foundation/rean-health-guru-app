@@ -177,7 +177,7 @@ class PatientCarePlanViewModel extends BaseModel {
         '/care-plans/patients/' + patientUserId! + '/enroll',
         body: body,
         header: map);
-    setBusy(false);
+    //setBusy(false);
     // Convert and return
     return EnrollCarePlanResponse.fromJson(response);
   }

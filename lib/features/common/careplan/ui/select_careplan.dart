@@ -948,7 +948,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           progressDialog.close();
         }
         getCarePlan();
-        showSuccessDialog();
+        //showSuccessDialog();
         //showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
@@ -975,6 +975,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
       if (carePlanEnrollmentForPatient.status == 'success') {
         if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          showSuccessDialog();
           debugPrint('Care Plan');
           carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
           _sharedPrefUtils.save(

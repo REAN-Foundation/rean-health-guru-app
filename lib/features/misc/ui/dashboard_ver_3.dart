@@ -405,7 +405,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                   Row(
                     children: [
                       InfoOutlinedScreen(
-                        tittle: 'Health Journey',
+                        tittle: 'Health Journey information',
                         description:
                         'Start your health journey to boost your well-being. Keep track of your progress with completed and pending tasks. If you want to view pending tasks, simply click on the count of pending, and you\'ll be redirected to the \'My Tasks\' screen on the \'To-Do\'s\' tab. Let\'s begin your journey towards a healthier you.',
                         height: 280,
@@ -417,7 +417,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             Icons.add_circle,
                             size: 32,
                             color: iconColor,
-                            semanticLabel: 'Enroll for Health Journey',
+                            semanticLabel: carePlanEnrollmentForPatientGlobe == null ? 'Enroll for Health Journey' : 'Health Journey Status',
                           ),
                           onPressed: () {
                             FirebaseAnalytics.instance.logEvent(name: 'start_health_journey_dashboard_button_click');

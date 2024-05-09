@@ -40,7 +40,7 @@ class PatientCarePlanViewModel extends BaseModel {
 
   Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
     // Get user profile for id
-    setBusy(true);
+    //setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -177,7 +177,7 @@ class PatientCarePlanViewModel extends BaseModel {
         '/care-plans/patients/' + patientUserId! + '/enroll',
         body: body,
         header: map);
-    setBusy(false);
+    //setBusy(false);
     // Convert and return
     return EnrollCarePlanResponse.fromJson(response);
   }

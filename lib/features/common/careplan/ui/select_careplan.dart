@@ -937,24 +937,18 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       map['StartDate'] = startDate;
 
       FirebaseAnalytics.instance.logEvent(name: 'health_journey_register_button_click', parameters: map);
-      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Setting up your Health Journey...\nPlease wait a moment.', msgMaxLines: 4, msgFontSize: 14);
       model.setBusy(true);
 
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
-        progressDialog.close();
-        if(progressDialog.isOpen()){
-          progressDialog.close();
-        }
+
         getCarePlan();
-        showSuccessDialog();
+        //showSuccessDialog();
         //showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
-      }
-      if(progressDialog.isOpen()){
-        progressDialog.close();
       }
     } catch (CustomException) {
       progressDialog.close();
@@ -975,6 +969,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
       if (carePlanEnrollmentForPatient.status == 'success') {
         if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+          progressDialog.close();
+          if(progressDialog.isOpen()){
+            progressDialog.close();
+          }
+          showSuccessDialog();
           debugPrint('Care Plan');
           carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
           _sharedPrefUtils.save(
@@ -1016,7 +1015,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       } else {
         //showToast(startCarePlanResponse.message);
       }
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
     } catch (CustomException) {
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

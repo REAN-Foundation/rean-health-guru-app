@@ -84,6 +84,7 @@ import 'package:patient/features/misc/ui/customize_health_report.dart';
 import 'package:patient/features/misc/ui/edit_patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/edit_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/install_new_app.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/ui/on_boarding_aha_page.dart';
@@ -373,6 +374,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => CustomizeHealthReportView());
       case RoutePaths.ACHIEVEMENT:
         return MaterialPageRoute(builder: (_) => AllAchievementView());
+      case RoutePaths.InstallNewApp:
+        return MaterialPageRoute(builder: (_) => InstallNewApp());
       /* case RoutePaths.Order_Medicine:
         return MaterialPageRoute(builder: (_) =>
       case RoutePaths.Order_Ambulance:

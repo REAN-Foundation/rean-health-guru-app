@@ -52,7 +52,7 @@ class _InstallNewAppState extends State<InstallNewApp> {
                   ),
                   Center(
                     child: Text(
-                      "Install Heart And Stroke Helper App.",
+                      "Exciting News: One AHA Helper app.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -80,7 +80,7 @@ class _InstallNewAppState extends State<InstallNewApp> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16),
                     child: Text(
-                        "We're happy to share that we've joined forces with Heart And Stroke Helper App! Enjoy seamless access to all our features on their platform using your current account credentials. Experience enhanced health support and resources in one convenient place.",
+                        "HF Helper is merging with the Heart & Stroke Helper app! Take advantage of one app with all your health education and tracking needs in one place.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Montserrat',

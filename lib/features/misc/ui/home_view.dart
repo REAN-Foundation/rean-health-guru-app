@@ -410,7 +410,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
+      //showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
   }
@@ -1200,7 +1200,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
+      //showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
@@ -1227,7 +1227,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
      } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
+      //showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }

@@ -68,11 +68,19 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();
     //}
+    if(RemoteConfigValues.userAppMerger) {
+      navigateToInstallNewApp();
+    }
     UpdateChecker(context);
     cleanAllData();
     getRoleIdApi();
     firebase();
     super.initState();
+  }
+
+  navigateToInstallNewApp(){
+    //Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamedAndRemoveUntil(context, RoutePaths.InstallNewApp, (Route<dynamic> route) => false)});
+    Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamed(context, RoutePaths.InstallNewApp)});
   }
 
   setupFirebaseConfig() async {

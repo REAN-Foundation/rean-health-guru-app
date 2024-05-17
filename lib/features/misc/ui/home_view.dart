@@ -973,6 +973,9 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     NotificationHandler().initialize();
     vitalsData = GetIt.instance<GetVitalsData>();
     getDeviceData();
+    if(RemoteConfigValues.userAppMerger) {
+      navigateToInstallNewApp();
+    }
     loadAllHistoryData();
     getCarePlanSubscribe();
     _initPackageInfo();
@@ -984,6 +987,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  navigateToInstallNewApp(){
+    //Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamedAndRemoveUntil(context, RoutePaths.InstallNewApp, (Route<dynamic> route) => false)});
+    Future.delayed(Duration(seconds: 2), ()=> {Navigator.pushNamed(context, RoutePaths.InstallNewApp)});
   }
 
   @override

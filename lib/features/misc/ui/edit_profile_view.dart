@@ -98,8 +98,8 @@ class _EditProfileState extends State<EditProfile> {
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   final List<String> radioItemsForMiratalStatus = [ 'Single', 'Married', 'Divorced', 'Widowed'];
-  final List<String> radioItemsForRace = [ 'American Indian/Alaskan Native', 'Asian', 'Black/African American', 'Native Hawaiian or Other Pacific Islander', 'White' ];
-  final List<String> radioItemsForEthnicity = [ 'Hispanic/Latino', 'Not Hispanic/Latino', 'Prefer not to say' ];
+  final List<String> radioItemsForRace = [ 'White', 'Black/African American', 'American Indian/Alaskan Native', 'Asian Indian', 'Chinese', 'Filipino', 'Japanese', 'Korean', 'Vietnamese', 'Hawaiian', 'Guamanian', 'Samoan', 'Native Hawaiian or Other Pacific Islander', 'Prefer not to say' ];
+  final List<String> radioItemsForEthnicity = [ 'Hispanic', 'Latino', 'Non Hispanic', 'Hispanic and Latino', 'Prefer not to say' ];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -111,6 +111,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    refreshPatientDetails(auth!, userId);
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
     _api_key = dotenv.env['Patient_API_KEY'];
     progressDialog = ProgressDialog(context: context);
@@ -2699,6 +2700,35 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ],
     );
+  }
+
+  refreshPatientDetails( String auth, String userId) async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
+
+      final response =
+      await apiProvider!.get('/patients/' + userId, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+        loadSharedPrefs();
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+
+      }
+    } catch (CustomException) {
+      debugPrint(CustomException.toString());
+    }
   }
 
   getPatientDetails(LoginViewModel model, String auth, String userId) async {

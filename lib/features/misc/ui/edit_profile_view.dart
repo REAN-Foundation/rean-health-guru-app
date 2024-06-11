@@ -751,7 +751,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Race',
+        Text('What is your race?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -846,7 +846,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Ethnicity',
+        Text('What is your ethnicity?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,

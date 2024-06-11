@@ -373,14 +373,15 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
       children: [
         Semantics(
           hint: 'requierd',
-          child: RichText(
-            text: TextSpan(
-              text: 'What health condition are you most concerned about?',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: textBlack,
-                  fontSize: 16),
-              children: <TextSpan>[
+          child: Text.rich(
+            TextSpan(
+              children:[
+          TextSpan(
+          text: 'What health condition are you most concerned about?',
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: textBlack,
+                fontSize: 16),),
                 TextSpan(
                     text: '*' ,
                     style: TextStyle(
@@ -388,9 +389,9 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
                         color: Colors.red,
                         fontSize: 16)),
               ],
+          )
             ),
           ),
-        ),
         const SizedBox(
           height: 4,
         ),
@@ -462,14 +463,15 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
       children: [
         Semantics(
           hint: 'requierd',
-          child: RichText(
-            text: TextSpan(
-              text: 'Select start date',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: textBlack,
-                  fontSize: 16),
-              children: <TextSpan>[
+          child: Text.rich(
+            TextSpan(
+              children: [
+          TextSpan(
+          text: 'Select start date',
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: textBlack,
+                fontSize: 16),),
                 TextSpan(
                     text: '*' ,
                     style: TextStyle(

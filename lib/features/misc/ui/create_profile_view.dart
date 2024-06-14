@@ -204,27 +204,37 @@ class _CreateProfileState extends State<CreateProfile> {
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
-                  child: Center(child: Text("1", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  child: Center(child: Text("1",
+                    semanticsLabel: 'step 1 create profile',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("2",
+                      semanticsLabel: 'step 2',
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("2", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("3",
+                      semanticsLabel: 'step 3',
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("3", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
 
               ],

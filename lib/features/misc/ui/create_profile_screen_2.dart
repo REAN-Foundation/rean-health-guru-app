@@ -24,8 +24,6 @@ class CreateProfileScreen2 extends StatefulWidget {
 
 class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
 
-  final List<String> radioItemsForRace = [ 'White', 'Black/African American', 'American Indian/Alaskan Native', 'Asian Indian', 'Chinese', 'Filipino', 'Japanese', 'Korean', 'Vietnamese', 'Hawaiian', 'Guamanian', 'Samoan', 'Native Hawaiian or Other Pacific Islander', 'Prefer not to say' ];
-  final List<String> radioItemsForEthnicity = [ 'Hispanic', 'Latino', 'Non Hispanic', 'Hispanic and Latino', 'Prefer not to say' ];
   String _raceValue = '';
   String _ethnicityValue = '';
   final _sharedPrefUtils = SharedPrefUtils();
@@ -166,15 +164,19 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("1",
+                        semanticsLabel: 'step 1',
+                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
                 Container(
                   height: 32,
@@ -184,17 +186,20 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
-                  child: Center(child: Text("2", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  child: Center(child: Text("2",
+                    semanticsLabel: 'step 2 choose Race and ethnicity',style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("3", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("3", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
 
               ],
@@ -357,6 +362,7 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
                       color: Colors.white),
                   child: Semantics(
                     label: 'Race',
+                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: _raceValue == '' ? null : _raceValue,
@@ -423,6 +429,7 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
                       color: Colors.white),
                   child: Semantics(
                     label: 'Ethnicity',
+                    hint: 'required',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: _ethnicityValue == '' ? null : _ethnicityValue,

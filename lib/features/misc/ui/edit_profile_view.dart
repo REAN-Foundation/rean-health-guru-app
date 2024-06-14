@@ -98,8 +98,6 @@ class _EditProfileState extends State<EditProfile> {
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   final List<String> radioItemsForMiratalStatus = [ 'Single', 'Married', 'Divorced', 'Widowed'];
-  final List<String> radioItemsForRace = [ 'White', 'Black/African American', 'American Indian/Alaskan Native', 'Asian Indian', 'Chinese', 'Filipino', 'Japanese', 'Korean', 'Vietnamese', 'Hawaiian', 'Guamanian', 'Samoan', 'Native Hawaiian or Other Pacific Islander', 'Prefer not to say' ];
-  final List<String> radioItemsForEthnicity = [ 'Hispanic', 'Latino', 'Non Hispanic', 'Hispanic and Latino', 'Prefer not to say' ];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];

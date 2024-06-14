@@ -250,7 +250,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
             iconTheme: IconThemeData(color: Colors.black),
           ),
           body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 00),
             child: model!.busy
                 ? Center(child: CircularProgressIndicator(),)
                 : Column(
@@ -258,30 +258,36 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 16,),
-                      pageNumber(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: pageNumber(),
+                      ),
                       SizedBox(height: 40,),
                       Expanded(
                         child: Scrollbar(
-                          thumbVisibility: true,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.start,
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.center,
-                              children: <Widget>[
+                          thumbVisibility: false,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: <Widget>[
 
-                                Text('Choose a health journey to get weekly education and tips to help take action towards your health condition.', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),),
-                                SizedBox(height: 16,),
-                                selectCarePlanDropDown(),
-                                startCarePlanDate(),
-                                SizedBox(height: 8,),
-                                decription != ''
-                                    ? descriptionOfCarePlan()
-                                    : Container(),
-                                //eligibilityOfCarePlan(),
-                                //recomandationForCarePlan(),
-                              ],
+                                  Text('Choose a health journey to get weekly education and tips to help take action towards your health condition.', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),),
+                                  SizedBox(height: 16,),
+                                  selectCarePlanDropDown(),
+                                  startCarePlanDate(),
+                                  SizedBox(height: 8,),
+                                  decription != ''
+                                      ? descriptionOfCarePlan()
+                                      : Container(),
+                                  //eligibilityOfCarePlan(),
+                                  //recomandationForCarePlan(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -312,25 +318,29 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("2", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                   ),
-                  child: Center(child: Text("2", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
                 Container(
                   height: 32,
@@ -340,7 +350,9 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
-                  child: Center(child: Text("3", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  child: Center(child: Text("3",
+                    semanticsLabel: 'step 3 Choose Health Journey',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
                 ),
               ],
             ),

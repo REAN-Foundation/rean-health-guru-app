@@ -279,6 +279,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
                                   Text('Choose a health journey to get weekly education and tips to help take action towards your health condition.', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),),
                                   SizedBox(height: 16,),
                                   selectCarePlanDropDown(),
+                                  if(selectedCarePlan != "None")
                                   startCarePlanDate(),
                                   SizedBox(height: 8,),
                                   decription != ''
@@ -391,7 +392,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
           TextSpan(
           text: 'What health condition are you most concerned about?',
             style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: textBlack,
                 fontSize: 16),),
                 TextSpan(
@@ -446,7 +447,9 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
 
                   //RemoteConfigValues.hospitalSystemVisibility = true;
                 //}
-
+                if(value == "None"){
+                  decription = '';
+                }
                 setState(() {
                   selectedCarePlan = value;
                   getCarePlanDetails();
@@ -481,7 +484,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
           TextSpan(
           text: 'Select start date',
             style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: textBlack,
                 fontSize: 16),),
                 TextSpan(

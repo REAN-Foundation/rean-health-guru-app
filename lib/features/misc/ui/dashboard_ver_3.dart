@@ -1279,25 +1279,29 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                 }
                               },
                               child: ExcludeSemantics(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.thumb_up,
-                                      color: Color(0XFF007E1A),
-                                      size: 36,
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Yes',
-                                        style: TextStyle(
-                                            color: Color(0XFF007E1A),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                child: Container(
+                                  height: 68,
+                                  width: 68,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_up,
+                                        color: Color(0XFF007E1A),
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Yes',
+                                          style: TextStyle(
+                                              color: Color(0XFF007E1A),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -1312,25 +1316,29 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context, RoutePaths.My_Medications, arguments: 0);
                               },
                               child: ExcludeSemantics(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.thumb_down,
-                                      color: primaryColor,
-                                      size: 36,
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('No',
-                                        style: TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                child: Container(
+                                  width: 68,
+                                  height: 68,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_down,
+                                        color: primaryColor,
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('No',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -3189,25 +3197,29 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                       arguments: 0);
                                 },
                                 child: ExcludeSemantics(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_up,
-                                        color: Color(0XFF007E1A),
-                                        size: 36,
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('Yes',
-                                          style: TextStyle(
-                                              color: Color(0XFF007E1A),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                    ],
+                                  child: Container(
+                                    height: 68,
+                                    width: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Color(0XFF007E1A),
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('Yes',
+                                            style: TextStyle(
+                                                color: Color(0XFF007E1A),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -3221,25 +3233,29 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                   recordMyPhysicalActivity(false);
                                 },
                                 child: ExcludeSemantics(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_down,
-                                        color: primaryColor,
-                                        size: 36,
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('No',
-                                          style: TextStyle(
-                                              color: primaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                    ],
+                                  child: Container(
+                                    height: 68,
+                                    width: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_down,
+                                          color: primaryColor,
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('No',
+                                            style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

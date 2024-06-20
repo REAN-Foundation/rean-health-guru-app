@@ -1167,7 +1167,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0))),
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
@@ -1176,8 +1176,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               decoration: BoxDecoration(
                   color: widgetBackgroundColor,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(7.0),
-                      topRight: Radius.circular(7.0))),
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1267,43 +1267,40 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'Yes I have taken my medications',
                             button: true,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  if (currentMedicationList.isEmpty) {
-                                    showToast(
-                                        'Your medication list is empty. Please add your medications.',
-                                        context);
-                                  } else {
-                                    FirebaseAnalytics.instance.logEvent(name: 'medication_yes_button_click');
-                                    markAllMedicationAsTaken();
-                                  }
-                                },
-                                child: ExcludeSemantics(
-                                  child: Container(
-                                    height: 68,
-                                    width: 68,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up,
-                                          color: Color(0XFF007E1A),
-                                          size: 36,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text('Yes',
-                                            style: TextStyle(
-                                                color: Color(0XFF007E1A),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'Montserrat')),
-                                      ],
-                                    ),
+                            child: InkWell(
+                              onTap: () {
+                                if (currentMedicationList.isEmpty) {
+                                  showToast(
+                                      'Your medication list is empty. Please add your medications.',
+                                      context);
+                                } else {
+                                  FirebaseAnalytics.instance.logEvent(name: 'medication_yes_button_click');
+                                  markAllMedicationAsTaken();
+                                }
+                              },
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  height: 68,
+                                  width: 68,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_up,
+                                        color: Color(0XFF007E1A),
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Yes',
+                                          style: TextStyle(
+                                              color: Color(0XFF007E1A),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -1312,38 +1309,35 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'No I haven\'t taken my medications',
                             button: true,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  FirebaseAnalytics.instance.logEvent(name: 'medication_no_button_click');
-                                  Navigator.pushNamed(
-                                      context, RoutePaths.My_Medications, arguments: 0);
-                                },
-                                child: ExcludeSemantics(
-                                  child: Container(
-                                    width: 68,
-                                    height: 68,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_down,
-                                          color: primaryColor,
-                                          size: 36,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text('No',
-                                            style: TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'Montserrat')),
-                                      ],
-                                    ),
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'medication_no_button_click');
+                                Navigator.pushNamed(
+                                    context, RoutePaths.My_Medications, arguments: 0);
+                              },
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 68,
+                                  height: 68,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_down,
+                                        color: primaryColor,
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('No',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -3194,40 +3188,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             Semantics(
                               label: 'Yes, I had movement today.',
                               button: true,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    FirebaseAnalytics.instance.logEvent(name: 'physical_activity_yes_button_click');
-                                    recordMyPhysicalActivity(true);
-                                    Navigator.pushNamed(
-                                        context, RoutePaths.My_Activity_Trends,
-                                        arguments: 0);
-                                  },
-                                  child: ExcludeSemantics(
-                                    child: Container(
-                                      height: 68,
-                                      width: 68,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.thumb_up,
-                                            color: Color(0XFF007E1A),
-                                            size: 36,
-                                          ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text('Yes',
-                                              style: TextStyle(
-                                                  color: Color(0XFF007E1A),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontFamily: 'Montserrat')),
-                                        ],
-                                      ),
+                              child: InkWell(
+                                onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_yes_button_click');
+                                  recordMyPhysicalActivity(true);
+                                  Navigator.pushNamed(
+                                      context, RoutePaths.My_Activity_Trends,
+                                      arguments: 0);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    height: 68,
+                                    width: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Color(0XFF007E1A),
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('Yes',
+                                            style: TextStyle(
+                                                color: Color(0XFF007E1A),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -3236,37 +3227,34 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             Semantics(
                               label: 'No, I don\'t had any movement today.',
                               button: true,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    FirebaseAnalytics.instance.logEvent(name: 'physical_activity_no_button_click');
-                                    recordMyPhysicalActivity(false);
-                                  },
-                                  child: ExcludeSemantics(
-                                    child: Container(
-                                      height: 68,
-                                      width: 68,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.thumb_down,
-                                            color: primaryColor,
-                                            size: 36,
-                                          ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text('No',
-                                              style: TextStyle(
-                                                  color: primaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontFamily: 'Montserrat')),
-                                        ],
-                                      ),
+                              child: InkWell(
+                                onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_no_button_click');
+                                  recordMyPhysicalActivity(false);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    height: 68,
+                                    width: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_down,
+                                          color: primaryColor,
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('No',
+                                            style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
                                     ),
                                   ),
                                 ),

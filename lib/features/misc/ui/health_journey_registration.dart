@@ -385,25 +385,25 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Semantics(
-          hint: 'requierd',
-          child: Text.rich(
+          hint: 'required',
+          label: 'What health condition are you most concerned about?',
+          child: ExcludeSemantics(
+            child: Text.rich(
+              TextSpan(
+                children:[
             TextSpan(
-              children:[
-          TextSpan(
-          text: 'What health condition are you most concerned about?',
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: textBlack,
-                fontSize: 16),),
-                TextSpan(
-                    text: '*' ,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red,
-                        fontSize: 16)),
-              ],
-          )
-            ),
+            text: 'What health condition are you most concerned about?',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  TextSpan(
+                      text: '*' ,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                          fontSize: 16)),
+                ],
+            )
+              ),
+          ),
           ),
         const SizedBox(
           height: 4,
@@ -477,23 +477,23 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Semantics(
-          hint: 'requierd',
-          child: Text.rich(
+          hint: 'required',
+          label: 'Select start date',
+          child: ExcludeSemantics(
+            child: Text.rich(
+              TextSpan(
+                children: [
             TextSpan(
-              children: [
-          TextSpan(
-          text: 'Select start date',
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: textBlack,
-                fontSize: 16),),
-                TextSpan(
-                    text: '*' ,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red,
-                        fontSize: 16)),
-              ],
+            text: 'Select start date',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  TextSpan(
+                      text: '*' ,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                          fontSize: 16)),
+                ],
+              ),
             ),
           ),
         ),

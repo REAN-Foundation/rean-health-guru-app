@@ -80,7 +80,6 @@ class _EditProfileState extends State<EditProfile> {
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
-  String? auth = '';
   String addresses = '';
   late ProgressDialog progressDialog;
   String fullName = '';
@@ -109,7 +108,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    refreshPatientDetails(auth!, userId);
+    refreshPatientDetails(auth!, patientUserId!);
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
     _api_key = dotenv.env['Patient_API_KEY'];
     progressDialog = ProgressDialog(context: context);
@@ -199,6 +198,7 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
+      debugPrint("ETHI ==> ${patient.healthProfile!.ethnicity} ");
       _ethnicityValue = patient.healthProfile!.ethnicity ?? '';
       if(!radioItemsForEthnicity.contains(_ethnicityValue)){
         _ethnicityValue = '';

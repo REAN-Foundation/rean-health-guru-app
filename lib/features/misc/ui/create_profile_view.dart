@@ -776,6 +776,7 @@ class _CreateProfileState extends State<CreateProfile> {
           ),*/
            Semantics(
              hint: 'required',
+             label: 'Sex',
              child: Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10.0),

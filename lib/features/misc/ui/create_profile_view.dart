@@ -15,8 +15,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/features/misc/models/user_data.dart';
-import 'package:patient/features/misc/ui/home_view.dart';
-import 'package:patient/features/misc/ui/welcome.dart';
+import 'package:patient/features/misc/ui/create_profile_screen_2.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -161,7 +160,9 @@ class _CreateProfileState extends State<CreateProfile> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 40),
+                      SizedBox(height: 16),
+                      pageNumber(),
+                      SizedBox(height: 16),
                       //_profileIcon(),
                       _textFeildWidget(),
                       SizedBox(height: 20),
@@ -179,6 +180,70 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
+  Widget pageNumber(){
+    return Container(
+      height: 40,
+      /*decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black
+        ),
+      ),*/
+      child: Stack(
+        children: [
+          Positioned(top: 20,child: SizedBox(width: MediaQuery.of(context).size.width, height: 1, child: Container(color: Colors.black,),)),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: Center(child: Text("1",
+                    semanticsLabel: 'step 1 create profile',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
+                ),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("2",
+                      semanticsLabel: 'step 2',
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  ),
+                ),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("3",
+                      semanticsLabel: 'step 3',
+                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Future getFile() async {
     /*FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -461,7 +526,7 @@ class _CreateProfileState extends State<CreateProfile> {
           // Add This
           child: MaterialButton(
               minWidth: 200,
-              child: Text('Save',
+              child: Text('Continue',
                   style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.white,
@@ -494,13 +559,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.close();
-                      if (getAppType() == 'AHA') {
-                        if(getAppName() != 'Heart & Stroke Helper™ ') {
-                          showSuccessToast('Welcome to ' + getAppName(), context);
-                        }
-                      } else {
-                        showSuccessToast('Welcome to REAN HealthGuru', context);
-                      }
+
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }*/
@@ -544,7 +603,11 @@ class _CreateProfileState extends State<CreateProfile> {
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8.167', true);
-        if(getAppName() == 'Heart & Stroke Helper™ ') {
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+              return CreateProfileScreen2();
+            }), (Route<dynamic> route) => false);
+       /* if(getAppName() == 'Heart & Stroke Helper™ ') {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return Welcome();
@@ -554,7 +617,7 @@ class _CreateProfileState extends State<CreateProfile> {
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
               }), (Route<dynamic> route) => false);
-        }
+        }*/
         model.setBusy(false);
       } else {
         showToast(doctorListApiResponse.message!, context);
@@ -713,6 +776,7 @@ class _CreateProfileState extends State<CreateProfile> {
           ),*/
            Semantics(
              hint: 'required',
+             label: 'Sex',
              child: Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10.0),

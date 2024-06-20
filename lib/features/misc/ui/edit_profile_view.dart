@@ -80,7 +80,6 @@ class _EditProfileState extends State<EditProfile> {
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
-  String? auth = '';
   String addresses = '';
   late ProgressDialog progressDialog;
   String fullName = '';
@@ -98,8 +97,6 @@ class _EditProfileState extends State<EditProfile> {
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   final List<String> radioItemsForMiratalStatus = [ 'Single', 'Married', 'Divorced', 'Widowed'];
-  final List<String> radioItemsForRace = [ 'American Indian/Alaskan Native', 'Asian', 'Black/African American', 'Native Hawaiian or Other Pacific Islander', 'White' ];
-  final List<String> radioItemsForEthnicity = [ 'Hispanic/Latino', 'Not Hispanic/Latino', 'Prefer not to say' ];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -111,6 +108,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    refreshPatientDetails(auth!, patientUserId!);
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
     _api_key = dotenv.env['Patient_API_KEY'];
     progressDialog = ProgressDialog(context: context);
@@ -200,6 +198,7 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
+      debugPrint("ETHI ==> ${patient.healthProfile!.ethnicity} ");
       _ethnicityValue = patient.healthProfile!.ethnicity ?? '';
       if(!radioItemsForEthnicity.contains(_ethnicityValue)){
         _ethnicityValue = '';
@@ -750,7 +749,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Race',
+        Text('What is your race?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -845,7 +844,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Ethnicity',
+        Text('What is your ethnicity?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -2699,6 +2698,35 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ],
     );
+  }
+
+  refreshPatientDetails( String auth, String userId) async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
+
+      final response =
+      await apiProvider!.get('/patients/' + userId, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+        loadSharedPrefs();
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+
+      }
+    } catch (CustomException) {
+      debugPrint(CustomException.toString());
+    }
   }
 
   getPatientDetails(LoginViewModel model, String auth, String userId) async {

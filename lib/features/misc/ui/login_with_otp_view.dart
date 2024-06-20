@@ -103,7 +103,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       dailyCheckInDate = '';
       carePlanEnrollmentForPatientGlobe = null;
       _sharedPrefUtils.save('CarePlan', null);
-      _sharedPrefUtils.saveBoolean('login1.8.167', null);
+      _sharedPrefUtils.saveBoolean('login1.8.167', false);
     }on FetchDataException catch(e){
       debugPrint("Error ==> ${e.toString()}");
     }
@@ -140,7 +140,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
       setState(() {});
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
     }
   }
 

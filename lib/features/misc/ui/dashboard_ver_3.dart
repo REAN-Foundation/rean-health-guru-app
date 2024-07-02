@@ -813,31 +813,38 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         label: 'Symptom is Better',
                         button: true,
                         child: ExcludeSemantics(
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_better_button_click');
-                              recordHowAreYouFeeling(1);
-                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage('res/images/ic_better_emoji.png'),
-                                  size: 48,
-                                  color: Color(0XFF007E1A),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'symptoms_better_button_click');
+                                recordHowAreYouFeeling(1);
+                                //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                              },
+                              child: Container(
+                                width: 96,
+                                height: 96,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ImageIcon(
+                                      AssetImage('res/images/ic_better_emoji.png'),
+                                      size: 48,
+                                      color: Color(0XFF007E1A),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Better',
+                                        style: TextStyle(
+                                            color: Color(0XFF007E1A),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Better',
-                                    style: TextStyle(
-                                        color: Color(0XFF007E1A),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
@@ -846,31 +853,38 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         label: 'Symptom is Same',
                         button: true,
                         child: ExcludeSemantics(
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_same_button_click');
-                              recordHowAreYouFeeling(0);
-                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage('res/images/ic_same_emoji.png'),
-                                  size: 48,
-                                  color: textGrey,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'symptoms_same_button_click');
+                                recordHowAreYouFeeling(0);
+                                //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                              },
+                              child: Container(
+                                width: 96,
+                                height: 96,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ImageIcon(
+                                      AssetImage('res/images/ic_same_emoji.png'),
+                                      size: 48,
+                                      color: textGrey,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Same',
+                                        style: TextStyle(
+                                            color: textGrey,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Same',
-                                    style: TextStyle(
-                                        color: textGrey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
@@ -879,32 +893,39 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         label: 'Symptom is Worse',
                         button: true,
                         child: ExcludeSemantics(
-                          child: InkWell(
-                            onTap: () {
-                              progressDialog.show(max: 100, msg: 'Loading...');
-                              FirebaseAnalytics.instance.logEvent(name: 'symptoms_worse_button_click');
-                              recordHowAreYouFeeling(-1);
-                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage('res/images/ic_worse_emoji.png'),
-                                  size: 48,
-                                  color: Color(0XFFC10E21),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                progressDialog.show(max: 100, msg: 'Loading...');
+                                FirebaseAnalytics.instance.logEvent(name: 'symptoms_worse_button_click');
+                                recordHowAreYouFeeling(-1);
+                                //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                              },
+                              child: Container(
+                                width: 96,
+                                height: 96,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ImageIcon(
+                                      AssetImage('res/images/ic_worse_emoji.png'),
+                                      size: 48,
+                                      color: Color(0XFFC10E21),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Worse',
+                                        style: TextStyle(
+                                            color: Color(0XFFC10E21),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Worse',
-                                    style: TextStyle(
-                                        color: Color(0XFFC10E21),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
@@ -1267,40 +1288,43 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'Yes I have taken my medications',
                             button: true,
-                            child: InkWell(
-                              onTap: () {
-                                if (currentMedicationList.isEmpty) {
-                                  showToast(
-                                      'Your medication list is empty. Please add your medications.',
-                                      context);
-                                } else {
-                                  FirebaseAnalytics.instance.logEvent(name: 'medication_yes_button_click');
-                                  markAllMedicationAsTaken();
-                                }
-                              },
-                              child: ExcludeSemantics(
-                                child: Container(
-                                  height: 68,
-                                  width: 68,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_up,
-                                        color: Color(0XFF007E1A),
-                                        size: 36,
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('Yes',
-                                          style: TextStyle(
-                                              color: Color(0XFF007E1A),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                    ],
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  if (currentMedicationList.isEmpty) {
+                                    showToast(
+                                        'Your medication list is empty. Please add your medications.',
+                                        context);
+                                  } else {
+                                    FirebaseAnalytics.instance.logEvent(name: 'medication_yes_button_click');
+                                    markAllMedicationAsTaken();
+                                  }
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    height: 68,
+                                    width: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Color(0XFF007E1A),
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('Yes',
+                                            style: TextStyle(
+                                                color: Color(0XFF007E1A),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1309,35 +1333,38 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'No I haven\'t taken my medications',
                             button: true,
-                            child: InkWell(
-                              onTap: () {
-                                FirebaseAnalytics.instance.logEvent(name: 'medication_no_button_click');
-                                Navigator.pushNamed(
-                                    context, RoutePaths.My_Medications, arguments: 0);
-                              },
-                              child: ExcludeSemantics(
-                                child: Container(
-                                  width: 68,
-                                  height: 68,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.thumb_down,
-                                        color: primaryColor,
-                                        size: 36,
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text('No',
-                                          style: TextStyle(
-                                              color: primaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Montserrat')),
-                                    ],
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'medication_no_button_click');
+                                  Navigator.pushNamed(
+                                      context, RoutePaths.My_Medications, arguments: 0);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    width: 68,
+                                    height: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_down,
+                                          color: primaryColor,
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('No',
+                                            style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1455,31 +1482,38 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'Yes, most of my food choices were healthy today.',
                             button: true,
-                            child: InkWell(
-                              onTap: () {
-                                FirebaseAnalytics.instance.logEvent(name: 'nutrition_yes_button_click');
-                                recordMyCaloriesConsumed(true);
-                              },
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.thumb_up,
-                                      color: Color(0XFF007E1A),
-                                      size: 36,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'nutrition_yes_button_click');
+                                  recordMyCaloriesConsumed(true);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    width: 68,
+                                    height: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Color(0XFF007E1A),
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('Yes',
+                                            style: TextStyle(
+                                                color: Color(0XFF007E1A),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Yes',
-                                        style: TextStyle(
-                                            color: Color(0XFF007E1A),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -1487,33 +1521,40 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                           Semantics(
                             label: 'No, most of my food choices were not healthy today.',
                             button: true,
-                            child: InkWell(
-                              onTap: () {
-                                FirebaseAnalytics.instance.logEvent(name: 'nutrition_no_button_click');
-                                Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                                    arguments: '');
-                                recordMyCaloriesConsumed(false);
-                              },
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.thumb_down,
-                                      color: primaryColor,
-                                      size: 36,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(name: 'nutrition_no_button_click');
+                                  Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                      arguments: '');
+                                  recordMyCaloriesConsumed(false);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Container(
+                                    width: 68,
+                                    height: 68,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_down,
+                                          color: primaryColor,
+                                          size: 36,
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text('No',
+                                            style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Montserrat')),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('No',
-                                        style: TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2221,47 +2262,50 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: "Add Blood Pressure",
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_blood_pressure_button_click');
-                              Navigator.pushNamed(
-                                  context,
-                                  RoutePaths
-                                      .Biometric_Blood_Presure_Vitals_Care_Plan);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_blood_pressure.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Blood\nPressure',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_blood_pressure_button_click');
+                                Navigator.pushNamed(
+                                    context,
+                                    RoutePaths
+                                        .Biometric_Blood_Presure_Vitals_Care_Plan);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(8),
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage(
+                                              'res/images/ic_blood_pressure.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Blood\nPressure',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2271,47 +2315,50 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Add Blood Glucose',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_blood_glucose_button_click');
-                              Navigator.pushNamed(
-                                  context,
-                                  RoutePaths
-                                      .Biometric_Blood_Glucose_Vitals_Care_Plan);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(12),
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_blood_glucose.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Blood\nGlucose',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_blood_glucose_button_click');
+                                Navigator.pushNamed(
+                                    context,
+                                    RoutePaths
+                                        .Biometric_Blood_Glucose_Vitals_Care_Plan);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(12),
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage(
+                                              'res/images/ic_blood_glucose.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Blood\nGlucose',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2321,43 +2368,46 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Add Pulse',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_pulse_button_click');
-                              Navigator.pushNamed(context,
-                                  RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.only(right: 12),
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage('res/images/ic_pulse.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Pulse',
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_pulse_button_click');
+                                Navigator.pushNamed(context,
+                                    RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(right: 12),
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage('res/images/ic_pulse.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Pulse',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2459,44 +2509,47 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Add Total Cholesterol',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_total_cholesterol_button_click');
-                              Navigator.pushNamed(context,
-                                  RoutePaths.Lipid_Profile_Total_Cholesterol);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_total_cholesterol.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Total\nCholesterol',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_total_cholesterol_button_click');
+                                Navigator.pushNamed(context,
+                                    RoutePaths.Lipid_Profile_Total_Cholesterol);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage(
+                                              'res/images/ic_total_cholesterol.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Total\nCholesterol',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2505,43 +2558,46 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Add LDL',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_ldl_button_click');
-                              Navigator.pushNamed(
-                                  context, RoutePaths.Lipid_Profile_LDL);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage('res/images/ic_ldl.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('LDL',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_ldl_button_click');
+                                Navigator.pushNamed(
+                                    context, RoutePaths.Lipid_Profile_LDL);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage('res/images/ic_ldl.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('LDL',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2550,43 +2606,46 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: "Add HDL",
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_hdl_button_click');
-                              Navigator.pushNamed(
-                                  context, RoutePaths.Lipid_Profile_HDL);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage('res/images/ic_hdl.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('HDL',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_hdl_button_click');
+                                Navigator.pushNamed(
+                                    context, RoutePaths.Lipid_Profile_HDL);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage('res/images/ic_hdl.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('HDL',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -2595,43 +2654,46 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Add triglycerides',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              FirebaseAnalytics.instance.logEvent(name: 'add_triglycerides_button_click');
-                              Navigator.pushNamed(context,
-                                  RoutePaths.Lipid_Profile_Triglyceroid);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_triglycerides.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Triglycerides',
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: 'add_triglycerides_button_click');
+                                Navigator.pushNamed(context,
+                                    RoutePaths.Lipid_Profile_Triglyceroid);
+                              },
+                              child: Container(
+                                height: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage(
+                                              'res/images/ic_triglycerides.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Triglycerides',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -3188,37 +3250,40 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             Semantics(
                               label: 'Yes, I had movement today.',
                               button: true,
-                              child: InkWell(
-                                onTap: () {
-                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_yes_button_click');
-                                  recordMyPhysicalActivity(true);
-                                  Navigator.pushNamed(
-                                      context, RoutePaths.My_Activity_Trends,
-                                      arguments: 0);
-                                },
-                                child: ExcludeSemantics(
-                                  child: Container(
-                                    height: 68,
-                                    width: 68,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up,
-                                          color: Color(0XFF007E1A),
-                                          size: 36,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text('Yes',
-                                            style: TextStyle(
-                                                color: Color(0XFF007E1A),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'Montserrat')),
-                                      ],
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    FirebaseAnalytics.instance.logEvent(name: 'physical_activity_yes_button_click');
+                                    recordMyPhysicalActivity(true);
+                                    Navigator.pushNamed(
+                                        context, RoutePaths.My_Activity_Trends,
+                                        arguments: 0);
+                                  },
+                                  child: ExcludeSemantics(
+                                    child: Container(
+                                      height: 68,
+                                      width: 68,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.thumb_up,
+                                            color: Color(0XFF007E1A),
+                                            size: 36,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text('Yes',
+                                              style: TextStyle(
+                                                  color: Color(0XFF007E1A),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Montserrat')),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -3227,34 +3292,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             Semantics(
                               label: 'No, I don\'t had any movement today.',
                               button: true,
-                              child: InkWell(
-                                onTap: () {
-                                  FirebaseAnalytics.instance.logEvent(name: 'physical_activity_no_button_click');
-                                  recordMyPhysicalActivity(false);
-                                },
-                                child: ExcludeSemantics(
-                                  child: Container(
-                                    height: 68,
-                                    width: 68,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_down,
-                                          color: primaryColor,
-                                          size: 36,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text('No',
-                                            style: TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'Montserrat')),
-                                      ],
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    FirebaseAnalytics.instance.logEvent(name: 'physical_activity_no_button_click');
+                                    recordMyPhysicalActivity(false);
+                                  },
+                                  child: ExcludeSemantics(
+                                    child: Container(
+                                      height: 68,
+                                      width: 68,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.thumb_down,
+                                            color: primaryColor,
+                                            size: 36,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text('No',
+                                              style: TextStyle(
+                                                  color: primaryColor,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: 'Montserrat')),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -3358,45 +3426,49 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: 'Sleep',
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                              /*Navigator.pushNamed(
-                                  context, RoutePaths.MY_STRESS);*/
-                              FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_sleep_button_click');
-                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
-                                  arguments: 1);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage('res/images/ic_sleep.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Sleep',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                /*Navigator.pushNamed(
+                                    context, RoutePaths.MY_STRESS);*/
+                                FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_sleep_button_click');
+                                Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                    arguments: 1);
+                              },
+                              child: Container(
+                                height: 96,
+                                width: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage('res/images/ic_sleep.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Sleep',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -3405,46 +3477,50 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                         Semantics(
                           label: "Mindfulness",
                           button: true,
-                          child: InkWell(
-                            onTap: () {
-                             /* Navigator.pushNamed(
-                                  context, RoutePaths.MY_STRESS);*/
-                              FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_mindfulness_button_click');
-                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
-                                  arguments: 1);
-                            },
-                            child: Container(
-                              height: 96,
-                              child: ExcludeSemantics(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: 56,
-                                      decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          border:
-                                              Border.all(color: primaryColor),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0))),
-                                      child: ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_medication.png'),
-                                        size: 32,
-                                        color: iconColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text('Mindfulness',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                               /* Navigator.pushNamed(
+                                    context, RoutePaths.MY_STRESS);*/
+                                FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_mindfulness_button_click');
+                                Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                    arguments: 1);
+                              },
+                              child: Container(
+                                height: 96,
+                                width: 96,
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
                                             color: primaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'Montserrat')),
-                                  ],
+                                            border:
+                                                Border.all(color: primaryColor),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0))),
+                                        child: ImageIcon(
+                                          AssetImage(
+                                              'res/images/ic_medication.png'),
+                                          size: 32,
+                                          color: iconColor,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Mindfulness',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

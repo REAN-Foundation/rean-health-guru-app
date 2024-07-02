@@ -116,10 +116,11 @@ class _MyDialogState extends State<AddHeightInCmDialog> {
                         decoration: InputDecoration(
                             hintText: 'Cm',
                             counterText: "",
+                            prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("Cm")),
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
-                            contentPadding: EdgeInsets.all(0),
+                            contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
                             filled: true)),

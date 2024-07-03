@@ -37,12 +37,18 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   var dateFormat = DateFormat('yyyy-MM-dd');
   DateTime? todaysDate;
   MovementsTracking? _sleepTracking;
+  MovementsTracking? _sleepTrackingMin;
   int _sleepHrs = 0;
+  int _sleepMin = 0;
   int _sleepingHrs = 0;
   Color buttonColor = Color(0XFFCFB4FF);
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
   var mindfulnessController = TextEditingController();
+  var _sleepInHrsController = TextEditingController();
+  var _sleepInMinController = TextEditingController();
+  var _sleepInMinFocus = FocusNode();
+  var _sleepInHrsFocus = FocusNode();
   var mindfulnessFocus = FocusNode();
 
   @override
@@ -73,10 +79,23 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
           debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
           _sleepHrs = _sleepTracking!.value!;
           _sleepingHrs = _sleepHrs;
+          _sleepMin = int.parse(_sleepTracking!.discription!);
         }
       }
+
+      _sleepInHrsController.text = _sleepHrs.toString();
+      _sleepInHrsController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _sleepInHrsController.text.length),
+      );
+
+      _sleepInMinController.text = _sleepMin.toString();
+      _sleepInMinController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _sleepInMinController.text.length),
+      );
+
+
       setState(() {});
-    } catch (e) {
+    } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
   }
@@ -139,10 +158,10 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                               onTap: () {
                                 FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_save_button_click');
                                 toastDisplay = true;
-                                if(_sleepingHrs == _sleepHrs && mindfulnessController.text.toString().isEmpty){
+                                if(_sleepInHrsController.text.isEmpty && _sleepInMinController.text.isEmpty && mindfulnessController.text.toString().isEmpty){
                                   showToast('Please enter valid input', context);
                                 }else {
-                                  if(_sleepingHrs != _sleepHrs) {
+                                  if(_sleepInHrsController.text.isNotEmpty || _sleepInMinController.text.isNotEmpty) {
                                     recordMySleepTimeInHrs();
                                   }
                                   if (mindfulnessController.text
@@ -241,134 +260,251 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
             SizedBox(
               height: 8,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16,4,0,0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Enter your sleep in hours and minutes',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 8,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (_sleepHrs != 0) {
-                                  _sleepHrs = _sleepHrs - 1;
-                                  announceText('$_sleepHrs hours of sleep');
-                                  setState(() {});
-                                  //recordMySleepTimeInHrs();
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                'decrease sleep in hours',
-                                size: 24,
-                              ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: textGrey, width: 1),
+                                color: Colors.white),
+                            child: Semantics(
+                              label: 'Sleep measures in ',
+                              child: TextFormField(
+                                  controller: _sleepInHrsController,
+                                  focusNode: _sleepInHrsFocus,
+                                  maxLines: 1,
+                                  maxLength: 2,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (data){
+                                    if(int.parse(data) > 23){
+                                      showSuccessToast("Please enter valid hours", context);
+                                      _sleepInHrsController.clear();
+                                      _sleepInHrsController.text = data.substring(0,1);
+                                      _sleepInHrsController.selection = TextSelection.fromPosition(
+                                        TextPosition(offset: _sleepInHrsController.text.length),
+                                      );
+                                      setState(() {
+
+                                      });
+                                    }
+                                  },
+                                  onFieldSubmitted: (term) {
+                                    _fieldFocusChange(context, _sleepInHrsFocus,
+                                    _sleepInMinFocus);
+                                  },
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                        RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
+                                  ],
+                                  decoration: InputDecoration(
+                                      hintText: 'Hours',
+                                      counterText: "",
+                                      prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("hrs")),
+                                      hintStyle: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                      contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                                      border: InputBorder.none,
+                                      fillColor: Colors.white,
+                                      filled: true)),
                             ),
                           ),
                         ),
-                        Semantics(
-                          label: '$_sleepHrs hours of sleep',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(4)),
-                                border:
-                                Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    _sleepHrs == 0
-                                        ? ''
-                                        : _sleepHrs.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    _sleepHrs > 1 ? 'hrs' : 'hr',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: textGrey, width: 1),
+                                color: Colors.white),
+                            child: Semantics(
+                              label: 'Sleep measures in ',
+                              child: TextFormField(
+                                  controller: _sleepInMinController,
+                                  focusNode: _sleepInMinFocus,
+                                  maxLines: 1,
+                                  maxLength: 2,
+                                  textInputAction: TextInputAction.done,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (data){
+                                    if(int.parse(data) > 59){
+                                      showSuccessToast("Please enter valid minutes", context);
+                                      _sleepInMinController.clear();
+                                      _sleepInMinController.text = data.substring(0,1);
+                                      _sleepInMinController.selection = TextSelection.fromPosition(
+                                        TextPosition(offset: _sleepInMinController.text.length),
+                                      );
+                                      setState(() {
+
+                                      });
+                                    }
+                                  },
+                                  onFieldSubmitted: (term) {},
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                        RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
+                                  ],
+                                  decoration: InputDecoration(
+                                      hintText: 'Minutes',
+                                      counterText: "",
+                                      prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("min")),
+                                      hintStyle: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                      contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                                      border: InputBorder.none,
+                                      fillColor: Colors.white,
+                                      filled: true)),
                             ),
                           ),
                         ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                _sleepHrs = _sleepHrs + 1;
-                                announceText('$_sleepHrs hours of sleep');
-                                setState(() {});
-                                debugPrint(
-                                    "_sleepHrs ==> $_sleepHrs");
-                                //recordMySleepTimeInHrs();
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                'increase sleep in hours',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
                       ],
                     ),
-                  ),
+                    /*Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: buttonColor,
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(4))),
+                      child: Center(
+                        child: IconButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onPressed: () {
+                            if (_sleepHrs != 0) {
+                              _sleepHrs = _sleepHrs - 1;
+                              announceText('$_sleepHrs hours of sleep');
+                              setState(() {});
+                              //recordMySleepTimeInHrs();
+                            }
+                          },
+                          icon: Icon(
+                            Icons.remove,
+                            color: primaryColor,
+                            semanticLabel:
+                            'decrease sleep in hours',
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: '$_sleepHrs hours of sleep',
+                      child: ExcludeSemantics(
+                        child: Container(
+                          width: 180,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(4)),
+                            border:
+                            Border.all(color: colorD6D6D6, width: 0.80),
+                          ),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 16,
+                              ),
+                              Text(
+                                _sleepHrs == 0
+                                    ? ''
+                                    : _sleepHrs.toString(),
+                                semanticsLabel: '',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.0,
+                                    color: textGrey),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                _sleepHrs > 1 ? 'hrs' : 'hr',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.0,
+                                    color: textGrey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: buttonColor,
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(4))),
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {
+                            _sleepHrs = _sleepHrs + 1;
+                            announceText('$_sleepHrs hours of sleep');
+                            setState(() {});
+                            debugPrint(
+                                "_sleepHrs ==> $_sleepHrs");
+                            //recordMySleepTimeInHrs();
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          icon: Icon(
+                            Icons.add,
+                            color: primaryColor,
+                            semanticLabel:
+                            'increase sleep in hours',
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    )*/
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 
   Widget mindfulness() {
@@ -555,16 +691,17 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
   recordMySleepTimeInHrs() async {
     try {
-      if(_sleepHrs != 0 ) {
+      if(_sleepInHrsController.text.isNotEmpty  || _sleepInHrsController.text.isNotEmpty) {
       if (_sleepTracking == null) {
         debugPrint("123 ");
         _sharedPrefUtils.save(
-            'sleepTime', MovementsTracking(startDate, _sleepHrs, '').toJson());
+            'sleepTime', MovementsTracking(startDate, int.parse(_sleepInHrsController.text), _sleepInMinController.text).toJson());
         loadSleepMovement();
       } else {
         debugPrint("456 ");
-        _sleepTracking!.value = _sleepHrs;
+        _sleepTracking!.value = int.parse(_sleepInHrsController.text.toString());
         _sleepTracking!.date = startDate;
+        _sleepTracking!.discription = _sleepInMinController.text;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
       clearAllFeilds();
@@ -573,7 +710,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
       setState(() {});
        final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['SleepDuration'] = _sleepHrs;
+      map['SleepDuration'] = _sleepInHrsController.text;
+      map['SleepMinutes'] = _sleepInMinController.text;
       map['Unit'] = 'Hrs';
       map['RecordDate'] = dateFormat.format(DateTime.now());
 

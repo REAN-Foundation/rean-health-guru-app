@@ -132,11 +132,11 @@ class _MyDialogState extends State<AddHeightInFtNInchDialog> {
                         decoration: InputDecoration(
                             hintText: 'Feet',
                             counterText: "",
-                            prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("ft")),
+                            suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("ft")),
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
-                            contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                            contentPadding: EdgeInsets.fromLTRB(0,15,0,0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
                             filled: true)),
@@ -171,11 +171,11 @@ class _MyDialogState extends State<AddHeightInFtNInchDialog> {
                         decoration: InputDecoration(
                             hintText: 'Inches',
                             counterText: "",
-                            prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("in")),
+                            suffixIcon:  Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 5),  child: Text("in")),
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
-                            contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                            contentPadding: EdgeInsets.fromLTRB(0,15,0,0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
                             filled: true)),

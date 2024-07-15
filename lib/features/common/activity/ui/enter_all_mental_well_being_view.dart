@@ -83,16 +83,19 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         }
       }
 
-      _sleepInHrsController.text = _sleepHrs.toString();
-      _sleepInHrsController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _sleepInHrsController.text.length),
-      );
+      if(_sleepHrs != 0) {
+        _sleepInHrsController.text = _sleepHrs.toString();
+        _sleepInHrsController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _sleepInHrsController.text.length),
+        );
+      }
 
-      _sleepInMinController.text = _sleepMin.toString();
-      _sleepInMinController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _sleepInMinController.text.length),
-      );
-
+      if(_sleepMin != 0) {
+        _sleepInMinController.text = _sleepMin.toString();
+        _sleepInMinController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _sleepInMinController.text.length),
+        );
+      }
 
       setState(() {});
     } on FetchDataException catch (e) {
@@ -266,7 +269,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16,4,0,0),
+                padding: const EdgeInsets.fromLTRB(16,4,16,0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -303,7 +306,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   keyboardType: TextInputType.number,
                                   onChanged: (data){
                                     if(int.parse(data) > 23){
-                                      showSuccessToast("Please enter valid hours", context);
+                                      showToast("Please enter valid hours", context);
                                       _sleepInHrsController.clear();
                                       _sleepInHrsController.text = data.substring(0,1);
                                       _sleepInHrsController.selection = TextSelection.fromPosition(
@@ -325,11 +328,11 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   decoration: InputDecoration(
                                       hintText: 'Hours',
                                       counterText: "",
-                                      prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("hrs")),
+                                      suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("hr")),
                                       hintStyle: TextStyle(
                                         fontSize: 14,
                                       ),
-                                      contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                                      contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
                                       border: InputBorder.none,
                                       fillColor: Colors.white,
                                       filled: true)),
@@ -358,7 +361,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   keyboardType: TextInputType.number,
                                   onChanged: (data){
                                     if(int.parse(data) > 59){
-                                      showSuccessToast("Please enter valid minutes", context);
+                                      showToast("Please enter valid minutes", context);
                                       _sleepInMinController.clear();
                                       _sleepInMinController.text = data.substring(0,1);
                                       _sleepInMinController.selection = TextSelection.fromPosition(
@@ -377,11 +380,11 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   decoration: InputDecoration(
                                       hintText: 'Minutes',
                                       counterText: "",
-                                      prefixIcon: Padding(padding: EdgeInsets.fromLTRB(12,15, 4, 5),  child: Text("min")),
+                                      suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("min")),
                                       hintStyle: TextStyle(
                                         fontSize: 14,
                                       ),
-                                      contentPadding: EdgeInsets.fromLTRB(0,13,0,0),
+                                      contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
                                       border: InputBorder.none,
                                       fillColor: Colors.white,
                                       filled: true)),
@@ -614,10 +617,12 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   /*hintText: unit == 'lbs'
                                     ? '(100 to 200)'
                                     : '(50 to 100)',*/
+                                    hintText: 'Minutes',
+                                    suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("min")),
                                     hintStyle: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                     ),
-                                    contentPadding: EdgeInsets.all(0),
+                                    contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
                                     border: InputBorder.none,
                                     fillColor: Colors.white,
                                     filled: true)),

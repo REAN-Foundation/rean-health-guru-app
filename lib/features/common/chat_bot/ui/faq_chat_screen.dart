@@ -1,9 +1,9 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:patient/features/common/chat_bot/models/chat_api_response.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/features/common/chat_bot/view_models/bot_view_model.dart';
@@ -13,6 +13,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/time_ago.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -256,10 +257,35 @@ class FAQChatScreenState extends State<FAQChatScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
+              Linkify(
+                onOpen: (link) async {
+                  if (await canLaunchUrl(Uri.parse(link.url))) {
+                    await launchUrl(Uri.parse(link.url));
+                  } else {
+                    throw 'Could not launch $link';
+                  }
+                },
+                softWrap: true,
+                options: LinkifyOptions(humanize: false, looseUrl:true ),
+                text: chatModelPojo.text.toString(),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'Montserrat'),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+              ),
+              /*Text(
                 chatModelPojo.text!,
                 style: TextStyle(fontSize: 14, color: textBlack),
-              ),
+              ),*/
+              /*LinkText(
+                chatModelPojo.text!,
+                textStyle: TextStyle(fontSize: 14, color: textBlack,
+                  fontWeight: FontWeight.w500,),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent, decoration: TextDecoration.underline, fontSize: 14,
+                  fontWeight: FontWeight.w500,),
+              ),*/
               SizedBox(
                 height: 4,
               ),
@@ -295,10 +321,36 @@ class FAQChatScreenState extends State<FAQChatScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              Linkify(
+                onOpen: (link) async {
+                  if (await canLaunchUrl(Uri.parse(link.url))) {
+                    await launchUrl(Uri.parse(link.url));
+                  } else {
+                    throw 'Could not launch $link';
+                  }
+                },
+                softWrap: true,
+                options: LinkifyOptions(humanize: false, looseUrl:true ),
+                text: chatModelPojo.text.toString(),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'Montserrat'),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+              ),
+              /*Text(
                 chatModelPojo.text!,
                 style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
+              ),*/
+             /* LinkText(
+                chatModelPojo.text!,
+
+                textStyle: TextStyle(fontSize: 14, color: Colors.white,
+                  fontWeight: FontWeight.w500,),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent, decoration: TextDecoration.underline, fontSize: 14,
+                  fontWeight: FontWeight.w500,),
+              ),*/
               SizedBox(
                 height: 4,
               ),

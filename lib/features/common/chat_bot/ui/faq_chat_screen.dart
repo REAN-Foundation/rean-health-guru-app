@@ -271,7 +271,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                    color: textBlack,
                     fontFamily: 'Montserrat'),
                 linkStyle: TextStyle(color: Colors.lightBlueAccent),
               ),

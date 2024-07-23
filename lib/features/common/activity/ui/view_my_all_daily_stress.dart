@@ -129,7 +129,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
       if (_sleepTracking != null) {
         if (todaysDate == _sleepTracking!.date) {
-          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
+          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs ${int.parse(_sleepTracking!.discription.toString())} Min');
           _sleepHrs = _sleepTracking!.value!;
           _sleepInMin = int.parse(_sleepTracking!.discription.toString());
         }
@@ -423,7 +423,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
   Widget sleepTime() {
     var sleepToDisplay = 0;
-    if(_sleepHrs != 0){
+    if(_sleepHrs != 0 || _sleepInMin != 0){
       sleepToDisplay = _sleepHrs * 60;
       sleepToDisplay = sleepToDisplay + _sleepInMin;
     }else if (Platform.isIOS) {

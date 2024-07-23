@@ -696,17 +696,22 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
   recordMySleepTimeInHrs() async {
     try {
-      if(_sleepInHrsController.text.isNotEmpty  || _sleepInHrsController.text.isNotEmpty) {
+
+
+      String sleepHrsInTextFeild = _sleepInHrsController.text.isNotEmpty ? _sleepInHrsController.text : "0";
+      String sleepMinInTextFeild = _sleepInMinController.text.isNotEmpty ? _sleepInMinController.text : "0";
+
+      if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
       if (_sleepTracking == null) {
         debugPrint("123 ");
         _sharedPrefUtils.save(
-            'sleepTime', MovementsTracking(startDate, int.parse(_sleepInHrsController.text), _sleepInMinController.text).toJson());
+            'sleepTime', MovementsTracking(startDate, int.parse(sleepHrsInTextFeild), sleepMinInTextFeild).toJson());
         loadSleepMovement();
       } else {
         debugPrint("456 ");
-        _sleepTracking!.value = int.parse(_sleepInHrsController.text.toString());
+        _sleepTracking!.value = int.parse(sleepHrsInTextFeild.toString());
         _sleepTracking!.date = startDate;
-        _sleepTracking!.discription = _sleepInMinController.text;
+        _sleepTracking!.discription = sleepMinInTextFeild;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
       clearAllFeilds();
@@ -715,8 +720,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
       setState(() {});
        final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['SleepDuration'] = _sleepInHrsController.text;
-      map['SleepMinutes'] = _sleepInMinController.text;
+      map['SleepDuration'] = sleepHrsInTextFeild;
+      map['SleepMinutes'] = sleepMinInTextFeild;
       map['Unit'] = 'Hrs';
       map['RecordDate'] = dateFormat.format(DateTime.now());
 

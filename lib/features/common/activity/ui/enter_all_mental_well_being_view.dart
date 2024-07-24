@@ -37,18 +37,18 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   var dateFormat = DateFormat('yyyy-MM-dd');
   DateTime? todaysDate;
   MovementsTracking? _sleepTracking;
-  MovementsTracking? _sleepTrackingMin;
+  //MovementsTracking? _sleepTrackingMin;
   int _sleepHrs = 0;
   int _sleepMin = 0;
-  int _sleepingHrs = 0;
+  //int _sleepingHrs = 0;
   Color buttonColor = Color(0XFFCFB4FF);
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
   var mindfulnessController = TextEditingController();
-  var _sleepInHrsController = TextEditingController();
-  var _sleepInMinController = TextEditingController();
-  var _sleepInMinFocus = FocusNode();
-  var _sleepInHrsFocus = FocusNode();
+  var sleepInHrsController = TextEditingController();
+  var sleepInMinController = TextEditingController();
+  var sleepInMinFocus = FocusNode();
+  var sleepInHrsFocus = FocusNode();
   var mindfulnessFocus = FocusNode();
 
   @override
@@ -78,22 +78,22 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         if (todaysDate == _sleepTracking!.date) {
           debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
           _sleepHrs = _sleepTracking!.value!;
-          _sleepingHrs = _sleepHrs;
+          //_sleepingHrs = _sleepHrs;
           _sleepMin = int.parse(_sleepTracking!.discription!);
         }
       }
 
       if(_sleepHrs != 0) {
-        _sleepInHrsController.text = _sleepHrs.toString();
-        _sleepInHrsController.selection = TextSelection.fromPosition(
-          TextPosition(offset: _sleepInHrsController.text.length),
+        sleepInHrsController.text = _sleepHrs.toString();
+        sleepInHrsController.selection = TextSelection.fromPosition(
+          TextPosition(offset: sleepInHrsController.text.length),
         );
       }
 
       if(_sleepMin != 0) {
-        _sleepInMinController.text = _sleepMin.toString();
-        _sleepInMinController.selection = TextSelection.fromPosition(
-          TextPosition(offset: _sleepInMinController.text.length),
+        sleepInMinController.text = _sleepMin.toString();
+        sleepInMinController.selection = TextSelection.fromPosition(
+          TextPosition(offset: sleepInMinController.text.length),
         );
       }
 
@@ -161,10 +161,10 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                               onTap: () {
                                 FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_save_button_click');
                                 toastDisplay = true;
-                                if(_sleepInHrsController.text.isEmpty && _sleepInMinController.text.isEmpty && mindfulnessController.text.toString().isEmpty){
+                                if(sleepInHrsController.text.isEmpty && sleepInMinController.text.isEmpty && mindfulnessController.text.toString().isEmpty){
                                   showToast('Please enter valid input', context);
                                 }else {
-                                  if(_sleepInHrsController.text.isNotEmpty || _sleepInMinController.text.isNotEmpty) {
+                                  if(sleepInHrsController.text.isNotEmpty || sleepInMinController.text.isNotEmpty) {
                                     recordMySleepTimeInHrs();
                                   }
                                   if (mindfulnessController.text
@@ -298,8 +298,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             child: Semantics(
                               label: 'Sleep measures in ',
                               child: TextFormField(
-                                  controller: _sleepInHrsController,
-                                  focusNode: _sleepInHrsFocus,
+                                  controller: sleepInHrsController,
+                                  focusNode: sleepInHrsFocus,
                                   maxLines: 1,
                                   maxLength: 2,
                                   textInputAction: TextInputAction.next,
@@ -307,10 +307,10 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   onChanged: (data){
                                     if(int.parse(data) > 23){
                                       showToast("Please enter valid hours", context);
-                                      _sleepInHrsController.clear();
-                                      _sleepInHrsController.text = data.substring(0,1);
-                                      _sleepInHrsController.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: _sleepInHrsController.text.length),
+                                      sleepInHrsController.clear();
+                                      sleepInHrsController.text = data.substring(0,1);
+                                      sleepInHrsController.selection = TextSelection.fromPosition(
+                                        TextPosition(offset: sleepInHrsController.text.length),
                                       );
                                       setState(() {
 
@@ -318,8 +318,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                     }
                                   },
                                   onFieldSubmitted: (term) {
-                                    _fieldFocusChange(context, _sleepInHrsFocus,
-                                    _sleepInMinFocus);
+                                    _fieldFocusChange(context, sleepInHrsFocus,
+                                    sleepInMinFocus);
                                   },
                                   inputFormatters: [
                                     FilteringTextInputFormatter.deny(
@@ -353,8 +353,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             child: Semantics(
                               label: 'Sleep measures in ',
                               child: TextFormField(
-                                  controller: _sleepInMinController,
-                                  focusNode: _sleepInMinFocus,
+                                  controller: sleepInMinController,
+                                  focusNode: sleepInMinFocus,
                                   maxLines: 1,
                                   maxLength: 2,
                                   textInputAction: TextInputAction.done,
@@ -362,10 +362,10 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                   onChanged: (data){
                                     if(int.parse(data) > 59){
                                       showToast("Please enter valid minutes", context);
-                                      _sleepInMinController.clear();
-                                      _sleepInMinController.text = data.substring(0,1);
-                                      _sleepInMinController.selection = TextSelection.fromPosition(
-                                        TextPosition(offset: _sleepInMinController.text.length),
+                                      sleepInMinController.clear();
+                                      sleepInMinController.text = data.substring(0,1);
+                                      sleepInMinController.selection = TextSelection.fromPosition(
+                                        TextPosition(offset: sleepInMinController.text.length),
                                       );
                                       setState(() {
 
@@ -698,8 +698,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     try {
 
 
-      String sleepHrsInTextFeild = _sleepInHrsController.text.isNotEmpty ? _sleepInHrsController.text : "0";
-      String sleepMinInTextFeild = _sleepInMinController.text.isNotEmpty ? _sleepInMinController.text : "0";
+      String sleepHrsInTextFeild = sleepInHrsController.text.isNotEmpty ? sleepInHrsController.text : "0";
+      String sleepMinInTextFeild = sleepInMinController.text.isNotEmpty ? sleepInMinController.text : "0";
 
       if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
       if (_sleepTracking == null) {

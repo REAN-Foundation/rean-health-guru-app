@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.362+2033
+version: 1.8.367+2038
 
 publish_to: none
 
@@ -87,7 +87,7 @@ dependencies:
   percent_indicator: ^4.2.2
   flutter_dotenv: ^5.0.2
   permission_handler: 9.2.0
-  get: ^4.3.8
+  #get: ^4.3.8
   pausable_timer: ^1.0.0+5
   phone_number: ^0.12.0+1
   flutter_sim_country_code: ^0.1.2

@@ -129,6 +129,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
       if (_sleepTracking != null) {
         if (todaysDate == _sleepTracking!.date) {
+          debugPrint("Sleep Min ==> ${_sleepTracking!.discription.toString()}");
           debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs ${int.parse(_sleepTracking!.discription.toString())} Min');
           _sleepHrs = _sleepTracking!.value!;
           _sleepInMin = int.parse(_sleepTracking!.discription.toString());
@@ -137,7 +138,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       //recordMySleepTimeInHrs(_sleepHrs.toString());
       //recordMySleepTimeInHrs("1");
       setState(() {});
-    } catch (e) {
+    }on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
   }

@@ -134,12 +134,14 @@ class Items {
       String? patientUserId, 
       String? unit, 
       int? sleepDuration,
+      dynamic sleepMinutes,
       dynamic stepCount,
       String? recordDate,}){
     _id = id;
     _patientUserId = patientUserId;
     _unit = unit;
     _sleepDuration = sleepDuration;
+    _sleepMinutes = sleepMinutes;
     _stepCount = stepCount;
     _recordDate = recordDate;
 }
@@ -149,6 +151,7 @@ class Items {
     _patientUserId = json['PatientUserId'];
     _unit = json['Unit'];
     _sleepDuration = json['SleepDuration'];
+    _sleepMinutes = json['SleepMinutes'];
     _stepCount = json['StepCount'];
     _recordDate = json['RecordDate'];
   }
@@ -156,6 +159,7 @@ class Items {
   String? _patientUserId;
   String? _unit;
   int? _sleepDuration;
+  dynamic _sleepMinutes;
   dynamic _stepCount;
   String? _recordDate;
 
@@ -163,6 +167,7 @@ class Items {
   String? get patientUserId => _patientUserId;
   String? get unit => _unit;
   int? get sleepDuration => _sleepDuration;
+  dynamic get sleepMinutes => _sleepMinutes;
   dynamic get stepCount => _stepCount;
   String? get recordDate => _recordDate;
 
@@ -172,6 +177,7 @@ class Items {
     map['PatientUserId'] = _patientUserId;
     map['Unit'] = _unit;
     map['SleepDuration'] = _sleepDuration;
+    map['SleepMinutes'] = _sleepMinutes;
     map['StepCount'] = _stepCount;
     map['RecordDate'] = _recordDate;
     return map;

@@ -237,11 +237,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     try {
       DateTime startDate = dateFormat.parse(DateTime.now().toIso8601String());
       final GetRecords records =
-      await model.getMySleepHistory(startDate.toString());
+      await model.getMySleepHistory(startDate.toString().replaceAll("00:00:00.000", ""));
       if (records.status == 'success') {
         if (records.data!.sleepRecords!.items!.isNotEmpty) {
+          debugPrint("Sleep Data In ${records.data!.sleepRecords!.items!.elementAt(0).sleepDuration} Hrs ${ records.data!.sleepRecords!.items!.elementAt(0).sleepMinutes} Min");
           _sharedPrefUtils.save(
-              'sleepTime', MovementsTracking(startDate, records.data!.sleepRecords!.items!.elementAt(0).sleepDuration, '').toJson());
+              'sleepTime', MovementsTracking(startDate, records.data!.sleepRecords!.items!.elementAt(0).sleepDuration, records.data!.sleepRecords!.items!.elementAt(0).sleepMinutes.toString()).toJson());
           //_sharedPrefUtils.save('sleepTime', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
         }
       } else {

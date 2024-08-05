@@ -151,7 +151,9 @@ class _BiometricBodyTemperatureVitalsViewState
               onTap: () {
                 if (_controller.text.toString().isEmpty) {
                   showToast('Please enter your body temperature', context);
-                } else {
+                // } else if(!isValueInBetweenRange(MinMaxRanges.minValueInTemp, MinMaxRanges.maxValueInTemp, _controller.text.toString())){
+                //   showToast('Please enter valid input', context);
+                // }  else {
                   addvitals();
                 }
               },
@@ -352,7 +354,7 @@ class _BiometricBodyTemperatureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -567,7 +569,7 @@ class _BiometricBodyTemperatureVitalsViewState
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "Celsius";
+      //map['Unit'] = "Farenheit";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

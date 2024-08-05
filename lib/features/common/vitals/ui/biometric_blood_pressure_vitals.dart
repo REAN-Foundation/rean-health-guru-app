@@ -364,7 +364,11 @@ class _BiometricBloodPresureVitalsViewState
                       } else if (_diastolicController.text.toString().isEmpty) {
                         showToast('Please enter your diastolic blood pressure',
                             context);
-                      } else {
+                      }/* else if(!isValueInBetweenRange(MinMaxRanges.minValueInBP, MinMaxRanges.maxValueInBP, _systolicController.text.toString())){
+                        showToast('Please enter valid input', context);
+                      }else if(!isValueInBetweenRange(MinMaxRanges.minValueInBP, MinMaxRanges.maxValueInBP, _diastolicController.text.toString())){
+                        showToast('Please enter valid input', context);
+                      }*/else {
                         addvitals(_systolicController.text.toString(),_diastolicController.text.toString());
                       }
                     },
@@ -606,8 +610,9 @@ class _BiometricBloodPresureVitalsViewState
         valeTextColor = Color(0XFF991112);
       }*/
     }
-    announceText('Your recent Blood Pressure is $value');
-
+    if(widget.allUIViewsVisible) {
+      announceText('Your recent Blood Pressure is $value');
+    }
     setState(() {
 
     });
@@ -921,7 +926,7 @@ class _BiometricBloodPresureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -988,7 +993,7 @@ class _BiometricBloodPresureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -114,12 +114,13 @@ class _MyDialogState extends State<AddHeightInCmDialog> {
                               RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: 'Cm',
+                            hintText: 'Centimeter',
                             counterText: "",
+                            suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("cm")),
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
-                            contentPadding: EdgeInsets.all(0),
+                            contentPadding: EdgeInsets.fromLTRB(0,15,0,0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
                             filled: true)),

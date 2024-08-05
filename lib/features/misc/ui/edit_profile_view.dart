@@ -80,7 +80,6 @@ class _EditProfileState extends State<EditProfile> {
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
-  String? auth = '';
   String addresses = '';
   late ProgressDialog progressDialog;
   String fullName = '';
@@ -98,8 +97,6 @@ class _EditProfileState extends State<EditProfile> {
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   final List<String> radioItemsForMiratalStatus = [ 'Single', 'Married', 'Divorced', 'Widowed'];
-  final List<String> radioItemsForRace = [ 'American Indian/Alaskan Native', 'Asian', 'Black/African American', 'Native Hawaiian or Other Pacific Islander', 'White' ];
-  final List<String> radioItemsForEthnicity = [ 'Hispanic/Latino', 'Not Hispanic/Latino', 'Prefer not to say' ];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -111,6 +108,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    refreshPatientDetails(auth!, patientUserId!);
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
     _api_key = dotenv.env['Patient_API_KEY'];
     progressDialog = ProgressDialog(context: context);
@@ -200,6 +198,7 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
+      debugPrint("ETHI ==> ${patient.healthProfile!.ethnicity} ");
       _ethnicityValue = patient.healthProfile!.ethnicity ?? '';
       if(!radioItemsForEthnicity.contains(_ethnicityValue)){
         _ethnicityValue = '';
@@ -435,7 +434,7 @@ class _EditProfileState extends State<EditProfile> {
         showDeleteDialog();
         carePlanEnrollmentForPatientGlobe = null;
         _sharedPrefUtils.save('CarePlan', null);
-        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.saveBoolean('login1.8.167', null);
         _sharedPrefUtils.clearAll();
         chatList.clear();
       } else {
@@ -704,7 +703,9 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               )
             : Semantics(
-                label: 'Marital Status ' + _maritalStatusValue.toString(),
+                label: _maritalStatusValue.toString().isEmpty
+                    ? "No data available"
+                    :'Marital Status ' + _maritalStatusValue.toString(),
                 readOnly: true,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -748,7 +749,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Race',
+        Text('What is your race?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -795,7 +796,9 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Race ' + _raceValue.toString(),
+          label:  _raceValue.toString().trim().isEmpty
+              ? "No data available"
+              :'Race ' + _raceValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -841,7 +844,7 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Ethnicity',
+        Text('What is your ethnicity?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -888,7 +891,9 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Ethnicity ' + _ethnicityValue.toString(),
+          label: _ethnicityValue.toString().isEmpty
+              ? "No data available"
+              :'Ethnicity ' + _ethnicityValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -982,7 +987,9 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Are you a stroke survivor or caregiver?' + _surviourOrCaregiverValue.toString(),
+          label: _surviourOrCaregiverValue.toString().isEmpty
+              ? "No data available"
+              :'Are you a stroke survivor or caregiver?' + _surviourOrCaregiverValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -1076,7 +1083,9 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Do you live alone?' + _liveAloneValue.toString(),
+          label: _liveAloneValue.toString().isEmpty
+              ? "No data available"
+              :'Do you live alone?' + _liveAloneValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -1170,7 +1179,9 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Did you work prior to your stroke?' + workPriorToStrokeValue.toString(),
+          label: workPriorToStrokeValue.toString().isEmpty
+              ? "No data available"
+              :'Did you work prior to your stroke?' + workPriorToStrokeValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -1315,7 +1326,9 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               )
             : Semantics(
-                label: 'Country ' + _countryValue.toString(),
+                label: _countryValue.toString().isEmpty
+                    ? "No data available"
+                    :'Country ' + _countryValue.toString(),
                 readOnly: true,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -1765,50 +1778,52 @@ class _EditProfileState extends State<EditProfile> {
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: textGrey,
-                width: 1.0,
+      child: MergeSemantics(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                border: Border.all(
+                  color: textGrey,
+                  width: 1.0,
+                ),
               ),
-            ),
-            child: Semantics(
-              label: 'First Name ' + _firstNameController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _firstNameController,
-                  focusNode: _firstNameFocus,
-                  maxLines: 1,
-                  keyboardType: TextInputType.name,
-                  enabled: false,
-                  style: TextStyle(
-                    color: textGrey,
-                  ),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
-            ),
-          )
-        ],
+              child: Semantics(
+                label: 'First Name ' + _firstNameController.text.toString(),
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _firstNameController,
+                    focusNode: _firstNameFocus,
+                    maxLines: 1,
+                    keyboardType: TextInputType.name,
+                    enabled: false,
+                    style: TextStyle(
+                      color: textGrey,
+                    ),
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -1816,51 +1831,53 @@ class _EditProfileState extends State<EditProfile> {
   Widget _entryLastNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: textGrey,
-                width: 1.0,
+      child: MergeSemantics(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                border: Border.all(
+                  color: textGrey,
+                  width: 1.0,
+                ),
               ),
-            ),
-            child: Semantics(
-              label: 'Last Name ' + _lastNameController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _lastNameController,
-                  focusNode: _lastNameFocus,
-                  keyboardType: TextInputType.name,
-                  enabled: false,
-                  style: TextStyle(
-                    color: textGrey,
-                  ),
-                  maxLines: 1,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    _fieldFocusChange(
-                        context, _lastNameFocus, _mobileNumberFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
-            ),
-          )
-        ],
+              child: Semantics(
+                label: 'Last Name ' + _lastNameController.text.toString(),
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _lastNameController,
+                    focusNode: _lastNameFocus,
+                    keyboardType: TextInputType.name,
+                    enabled: false,
+                    style: TextStyle(
+                      color: textGrey,
+                    ),
+                    maxLines: 1,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(
+                          context, _lastNameFocus, _mobileNumberFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -1892,7 +1909,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'City ' + _cityController.text.toString(),
+              label:  _cityController.text.toString().isEmpty
+                  ? "No data available"
+                  :'City ' + _cityController.text.toString(),
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2000,7 +2019,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Postal Code ' +
+              label: _postalCodeController.text.toString().isEmpty
+                  ? "No data available"
+                  : 'Postal Code ' +
                   _postalCodeController.text.toString().replaceAllMapped(
                       RegExp(r".{1}"), (match) => "${match.group(0)} "),
               textField: isEditable,
@@ -2011,6 +2032,9 @@ class _EditProfileState extends State<EditProfile> {
                     controller: _postalCodeController,
                     focusNode: _postalFocus,
                     keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
                     maxLines: 1,
                     enabled: isEditable,
                     textInputAction: TextInputAction.done,
@@ -2056,7 +2080,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Address ' + _addressController.text.toString(),
+              label: _addressController.text.toString().isEmpty
+                  ? "No data available"
+                  :'Address ' + _addressController.text.toString(),
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2111,7 +2137,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: "Email " + _emailController.text.toString(),
+              label:  _emailController.text.toString().isEmpty
+                  ? "No data available"
+                  :"Email " + _emailController.text.toString(),
               textField: isEditable,
               child: ExcludeSemantics(
                 child: TextFormField(
@@ -2672,6 +2700,35 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  refreshPatientDetails( String auth, String userId) async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
+
+      final response =
+      await apiProvider!.get('/patients/' + userId, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+        loadSharedPrefs();
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+
+      }
+    } catch (CustomException) {
+      debugPrint(CustomException.toString());
+    }
+  }
+
   getPatientDetails(LoginViewModel model, String auth, String userId) async {
     try {
       model.setBusy(true);
@@ -3015,7 +3072,7 @@ class _EditProfileState extends State<EditProfile> {
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
         SizedBox(
-          height: 8,
+          height: 0,
         ),
         _entryAddressField('Address'),
         SizedBox(
@@ -3076,150 +3133,171 @@ class _EditProfileState extends State<EditProfile> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
           children: [
-            Semantics(
-              label: 'Camera',
-              button: true,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openCamera();
-                },
-                child: ExcludeSemantics(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Camera\n   ',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  alignment: Alignment.topRight,
+                  icon: Icon(
+                    Icons.close,
+                    color: primaryColor,
+                    semanticLabel: 'Close',
                   ),
-                ),
-              ),
-            ),
-            Semantics(
-              label: 'Gallery',
-              button: true,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openGallery();
-                },
-                child: ExcludeSemantics(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.image,
-                              color: primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Gallery\n   ',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            /*if (profileImagePath != '') ...[
-              Semantics(
-                label: 'removeProfileImage',
-                child: InkWell(
-                  onTap: () {
-                    profileImagePath = '';
+                  onPressed: () {
+                    Navigator.of(context).pop();
                   },
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
+                ),
+                SizedBox(width: 4,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Semantics(
+                  label: 'Camera',
+                  button: true,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      openCamera();
+                    },
+                    child: ExcludeSemantics(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
                                 BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 1.0,
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.close,
-                              color: primaryColor,
-                              size: 24,
+                            SizedBox(
+                              height: 8,
                             ),
-                          ),
+                            Text(
+                              'Camera\n   ',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Remove\nPhoto',
-                          style: TextStyle(fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],*/
+                Semantics(
+                  label: 'Gallery',
+                  button: true,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      openGallery();
+                    },
+                    child: ExcludeSemantics(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.image,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Gallery\n   ',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                /*if (profileImagePath != '') ...[
+                  Semantics(
+                    label: 'removeProfileImage',
+                    child: InkWell(
+                      onTap: () {
+                        profileImagePath = '';
+                      },
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.close,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Remove\nPhoto',
+                              style: TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],*/
+              ],
+            ),
           ],
         ),
       ),

@@ -436,6 +436,7 @@ class _AppDrawerState extends State<AppDrawer> {
             visible: RemoteConfigValues.healthDeviceConnectionVisibility,
             child: InkWell(
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_health_device_button_click');
                 Navigator.popAndPushNamed(context, RoutePaths.Connect_Health_Device);
                 //progressDialog!.show(max: 100, msg: 'Loading...');
                 //generateSeesionId();
@@ -806,7 +807,7 @@ class _AppDrawerState extends State<AppDrawer> {
             onPressed: () {
               carePlanEnrollmentForPatientGlobe = null;
               _sharedPrefUtils.save('CarePlan', null);
-              _sharedPrefUtils.saveBoolean('login', null);
+              _sharedPrefUtils.saveBoolean('login1.8.167', null);
               _sharedPrefUtils.clearAll();
               chatList.clear();
               Navigator.pushAndRemoveUntil(context,
@@ -831,7 +832,7 @@ class _AppDrawerState extends State<AppDrawer> {
           debugPrint('Positive Button Click');
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);
-          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.saveBoolean('login1.8.167', null);
           _sharedPrefUtils.clearAll();
           chatList.clear();
           Navigator.pushAndRemoveUntil(context,

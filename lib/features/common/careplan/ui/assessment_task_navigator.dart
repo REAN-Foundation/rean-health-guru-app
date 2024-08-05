@@ -14,6 +14,7 @@ import 'package:patient/features/common/careplan/ui/add_medication_task_careplan
 import 'package:patient/features/common/careplan/ui/assessment_multi_choice_question.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
+import 'package:patient/features/common/careplan/ui/biometric_blood_pressure_task.dart';
 import 'package:patient/features/common/careplan/ui/text_task_careplan.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -173,6 +174,7 @@ class _AssesmentTaskNavigatorViewState
           widget.task!.action!.assessment!.id.toString());
 
       if (response.status == 'success') {
+        debugPrint("Inside Success");
         //progressDialog.close();
         navigateScreen(response.data!.next!);
         debugPrint('AHA Assesment Care Plan Task ==> ${response.toJson()}');
@@ -198,6 +200,9 @@ class _AssesmentTaskNavigatorViewState
     } else if (questionType.nodeType == 'Node list') {
       nodeListTask(questionType);
     } else if (questionType.expectedResponseType! == 'Biometrics') {
+      if(questionType.title!.contains('Please provide your systolic blood pressure (SBP) and diastolic blood pressure (DBP).') ){
+        biometricBPQuestion(questionType);
+      }
       //showToast('Biometric Task');
       //assignmentTask(assessmment);
     } else if (questionType.expectedResponseType! == 'Text') {
@@ -370,6 +375,29 @@ class _AssesmentTaskNavigatorViewState
     //}
   }
 
+  biometricBPQuestion(Next assessmment) async {
+    final id = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => BiomatricBloodPressureTask(assessmment)),
+    );
+    debugPrint('Question Index ==> $id');
+    /*if(this.assessmment.question.isLastQuestion){
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return HomeView( 1 );
+          }), (Route<dynamic> route) => false);
+    }else {*/
+    if (id == null) {
+      Navigator.pop(context);
+      showToast('Complete the assessment where you left off', context);
+    } else {
+      nextQuestion(id);
+    }
+    //}
+  }
+
   yesNoQuestion(Next assessmment) async {
     final id = await Navigator.push(
       context,
@@ -450,8 +478,15 @@ class _AssesmentTaskNavigatorViewState
     try {
       final map = <String, dynamic>{};
       map['ResponseType'] = assessmment!.expectedResponseType;
-      map['Answer'] = index;
-
+      if(assessmment!.expectedResponseType == "Biometrics"){
+        var answer = <String, dynamic>{};
+        answer["BiometricsType"] = "Blood Pressure";
+        answer["ProviderCode"] = "Blood Pressure";
+        answer["Value"] = index;
+        map["Answer"] = answer;
+      }else {
+        map['Answer'] = index;
+      }
       final AssesmentResponse _answerAssesmentResponse =
           await model.answerAssesmentResponse(
               widget.task!.action!.assessment!.id.toString(),
@@ -469,7 +504,10 @@ class _AssesmentTaskNavigatorViewState
             showSuccessDialog();
           //}
 
-        } else {
+        } else if(_answerAssesmentResponse.data!.answerResponse!.messageBeforeNext != null){
+          messageBeforeNextDialog(_answerAssesmentResponse.data!.answerResponse!.messageBeforeNext.toString());
+        }else {
+
           getNextQuestionAssesmentResponse();
           debugPrint(
               'AHA Assesment Care Plan Task ==> ${_answerAssesmentResponse.toJson()}');
@@ -484,6 +522,117 @@ class _AssesmentTaskNavigatorViewState
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+  messageBeforeNextDialog(String message) {
+
+
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        width: MediaQuery.of(context).size.width - 64,
+        child: _messageBeforeNext(message),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
+  }
+
+  Widget _messageBeforeNext(String message) {
+
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12)),
+              color: colorF6F6FF,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text("Message",
+                    style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        color: primaryColor,
+                        fontSize: 16.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    message,
+                    style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        color: primaryColor,
+                        fontSize: 16.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: InkWell(
+              onTap: () {
+                getNextQuestionAssesmentResponse();
+                Navigator.pop(context);
+              },
+              child: Container(
+                  height: 40,
+                  width: 120,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Okay',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   nextQuestionIfListNodeAnswer(List<int> index) async {
@@ -721,10 +870,12 @@ class _AssesmentTaskNavigatorViewState
                       Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
                       arguments: widget.task!.action!.assessment!.id);
                   }else {
-                    Navigator.pushAndRemoveUntil(context,
+                    int count = 0;
+                    Navigator.of(context).popUntil((_) => count++ >= 2);
+                   /* Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
                           return HomeView(1);
-                        }), (Route<dynamic> route) => false);
+                        }), (Route<dynamic> route) => false);*/
                   }
                 },
                 child: Container(

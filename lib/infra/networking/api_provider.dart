@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:patient/infra/utils/common_utils.dart';
 
 import 'custom_exception.dart';
 
@@ -150,7 +151,6 @@ class ApiProvider {
       case 201:
       case 400:
       case 401:
-      case 403:
       case 404:
       case 409:
       case 422:
@@ -161,7 +161,9 @@ class ApiProvider {
         final responseJson = json.decode(response.body.toString());
         debugPrint(responseJson.toString());
         return responseJson;
-
+      case 403:
+        autoLogout();
+        break;
       default:
         final code = response.statusCode.toString();
         debugPrint('Status_Code ${code.toString()}');

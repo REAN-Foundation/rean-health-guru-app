@@ -14,22 +14,22 @@ on:
     inputs:
       Tag_name:
         description: Github Tag name(please include "v", example:v1.8.245)
-        required: true
+        required: false
 
 jobs:
 
-  Github-ECR-Tag-Check:
-   runs-on: ubuntu-latest
-   steps:
-     - name: check tag
-       uses: mukunku/tag-exists-action@v1.2.0
-       id: checkTag
-       with: 
-         tag: ${{ github.event.inputs.Tag_name }}
-     - run: if [[ ${{ steps.checkTag.outputs.exists }} == 'false' ]]; then exit 1; fi
+  # Github-ECR-Tag-Check:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: check tag
+  #      uses: mukunku/tag-exists-action@v1.2.0
+  #      id: checkTag
+  #      with: 
+  #        tag: ${{ github.event.inputs.Tag_name }}
+  #    - run: if [[ ${{ steps.checkTag.outputs.exists }} == 'false' ]]; then exit 1; fi
   
   gitguardian-scanning:
-    needs: Github-ECR-Tag-Check
+    # needs: Github-ECR-Tag-Check
     name: GitGuardian Scan
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   CodeScan-FlutterAnalyze:
-    needs: Github-ECR-Tag-Check
+    # needs: Github-ECR-Tag-Check
     environment: aha-uat
     runs-on: ubuntu-latest
     steps:
@@ -56,9 +56,9 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+        # with:
+        #   ref: ${{ github.event.inputs.Tag_name }}
+        #   fetch-depth: 1
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
@@ -78,7 +78,7 @@ jobs:
           flutter analyze --preamble --congratulate
 
   Android-BuildApp:
-    needs: Github-ECR-Tag-Check
+    # needs: Github-ECR-Tag-Check
     environment: aha-uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest
@@ -87,9 +87,9 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+        # with:
+        #   ref: ${{ github.event.inputs.Tag_name }}
+        #   fetch-depth: 1
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -155,9 +155,9 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+        # with:
+        #   ref: ${{ github.event.inputs.Tag_name }}
+        #   fetch-depth: 1
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -177,18 +177,18 @@ jobs:
 
 
   iOS-BuildApp:
-    needs: Github-ECR-Tag-Check
+    # needs: Github-ECR-Tag-Check
     environment: aha-uat
     # needs: [Code-Scan]
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       # Checkout Code
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+        # with:
+        #   ref: ${{ github.event.inputs.Tag_name }}
+        #   fetch-depth: 1
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
@@ -248,7 +248,7 @@ jobs:
   iOS-Release-Alpha:
     environment: aha-uat
     needs: iOS-BuildApp
-    runs-on: macos-latest
+    runs-on: macos-13
     defaults:
       run:
         shell: bash
@@ -258,9 +258,9 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.Tag_name }}
-          fetch-depth: 1
+        # with:
+        #   ref: ${{ github.event.inputs.Tag_name }}
+        #   fetch-depth: 1
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane

@@ -221,6 +221,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                         _timer!.isActive
                                                             ? Semantics(
                                                                 button: true,
+                                                                label: 'Play',
                                                                 child:
                                                                     ExcludeSemantics(
                                                                   child:
@@ -285,6 +286,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                 70.0))),
                                                 child: Semantics(
                                                   button: true,
+                                                  label: 'Pause',
                                                   child: ExcludeSemantics(
                                                     child: Container(
                                                       height: 100,
@@ -492,7 +494,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
     hours = 0;
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
-    map['DurationInMins'] = Duration(minutes: newSec).inMinutes.toString();
+    map['DurationInMins'] = Duration(seconds: newSec).inMinutes.toString();
     map['RecordDate'] = dateFormat.format(DateTime.now());
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);

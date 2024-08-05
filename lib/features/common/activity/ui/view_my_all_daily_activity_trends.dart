@@ -494,62 +494,64 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Stand',
-                      semanticsLabel: 'Stand',
-                      style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18.0,
-                          color: textBlack),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                ImageIcon(
-                  AssetImage('res/images/ic_stand.png'),
-                  size: 48,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                MergeSemantics(
-                  child: Column(
+            child: MergeSemantics(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(Conversion.durationFromMinToHrsToString(standMovements),
-                          semanticsLabel:
-                              Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
-                          style: const TextStyle(
-                              color: textBlack,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Montserrat",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 22.0),
-                          textAlign: TextAlign.center),
-                      Text("Duration",
-                          semanticsLabel: 'Duration',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: textBlack,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                          )),
+                      Text(
+                        'Stand',
+                        semanticsLabel: 'Stand',
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18.0,
+                            color: textBlack),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 16,
+                  ),
+                  ImageIcon(
+                    AssetImage('res/images/ic_stand.png'),
+                    size: 48,
+                    color: primaryColor,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  MergeSemantics(
+                    child: Column(
+                      children: [
+                        Text(Conversion.durationFromMinToHrsToString(standMovements),
+                            semanticsLabel:
+                                Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                            style: const TextStyle(
+                                color: textBlack,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 22.0),
+                            textAlign: TextAlign.center),
+                        Text("Duration",
+                            semanticsLabel: 'Duration',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: textBlack,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           /*Positioned(
@@ -614,62 +616,64 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Steps',
-                      semanticsLabel: 'Steps',
-                      style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18.0,
-                          color: textBlack),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                ImageIcon(
-                  AssetImage('res/images/ic_steps_count.png'),
-                  size: 48,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                MergeSemantics(
-                  child: Column(
+            child: MergeSemantics(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(stepsToDisplay.toString(),
-                          semanticsLabel: stepsToDisplay.toString(),
-                          style: const TextStyle(
-                              color: textBlack,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Montserrat",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 22.0),
-                          textAlign: TextAlign.center),
-                      Text("Steps",
-                          semanticsLabel: 'Steps',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: secondaryTextBlack,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                          )),
+                      Text(
+                        'Steps',
+                        semanticsLabel: 'Steps',
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18.0,
+                            color: textBlack),
+                      ),
                     ],
                   ),
-                ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  ImageIcon(
+                    AssetImage('res/images/ic_steps_count.png'),
+                    size: 48,
+                    color: primaryColor,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  MergeSemantics(
+                    child: Column(
+                      children: [
+                        Text(stepsToDisplay.toString(),
+                            semanticsLabel: stepsToDisplay.toString(),
+                            style: const TextStyle(
+                                color: textBlack,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 22.0),
+                            textAlign: TextAlign.center),
+                        Text("Steps",
+                            semanticsLabel: 'Steps',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: textBlack,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal,
+                            )),
+                      ],
+                    ),
+                  ),
 
-              ],
+                ],
+              ),
             ),
           ),
           /*Positioned(
@@ -815,62 +819,64 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Exercise',
-                      semanticsLabel: 'Exercise',
-                      style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18.0,
-                          color: textBlack),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                ImageIcon(
-                  AssetImage('res/images/ic_exercise_person.png'),
-                  size: 48,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                MergeSemantics(
-                  child: Column(
+            child: MergeSemantics(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                          semanticsLabel:
-                              Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
-                          style: const TextStyle(
-                              color: textBlack,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Montserrat",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 22.0),
-                          textAlign: TextAlign.center),
-                      Text("Duration",
-                          semanticsLabel: 'Duration',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: secondaryTextBlack,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                          )),
+                      Text(
+                        'Exercise',
+                        semanticsLabel: 'Exercise',
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18.0,
+                            color: textBlack),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 16,
+                  ),
+                  ImageIcon(
+                    AssetImage('res/images/ic_exercise_person.png'),
+                    size: 48,
+                    color: primaryColor,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  MergeSemantics(
+                    child: Column(
+                      children: [
+                        Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                            semanticsLabel:
+                                Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                            style: const TextStyle(
+                                color: textBlack,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 22.0),
+                            textAlign: TextAlign.center),
+                        Text("Duration",
+                            semanticsLabel: 'Duration',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: textBlack,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(

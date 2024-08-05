@@ -11,6 +11,7 @@ import 'package:patient/features/common/emergency/models/health_system_pojo.dart
 import 'package:patient/features/misc/models/awards_user_details.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
+import 'package:patient/features/misc/models/get_health_report_settings_pojo.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
@@ -26,7 +27,7 @@ class CommonConfigModel extends BaseModel {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   AwardApiProvider? awardApiProvider = GetIt.instance<AwardApiProvider>();
 
-  Future<GetCarePlanEnrollmentForPatient> getCarePlan() async {
+  Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
     // Get user profile for id
 
     final map = <String, String>{};
@@ -34,7 +35,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + patientUserId! + '/enrollments?isAcvtive=true',
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isActive='+isActive.toString(),
         header: map);
     setBusy(false);
     // Convert and return
@@ -140,7 +141,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems?planName='+planName,
+        '/patient-emergency-contacts/health-systems',//?planName='+planName
         header: map);
 
     setBusy(false);
@@ -349,6 +350,36 @@ class CommonConfigModel extends BaseModel {
     //setBusy(false);
     // Convert and return
     return HowToEarnBadges.fromJson(response);
+  }
+
+  Future<GetHealthReportSettingsPojo> getHealthReportSettings() async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/patient-statistics/'+patientUserId.toString()+'/settings',
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return GetHealthReportSettingsPojo.fromJson(response);
+  }
+
+  Future<GetHealthReportSettingsPojo> setHealthReportSettings(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.put(
+        '/patient-statistics/'+patientUserId.toString()+'/settings',
+        header: map, body: body);
+    setBusy(false);
+    // Convert and return
+    return GetHealthReportSettingsPojo.fromJson(response);
   }
 
 }

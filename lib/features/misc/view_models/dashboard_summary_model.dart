@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_assessment_template_by_id_response.dart';
@@ -66,7 +67,7 @@ class DashboardSummaryModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
     /*final response = await apiProvider!.get(
-        '/educational/knowledge-nuggets/71020ffc-c83b-46b1-9015-4a647059c689', //+ patientUserId!,
+        '/educational/knowledge-nuggets/6b37b604-0157-426a-93e4-ecc0ba2b0ef3', //+ patientUserId!,
         header: map);*/
     final response = await apiProvider!.get(
         '/educational/knowledge-nuggets/today/' + patientUserId!,
@@ -159,6 +160,34 @@ class DashboardSummaryModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return SearchSymptomAssesmentTempleteResponse.fromJson(response);
+  }
+
+  Future<UserTaskResponse> getUserTasks(
+      String state, String dateFrom, String dateTo) async {
+    //setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    //final String query = state == '' ? '' : '?status=' + state;
+    final String query = '';
+    //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
+    final response = await apiProvider!.get(
+        '/user-tasks/search' +
+            query +
+            '?userId=' +
+            patientUserId! +
+            '&orderBy=ScheduledStartTime&order=ascending&scheduledFrom=' +
+            dateFrom +
+            '&scheduledTo=' +
+            dateTo +
+            '&itemsPerPage=410',
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return UserTaskResponse.fromJson(response);
   }
 
   Future<GetAssesmentTemplateByIdResponse> getAssesmentTemplateById(

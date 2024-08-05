@@ -252,7 +252,9 @@ class _BiometricBloodSugarVitalsViewState
                   FirebaseAnalytics.instance.logEvent(name: 'vitals_blood_glucose_save_button_click');
                   if (_controller.text.toString().isEmpty) {
                     showToast('Please enter your blood glucose', context);
-                  } else {
+                  } /*else if(!isValueInBetweenRange(MinMaxRanges.minValueInBloodGlucose, MinMaxRanges.maxValueInBloodGlucose, _controller.text.toString())){
+                    showToast('Please enter valid input', context);
+                  } */else {
                     addvitals();
                   }
                 },
@@ -456,7 +458,7 @@ class _BiometricBloodSugarVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

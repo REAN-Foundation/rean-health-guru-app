@@ -33,7 +33,7 @@ class EmergencyContactView extends StatefulWidget {
   _EmergencyContactViewState createState() => _EmergencyContactViewState();
 }
 
-class _EmergencyContactViewState extends State<EmergencyContactView> {
+class _EmergencyContactViewState extends State<EmergencyContactView> with WidgetsBindingObserver{
   var model = CommonConfigModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController =
@@ -54,6 +54,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   var healthSystemHospitalList = <String>[];
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    debugPrint('Emergency ==> $state');
+    if (state == AppLifecycleState.resumed) {
+      //do your stuff
+
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   getEmergencyTeam() async {
     try {
@@ -82,17 +97,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     try {
       healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo =
-      await model.getHealthSystem(carePlanEnrollmentForPatientGlobe!
-          .data!.patientEnrollments!
-          .elementAt(0)
-          .planName
-          .toString());
+      await model.getHealthSystem('');
 
       if (healthSystemPojo.status == 'success') {
         _healthSystems = healthSystemPojo.data!.healthSystems;
         for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
           healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
         }
+        healthSystemList.sort();
         healthSystemList.add('None of the above');
         setState(() {});
       } else {
@@ -116,6 +128,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         for(int i = 0 ; i < systemHospitals.data!.healthSystemHospitals!.length ; i++ ){
           healthSystemHospitalList.add(systemHospitals.data!.healthSystemHospitals![i].name.toString());
         }
+        healthSystemHospitalList.sort();
         setState(() {});
       } else {
         showToast(systemHospitals.message!, context);
@@ -166,11 +179,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   void initState() {
-    if(carePlanEnrollmentForPatientGlobe != null) {
-      getHealthSystem();
-    }
+    //if(carePlanEnrollmentForPatientGlobe != null) {
+
+    //}
+    WidgetsBinding.instance.addObserver(this);
     loadSharedPrefs();
     getEmergencyTeam();
+    getHealthSystem();
     super.initState();
   }
 
@@ -191,7 +206,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  if(RemoteConfigValues.hospitalSystemVisibility && carePlanEnrollmentForPatientGlobe != null && healthSystemList.isNotEmpty)...[
+                  if(RemoteConfigValues.hospitalSystemVisibility && healthSystemList.isNotEmpty)...[
                   Row(
                     children: [
                       Padding(

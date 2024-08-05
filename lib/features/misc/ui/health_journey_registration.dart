@@ -20,6 +20,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -29,12 +30,12 @@ import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SelectCarePlanView extends StatefulWidget {
+class HealthJourneyRegistrationView extends StatefulWidget {
   @override
-  _SelectCarePlanViewState createState() => _SelectCarePlanViewState();
+  _HealthJourneyRegistrationViewState createState() => _HealthJourneyRegistrationViewState();
 }
 
-class _SelectCarePlanViewState extends State<SelectCarePlanView> {
+class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistrationView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late GetAHACarePlansResponse _ahaCarePlansResponse;
@@ -193,7 +194,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         ));
       }*/
     }
-
+    items.add(DropdownMenuItem(
+      child: Text("None"),
+      value: "None",
+    ));
     debugPrint('List Length ${items.length}');
 
     return items;
@@ -232,124 +236,129 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: primaryColor,
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            elevation: 0,
-            backgroundColor: primaryColor,
-            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+            backgroundColor: Colors.white,
             title: Text(
-              '',//'Select Health Journey',
+              'Health Journey',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: Colors.white,
+                  color: primaryColor,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: <Widget>[
-              /*IconButton(
-                icon: Icon(
-                  Icons.person_pin,
-                  color: Colors.black,
-                  size: 32.0,
-                ),
-                onPressed: () {
-                  debugPrint("Clicked on profile icon");
-                },
-              )*/
-            ],
+            iconTheme: IconThemeData(color: Colors.black),
           ),
-          body: Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    color: primaryColor,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    color: primaryColor,
-                    height: 0,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(0.0),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              topLeft: Radius.circular(12))),
-                      child: model!.busy
-                          ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Scrollbar(
-                                    thumbVisibility: true,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          SizedBox(height: 16,),
-                                          Semantics(
-                                            label: 'Health Journey image',
-                                            image: true,
-                                            child: Image.asset(
-                                              'res/images/ic_hf_care_plan.png',
-                                              color: primaryColor,
-                                              width: 120,
-                                              height: 120,
-                                            ),
-                                          ),
-                                          SizedBox(height: 8,),
-                                          Text(
-                                            'Health Journey',
-                                            style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
-                                          ),
-                                          SizedBox(height: 16,),
-                                          selectCarePlanDropDown(),
-                                          startCarePlanDate(),
-                                          SizedBox(height: 8,),
-                                          if(RemoteConfigValues.hospitalSystemVisibility)
-                                          healthSystem(),
-                                          //checkElegibility(),
-                                          /* if (selectedCarePlan == '')
-                                            Container()
-                                          else*/
-                                          decription != ''
-                                              ? descriptionOfCarePlan()
-                                              : Container(),
-                                          //eligibilityOfCarePlan(),
-                                          //recomandationForCarePlan(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                registerFooter(),
-                              ],
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 00),
+            child: model!.busy
+                ? Center(child: CircularProgressIndicator(),)
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: pageNumber(),
+                      ),
+                      SizedBox(height: 40,),
+                      Expanded(
+                        child: Scrollbar(
+                          thumbVisibility: false,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: <Widget>[
+
+                                  Text('Choose a health journey to get weekly education and tips to help take action towards your health condition.', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),),
+                                  SizedBox(height: 16,),
+                                  selectCarePlanDropDown(),
+                                  if(selectedCarePlan != "None")
+                                  startCarePlanDate(),
+                                  SizedBox(height: 8,),
+                                  decription != ''
+                                      ? descriptionOfCarePlan()
+                                      : Container(),
+                                  //eligibilityOfCarePlan(),
+                                  //recomandationForCarePlan(),
+                                ],
+                              ),
                             ),
-                    ),
-                  )
-                ],
-              ),
-            ],
+                          ),
+                        ),
+                      ),
+                      registerFooter(),
+                      SizedBox(height: 20,),
+                    ],
+                  ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget pageNumber(){
+    return Container(
+      height: 40,
+      /*decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black
+        ),
+      ),*/
+      child: Stack(
+        children: [
+          Positioned(top: 20,child: SizedBox(width: MediaQuery.of(context).size.width, height: 1, child: Container(color: Colors.black,),)),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  ),
+                ),
+                ExcludeSemantics(
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Center(child: Text("2", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),)),
+                  ),
+                ),
+                Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: Center(child: Text("3",
+                    semanticsLabel: 'step 3 Choose Health Journey',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),)),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -371,178 +380,185 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget selectCarePlanDropDown() {
-    return Padding(
-      padding:
-      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Select Health Journey',
-                style: TextStyle(
-                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          hint: 'required',
+          label: 'What health condition are you most concerned about?',
+          child: ExcludeSemantics(
+            child: Text.rich(
+              TextSpan(
+                children:[
+            TextSpan(
+            text: 'What health condition are you most concerned about?',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  TextSpan(
+                      text: '*' ,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                          fontSize: 16)),
+                ],
+            )
               ),
-              Text(
-                '*',
-                semanticsLabel: 'required',
-                style: TextStyle(
-                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
-              ),
-            ],
           ),
-          const SizedBox(
-            height: 4,
           ),
-          Semantics(
-            hint: 'required',
-            child: Container(
-              height: 48,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: Colors.grey, width: 1),
+        const SizedBox(
+          height: 4,
+        ),
+        Semantics(
+          hint: 'required',
+          child: Container(
+            height: 48,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey, width: 1),
+            ),
+            child: DropdownButton<String>(
+              isExpanded: true,
+              hint: Text('Choose an option',
+                style: TextStyle(
+                    color: textBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
               ),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                hint: Text('Choose an option',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-                items:
-                _carePlanMenuItems /*[
-                    DropdownMenuItem(
-                      value: "Heart Failure - AHAHF ",
-                      child: Text(
-                        "Heart Failure - AHAHF ",
-                        style: TextStyle(
-                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
+              items:
+              _carePlanMenuItems /*[
+                  DropdownMenuItem(
+                    value: "Heart Failure - AHAHF ",
+                    child: Text(
+                      "Heart Failure - AHAHF ",
+                      style: TextStyle(
+                          color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
                     ),
+                  ),
 
-                  ]*/
-                ,
-                onChanged: (value) {
-                  /*if(value == 'Heart Failure Motivator' || value == 'SMBP'){
-                    healthSystemList.clear();
-                    RemoteConfigValues.hospitalSystemVisibility = false;
-                  }else{*/
+                ]*/
+              ,
+              onChanged: (value) {
+                /*if(value == 'Heart Failure Motivator' || value == 'SMBP'){
+                  healthSystemList.clear();
+                  RemoteConfigValues.hospitalSystemVisibility = false;
+                }else{*/
 
-                    //RemoteConfigValues.hospitalSystemVisibility = true;
-                  //}
-
-                  setState(() {
-                    selectedCarePlan = value;
-                    getCarePlanDetails();
-                  });
-                },
-                value: selectedCarePlan == '' ? null : selectedCarePlan,
-              ),
+                  //RemoteConfigValues.hospitalSystemVisibility = true;
+                //}
+                if(value == "None"){
+                  decription = '';
+                }
+                setState(() {
+                  selectedCarePlan = value;
+                  getCarePlanDetails();
+                });
+              },
+              value: selectedCarePlan == '' ? null : selectedCarePlan,
             ),
           ),
-          const SizedBox(
-            height: 4,
-          ),
-          /*Text(
-            selectedCarePlan == '' ? '' : carePlanTypes.displayName!,
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
-          ),*/
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        /*Text(
+          selectedCarePlan == '' ? '' : carePlanTypes.displayName!,
+          style: TextStyle(
+              color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
+        ),*/
+      ],
     );
   }
 
   Widget startCarePlanDate() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Select Start Date',
-                style: TextStyle(
-                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          hint: 'required',
+          label: 'Select start date',
+          child: ExcludeSemantics(
+            child: Text.rich(
+              TextSpan(
+                children: [
+            TextSpan(
+            text: 'Select start date',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  TextSpan(
+                      text: '*' ,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                          fontSize: 16)),
+                ],
               ),
-              Text(
-                '*',
-                semanticsLabel: 'required',
-                style: TextStyle(
-                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(
-            height: 4,
-          ),
-          Semantics(
-            label: 'Select start date format should be month, date, year ' + dob,
-            button: true,
-            hint: 'required',
-            child: GestureDetector(
-              child: ExcludeSemantics(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 48.0,
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    border: Border.all(
-                      color: Color(0XFF909CAC),
-                      width: 1.0,
-                    ),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Semantics(
+          label: 'Select start date format should be month, date, year ' + dob,
+          button: true,
+          hint: 'required',
+          child: GestureDetector(
+            child: ExcludeSemantics(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48.0,
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  border: Border.all(
+                    color: Color(0XFF909CAC),
+                    width: 1.0,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            dob,
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 16),
-                          ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          dob,
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 16),
                         ),
-                        SizedBox(
-                            height: 24,
-                            width: 24,
-                            child: Image.asset('res/images/ic_calender.png')),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Image.asset('res/images/ic_calender.png')),
+                    ],
                   ),
                 ),
               ),
-              onTap: () {
-                DatePicker.showDatePicker(context,
-                    showTitleActions: true,
-                    minTime: DateTime.now().subtract(Duration(days: 0)),
-                    onChanged: (date) {
-                      debugPrint('change $date');
-                    }, onConfirm: (date) {
-                      unformatedDOB = date.toIso8601String();
-                      setState(() {
-                        dob = dateFormat.format(date);
-                        startDate =
-                            dateFormatStandard.format(date) + 'T00:00:00.000Z';
-                      });
-                      debugPrint('confirm $date');
-                      debugPrint('confirm formated $startDate');
-                    }, currentTime: DateTime.now(), locale: LocaleType.en);
-              },
             ),
+            onTap: () {
+              DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime.now().subtract(Duration(days: 0)),
+                  onChanged: (date) {
+                    debugPrint('change $date');
+                  }, onConfirm: (date) {
+                    unformatedDOB = date.toIso8601String();
+                    setState(() {
+                      dob = dateFormat.format(date);
+                      startDate =
+                          dateFormatStandard.format(date) + 'T00:00:00.000Z';
+                    });
+                    debugPrint('confirm $date');
+                    debugPrint('confirm formated $startDate');
+                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -586,50 +602,46 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     return Column(
       children: [
         SizedBox(
-          height: 32,
+          height: 16,
         ),
-        Padding(
+        Container(
           padding: const EdgeInsets.only(
-              left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-          child: Container(
-            padding: const EdgeInsets.only(
-                left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: const Color(0xffcecece).withOpacity(0.5)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Description',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                /* Text("dfbbd", style: TextStyle(
-                    color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
-              Linkify(
-                onOpen: (link) async {
-                  if (await canLaunchUrl(Uri.parse(link.url))) {
-                    await launchUrl(Uri.parse(link.url));
-                  } else {
-                    throw 'Could not launch $link';
-                  }
-                },
-                options: LinkifyOptions(humanize: false),
-                text: decription.toString(),
-                style: TextStyle(color: textGrey, fontSize: 14),
-                linkStyle: TextStyle(color: hyperLinkTextColor),
+              left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: const Color(0xffcecece).withOpacity(0.5)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Description',
+                style: TextStyle(
+                    color: textBlack,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600),
               ),
-                    ],
-                  ),
+              const SizedBox(
+                height: 8,
+              ),
+              /* Text("dfbbd", style: TextStyle(
+                  color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
+            Linkify(
+              onOpen: (link) async {
+                if (await canLaunchUrl(Uri.parse(link.url))) {
+                  await launchUrl(Uri.parse(link.url));
+                } else {
+                  throw 'Could not launch $link';
+                }
+              },
+              options: LinkifyOptions(humanize: false),
+              text: decription.toString(),
+              style: TextStyle(color: textGrey, fontSize: 14),
+              linkStyle: TextStyle(color: hyperLinkTextColor),
+            ),
+                  ],
                 ),
-    ),
+              ),
     ],
     );
   }
@@ -875,58 +887,115 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Semantics(
-                  label: 'Register',
-                  button: true,
-                  child: ExcludeSemantics(
-                    child: InkWell(
-                      onTap: () {
-                        if (selectedCarePlan == '') {
-                          showToast('Please select Health Journey', context);
-                        } else if (startDate == '') {
-                          showToast('Please select start date', context);
-                        } else if(healthSystemList.isNotEmpty && healthSystemGlobe == null){
-                          showToast('Please select Health System', context);
-                        }else if(healthSystemList.isNotEmpty && healthSystemHospitalGlobe == null ){
-                          showToast('Please select Hospital', context);
-                        }else if (carePlanEligibility!) {
-                          startCarePlan();
-                          /*if(healthSystemList.isNotEmpty) {
-                            //updateHospitalSystem();
-                          }*/
-                          _updatePatientMedicalProfile(carePlanTypes!.name.toString());
-                        } else {
-                          //showToast(carePlanEligibilityMsg.toString(), context);
-                        }
-                      },
-                      child: Container(
-                        height: 48,
-                        width: MediaQuery.of(context).size.width - 32,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: primaryColor),
-                        child: Center(
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Material(
+                  //Wrap with Material
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+                  elevation: 4.0,
+                  color: primaryColor,
+                  clipBehavior: Clip.antiAlias,
+                  // Add This
+                  child: MaterialButton(
+                      minWidth: 200,
+                      child: Text('Submit',
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600)),
+                              onPressed: () {
+
+                                if(selectedCarePlan == "None"){
+                                  navigateToHome();
+                                  return;
+                                }
+
+
+                                if (selectedCarePlan == '') {
+                                  showToast('Please select Health Journey', context);
+                                } else if (startDate == '') {
+                                  showToast('Please select start date', context);
+                                } else if (carePlanEligibility!) {
+                                  startCarePlan();
+                                  /*if(healthSystemList.isNotEmpty) {
+                                      //updateHospitalSystem();
+                                    }*/
+                                  _updatePatientMedicalProfile(carePlanTypes!.name.toString());
+                                } else {
+                                  //showToast(carePlanEligibilityMsg.toString(), context);
+                                }
+                              },),
                 ),
               ],
-            ),
+            )
           ],
         ));
+  }
+
+
+  navigateToHome(){
+    if (getAppType() == 'AHA') {
+      if(getAppName() != 'Heart & Stroke Helper™ ') {
+        showSuccessToast('Welcome to ' + getAppName(), context);
+      }
+    } else {
+      showSuccessToast('Welcome to REAN HealthGuru', context);
+    }
+
+    if(getAppName() == 'Heart & Stroke Helper™ ') {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return Welcome();
+          }), (Route<dynamic> route) => false);
+    }else{
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return HomeView(0);
+          }), (Route<dynamic> route) => false);
+    }
+
+  }
+
+  Widget oldButton(){
+    return  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Semantics(
+          label: 'Register',
+          button: true,
+          child: ExcludeSemantics(
+            child: MaterialButton(
+              minWidth: 200,
+              onPressed: () {
+                if (selectedCarePlan == '') {
+                  showToast('Please select Health Journey', context);
+                } else if (startDate == '') {
+                  showToast('Please select start date', context);
+                } else if(healthSystemList.isNotEmpty && healthSystemGlobe == null){
+                  showToast('Please select Health System', context);
+                }else if(healthSystemList.isNotEmpty && healthSystemHospitalGlobe == null ){
+                  showToast('Please select Hospital', context);
+                }else if (carePlanEligibility!) {
+                  startCarePlan();
+                  /*if(healthSystemList.isNotEmpty) {
+                            //updateHospitalSystem();
+                          }*/
+                  _updatePatientMedicalProfile(carePlanTypes!.name.toString());
+                } else {
+                  //showToast(carePlanEligibilityMsg.toString(), context);
+                }
+              },
+              child: Text('Submit',
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600)),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   startCarePlan() async {
@@ -973,7 +1042,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           if(progressDialog.isOpen()){
             progressDialog.close();
           }
-          showSuccessDialog();
+          //showSuccessDialog();
           debugPrint('Care Plan');
           carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
           _sharedPrefUtils.save(
@@ -1003,7 +1072,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             debugPrint('CarePlan ==> HFMotivator');
             _sharedPrefUtils.save('Sponsor', 'The American Heart Association\'s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.');
           }
-
+          navigateToHome();
         }else{
           _sharedPrefUtils.save(
               'CarePlan', null);

@@ -14,12 +14,14 @@ import 'package:patient/features/common/careplan/models/create_health_priority_r
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_action_plan_list.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_my_response.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
 import 'package:patient/features/common/careplan/models/get_goals_by_priority.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
@@ -35,6 +37,35 @@ class PatientCarePlanViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+
+  Future<GetCarePlanEnrollmentForPatient> getCarePlan(bool isActive) async {
+    // Get user profile for id
+    //setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isActive='+isActive.toString(),
+        header: map);
+    setBusy(false);
+    // Convert and return
+    return GetCarePlanEnrollmentForPatient.fromJson(response);
+  }
+
+  Future<GetWeeklyCarePlanStatus> getCarePlanWeeklyStatus(String carePlanId) async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .get('/care-plans/' + carePlanId + '/weekly-status', header: map);
+    setBusy(false);
+    // Convert and return
+    return GetWeeklyCarePlanStatus.fromJson(response);
+  }
 
   Future<GetAHACarePlansResponse> getAHACarePlans() async {
     // Get user profile for id
@@ -79,7 +110,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/patient-emergency-contacts/health-systems?planName='+planName,
+        '/patient-emergency-contacts/health-systems',//?planName='+planName
         header: map);
 
     setBusy(false);
@@ -146,7 +177,7 @@ class PatientCarePlanViewModel extends BaseModel {
         '/care-plans/patients/' + patientUserId! + '/enroll',
         body: body,
         header: map);
-    setBusy(false);
+    //setBusy(false);
     // Convert and return
     return EnrollCarePlanResponse.fromJson(response);
   }
@@ -299,7 +330,7 @@ class PatientCarePlanViewModel extends BaseModel {
             dateFrom +
             '&scheduledTo=' +
             dateTo +
-            '&itemsPerPage=400',
+            '&itemsPerPage=410',
         header: map);
 
     setBusy(false);
@@ -539,7 +570,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
-  Future<GetGoalPriorities> getGoalsPriority(String planId) async {
+  Future<GetGoalPriorities> getGoalsPriority(String planId, String carePlanName) async {
     // Get user profile for id
     setBusy(true);
 
@@ -548,7 +579,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .get('/types/priorities?tags=HeartFailure', header: map);
+        .get('/types/priorities?tags='+carePlanName, header: map);
 
     debugPrint(response.toString());
     setBusy(false);

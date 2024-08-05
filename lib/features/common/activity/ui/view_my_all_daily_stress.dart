@@ -65,6 +65,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   late Timer _timerRefrehs;
   MovementsTracking? _sleepTracking;
   int _sleepHrs = 0;
+  int _sleepInMin = 0;
   DateTime? todaysDate;
 
   loadSharedPrefs() async {
@@ -128,11 +129,12 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
       if (_sleepTracking != null) {
         if (todaysDate == _sleepTracking!.date) {
-          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
+          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs ${int.parse(_sleepTracking!.discription.toString())} Min');
           _sleepHrs = _sleepTracking!.value!;
+          _sleepInMin = int.parse(_sleepTracking!.discription.toString());
         }
       }
-      recordMySleepTimeInHrs(_sleepHrs.toString());
+      //recordMySleepTimeInHrs(_sleepHrs.toString());
       //recordMySleepTimeInHrs("1");
       setState(() {});
     } catch (e) {
@@ -421,8 +423,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
   Widget sleepTime() {
     var sleepToDisplay = 0;
-    if(_sleepHrs != 0){
+    if(_sleepHrs != 0 || _sleepInMin != 0){
       sleepToDisplay = _sleepHrs * 60;
+      sleepToDisplay = sleepToDisplay + _sleepInMin;
     }else if (Platform.isIOS) {
       debugPrint(
           'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
@@ -437,7 +440,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       } else {
         sleepToDisplay = sleepInBed;
       }
-      recordMySleepTimeInHrs(Conversion.durationFromMinToHrsToString(sleepToDisplay).substring(0,1));
+      //recordMySleepTimeInHrs(Conversion.durationFromMinToHrsToString(sleepToDisplay).substring(0,1));
     } else {
       //https://pub.dev/packages/time_range_picker
     }

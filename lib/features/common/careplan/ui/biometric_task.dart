@@ -5,7 +5,6 @@ import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
@@ -626,10 +625,11 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        Navigator.pushAndRemoveUntil(context,
+        Navigator.pop(context);
+        /*Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
-        }), (Route<dynamic> route) => false);
+        }), (Route<dynamic> route) => false);*/
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

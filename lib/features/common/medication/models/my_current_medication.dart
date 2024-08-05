@@ -102,7 +102,7 @@ class Items {
   String? orderId;
   String? drugId;
   String? drugName;
-  int? dose;
+  dynamic dose;
   String? dosageUnit;
   List<String>? timeSchedules;
   int? frequency;

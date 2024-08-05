@@ -42,6 +42,10 @@ class _SetPrioritiesGoalsForCarePlanViewState
             .elementAt(0)
             .enrollmentId
             .toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .planName
+              .toString()
       );
 
       if (_getGoalPriorities.status == 'success') {
@@ -85,7 +89,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
             backgroundColor: primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
-              'Set Care Plan Goals',
+              'Goal',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -245,7 +249,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
               height: 32,
             ),
             Text(
-              'Primary',
+              'Primary*',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 16,
@@ -283,7 +287,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
               height: 32,
             ),
             Text(
-              'Secondary',
+              'Secondary*',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 16,
@@ -332,12 +336,12 @@ class _SetPrioritiesGoalsForCarePlanViewState
         : InkWell(
             onTap: () {
               if (selectedPrimaryGoal == '') {
-                showToast('Please select primary goal', context);
+                showToast('Please select primary priority.', context);
               } else if (selectedSecondaryGoal == '') {
-                showToast('Please select secondary goal', context);
+                showToast('Please select secondary priority.', context);
               } else if (selectedPrimaryGoal == selectedSecondaryGoal) {
                 showToast(
-                    'Please select different secondary priority', context);
+                    'Please select different secondary priority.', context);
               } else {
                 setPriorityGoal();
               }
@@ -346,7 +350,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
             },
             child: Container(
               height: 40,
-              width: 160,
+              width: 120,
               padding: EdgeInsets.symmetric(
                 horizontal: 16.0,
               ),
@@ -356,25 +360,15 @@ class _SetPrioritiesGoalsForCarePlanViewState
                 color: primaryColor,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: primaryColor,
-                    size: 16,
-                  ),
                   Text(
                     'Next',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 14),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 16,
                   ),
                 ],
               ),

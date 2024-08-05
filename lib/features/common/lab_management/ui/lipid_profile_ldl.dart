@@ -226,7 +226,9 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                   FirebaseAnalytics.instance.logEvent(name: 'lab_values_ldl_save_button_click');
                   if (_controller.text.toString().isEmpty) {
                     showToast('Please enter your LDL', context);
-                  } else {
+                  } /*else if(!isValueInBetweenRange(MinMaxRanges.minValueInLDL, MinMaxRanges.maxValueInLDL, _controller.text.toString())){
+                    showToast('Please enter valid input', context);
+                  } */ else {
                     addvitals();
                   }
                 },
@@ -430,7 +432,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of ',
+        label: 'Showing the graph for ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

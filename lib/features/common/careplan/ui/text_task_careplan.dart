@@ -213,7 +213,11 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              Navigator.pop(context, _textController.text.toString());
+              if(_textController.text.toString().isNotEmpty) {
+                Navigator.pop(context, _textController.text.toString());
+              }else{
+                showToast("Please enter valid input.", context);
+              }
             },
           ),
         ),

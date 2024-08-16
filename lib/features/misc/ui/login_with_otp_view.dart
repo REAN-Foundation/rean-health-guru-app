@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -332,7 +332,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     //_emailPasswordWidget(),
                     SizedBox(height: 60),
                     Text(
-                      'Let\’s get started',
+                      'lets_get_started'.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,
@@ -342,7 +342,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    _textFeild('Enter your phone', model),
+                    _textFeild('enter_your_phone'.tr(), model),
                     SizedBox(height: 08),
                     _privacyPolicy(),
                     SizedBox(height: 08),
@@ -392,10 +392,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     TextSpan(
                         text: getAppType() == "AHA"
                             ? 'I agree to the American Heart Association’s '
-                            : "I agree to the REAN HealthGuru ",
+                            : "i_agree_privacy_policy".tr(),
                         style: TextStyle(fontSize: 14, color: textBlack)),
                     TextSpan(
-                        text: 'privacy policy',
+                        text: 'privacy_policy'.tr(),
                         style: TextStyle(fontSize: 14, color: primaryColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
@@ -425,8 +425,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           visible: privacyPolicyErrorVisibility,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'You must accept the privacy policy to continue.',
+            child: Text('accept_terms_and_condition'.tr(),
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.red,
@@ -481,7 +480,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   height: 16,
                 ),
                 Text(
-                  'You will receive a 6 digit code for phone number verification ',
+                  'otp_message'.tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -568,7 +567,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         height: 50,
         child: ExcludeSemantics(
           child: ElevatedButton(
-            child: Text('Get One-Time PIN',
+            child: Text('get_one_time_pin'.tr(),
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -612,9 +611,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       context);*/
                   Future.delayed(const Duration(seconds: 2), () {
                     debugPrint('Inside Delay');
-                    SemanticsService.announce(
-                        'You must accept the privacy policy to continue',
-                        TextDirection.ltr);
+                    /*SemanticsService.announce(
+                        'You must accept the privacy policy to continue');*/
                   });
                   privacyPolicyErrorVisibility = true;
                   setState(() {});

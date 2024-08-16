@@ -168,9 +168,10 @@ Future<void> main() async {
   //runApp(MyApp(login));
   runApp(
     EasyLocalization(
-        supportedLocales: [Locale('en')],
+        supportedLocales: [Locale('en'), Locale('es'), Locale('hi')],
         path: 'res/translations', // <-- change the path of the translation files
         fallbackLocale: Locale('en'),
+        startLocale: Locale('es'),
         child: MyApp(login)
     ),
   );

@@ -1,0 +1,15 @@
+{œ
+  "medication_reminders":"Recordatorios de medicamentos",
+  "medication_raminder_tag_line": "Configure sus recordatorios de medicamentos. ¡No olvides ni una sola dosis!",
+  "vitals": "Partes vitales",
+  "vitals_tag_line": "Controle los signos vitales de su cuerpo. Vigile de cerca su salud.",
+  "medical_records": "Registros médicos",
+  "medical_records_tag_line": "Acceda y comparta su historial médico mientras viaja.",
+  "lets_get_started": "Empecemos",
+  "enter_your_phone" : "Introduce tu teléfono",
+  "otp_message": "Recibirás un código de 6 dígitos para la verificación del número de teléfono.",
+  "i_agree_privacy_policy": "Estoy de acuerdo con la REAN HealthGuru ",
+  "privacy_policy": "política de privacidad",
+  "accept_terms_and_condition" : "Debes aceptar la política de privacidad para continuar.",
+  "get_one_time_pin" : "Obtenga PIN de un solo uso"
+}

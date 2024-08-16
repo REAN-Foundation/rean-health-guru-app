@@ -4,5 +4,12 @@
   "vitals": "Vitals",
   "vitals_tag_line": "Monitor your body vitals. Keep a close watch over your health.",
   "medical_records": "Medical Records",
-  "medical_records_tag_line": "Access and share your medical history on the go."
+  "medical_records_tag_line": "Access and share your medical history on the go.",
+  "lets_get_started": "Let\\’s get started",
+  "enter_your_phone" : "Enter your phone",
+  "otp_message": "You will receive a 6 digit code for phone number verification",
+  "i_agree_privacy_policy": "I agree to the REAN HealthGuru ",
+  "privacy_policy": "privacy policy",
+  "accept_terms_and_condition" : "You must accept the privacy policy to continue.",
+  "get_one_time_pin" : "Get One-Time PIN"
 }

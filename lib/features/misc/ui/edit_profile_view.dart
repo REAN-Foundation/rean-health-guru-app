@@ -1921,6 +1921,7 @@ class _EditProfileState extends State<EditProfile> {
                     focusNode: _cityFocus,
                     keyboardType: TextInputType.streetAddress,
                     maxLines: 1,
+                    maxLength: 28,
                     enabled: isEditable,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (term) {
@@ -2092,6 +2093,7 @@ class _EditProfileState extends State<EditProfile> {
                     focusNode: _addressFocus,
                     keyboardType: TextInputType.streetAddress,
                     maxLines: 1,
+                    maxLength: 40,
                     enabled: isEditable,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (term) {
@@ -2662,7 +2664,7 @@ class _EditProfileState extends State<EditProfile> {
                       imageResourceId == '' ? null : imageResourceId;
                   //map['EmergencyContactNumber'] =
                   //  _emergencyMobileNumberController.text;
-                  if (_emailController.text != '') {
+                  if (_emailController.text.toString().trim().isNotEmpty) {
                     map['Email'] = _emailController.text;
                   }else{
                     map['Email'] = null;

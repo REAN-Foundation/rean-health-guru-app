@@ -147,15 +147,19 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
           color: colorF6F6FF,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-      child: Center(
-        child:Text(
-          widget.next!.title.toString(),
-          style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 16),
-          textAlign: TextAlign.left,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.next!.title.toString(),
+            style: TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 16),
+            textAlign: TextAlign.left,
+          ),
+        ],
       ),
     );
   }
@@ -181,6 +185,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
             maxLines: null,
             style: TextStyle(
               color: Colors.black54,
+              fontSize: 14,
             ),
             onFieldSubmitted: (term) {},
             decoration: InputDecoration(
@@ -213,7 +218,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if(_textController.text.toString().isNotEmpty) {
+              if(_textController.text.toString().trim().isNotEmpty) {
                 Navigator.pop(context, _textController.text.toString());
               }else{
                 showToast("Please enter valid input.", context);

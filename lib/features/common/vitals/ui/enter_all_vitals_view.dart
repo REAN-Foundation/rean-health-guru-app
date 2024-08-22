@@ -195,7 +195,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 }/*else{
                                   validationToastDisplay = true;
                                 }*/
-                                if (_bloodOxygenSaturationController.text
+                                if(int.parse(_bloodOxygenSaturationController.text.toString()) > 100){
+                                  showToast(
+                                      'Please enter valid blood oxygen saturation', context);
+                                  validationToastDisplay = false;
+                                }else if (_bloodOxygenSaturationController.text
                                     .toString()
                                     .isNotEmpty) {
                                   validationToastDisplay = false;

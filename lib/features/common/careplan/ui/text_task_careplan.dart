@@ -143,6 +143,8 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
   Widget questionText() {
     return Container(
       padding: const EdgeInsets.all(8.0),
+      width: MediaQuery.of(context).size.width,
+      constraints: BoxConstraints(minHeight: 60),
       decoration: BoxDecoration(
           color: colorF6F6FF,
           borderRadius: BorderRadius.only(
@@ -185,7 +187,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
             maxLines: null,
             style: TextStyle(
               color: Colors.black54,
-              fontSize: 14,
+              fontSize: 16,
             ),
             onFieldSubmitted: (term) {},
             decoration: InputDecoration(

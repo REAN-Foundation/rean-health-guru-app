@@ -71,6 +71,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   @override
   void initState() {
+    _fcm.subscribeToTopic("All_Users");
     if (getAppType() == 'AHA') {
       borderColor = redLightAha;
     }

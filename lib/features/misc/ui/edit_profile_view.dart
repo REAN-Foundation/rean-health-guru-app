@@ -1900,6 +1900,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            height: 48,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -1928,6 +1929,7 @@ class _EditProfileState extends State<EditProfile> {
                       _fieldFocusChange(context, _cityFocus, _countryFocus);
                     },
                     decoration: InputDecoration(
+                        counter: Offstage(),
                         border: InputBorder.none,
                         fillColor: Colors.white,
                         filled: true)),
@@ -2010,7 +2012,8 @@ class _EditProfileState extends State<EditProfile> {
             height: 10,
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+            height: 48,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -2037,12 +2040,15 @@ class _EditProfileState extends State<EditProfile> {
                       FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                     ],
                     maxLines: 1,
+                    maxLength: 6,
                     enabled: isEditable,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (term) {
                       //_fieldFocusChange(context, _cityFocus, _addressFocus);
                     },
                     decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                        counter: Offstage(),
                         border: InputBorder.none,
                         fillColor: Colors.white,
                         filled: true)),
@@ -2071,7 +2077,8 @@ class _EditProfileState extends State<EditProfile> {
             height: 10,
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+            height: 48,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -2100,6 +2107,8 @@ class _EditProfileState extends State<EditProfile> {
                       _fieldFocusChange(context, _addressFocus, _cityFocus);
                     },
                     decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                        counter: Offstage(),
                         border: InputBorder.none,
                         fillColor: Colors.white,
                         filled: true)),

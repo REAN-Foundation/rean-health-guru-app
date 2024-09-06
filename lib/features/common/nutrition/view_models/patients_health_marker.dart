@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:patient/features/common/activity/models/get_all_activity_record.dart';
+import 'package:patient/features/common/activity/models/get_all_physical_activity_data.dart';
+import 'package:patient/features/common/activity/models/get_all_steps_history.dart';
+import 'package:patient/features/common/activity/models/get_sleep_history_data.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -23,6 +27,142 @@ class PatientHealthMarkerViewModel extends BaseModel {
         '/wellness/daily-records/calorie-balances',
         header: map,
         body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<GetAllActivityRecord> getMystandHistory() async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/stand/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetAllActivityRecord.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteStandRecord(String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/wellness/daily-records/stand/' + recordId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<GetAllStepsHistory> getMyStepsHistory() async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/step-counts/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetAllStepsHistory.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteStepsRecord(String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/wellness/daily-records/step-counts/' + recordId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<GetAllPhysicalActivityData> getMyExcersizeHistory() async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/exercise/physical-activities/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetAllPhysicalActivityData.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteExcersizeRecord(String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/wellness/exercise/physical-activities/' + recordId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<GetSleepHistoryData> getMySleepHistory() async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/sleep/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetSleepHistoryData.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteSleepRecord(String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/wellness/daily-records/step-counts/' + recordId, header: map);
 
     setBusy(false);
     // Convert and return

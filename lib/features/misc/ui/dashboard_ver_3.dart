@@ -3433,7 +3433,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                 /*Navigator.pushNamed(
                                     context, RoutePaths.MY_STRESS);*/
                                 FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_sleep_button_click');
-                                Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                Navigator.pushNamed(context, RoutePaths.MySleepData,
                                     arguments: 1);
                               },
                               child: Container(

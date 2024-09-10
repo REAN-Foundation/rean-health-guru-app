@@ -193,7 +193,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                   debugPrint(
                                       'Steps ==> ${_stepscontroller.text}');
                                   validationToastDisplay = false;
-                                  recordMySteps();
+
                                   recordMyStepCount(
                                       int.parse(_stepscontroller.text));
                                 }
@@ -601,6 +601,8 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStepCount(int count) async {
     try {
+      int stepsCount = _stepsMovemntsTracking!.value! + count;
+      recordMySteps(stepsCount.toString());
       if (_stepsMovemntsTracking == null) {
         _sharedPrefUtils.save(
             'stepCount', MovementsTracking(todaysDate, count, '').toJson());
@@ -670,12 +672,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   bool toastDisplay = true;
 
   clearAllFeilds() {
+    //showSuccessToast('Record Updated Successfully!', context);
     if (toastDisplay) {
       id = 0;
       radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
     setState(() {
@@ -683,11 +685,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     });
   }
 
-  recordMySteps() async {
+  recordMySteps(String steps) async {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['StepCount'] = _stepscontroller.text;
+      map['StepCount'] = steps;
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMySteps(map);

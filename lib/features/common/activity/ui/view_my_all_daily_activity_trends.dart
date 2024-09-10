@@ -126,10 +126,10 @@ class _ViewMyAllDailyActivityTrendsState
       if (movements != null) {
         _standMovemntsTracking = MovementsTracking.fromJson(movements);
       }
-
+      debugPrint('Stand in View ==> ${movements.toString()}');
       if (_standMovemntsTracking != null) {
         if (todaysDate == _standMovemntsTracking!.date) {
-          debugPrint('Stand ==> ${_standMovemntsTracking!.value!}');
+
           standMovements = _standMovemntsTracking!.value!;
         }
       }
@@ -241,10 +241,14 @@ class _ViewMyAllDailyActivityTrendsState
       //this.steps = steps;
 
       /// Update the UI to display the results
-      setState(() {
-        _state =
-            _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
-      });
+      try {
+        setState(() {
+          _state =
+          _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+        });
+      }catch (e){
+
+      }
     } else {
       debugPrint('Authorization not granted');
       setState(() => _state = AppState.DATA_NOT_FETCHED);

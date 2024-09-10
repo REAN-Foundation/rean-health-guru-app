@@ -319,7 +319,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('Stand\n(Min)',
+                            child: Text('Steps',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -484,7 +484,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
               height: 8,
             ),
             Text(
-              'Stand',
+              'Steps',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -568,7 +568,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
       progressDialog.show(max: 100, msg: 'Loading...');
 
       final BaseResponse baseResponse =
-          await model.deleteStandRecord(recordId);
+          await model.deleteStepsRecord(recordId);
 
       if (baseResponse.status == 'success') {
         if (progressDialog.isOpen()) {

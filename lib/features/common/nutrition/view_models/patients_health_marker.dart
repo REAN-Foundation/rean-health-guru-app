@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/activity/models/get_all_activity_record.dart';
+import 'package:patient/features/common/activity/models/get_all_meditation_data.dart';
 import 'package:patient/features/common/activity/models/get_all_physical_activity_data.dart';
 import 'package:patient/features/common/activity/models/get_all_steps_history.dart';
 import 'package:patient/features/common/activity/models/get_sleep_history_data.dart';
@@ -162,7 +163,41 @@ class PatientHealthMarkerViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .delete('/wellness/daily-records/step-counts/' + recordId, header: map);
+        .delete('/wellness/daily-records/sleep/' + recordId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<GetAllMeditationData> getMyMeditationHistory() async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/exercise/meditations/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetAllMeditationData.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteMeditationRecord(String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/wellness/exercise/meditations/' + recordId, header: map);
 
     setBusy(false);
     // Convert and return

@@ -10,6 +10,7 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
@@ -319,7 +320,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('Excersize\n(Min)',
+                            child: Text('Excersize\n(hr:min)',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -383,6 +384,14 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
+
+    String valueToDisplay = record.durationInMin.toString();
+    if(record.durationInMin == null){
+      valueToDisplay = "00:00";
+    }else{
+      valueToDisplay = Conversion.durationFromMinToHrsOnlyDigit(record.durationInMin!.toInt());
+    }
+
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -414,9 +423,9 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
             Expanded(
               flex: 2,
               child: Semantics(
-                label: 'Excersize ',
+                label: 'Excercise ',
                 readOnly: true,
-                child: Text(record.durationInMin.toString(),
+                child: Text(valueToDisplay,
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -484,7 +493,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
               height: 8,
             ),
             Text(
-              'Excersize',
+              'Excercise',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -607,7 +616,6 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         }
         records.clear();
         records.addAll(getAllActivityRecord.data!.physicalActivities!.items!);
-        filterOutNullData();
 
       } else {
         if(progressDialog.isOpen()) {
@@ -621,33 +629,6 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
       debugPrint('Error ==> ' + e.toString());
     }
   }
-
-  int count = 0;
-
-  filterOutNullData(){
-    count++;
-    for (int i = 0 ; i < records.length ; i++){
-
-      if(records.elementAt(i).durationInMin.toString() == "null"){
-        //debugPrint("Exer Record view ==> ${records.elementAt(i).durationInMin.toString()}");
-        records.remove(records.elementAt(1));
-      }
-    }
-    //records.addAll(getAllActivityRecord.data!.physicalActivities!.items!);
-
-    //debugPrint("Exer Record Len ==> ${records.length}");
-
-    filterOutNullData();
-
-    setState(() {
-        if(count == 2){
-          count = 0;
-          return;
-        }
-    });
-
-  }
-
 
 
 }

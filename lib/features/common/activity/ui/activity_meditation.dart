@@ -1,16 +1,17 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/activity/models/get_sleep_history_data.dart';
+import 'package:patient/features/common/activity/models/get_all_meditation_data.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -18,38 +19,35 @@ import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
-class ActivitySleepView extends StatefulWidget {
+class ActivityMeditationView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
-  ActivitySleepView(bool allUIViewsVisible) {
+  ActivityMeditationView(bool allUIViewsVisible) {
     this.allUIViewsVisible = allUIViewsVisible;
   }
 
   @override
-  _ActivitySleepViewState createState() =>
-      _ActivitySleepViewState();
+  _ActivityMeditationViewState createState() =>
+      _ActivityMeditationViewState();
 }
 
-class _ActivitySleepViewState extends State<ActivitySleepView> {
+class _ActivityMeditationViewState extends State<ActivityMeditationView> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
   List<Items> records = <Items>[];
   var dateFormatSleepard = DateFormat('MMM dd, yyyy');
-  var sleepInHrsController = TextEditingController();
-  var sleepInMinController = TextEditingController();
-  var sleepInMinFocus = FocusNode();
-  var sleepInHrsFocus = FocusNode();
   late ProgressDialog progressDialog;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   MovementsTracking? _sleepTracking;
-  //MovementsTracking? _sleepTrackingMin;
-  int _sleepHrs = 0;
-  int _sleepMin = 0;
+  var mindfulnessController = TextEditingController();
+  var mindfulnessFocus = FocusNode();
   DateTime? startDate;
   var dateFormat = DateFormat('yyyy-MM-dd');
   DateTime? todaysDate;
+  DashboardTile? mindfulnessTimeDashboardTile;
+  int oldStoreSec = 0;
 
 
   @override
@@ -62,12 +60,27 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     debugPrint('Start Date $startDate');
 
-    loadSharedPref();
+    loadSharedPrefs();
     super.initState();
   }
 
-  loadSharedPref() async {
+  loadSharedPrefs() async {
+    try {
+      mindfulnessTimeDashboardTile = DashboardTile.fromJson(
+          await _sharedPrefUtils.read('mindfulnessTime'));
+      if (mindfulnessTimeDashboardTile!.date!
+          .difference(DateTime.now())
+          .inDays ==
+          0) {
+        oldStoreSec = int.parse(mindfulnessTimeDashboardTile!.discription!);
+      }
 
+      setState(() {
+        debugPrint('MindfulnessTime Dashboard Tile ==> $oldStoreSec');
+      });
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
 
@@ -85,7 +98,7 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Sleep',
+              'Meditation',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -162,122 +175,82 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            'Enter your sleep in hours and minutes',
-            style: TextStyle(
-                color: textBlack,
-                fontWeight: FontWeight.w600,
-                fontSize: 14),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 8,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
             children: [
-              Expanded(
-                flex: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: textGrey, width: 1),
-                      color: Colors.white),
-                  child: Semantics(
-                    label: 'Sleep measures in ',
-                    child: TextFormField(
-                        controller: sleepInHrsController,
-                        focusNode: sleepInHrsFocus,
-                        maxLines: 1,
-                        maxLength: 2,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
-                        onChanged: (data){
-                          if(int.parse(data) > 23){
-                            showToast("Please enter valid hours", context);
-                            sleepInHrsController.clear();
-                            sleepInHrsController.text = data.substring(0,1);
-                            sleepInHrsController.selection = TextSelection.fromPosition(
-                              TextPosition(offset: sleepInHrsController.text.length),
-                            );
-                            setState(() {
-
-                            });
-                          }
-                        },
-                        onFieldSubmitted: (term) {
-                          _fieldFocusChange(context, sleepInHrsFocus,
-                              sleepInMinFocus);
-                        },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Hours',
-                            counterText: "",
-                            suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("hr")),
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
-                            contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
+              Row(
+                children: [
+                  Text(
+                    'Enter your mindful minutes',
+                    style: TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Expanded(
-                flex: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: textGrey, width: 1),
-                      color: Colors.white),
-                  child: Semantics(
-                    label: 'Sleep measures in ',
-                    child: TextFormField(
-                        controller: sleepInMinController,
-                        focusNode: sleepInMinFocus,
-                        maxLines: 1,
-                        maxLength: 2,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        onChanged: (data){
-                          if(int.parse(data) > 59){
-                            showToast("Please enter valid minutes", context);
-                            sleepInMinController.clear();
-                            sleepInMinController.text = data.substring(0,1);
-                            sleepInMinController.selection = TextSelection.fromPosition(
-                              TextPosition(offset: sleepInMinController.text.length),
-                            );
-                            setState(() {
-
-                            });
-                          }
-                        },
-                        onFieldSubmitted: (term) {},
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Minutes',
-                            counterText: "",
-                            suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("min")),
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
-                            contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
+                  RichText(
+                    text: TextSpan(
+                      text: '',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          color: textBlack,
+                          fontSize: 12),
+                    ),
                   ),
-                ),
+                  /*Expanded(
+                      child: InfoScreen(
+                          tittle: 'Stand Information',
+                          description:
+                              'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                          height: 208),
+                    ),*/
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: textGrey, width: 1),
+                          color: Colors.white),
+                      child: Semantics(
+                        label: 'mindfulness measures in minutes',
+                        child: TextFormField(
+                            controller: mindfulnessController,
+                            focusNode: mindfulnessFocus,
+                            maxLines: 1,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.number,
+                            onFieldSubmitted: (term) {
+                            },
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                            ],
+                            decoration: InputDecoration(
+                              /*hintText: unit == 'lbs'
+                                  ? '(100 to 200)'
+                                  : '(50 to 100)',*/
+                                hintText: 'Minutes',
+                                suffixIcon: Padding(padding: EdgeInsets.fromLTRB(40,15, 0, 0),  child: Text("min")),
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                ),
+                                contentPadding: EdgeInsets.fromLTRB(4,15,0,0),
+                                border: InputBorder.none,
+                                fillColor: Colors.white,
+                                filled: true)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -291,13 +264,15 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
               button: true,
               child: InkWell(
                 onTap: () {
-                  FirebaseAnalytics.instance.logEvent(name: 'activity_stand_save_button_click');
-                  if(sleepInHrsController.text.isEmpty && sleepInMinController.text.isEmpty ){
-                    showToast('Please enter valid input', context);
-                  }else {
-                    if (sleepInHrsController.text.isNotEmpty ||
-                        sleepInMinController.text.isNotEmpty) {
-                      addSleep();
+                  if (mindfulnessController.text
+                      .toString()
+                      .isNotEmpty) {
+                    if(!isValueInBetweenRange(MinMaxRanges.minValueInMinutes, MinMaxRanges.maxValueInMinutes, mindfulnessController.text.toString())){
+                      showToast('Please enter valid input', context);
+                    }else {
+                      add(int.parse(
+                          mindfulnessController.text
+                              .toString()));
                     }
                   }
                 },
@@ -478,7 +453,7 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('Sleep\n(hr:min)',
+                            child: Text('Meditation\n(min)',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -542,14 +517,6 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    String valuetoDisplay = record.sleepDuration.toString();
-
-    if(record.sleepMinutes == null){
-      valuetoDisplay = valuetoDisplay + ":00";
-    }else{
-      valuetoDisplay = valuetoDisplay + ":"+record.sleepMinutes.toString();
-    }
-
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -565,10 +532,10 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
                 child: Text(
                   dateFormatSleepard.format(records
                               .elementAt(index)
-                              .recordDate ==
+                              .createdAt ==
                           null
                       ? DateTime.now()
-                      : DateTime.parse(records.elementAt(index).recordDate!)),
+                      : DateTime.parse(records.elementAt(index).createdAt!)),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -583,7 +550,7 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
               child: Semantics(
                 label: 'Sleep ',
                 readOnly: true,
-                child: Text(valuetoDisplay,
+                child: Text(record.durationInMins.toString(),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -651,7 +618,7 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
               height: 8,
             ),
             Text(
-              'Sleep',
+              'Meditation',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -676,8 +643,8 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
-          double.parse(records.elementAt(i).sleepDuration.toString())));
+          DateTime.parse(records.elementAt(i).createdAt!).toLocal(),
+          double.parse(records.elementAt(i).durationInMins.toString())));
     }
 
     return [
@@ -700,44 +667,34 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
     }*/
   }
 
-  addSleep() async {
+  add(int minutes) async {
     try {
 
-      String sleepHrsInTextFeild = sleepInHrsController.text.isNotEmpty ? sleepInHrsController.text : "0";
-      String sleepMinInTextFeild = sleepInMinController.text.isNotEmpty ? sleepInMinController.text : "0";
+      hideKeyboard();
+      debugPrint('New Mindful min ==> $minutes');
+      int newSec = Duration(minutes: minutes).inSeconds;
+      newSec = newSec + oldStoreSec;
+      _sharedPrefUtils.save(
+          'mindfulnessTime',
+          DashboardTile(DateTime.now(), 'mindfulnessTime', newSec.toString())
+              .toJson());
 
-      if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
-        if (_sleepTracking == null) {
-          debugPrint("123 ");
-          _sharedPrefUtils.save(
-              'sleepTime', MovementsTracking(startDate, int.parse(sleepHrsInTextFeild), sleepMinInTextFeild).toJson());
-        } else {
-          debugPrint("456 ");
-          _sleepTracking!.value = int.parse(sleepHrsInTextFeild.toString());
-          _sleepTracking!.date = startDate;
-          _sleepTracking!.discription = sleepMinInTextFeild;
-          _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
-        }
-        clearAllFeilds();
-        //showToast("Sleep time recorded successfully", context);
-      }
+      oldStoreSec = newSec;
+      mindfulnessController.clear();
+      loadSharedPrefs();
       setState(() {});
+
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['SleepDuration'] = sleepHrsInTextFeild;
-      map['SleepMinutes'] = sleepMinInTextFeild;
-      map['Unit'] = 'Hrs';
+      map['DurationInMins'] = minutes.toString();
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      final BaseResponse baseResponse =
-      await model.recordMySleep(map);
+      final BaseResponse baseResponse = await model.recordMyMindfulness(map);
 
       if (baseResponse.status == 'success') {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        sleepInHrsController.clear();
-        sleepInMinController.clear();
         showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
@@ -759,7 +716,7 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
       progressDialog.show(max: 100, msg: 'Loading...');
 
       final BaseResponse baseResponse =
-          await model.deleteSleepRecord(recordId);
+          await model.deleteMeditationRecord(recordId);
 
       if (baseResponse.status == 'success') {
         if (progressDialog.isOpen()) {
@@ -783,14 +740,14 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
 
   getVitalsHistory() async {
     try {
-      final GetSleepHistoryData getAllRecord =
-      await model.getMySleepHistory();
+      final GetAllMeditationData getAllRecord =
+      await model.getMyMeditationHistory();
       if (getAllRecord.status == 'success') {
         if(progressDialog.isOpen()) {
           progressDialog.close();
         }
         records.clear();
-        records.addAll(getAllRecord.data!.sleepRecords!.items!);
+        records.addAll(getAllRecord.data!.meditationRecords!.items!);
         records.reversed.toList();
         setState(() {
 

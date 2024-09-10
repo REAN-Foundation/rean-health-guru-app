@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/achievement/ui/all_achivement_view.dart';
+import 'package:patient/features/common/activity/ui/activity_meditation.dart';
 import 'package:patient/features/common/activity/ui/activity_sleep.dart';
 import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
@@ -202,6 +203,8 @@ class Routers {
                 NutritionQuestionnaireView(settings.arguments as String?));
       case RoutePaths.Meditation:
         return MaterialPageRoute(builder: (_) => MeditationTimmerView());
+      case RoutePaths.Meditation_Trends:
+        return MaterialPageRoute(builder: (_) => ActivityMeditationView(true));
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:

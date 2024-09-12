@@ -320,7 +320,9 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                                 .toString()
                                                 .replaceAll('.', " ft ") +
                                             ' inch': height.toStringAsFixed(0)+' cm',
-                                    semanticsLabel: getCurrentLocale() == "US" ?  heightInFeet
+                                    semanticsLabel: height == 0
+                                        ? ''
+                                        :getCurrentLocale() == "US" ?  heightInFeet
                                             .toString()
                                             .replaceAll('.', 'Feet ') +
                                         ' inches': height.toStringAsFixed(0)+' centimeter',

@@ -832,13 +832,15 @@ class _AssesmentTaskNavigatorViewState
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Semantics(
-                label: 'Success image',
-                image: true,
-                child: Image.asset(
-                  'res/images/ic_careplan_success_tumbs_up.png',
-                  width: 200,
-                  height: 200,
+              ExcludeSemantics(
+                child: Semantics(
+                  label: 'Success image',
+                  image: true,
+                  child: Image.asset(
+                    'res/images/ic_careplan_success_tumbs_up.png',
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
               ),
               Text(

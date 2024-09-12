@@ -149,7 +149,10 @@ class _BiometricBloodOxygenVitalsViewState
                 if (_controller.text.toString().isEmpty) {
                   showToast(
                       'Please enter your blood oxygen saturation', context);
-                } else {
+                } else if(int.parse(_controller.text.toString()) > 100){
+                  showToast(
+                      'Please enter valid blood oxygen saturation', context);
+                }else{
                   addvitals();
                 }
               },

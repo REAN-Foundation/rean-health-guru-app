@@ -497,13 +497,17 @@ class _EnterAllCholesterolValuesViewState
                   SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    'Enter your total cholesterol',
-                    style: TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                    textAlign: TextAlign.center,
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 200),
+                    child: Text(
+                      'Enter your total cholesterol',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   RichText(
                     text: TextSpan(

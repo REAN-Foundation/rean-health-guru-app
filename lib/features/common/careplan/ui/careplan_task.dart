@@ -903,8 +903,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       hint: task.finished
           ? taskName + ' task is already completed'
           : query == 'completed' && task.status == 'Delayed'
-          ? taskName + 'Pending task double click to activate'
-          : taskName + ' task double click to activate',
+          ? taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
+          task.scheduledStartTime.toString())
+          .toLocal())+' Pending task '
+          : taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
+          task.scheduledStartTime.toString())
+          .toLocal())+ ' task ',
       child: InkWell(
         onTap: () {
           debugPrint(
@@ -925,194 +929,196 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //startAHACarePlanSummary(task);
           }
         },
-        child: Card(
-          semanticContainer: false,
-          elevation: 0.0,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                    color: getAppType() == 'AHA'
-                        ? Color(0XFFEBE0FF)
-                        : primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(4.0))),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      color: colorF6F6FF,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0))),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 6,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 8,
-                              ),
-                              //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
-                              //SizedBox(width: 4,),
-                              Container(
-                                width: MediaQuery.of(context).size.width - 200,
-                                child: Text(
-                                    task.action != null
-                                        ? task.action!.type.toString()
-                                        : task.category.toString(),
-                                    semanticsLabel: task.action != null
-                                        ? task.action!.type.toString()
-                                        : task.category.toString(),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: primaryColor)),
-                              ),
-                            ],
+        child: ExcludeSemantics(
+          child: Card(
+            semanticContainer: false,
+            elevation: 0.0,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                      color: getAppType() == 'AHA'
+                          ? Color(0XFFEBE0FF)
+                          : primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        color: colorF6F6FF,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0))),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 6,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
+                                //SizedBox(width: 4,),
+                                Container(
+                                  width: MediaQuery.of(context).size.width - 200,
+                                  child: Text(
+                                      task.action != null
+                                          ? task.action!.type.toString()
+                                          : task.category.toString(),
+                                      semanticsLabel: task.action != null
+                                          ? task.action!.type.toString()
+                                          : task.category.toString(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: primaryColor)),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                  dateFormatOnlyDate.format(DateTime.parse(
-                                          task.scheduledStartTime.toString())
-                                      .toLocal()),
-                                  semanticsLabel: dateFormatOnlyDate.format(
-                                      DateTime.parse(task.scheduledStartTime
-                                              .toString())
-                                          .toLocal()),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: primaryColor)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 8,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(task.task ?? '',
-                                  semanticsLabel: task.task ?? '',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200,
-                                      color: textBlack)),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(task.description ?? '',
-                                  semanticsLabel: task.description ?? '',
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0XFF909CAC))),
-                              task.task == 'Quality of Life Questionnaire' && task.finished ?
-                              Semantics(
-                                button: true,
-                                child: Text('Show my score',
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                    dateFormatOnlyDate.format(DateTime.parse(
+                                            task.scheduledStartTime.toString())
+                                        .toLocal()),
+                                    semanticsLabel: dateFormatOnlyDate.format(
+                                        DateTime.parse(task.scheduledStartTime
+                                                .toString())
+                                            .toLocal()),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        shadows: [
-                                          Shadow(
-                                              color: Colors.blue,
-                                              offset: Offset(0, -5))
-                                        ],
-                                        fontSize: 12.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.transparent,
-                                        decoration:
-                                        TextDecoration.underline,
-                                        decorationColor: Colors.blue,
-                                        decorationThickness: 1,)),
-                              )
-                                  : Container(),
-                              query == 'completed' && task.status == 'Delayed' ?
-                              MergeSemantics(
-                                child: Container(
-                                  height: 20,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      color: buttonColor,
-                                      border: Border.all(color: buttonColor),
-                                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
-                                  child: Center(
-                                    child: Text('Pending',
-                                        maxLines: 1,
-                                        semanticsLabel: 'Pending task',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: primaryColor)),
-                                  ),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor)),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              )
-                                  :Container(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(task.task ?? '',
+                                    semanticsLabel: task.task ?? '',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w200,
+                                        color: textBlack)),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(task.description ?? '',
+                                    semanticsLabel: task.description ?? '',
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: Color(0XFF909CAC))),
+                                task.task == 'Quality of Life Questionnaire' && task.finished ?
+                                Semantics(
+                                  button: true,
+                                  child: Text('Show my score',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          shadows: [
+                                            Shadow(
+                                                color: Colors.blue,
+                                                offset: Offset(0, -5))
+                                          ],
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.transparent,
+                                          decoration:
+                                          TextDecoration.underline,
+                                          decorationColor: Colors.blue,
+                                          decorationThickness: 1,)),
+                                )
+                                    : Container(),
+                                query == 'completed' && task.status == 'Delayed' ?
+                                MergeSemantics(
+                                  child: Container(
+                                    height: 20,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        border: Border.all(color: buttonColor),
+                                        borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                                    child: Center(
+                                      child: Text('Pending',
+                                          maxLines: 1,
+                                          semanticsLabel: 'Pending task',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: primaryColor)),
+                                    ),
+                                  ),
+                                )
+                                    :Container(),
 
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                task.finished
-                                    ? Icons.check
-                                    : Icons.chevron_right,
-                                size: 32,
-                                color:
-                                    task.finished ? Colors.green : Colors.grey,
-                              ),
-                            ],
-                          )),
-                      SizedBox(width: 18,),
-                    ],
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  task.finished
+                                      ? Icons.check
+                                      : Icons.chevron_right,
+                                  size: 32,
+                                  color:
+                                      task.finished ? Colors.green : Colors.grey,
+                                ),
+                              ],
+                            )),
+                        SizedBox(width: 18,),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -55,6 +56,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   late ProgressDialog progressDialog;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   getHealthSystem(String planName) async {
     try {
@@ -157,6 +159,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint('App Name ==> ${getAppName()}');
       debugPrint(
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
+
+      _fcm.unsubscribeFromTopic(list.elementAt(i).code.toString());
 
       if(RemoteConfigValues.carePlanCode.contains(list.elementAt(i).code)){
         items.add(DropdownMenuItem(
@@ -943,6 +947,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
+        _fcm.subscribeToTopic(selectedCarePlan.toString());
 
         getCarePlan();
         //showSuccessDialog();

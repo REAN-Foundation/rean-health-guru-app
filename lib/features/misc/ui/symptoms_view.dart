@@ -154,7 +154,6 @@ class _SymptomsViewState extends State<SymptomsView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: 60,
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         color: primaryColor,

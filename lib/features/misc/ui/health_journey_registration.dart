@@ -452,7 +452,9 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
                 }
                 setState(() {
                   selectedCarePlan = value;
-                  getCarePlanDetails();
+                  if(selectedCarePlan != "None") {
+                    getCarePlanDetails();
+                  }
                 });
               },
               value: selectedCarePlan == '' ? null : selectedCarePlan,

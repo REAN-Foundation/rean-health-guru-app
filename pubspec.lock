@@ -283,6 +283,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  facebook_app_events:
+    dependency: "direct main"
+    description:
+      name: facebook_app_events
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.18.0"
   fake_async:
     dependency: transitive
     description:

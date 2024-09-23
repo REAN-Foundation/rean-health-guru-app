@@ -70,7 +70,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Excersizes',
+              'Exercise',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -155,7 +155,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Enter your Excersize :',
+                'Enter your Exercise :',
                 style: TextStyle(
                     color: textBlack,
                     fontWeight: FontWeight.w600,
@@ -189,7 +189,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Excersizes measures in minutes',
+                    label: 'Exercise measures in minutes',
                     child: TextFormField(
                         controller: controller,
                         maxLines: 1,
@@ -243,7 +243,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
                 onTap: () {
                   FirebaseAnalytics.instance.logEvent(name: 'activity_Excersize_save_button_click');
                   if (controller.text.toString().isEmpty) {
-                    showToast('Please enter your Excersize in minutes', context);
+                    showToast('Please enter your Exercise in minutes', context);
                   } else if(isNumeric(controller.text)) {
                     progressDialog.show(max: 100, msg: 'Loading...');
                     double entertedWeight = double.parse(controller.text.toString());
@@ -320,7 +320,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('Excersize\n(hr:min)',
+                            child: Text('Exercise\n(hr:min)',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -493,7 +493,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
               height: 8,
             ),
             Text(
-              'Excercise',
+              'Exercise',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,

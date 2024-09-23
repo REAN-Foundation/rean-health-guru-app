@@ -6,6 +6,7 @@ import 'package:patient/features/common/careplan/models/start_assessment_respons
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/min_max_ranges.dart';
@@ -601,7 +602,10 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStepCount(int count) async {
     try {
-      int stepsCount = _stepsMovemntsTracking!.value! + count;
+      int stepsCount = count;
+      if(_stepsMovemntsTracking != null ){
+        stepsCount = _stepsMovemntsTracking!.value! + count;
+      }
       recordMySteps(stepsCount.toString());
       if (_stepsMovemntsTracking == null) {
         _sharedPrefUtils.save(
@@ -627,10 +631,10 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       final BaseResponse baseResponse = await model.recordMyWaterCount(map);
       if (baseResponse.status == 'success') {
       } else {}*/
-    } catch (e) {
+    } on FetchDataException catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error ==> 456 ' + e.toString());
     }
   }
 
@@ -672,8 +676,9 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   bool toastDisplay = true;
 
   clearAllFeilds() {
-    //showSuccessToast('Record Updated Successfully!', context);
+
     if (toastDisplay) {
+      showSuccessToast('Record Updated Successfully!', context);
       id = 0;
       radioItem = '';
       _scrollController.animateTo(0.0,
@@ -698,7 +703,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error ==> 123 ' + e.toString());
     }
   }
 

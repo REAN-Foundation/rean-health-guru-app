@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/activity/ui/activity_meditation.dart';
+import 'package:patient/features/common/activity/ui/activity_sleep.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -445,7 +447,6 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       //https://pub.dev/packages/time_range_picker
     }
     return Container(
-      height: 240,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -455,6 +456,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -553,7 +557,11 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       ],
                     ),
                   ),
-                )
+                ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ActivitySleepView(false),
+              ),
             ],
           ),
           Positioned(
@@ -572,7 +580,6 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   Widget mindfulnessTime() {
     debugPrint('MindfulnessTime Dashboard Tile inisde ==> $oldStoreSec');
     return Container(
-      height: 240,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -582,6 +589,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -660,6 +670,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                   ),
                 ),
               ),*/
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ActivityMeditationView(false),
+              ),
             ],
           ),
           Positioned(

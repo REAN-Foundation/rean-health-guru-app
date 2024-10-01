@@ -122,7 +122,7 @@ jobs:
       # Upload Artifacts
       - name: Upload build Artifacts
         id: upload_build_artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: android-artifacts
           path: |
@@ -256,7 +256,7 @@ jobs:
       # Upload Artifacts
       - name: Upload build Artifacts
         id: upload_build_artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ios-artifacts
           path: |

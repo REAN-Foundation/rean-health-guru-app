@@ -113,7 +113,7 @@ dependencies:
   flutter_inappwebview: ^5.8.0
   dio: ^4.0.0
   #open_file: ^3.2.1
- 
+
 dev_dependencies:
   #test: any
   #flutter_test:

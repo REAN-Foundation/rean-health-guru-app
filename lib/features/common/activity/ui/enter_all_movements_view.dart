@@ -193,7 +193,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                   debugPrint(
                                       'Steps ==> ${_stepscontroller.text}');
                                   validationToastDisplay = false;
-                                  recordMySteps();
+
                                   recordMyStepCount(
                                       int.parse(_stepscontroller.text));
                                 }
@@ -568,10 +568,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStandTimeInMinutes(int time) async {
     try {
+      debugPrint("Todays date ==> $todaysDate");
       if (_standMovemntsTracking == null) {
         _sharedPrefUtils.save(
-            'standTime', MovementsTracking(startDate, time, '').toJson());
+            'standTime', MovementsTracking(todaysDate, time, '').toJson());
       } else {
+        _standMovemntsTracking!.date = todaysDate;
         _standMovemntsTracking!.value = _standMovemntsTracking!.value! + time;
         _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
       }
@@ -599,10 +601,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStepCount(int count) async {
     try {
+      int stepsCount = _stepsMovemntsTracking!.value! + count;
+      recordMySteps(stepsCount.toString());
       if (_stepsMovemntsTracking == null) {
         _sharedPrefUtils.save(
-            'stepCount', MovementsTracking(startDate, count, '').toJson());
+            'stepCount', MovementsTracking(todaysDate, count, '').toJson());
       } else {
+        _stepsMovemntsTracking!.date = todaysDate;
         _stepsMovemntsTracking!.value = _stepsMovemntsTracking!.value! + count;
         _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
       }
@@ -633,11 +638,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     try {
       if (_exerciseMovemntsTracking == null) {
         _sharedPrefUtils.save(
-            'exerciseTime', MovementsTracking(startDate, time, '').toJson());
+            'exerciseTime', MovementsTracking(todaysDate, time, '').toJson());
       } else {
         _exerciseMovemntsTracking!.value =
             _exerciseMovemntsTracking!.value! + time;
-        _exerciseMovemntsTracking!.date = startDate;
+        _exerciseMovemntsTracking!.date = todaysDate;
         _sharedPrefUtils.save(
             'exerciseTime', _exerciseMovemntsTracking!.toJson());
       }
@@ -667,12 +672,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   bool toastDisplay = true;
 
   clearAllFeilds() {
+    //showSuccessToast('Record Updated Successfully!', context);
     if (toastDisplay) {
       id = 0;
       radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
     setState(() {
@@ -680,11 +685,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     });
   }
 
-  recordMySteps() async {
+  recordMySteps(String steps) async {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['StepCount'] = _stepscontroller.text;
+      map['StepCount'] = steps;
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMySteps(map);

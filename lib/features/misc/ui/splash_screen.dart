@@ -19,6 +19,7 @@ import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
 import 'package:patient/infra/utils/get_vitals_data.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;
@@ -73,6 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
         _packageInfo = info;
       });
     }
+    appVersion = _packageInfo.version.toString();
     try {
       final String? locale = await FlutterSimCountryCode.simCountryCode;
       if (locale!.trim().isNotEmpty && locale != '--') {

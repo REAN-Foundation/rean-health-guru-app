@@ -4,7 +4,9 @@ import 'package:patient/features/common/careplan/models/add_team_member_response
 
 String? auth = '';
 String? patientUserId = '';
+String? tenantId = '';
 String? patientGender = '';
+String? appVersion = '';
 int assrotedUICount = 1;
 var doctorSearchListGlobe = <Doctors>[];
 var parmacySearchListGlobe = <Pharmacies>[];

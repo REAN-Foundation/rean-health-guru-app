@@ -44,6 +44,7 @@ class RoutePaths {
   static const String MyExcersiceData = 'MyExcersiceData';
   static const String MySleepData = 'MySleepData';
   static const String Meditation = 'Meditation';
+  static const String Meditation_Trends = 'MeditationTrends';
   static const String My_Nutrition = 'MyNutrition';
   static const String ADD_MY_MEDICATION = 'AddMyMedication';
   static const String My_Care_Plan = 'MyCarePlan';

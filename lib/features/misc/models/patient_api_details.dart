@@ -100,6 +100,7 @@ class User {
   String? id;
   String? userName;
   String? personId;
+  String? tenantId;
   Person? person;
   String? lastLogin;
   String? defaultTimeZone;
@@ -111,6 +112,7 @@ class User {
       {this.id,
         this.userName,
         this.personId,
+        this.tenantId,
         this.person,
         this.lastLogin,
         this.defaultTimeZone,
@@ -122,6 +124,7 @@ class User {
     id = json['id'];
     userName = json['UserName'];
     personId = json['PersonId'];
+    tenantId = json['TenantId'];
     person =
     json['Person'] != null ? Person.fromJson(json['Person']) : null;
     lastLogin = json['LastLogin'];
@@ -136,6 +139,7 @@ class User {
     data['id'] = id;
     data['UserName'] = userName;
     data['PersonId'] = personId;
+    data['TenantId'] = tenantId;
     if (person != null) {
       data['Person'] = person!.toJson();
     }

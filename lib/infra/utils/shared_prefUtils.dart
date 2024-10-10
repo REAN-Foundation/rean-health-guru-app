@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefUtils {
@@ -25,6 +26,7 @@ class SharedPrefUtils {
 
   save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
+    debugPrint("Saved String ==> ${json.encode(value)}");
     prefs.setString(key, json.encode(value));
   }
 

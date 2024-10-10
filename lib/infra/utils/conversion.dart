@@ -43,6 +43,14 @@ class Conversion {
     return '${parts[0].padLeft(2, '0')} hr ${parts[1].padLeft(2, '0')} min';
   }
 
+  static String durationFromMinToHrsOnlyDigit(int minutes) {
+    debugPrint('Convaersin ==>  $minutes');
+    final d = Duration(minutes: minutes);
+    final List<String> parts = d.toString().split(':');
+    debugPrint('Convaersin ==>  ${parts[0].padLeft(2, '0')}:${parts[1].padLeft(2, '0')}');
+    return '${parts[0].padLeft(2, '0')}:${parts[1].padLeft(2, '0')}';
+  }
+
   static String durationFromSecToMinToString(int seconds) {
     final d = Duration(seconds: seconds);
     final List<String> parts = d.toString().split(':');

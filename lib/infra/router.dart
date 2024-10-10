@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/achievement/ui/all_achivement_view.dart';
+import 'package:patient/features/common/activity/ui/activity_meditation.dart';
+import 'package:patient/features/common/activity/ui/activity_sleep.dart';
 import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
-import 'package:patient/features/common/activity/ui/view_my_daily_sleep.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_appointment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_confirm_screen.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_info_view.dart';
@@ -195,13 +196,15 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => AllMentalWellBeingView(settings.arguments as int));
       case RoutePaths.MySleepData:
-        return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
+        return MaterialPageRoute(builder: (_) => ActivitySleepView(true));
       case RoutePaths.My_Nutrition:
         return MaterialPageRoute(
             builder: (_) =>
                 NutritionQuestionnaireView(settings.arguments as String?));
       case RoutePaths.Meditation:
         return MaterialPageRoute(builder: (_) => MeditationTimmerView());
+      case RoutePaths.Meditation_Trends:
+        return MaterialPageRoute(builder: (_) => ActivityMeditationView(true));
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:

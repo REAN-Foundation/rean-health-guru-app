@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/get_all_activity_record.dart';
+import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -38,20 +39,39 @@ class _ActivityStandViewState extends State<ActivityStandView> {
   final controller = TextEditingController();
   late ProgressDialog progressDialog;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  MovementsTracking? _standMovemntsTracking;
+  int standMovements = 0;
 
   @override
   void initState() {
     progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
 
-
-    loadSharedPref();
+    loadStandMovement();
     super.initState();
   }
 
-  loadSharedPref() async {
+  loadStandMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('standTime');
 
+      if (movements != null) {
+        _standMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_standMovemntsTracking != null) {
+        if (todaysDate == _standMovemntsTracking!.date) {
+          debugPrint('Stand ==> ${_standMovemntsTracking!.value!}');
+          standMovements = _standMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
 
@@ -571,12 +591,13 @@ class _ActivityStandViewState extends State<ActivityStandView> {
           await model.deleteStandRecord(recordId);
 
       if (baseResponse.status == 'success') {
+        getVitalsHistory();
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
         showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
-        getVitalsHistory();
+
         model.setBusy(true);
       } else {
         progressDialog.close();
@@ -600,6 +621,9 @@ class _ActivityStandViewState extends State<ActivityStandView> {
         }
         records.clear();
         records.addAll(getAllActivityRecord.data!.standRecords!.items!);
+        if(records.isNotEmpty) {
+          dataSync();
+        }
 
 
       } else {
@@ -614,4 +638,34 @@ class _ActivityStandViewState extends State<ActivityStandView> {
       debugPrint('Error ==> ' + e.toString());
     }
   }
+
+
+  DateTime? todaysDate;
+
+  dataSync() async {
+    try {
+      debugPrint("Todays date Stand ==> ${dateFormat.format(todaysDate!)}");
+      debugPrint("Todays date Stand 1 ==> ${dateFormat.format(DateTime.parse(records.elementAt(0).recordDate!))}");
+
+      if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).recordDate!))) {
+        debugPrint("Todays date Stand 2 ==> In min => ${records.elementAt(0).stand}");
+          _standMovemntsTracking!.date = todaysDate;
+          _standMovemntsTracking!.value = records.elementAt(0).stand;
+          _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
+      }else{
+        _standMovemntsTracking!.date = todaysDate;
+        _standMovemntsTracking!.value = 0;
+        _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
+      }
+
+      (context as Element).reassemble();
+
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+
 }

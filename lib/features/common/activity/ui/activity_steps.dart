@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/get_all_steps_history.dart';
+import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -38,20 +39,39 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
   final controller = TextEditingController();
   late ProgressDialog progressDialog;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  MovementsTracking? _stepsMovemntsTracking;
+  int stepsMovements = 0;
 
   @override
   void initState() {
     progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
 
-
-    loadSharedPref();
+    loadStepsMovement();
     super.initState();
   }
 
-  loadSharedPref() async {
+  loadStepsMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('stepCount');
 
+      if (movements != null) {
+        _stepsMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_stepsMovemntsTracking != null) {
+        if (todaysDate == _stepsMovemntsTracking!.date) {
+          debugPrint('Steps ==> ${_stepsMovemntsTracking!.value!}');
+          stepsMovements = _stepsMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
 
@@ -600,7 +620,9 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
         }
         records.clear();
         records.addAll(getAllActivityRecord.data!.stepCountRecords!.items!);
-
+        if(records.isNotEmpty) {
+          dataSync();
+        }
 
       } else {
         if(progressDialog.isOpen()) {
@@ -614,4 +636,31 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
       debugPrint('Error ==> ' + e.toString());
     }
   }
+
+  DateTime? todaysDate;
+
+  dataSync() async {
+    try {
+      debugPrint("Todays date stepCount ==> ${dateFormat.format(todaysDate!)}");
+      debugPrint("Todays date stepCount 1 ==> ${dateFormat.format(DateTime.parse(records.elementAt(0).recordDate!))}");
+
+      if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).recordDate!))) {
+        debugPrint("Todays date stepCount 2 ==> In min => ${records.elementAt(0).stepCount}");
+        _stepsMovemntsTracking!.date = todaysDate;
+        _stepsMovemntsTracking!.value = records.elementAt(0).stepCount;
+        _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
+      }else{
+        _stepsMovemntsTracking!.date = todaysDate;
+        _stepsMovemntsTracking!.value = 0;
+        _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
+      }
+      (context as Element).reassemble();
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/get_all_meditation_data.dart';
-import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
@@ -40,7 +39,6 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
   late ProgressDialog progressDialog;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
-  MovementsTracking? _sleepTracking;
   var mindfulnessController = TextEditingController();
   var mindfulnessFocus = FocusNode();
   DateTime? startDate;
@@ -411,11 +409,6 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
     );
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
 
 
   Widget weightHistoryListFeilds() {

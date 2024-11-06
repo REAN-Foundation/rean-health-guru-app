@@ -11,7 +11,6 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
-import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
@@ -38,7 +37,6 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
   var dateFormatExcersizeard = DateFormat('MMM dd, yyyy');
   final controller = TextEditingController();
   late ProgressDialog progressDialog;
-  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 
 
   @override

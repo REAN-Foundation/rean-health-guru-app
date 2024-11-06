@@ -247,7 +247,7 @@ class _ViewMyAllDailyActivityTrendsState
           _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
         });
       }catch (e){
-
+        debugPrint(e.toString());
       }
     } else {
       debugPrint('Authorization not granted');

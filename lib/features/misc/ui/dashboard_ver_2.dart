@@ -3041,7 +3041,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-          await model.getTodaysKnowledgeTopic();
+          await model.getTodaysKnowledgeTopic("");
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {

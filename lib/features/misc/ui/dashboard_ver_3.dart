@@ -104,9 +104,17 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     Future.delayed(
       Duration(seconds: 4),
       () {
-        getTodaysKnowledgeTopic();
+        //getTodaysKnowledgeTopic();
         getPendingUserTask("pending");
         getMyMedications();
+        //getMedicationSummary();
+        //getLatestBiometrics();
+      },
+    );
+    Future.delayed(
+      Duration(seconds: 6),
+          () {
+        getTodaysKnowledgeTopic();
         //getMedicationSummary();
         //getLatestBiometrics();
       },
@@ -1937,7 +1945,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                   ),
                 ),
               )
-                  : model.busy
+                  : briefInformation.toString().isEmpty
                       ? Center(
                           child: SizedBox(
                               height: 32,
@@ -3668,10 +3676,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     );
   }
 
+
+
+  String getCarePlanNameTags(){
+    String knowledgeTags = "";
+    if(carePlanEnrollmentForPatientGlobe != null) {
+      if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+          .isNotEmpty) {
+        if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "HFMotivator") {
+          knowledgeTags = "hf, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "Cholesterol") {
+          knowledgeTags = "cholesterol, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "Stroke") {
+          knowledgeTags = "stroke, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "SMBP") {
+          knowledgeTags = "bp, general";
+        }
+      }
+    }else{
+      knowledgeTags = "general";
+    }
+    return knowledgeTags;
+  }
+
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-          await model.getTodaysKnowledgeTopic();
+          await model.getTodaysKnowledgeTopic(getCarePlanNameTags());
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {

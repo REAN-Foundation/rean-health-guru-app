@@ -45,8 +45,6 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   MovementsTracking? _sleepTracking;
   //MovementsTracking? _sleepTrackingMin;
-  int _sleepHrs = 0;
-  int _sleepMin = 0;
   DateTime? startDate;
   var dateFormat = DateFormat('yyyy-MM-dd');
   DateTime? todaysDate;

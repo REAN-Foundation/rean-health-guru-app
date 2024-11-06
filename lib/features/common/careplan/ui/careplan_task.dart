@@ -21,6 +21,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -456,6 +457,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
+                            UserAnalyticsServices.registerScreenEntryEvent('task-progress-screen', 'task-progress', 'task-progress-screen-entry', '', null);
                             if(!model.busy) {
                               query = 'completed';
                               getUserTask();

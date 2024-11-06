@@ -7,6 +7,7 @@ import 'package:patient/features/common/medication/view_models/patients_medicati
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -44,6 +45,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   @override
   void initState() {
     getMyMedications();
+    UserAnalyticsServices.registerScreenEntryEvent('medication-remainder-screen', 'medication-remainder-flow', 'medication-remainder-screen-entry', '', null);
     super.initState();
   }
 

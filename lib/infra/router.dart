@@ -135,6 +135,10 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => OTPScreenView(settings.arguments as String?));
       case RoutePaths.CREATE_PROFILE:
+        eventType = 'create-profile-screen';
+        eventCategory = 'create-profile';
+        eventSubject = 'create-profile-screen-entry';
+        UserAnalyticsServices.registerScreenEntryEvent(eventType, eventCategory, eventSubject, '', null);
         return MaterialPageRoute(builder: (_) => CreateProfile());
       case RoutePaths.ABOUT_REAN_CARE:
         eventType = 'about-screen';
@@ -155,15 +159,15 @@ class Routers {
         UserAnalyticsServices.registerScreenEntryEvent(eventType, eventCategory, eventSubject, '', null);
         return MaterialPageRoute(builder: (_) => SupportNetworkView());
       case RoutePaths.Remainder:
-        eventType = 'remainder-screen';
-        eventCategory = 'remainder';
-        eventSubject = 'remainder-screen-entry';
+        eventType = 'reminder-screen';
+        eventCategory = 'reminder';
+        eventSubject = 'reminder-screen-entry';
         UserAnalyticsServices.registerScreenEntryEvent(eventType, eventCategory, eventSubject, '', null);
         return MaterialPageRoute(builder: (_) => ViewMyRemainderView());
       case RoutePaths.Add_Remainder:
-        eventType = 'add-remainder-screen';
-        eventCategory = 'remainder';
-        eventSubject = 'add-remainder-screen-entry';
+        eventType = 'add-reminder-screen';
+        eventCategory = 'reminder';
+        eventSubject = 'add-reminder-screen-entry';
         UserAnalyticsServices.registerScreenEntryEvent(eventType, eventCategory, eventSubject, '', null);
         return MaterialPageRoute(builder: (_) => AddMyRemainderView());
       case RoutePaths.Payment_Confirmation_View:

@@ -35,6 +35,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/services/update_checker.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -119,6 +120,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
       patientUserId = patient.user!.id;
       patientGender = patient.user!.person!.gender;
+      tenantId = patient.user!.tenantId;
+      debugPrint("Tenant Id ==> $tenantId");
       //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
       //debugPrint(user.toJson().toString());
       final dynamic roleId = await _sharedPrefUtils.read('roleId');
@@ -1259,6 +1262,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     switch (_currentNav) {
       case 0:
         FirebaseAnalytics.instance.logEvent(name: 'navigation_home_button_click');
+        UserAnalyticsServices.registerScreenEntryEvent('home-dashboard-screen', 'home-dashboard', 'home-dashboard-screen-entry', '', null);
         screen = DashBoardVer3View(
           positionToChangeNavigationBar: (int tabPosition) {
             debugPrint('Tapped Tab $tabPosition');
@@ -1267,10 +1271,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         );
         break;
       case 1:
+        UserAnalyticsServices.registerScreenEntryEvent('home-task-screen', 'home-task', 'home-task-screen-entry', '', null);
         FirebaseAnalytics.instance.logEvent(name: 'navigation_task_button_click');
         screen = CarePlanTasksView();
         break;
       case 2:
+        UserAnalyticsServices.registerScreenEntryEvent('home-report-screen', 'home-report', 'home-report-screen-entry', '', null);
         FirebaseAnalytics.instance.logEvent(name: 'navigation_upload_report_button_click');
         screen = MyReportsView();
         break;
@@ -1278,6 +1284,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         screen = ViewMyAppointment();
         break;*/
       case 3:
+        UserAnalyticsServices.registerScreenEntryEvent('home-emergency-screen', 'home-emergency', 'home-emergency-screen-entry', '', null);
         FirebaseAnalytics.instance.logEvent(name: 'navigation_emergency_button_click');
         screen = EmergencyContactView();
         break;

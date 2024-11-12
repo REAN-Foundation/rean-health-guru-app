@@ -658,7 +658,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
         _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
       }
 
-      (context as Element).reassemble();
+      //(context as Element).reassemble();
 
     } catch (e) {
       model.setBusy(false);

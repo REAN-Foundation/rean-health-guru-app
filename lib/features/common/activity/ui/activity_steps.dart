@@ -654,7 +654,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
         _stepsMovemntsTracking!.value = 0;
         _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
       }
-      (context as Element).reassemble();
+      //(context as Element).reassemble();
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

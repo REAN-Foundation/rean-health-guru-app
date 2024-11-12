@@ -31,6 +31,15 @@ class NotificationHandler {
               context: NavigationService.navigatorKey.currentContext!);
           changeDisplayOnceFlag();
         }
+      }else if(routeName == "BloodPressureAlert"){
+        notificationMessage = message.notification!.body.toString();
+        if(displayAlertOnces) {
+          displayAlertOnces = false;
+          CommonAlerts.abnormalReadingAlert(
+              message: message.notification!.body.toString(),
+              context: NavigationService.navigatorKey.currentContext!);
+          changeDisplayOnceFlag();
+        }
       }
       //_handleNotification(message.data);
       //showNotification(message);

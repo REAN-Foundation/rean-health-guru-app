@@ -64,6 +64,8 @@ var myEvent = Event<NotificationBody>();
 bool displayAlertOnces = true;
 final List<String> radioItemsForRace = [  'American Indian/Alaskan Native', 'Asian', 'Black/African American','Native Hawaiian or Other Pacific Islander', 'White', 'Prefer not to say' ];
 final List<String> radioItemsForEthnicity = [ 'Hispanic/Latino', 'Not Hispanic/Latino', 'Prefer not to say' ];
+String notificationMessage = "";
+
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

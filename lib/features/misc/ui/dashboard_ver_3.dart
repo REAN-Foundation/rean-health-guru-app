@@ -14,6 +14,7 @@ import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart' as task_pojo;
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/common/vitals/ui/abnormal_reading_bp.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/models/knowledge_topic_response.dart';
@@ -2279,6 +2280,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context,
                                     RoutePaths
                                         .Biometric_Blood_Presure_Vitals_Care_Plan);
+
+                               /* Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return AbnormalReadingBpView();
+                                    }), (Route<dynamic> route) => false);*/
                               },
                               child: Container(
                                 height: 96,

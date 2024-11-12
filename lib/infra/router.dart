@@ -70,6 +70,7 @@ import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/nutrition_questionnaire_view.dart';
 import 'package:patient/features/common/remainder/ui/add_my_remainder.dart';
+import 'package:patient/features/common/vitals/ui/abnormal_reading_bp.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
@@ -171,6 +172,9 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => DateAndTimeForBookAppoinmentView(
                 settings.arguments.runtimeType));
+      case RoutePaths.Abnormal_Reading:
+        return MaterialPageRoute(
+            builder: (_) => AbnormalReadingBpView());
       case RoutePaths.Edit_Profile:
         return MaterialPageRoute(builder: (_) => EditProfile());
       case RoutePaths.Home:

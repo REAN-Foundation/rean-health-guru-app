@@ -152,6 +152,99 @@ class CommonAlerts{
         builder: (BuildContext context) => sucsessDialog);
   }
 
+  static abnormalReadingAlert({required String message, required BuildContext context}){
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.all(24),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        margin: EdgeInsets.zero,
+        semanticContainer: false,
+        child: Container(
+          height: 360.0,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding:  EdgeInsets.all(16.0),
+                child: Center(child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.notification_important, color: Colors.red, size: 24,),
+                    SizedBox(width: 4,),
+                    Text('Alert', style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.w700),),
+                  ],
+                )),
+              ),
+              Expanded(child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView( scrollDirection: Axis.vertical, child: Text(message.toString(), style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.left,)),
+              )),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      button: true,
+                      label: 'View More',
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.popAndPushNamed(
+                                context, RoutePaths.Abnormal_Reading);
+                            /*Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return AbnormalReadingBpView();
+                                }));
+                            Navigator.pop(context);*/
+                          },
+                          child: Container(
+                            height: 48,
+                            width: 160,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                border:
+                                Border.all(color: primaryColor, width: 1),
+                                color: primaryColor),
+                            child: Center(
+                              child: Text(
+                                'View More',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => sucsessDialog);
+  }
+
   static showHealthJourneyDialog({required BuildContext context}) {
     FirebaseAnalytics.instance.logEvent(name: 'health_journey_popup_displayed');
     Dialog sucsessDialog = Dialog(

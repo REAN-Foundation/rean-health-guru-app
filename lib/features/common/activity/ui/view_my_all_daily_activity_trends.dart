@@ -687,7 +687,7 @@ class _ViewMyAllDailyActivityTrendsState
                   padding: const EdgeInsets.all(8.0),
                   child: ActivityStepsView(false, (){
                     debugPrint("Funtion called");
-                    loadStandMovement();
+                    loadStepsMovement();
                     setState(() {});
                   }),
                 ),

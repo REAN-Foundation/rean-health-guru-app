@@ -671,6 +671,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         _exerciseMovemntsTracking!.date = todaysDate;
         _exerciseMovemntsTracking!.value = 0;
         _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
+        widget.dataRefrshfunction;
       }
       widget.dataRefrshfunction;
       //(context as Element).reassemble();

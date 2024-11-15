@@ -20,9 +20,11 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 //ignore: must_be_immutable
 class ActivityStandView extends StatefulWidget {
   bool allUIViewsVisible = false;
+  late Function dataRefrshfunction;
 
-  ActivityStandView(bool allUIViewsVisible) {
+  ActivityStandView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
+    this.dataRefrshfunction = dataRefrshfunction;
   }
 
   @override
@@ -623,6 +625,11 @@ class _ActivityStandViewState extends State<ActivityStandView> {
         records.addAll(getAllActivityRecord.data!.standRecords!.items!);
         if(records.isNotEmpty) {
           dataSync();
+        }else{
+          _standMovemntsTracking!.date = todaysDate;
+          _standMovemntsTracking!.value = 0;
+          _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
+          widget.dataRefrshfunction();
         }
 
 
@@ -657,6 +664,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
         _standMovemntsTracking!.value = 0;
         _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
       }
+      widget.dataRefrshfunction();
 
       //(context as Element).reassemble();
 

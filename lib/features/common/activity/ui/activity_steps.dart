@@ -20,9 +20,11 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 //ignore: must_be_immutable
 class ActivityStepsView extends StatefulWidget {
   bool allUIViewsVisible = false;
+  late Function dataRefrshfunction;
 
-  ActivityStepsView(bool allUIViewsVisible) {
+  ActivityStepsView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
+    this.dataRefrshfunction = dataRefrshfunction;
   }
 
   @override
@@ -622,6 +624,11 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
         records.addAll(getAllActivityRecord.data!.stepCountRecords!.items!);
         if(records.isNotEmpty) {
           dataSync();
+        }else{
+          _stepsMovemntsTracking!.date = todaysDate;
+          _stepsMovemntsTracking!.value = 0;
+          _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
+          widget.dataRefrshfunction;
         }
 
       } else {
@@ -654,6 +661,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
         _stepsMovemntsTracking!.value = 0;
         _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
       }
+      widget.dataRefrshfunction;
       //(context as Element).reassemble();
     } catch (e) {
       model.setBusy(false);

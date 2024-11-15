@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/get_all_physical_activity_data.dart';
+import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -11,6 +12,7 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
@@ -19,9 +21,11 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 //ignore: must_be_immutable
 class ActivityExcersizeView extends StatefulWidget {
   bool allUIViewsVisible = false;
+  late Function dataRefrshfunction;
 
-  ActivityExcersizeView(bool allUIViewsVisible) {
+  ActivityExcersizeView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
+    this.dataRefrshfunction = dataRefrshfunction;
   }
 
   @override
@@ -37,13 +41,17 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
   var dateFormatExcersizeard = DateFormat('MMM dd, yyyy');
   final controller = TextEditingController();
   late ProgressDialog progressDialog;
-
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  MovementsTracking? _exerciseMovemntsTracking;
+  int stepsMovements = 0;
 
   @override
   void initState() {
     progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
-
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
 
     loadSharedPref();
     super.initState();
@@ -614,6 +622,14 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         }
         records.clear();
         records.addAll(getAllActivityRecord.data!.physicalActivities!.items!);
+        if(records.isNotEmpty) {
+          dataSync();
+        }else{
+          _exerciseMovemntsTracking!.date = todaysDate;
+          _exerciseMovemntsTracking!.value = 0;
+          _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
+          widget.dataRefrshfunction();
+        }
 
       } else {
         if(progressDialog.isOpen()) {
@@ -628,5 +644,41 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
     }
   }
 
+  DateTime? todaysDate;
+
+  dataSync() async {
+    try {
+      debugPrint("Todays date stepCount ==> ${dateFormat.format(todaysDate!)}");
+      debugPrint("Todays date stepCount 1 ==> ${dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))}");
+
+      if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))) {
+        if(records.elementAt(0).durationInMin == null) {
+          debugPrint("Todays date excersize 2 ==> In min => ${records
+              .elementAt(0)
+              .durationInMin}");
+          _exerciseMovemntsTracking!.date = todaysDate;
+          _exerciseMovemntsTracking!.value = records
+              .elementAt(0)
+              .durationInMin;
+          _sharedPrefUtils.save(
+              'exerciseTime', _exerciseMovemntsTracking!.toJson());
+        }else{
+          _exerciseMovemntsTracking!.date = todaysDate;
+          _exerciseMovemntsTracking!.value = 0;
+          _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
+        }
+      }else{
+        _exerciseMovemntsTracking!.date = todaysDate;
+        _exerciseMovemntsTracking!.value = 0;
+        _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
+      }
+      widget.dataRefrshfunction;
+      //(context as Element).reassemble();
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
 
 }

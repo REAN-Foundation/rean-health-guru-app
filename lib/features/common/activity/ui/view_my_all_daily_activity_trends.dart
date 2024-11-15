@@ -558,7 +558,11 @@ class _ViewMyAllDailyActivityTrendsState
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ActivityStandView(false),
+                  child: ActivityStandView(false, (){
+                    debugPrint("Funtion called");
+                    loadStandMovement();
+                    setState(() {});
+                  }),
                 ),
               ],
             ),
@@ -681,7 +685,11 @@ class _ViewMyAllDailyActivityTrendsState
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ActivityStepsView(false),
+                  child: ActivityStepsView(false, (){
+                    debugPrint("Funtion called");
+                    loadStandMovement();
+                    setState(() {});
+                  }),
                 ),
               ],
             ),
@@ -886,7 +894,11 @@ class _ViewMyAllDailyActivityTrendsState
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ActivityExcersizeView(false),
+                  child: ActivityExcersizeView(false, (){
+                    debugPrint("Funtion called");
+                    loadExerciseMovement();
+                    setState(() {});
+                  }),
                 ),
               ],
             ),

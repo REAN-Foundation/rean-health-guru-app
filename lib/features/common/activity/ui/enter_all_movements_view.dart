@@ -737,7 +737,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }

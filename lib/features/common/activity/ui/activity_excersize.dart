@@ -580,7 +580,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
     } catch (e) {
       progressDialog.close();
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }
@@ -607,7 +607,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
     } catch (e) {
       progressDialog.close();
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }
@@ -635,11 +635,11 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         if(progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(getAllActivityRecord.message!, context);
+        //showToast(getAllActivityRecord.message!, context);
       }
     } on FetchDataException catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }
@@ -648,11 +648,27 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
 
   dataSync() async {
     try {
-      debugPrint("Todays date stepCount ==> ${dateFormat.format(todaysDate!)}");
-      debugPrint("Todays date stepCount 1 ==> ${dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))}");
+      debugPrint("Todays Excersize Min ==> ${dateFormat.format(todaysDate!)}");
+      debugPrint("Todays Excersize Min 1 ==> ${dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))}");
 
       if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))) {
-        if(records.elementAt(0).durationInMin == null) {
+
+        int excersizeMin = 0;
+
+        for(int i = 0 ; i < records.length ; i ++){
+          if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(i).createdAt!))) {
+            if(records.elementAt(i).durationInMin != null){
+              debugPrint("Excersize Time Before ==> $excersizeMin");
+              excersizeMin = excersizeMin + int.parse(records.elementAt(i).durationInMin.toString());
+              debugPrint("Excersize Time After ==> $excersizeMin");
+            }
+          }
+        }
+        _exerciseMovemntsTracking!.date = todaysDate;
+        _exerciseMovemntsTracking!.value = excersizeMin;
+        _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
+        widget.dataRefrshfunction();
+        /*if(records.elementAt(0).durationInMin == null) {
           debugPrint("Todays date excersize 2 ==> In min => ${records
               .elementAt(0)
               .durationInMin}");
@@ -666,18 +682,18 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
           _exerciseMovemntsTracking!.date = todaysDate;
           _exerciseMovemntsTracking!.value = 0;
           _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
-        }
+        }*/
       }else{
         _exerciseMovemntsTracking!.date = todaysDate;
         _exerciseMovemntsTracking!.value = 0;
         _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
-        widget.dataRefrshfunction;
+        widget.dataRefrshfunction();
       }
-      widget.dataRefrshfunction;
+      widget.dataRefrshfunction();
       //(context as Element).reassemble();
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }

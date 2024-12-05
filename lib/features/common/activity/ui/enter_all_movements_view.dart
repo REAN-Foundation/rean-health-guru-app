@@ -709,9 +709,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStand() async {
     try {
+
+      var standMin = standMovements != 0 ? standMovements + int.parse(_standController.text.toString()) : int.parse(_standController.text.toString()) ;
+
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Stand'] = _standController.text;
+      map['Stand'] = standMin;
       map['Unit'] = 'Minutes';
       map['RecordDate'] = dateFormat.format(DateTime.now());
 

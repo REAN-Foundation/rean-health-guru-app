@@ -256,20 +256,22 @@ void showSuccessToast(String msg, BuildContext context) {
 }
 
 void showToast(String msg, BuildContext context) {
-  FocusManager.instance.primaryFocus!.unfocus();
-  /*Fluttertoast.showToast(
+  if(msg != "Null check operator used on a null value") {
+    FocusManager.instance.primaryFocus!.unfocus();
+    /*Fluttertoast.showToast(
     msg: msg,
     toastLength: Toast.LENGTH_LONG,
     backgroundColor: Colors.black,
     textColor: Colors.white,
   );*/
-  final snackBar = SnackBar(
-    content: Text(msg),
-  );
+    final snackBar = SnackBar(
+      content: Text(msg),
+    );
 
-  // Find the ScaffoldMessenger in the widget tree
-  // and use it to show a SnackBar.
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }
 
 void showToastMsg(String msg, BuildContext context) {

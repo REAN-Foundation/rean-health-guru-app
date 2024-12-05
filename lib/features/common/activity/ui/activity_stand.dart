@@ -13,6 +13,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
@@ -270,7 +271,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
                     double entertedWeight = double.parse(controller.text.toString());
 
 
-                    addvitals(entertedWeight.toStringAsFixed(1));
+                    add();
                   } else{
                     showToast('Please enter valid input', context);
                   }
@@ -547,7 +548,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
   }
 
 
-  addvitals(String bodyWeight) async {
+  add() async {
     try {
 
       /*double entertedWeight = double.parse(bodyWeight);
@@ -556,10 +557,15 @@ class _ActivityStandViewState extends State<ActivityStandView> {
         entertedWeight = entertedWeight / 2.20462;
       }*/
 
+      var standMin = records.isNotEmpty ? records.elementAt(0).durationInMin! + int.parse(controller.text.toString()) : int.parse(controller.text.toString()) ;
+
+
+
       final map = <String, dynamic>{};
-      map['BodyWeight'] = bodyWeight;
-      map['PatientUserId'] = "";
-      map['Unit'] = "kg";
+      map['PatientUserId'] = patientUserId;
+      map['Stand'] = standMin;
+      map['Unit'] = 'Minutes';
+      map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
       await model.recordMyStand(map);
@@ -641,7 +647,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
       }
     } on FetchDataException catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }

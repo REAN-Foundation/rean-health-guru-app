@@ -823,11 +823,15 @@ class _ViewMyAllDailyActivityTrendsState
       } else {
         exerciseToDisplay = exerciseMovements;
       }*/
+      debugPrint("Exercise To Display 0 ==> $exerciseMovements");
       exerciseToDisplay =
           data!.getExerciseTimeInMin().abs() + exerciseMovements;
+      debugPrint("Exercise Health Data ==> ${data!.getExerciseTimeInMin().abs()}");
+      debugPrint("Exercise To Display 1 ==> $exerciseToDisplay");
     } else {
       exerciseToDisplay = exerciseMovements;
     }
+
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1222,7 +1226,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 1 ==> ' + e.toString());
     }
   }
 
@@ -1239,7 +1243,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 2 ==> ' + e.toString());
     }
   }
 
@@ -1257,7 +1261,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 3 ==> ' + e.toString());
     }
   }
 }

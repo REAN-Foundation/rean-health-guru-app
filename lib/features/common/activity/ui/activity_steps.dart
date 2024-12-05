@@ -639,7 +639,7 @@ class _ActivityStepsViewState extends State<ActivityStepsView> {
       }
     } on FetchDataException catch (e) {
       model.setBusy(false);
-      showToast(e.toString(), context);
+      //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
   }

@@ -22,7 +22,7 @@ class ActivityStepsView extends StatefulWidget {
   bool allUIViewsVisible = false;
   late Function dataRefrshfunction;
 
-  ActivityStepsView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
+  ActivityStepsView(bool allUIViewsVisible, Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
     this.dataRefrshfunction = dataRefrshfunction;
   }

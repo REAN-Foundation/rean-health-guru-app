@@ -560,7 +560,12 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                 ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ActivitySleepView(false),
+                child: ActivitySleepView(false, (){
+                      loadSleepMovement();
+                      setState(() {
+
+                      });
+                }),
               ),
             ],
           ),

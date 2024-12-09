@@ -20,9 +20,11 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 //ignore: must_be_immutable
 class ActivitySleepView extends StatefulWidget {
   bool allUIViewsVisible = false;
+  late Function dataRefrshfunction;
 
-  ActivitySleepView(bool allUIViewsVisible) {
+  ActivitySleepView(bool allUIViewsVisible, Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
+    this.dataRefrshfunction = dataRefrshfunction;
   }
 
   @override
@@ -48,6 +50,8 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
   DateTime? startDate;
   var dateFormat = DateFormat('yyyy-MM-dd');
   DateTime? todaysDate;
+  int _sleepHrs = 0;
+  int _sleepMin = 0;
 
 
   @override
@@ -59,9 +63,46 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
     todaysDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     debugPrint('Start Date $startDate');
-
+    loadSleepMovement();
     loadSharedPref();
     super.initState();
+  }
+
+  loadSleepMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('sleepTime');
+
+      if (movements != null) {
+        _sleepTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_sleepTracking != null) {
+        if (todaysDate == _sleepTracking!.date) {
+          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
+          _sleepHrs = _sleepTracking!.value!;
+          //_sleepingHrs = _sleepHrs;
+          _sleepMin = int.parse(_sleepTracking!.discription!);
+        }
+      }
+
+      if(_sleepHrs != 0) {
+        sleepInHrsController.text = _sleepHrs.toString();
+        sleepInHrsController.selection = TextSelection.fromPosition(
+          TextPosition(offset: sleepInHrsController.text.length),
+        );
+      }
+
+      if(_sleepMin != 0) {
+        sleepInMinController.text = _sleepMin.toString();
+        sleepInMinController.selection = TextSelection.fromPosition(
+          TextPosition(offset: sleepInMinController.text.length),
+        );
+      }
+
+      setState(() {});
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   loadSharedPref() async {
@@ -790,6 +831,9 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
         records.clear();
         records.addAll(getAllRecord.data!.sleepRecords!.items!);
         records.reversed.toList();
+        if(records.isNotEmpty) {
+          dataSync();
+        }
         setState(() {
 
         });
@@ -806,4 +850,27 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
       debugPrint('Error ==> ' + e.toString());
     }
   }
+
+
+  dataSync(){
+    try {
+      if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).recordDate!))) {
+        _sleepTracking!.date = todaysDate;
+        _sleepTracking!.value = records.elementAt(0).sleepDuration;
+        _sleepTracking!.discription = records.elementAt(0).sleepMinutes.toString();
+        _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
+      }else{
+        _sleepTracking!.date = todaysDate;
+        _sleepTracking!.value = 0;
+        _sleepTracking!.discription = "0";
+        _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
+      }
+      widget.dataRefrshfunction();
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
 }

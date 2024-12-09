@@ -23,7 +23,7 @@ class ActivityStandView extends StatefulWidget {
   bool allUIViewsVisible = false;
   late Function dataRefrshfunction;
 
-  ActivityStandView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
+  ActivityStandView(bool allUIViewsVisible, Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
     this.dataRefrshfunction = dataRefrshfunction;
   }
@@ -268,7 +268,7 @@ class _ActivityStandViewState extends State<ActivityStandView> {
                     showToast('Please enter your stand in minutes', context);
                   } else if(isNumeric(controller.text)) {
                     progressDialog.show(max: 100, msg: 'Loading...');
-                    double entertedWeight = double.parse(controller.text.toString());
+                    //double entertedWeight = double.parse(controller.text.toString());
 
 
                     add();

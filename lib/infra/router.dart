@@ -200,7 +200,7 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => AllMentalWellBeingView(settings.arguments as int));
       case RoutePaths.MySleepData:
-        return MaterialPageRoute(builder: (_) => ActivitySleepView(true));
+        return MaterialPageRoute(builder: (_) => ActivitySleepView(true,(){}));
       case RoutePaths.My_Nutrition:
         return MaterialPageRoute(
             builder: (_) =>

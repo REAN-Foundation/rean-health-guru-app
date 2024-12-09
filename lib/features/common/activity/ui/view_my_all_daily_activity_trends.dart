@@ -148,6 +148,7 @@ class _ViewMyAllDailyActivityTrendsState
       }
 
       if (_stepsMovemntsTracking != null) {
+        debugPrint('Steps Date And Time ==> ${_stepsMovemntsTracking!.date!}');
         if (todaysDate == _stepsMovemntsTracking!.date) {
           debugPrint('Steps ==> ${_stepsMovemntsTracking!.value!}');
           stepsMovements = _stepsMovemntsTracking!.value!;
@@ -610,7 +611,11 @@ class _ViewMyAllDailyActivityTrendsState
       } else {
         stepsToDisplay = stepsMovements;
       }*/
-      stepsToDisplay = steps + stepsMovements;
+      if(stepsMovements < steps) {
+        stepsToDisplay = steps + stepsMovements;
+      }else {
+        stepsToDisplay = stepsMovements;
+      }
     } else {
       stepsToDisplay = stepsMovements;
     }
@@ -815,22 +820,22 @@ class _ViewMyAllDailyActivityTrendsState
 
   Widget exerciseTime() {
     int exerciseToDisplay = 0;
-    if (Platform.isIOS) {
+   /* if (Platform.isIOS) {
       debugPrint(
           "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
-      /*if (data!.getExerciseTimeInMin() > exerciseMovements) {
+      *//*if (data!.getExerciseTimeInMin() > exerciseMovements) {
         exerciseToDisplay = data!.getExerciseTimeInMin().abs();
       } else {
         exerciseToDisplay = exerciseMovements;
-      }*/
+      }*//*
       debugPrint("Exercise To Display 0 ==> $exerciseMovements");
       exerciseToDisplay =
           data!.getExerciseTimeInMin().abs() + exerciseMovements;
       debugPrint("Exercise Health Data ==> ${data!.getExerciseTimeInMin().abs()}");
       debugPrint("Exercise To Display 1 ==> $exerciseToDisplay");
-    } else {
+    } else {*/
       exerciseToDisplay = exerciseMovements;
-    }
+    //}
 
     return Container(
       decoration: BoxDecoration(

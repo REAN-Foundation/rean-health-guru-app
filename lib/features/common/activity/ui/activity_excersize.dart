@@ -23,7 +23,7 @@ class ActivityExcersizeView extends StatefulWidget {
   bool allUIViewsVisible = false;
   late Function dataRefrshfunction;
 
-  ActivityExcersizeView(bool allUIViewsVisible, @required Function dataRefrshfunction) {
+  ActivityExcersizeView(bool allUIViewsVisible, Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
     this.dataRefrshfunction = dataRefrshfunction;
   }
@@ -45,6 +45,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
   var dateFormat = DateFormat('yyyy-MM-dd');
   MovementsTracking? _exerciseMovemntsTracking;
   int stepsMovements = 0;
+  int exerciseMovements = 0;
 
   @override
   void initState() {
@@ -52,9 +53,29 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
     getVitalsHistory();
     todaysDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
-
+    loadExerciseMovement();
     loadSharedPref();
     super.initState();
+  }
+
+  loadExerciseMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('exerciseTime');
+
+      if (movements != null) {
+        _exerciseMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_exerciseMovemntsTracking != null) {
+        if (todaysDate == _exerciseMovemntsTracking!.date) {
+          debugPrint('Exercise ==> ${_exerciseMovemntsTracking!.value!}');
+          exerciseMovements = _exerciseMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   loadSharedPref() async {
@@ -599,7 +620,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
-        model.setBusy(true);
+        //model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);
@@ -656,6 +677,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
         int excersizeMin = 0;
 
         for(int i = 0 ; i < records.length ; i ++){
+          debugPrint("Excersize Time Match ==> ${dateFormat.format(todaysDate!)}  == ${dateFormat.format(DateTime.parse(records.elementAt(i).createdAt!))}");
           if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(i).createdAt!))) {
             if(records.elementAt(i).durationInMin != null){
               debugPrint("Excersize Time Before ==> $excersizeMin");
@@ -664,6 +686,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
             }
           }
         }
+        debugPrint("Excersize Total Time ==> $excersizeMin");
         _exerciseMovemntsTracking!.date = todaysDate;
         _exerciseMovemntsTracking!.value = excersizeMin;
         _sharedPrefUtils.save('exerciseTime', _exerciseMovemntsTracking!.toJson());
@@ -691,7 +714,7 @@ class _ActivityExcersizeViewState extends State<ActivityExcersizeView> {
       }
       widget.dataRefrshfunction();
       //(context as Element).reassemble();
-    } catch (e) {
+    } on FetchDataException catch (e) {
       model.setBusy(false);
       //showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

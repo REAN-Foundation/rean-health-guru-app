@@ -2,6 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/models/get_all_meditation_data.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -10,6 +11,7 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/min_max_ranges.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
@@ -20,9 +22,11 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 //ignore: must_be_immutable
 class ActivityMeditationView extends StatefulWidget {
   bool allUIViewsVisible = false;
+  late Function dataRefrshfunction;
 
-  ActivityMeditationView(bool allUIViewsVisible) {
+  ActivityMeditationView(bool allUIViewsVisible, Function dataRefrshfunction) {
     this.allUIViewsVisible = allUIViewsVisible;
+    this.dataRefrshfunction = dataRefrshfunction;
   }
 
   @override
@@ -300,6 +304,61 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
               ),
             ),
           ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'or',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6),
+                    semanticsLabel:
+                    Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours'),
+                    style: const TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Montserrat",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0),
+                    textAlign: TextAlign.center),
+                SizedBox(
+                  child: OutlinedButton(
+                    child: Text('Start'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, RoutePaths.Meditation).then((_) {
+                        loadSharedPrefs();
+                      });
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(width: 1.0, color: primaryColor),
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                      textStyle:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      foregroundColor: primaryColor,
+                      shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           SizedBox(
             height: 20,
           ),
@@ -742,6 +801,9 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
         records.clear();
         records.addAll(getAllRecord.data!.meditationRecords!.items!);
         records.reversed.toList();
+        if(records.isNotEmpty){
+          dataSync();
+        }
         setState(() {
 
         });
@@ -753,6 +815,26 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
         showToast(getAllRecord.message!, context);
       }
     } on FetchDataException catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  dataSync(){
+    try {
+      if(dateFormat.format(todaysDate!) == dateFormat.format(DateTime.parse(records.elementAt(0).createdAt!))) {
+        debugPrint("Inside mind date match");
+        mindfulnessTimeDashboardTile!.date = todaysDate;
+        mindfulnessTimeDashboardTile!.discription = Duration(minutes: records.elementAt(0).durationInMins!.toInt()).inSeconds.toString();
+        _sharedPrefUtils.save('mindfulnessTime', mindfulnessTimeDashboardTile!.toJson());
+      }else{
+        mindfulnessTimeDashboardTile!.date = todaysDate;
+        mindfulnessTimeDashboardTile!.discription = "0";
+        _sharedPrefUtils.save('mindfulnessTime', mindfulnessTimeDashboardTile!.toJson());
+      }
+      widget.dataRefrshfunction();
+    } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

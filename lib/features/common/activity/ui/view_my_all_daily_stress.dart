@@ -442,7 +442,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       } else {
         sleepToDisplay = sleepInBed;
       }
-      //recordMySleepTimeInHrs(Conversion.durationFromMinToHrsToString(sleepToDisplay).substring(0,1));
+      if(sleepToDisplay != 0) {
+        recordMySleepTimeInHrs(
+            Conversion.durationFromMinToHrsToString(sleepToDisplay));
+      }
     } else {
       //https://pub.dev/packages/time_range_picker
     }
@@ -627,9 +630,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               MergeSemantics(
                 child: Column(
                   children: [
-                    Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                    Text(Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6),
                         semanticsLabel:
-                            Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours') + 'Duration',
+                            Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours') + 'Duration',
                         style: const TextStyle(
                             color: textBlack,
                             fontWeight: FontWeight.w700,
@@ -677,7 +680,12 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               ),*/
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ActivityMeditationView(false),
+                child: ActivityMeditationView(false , (){
+                      loadSharedPrefs();
+                      setState(() {
+
+                      });
+                }),
               ),
             ],
           ),
@@ -734,12 +742,15 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       if(sleepInHrs != 0 ) {
         final map = <String, dynamic>{};
         map['PatientUserId'] = patientUserId;
-        map['SleepDuration'] = sleepInHrs;
+        map['SleepDuration'] = sleepInHrs.substring(0,1);
+        map['SleepMinutes'] = sleepInHrs.substring(sleepInHrs.length-6 , sleepInHrs.length-4);
         map['Unit'] = 'Hrs';
         map['RecordDate'] = dateFormat.format(DateTime.now());
 
         final BaseResponse baseResponse = await model.recordMySleep(map);
-        if (baseResponse.status == 'success') {} else {}
+        if (baseResponse.status == 'success') {
+          setState(() {});
+        } else {}
       }
     } catch (e) {
       model.setBusy(false);

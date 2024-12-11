@@ -208,7 +208,7 @@ class Routers {
       case RoutePaths.Meditation:
         return MaterialPageRoute(builder: (_) => MeditationTimmerView());
       case RoutePaths.Meditation_Trends:
-        return MaterialPageRoute(builder: (_) => ActivityMeditationView(true));
+        return MaterialPageRoute(builder: (_) => ActivityMeditationView(true,(){}));
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:

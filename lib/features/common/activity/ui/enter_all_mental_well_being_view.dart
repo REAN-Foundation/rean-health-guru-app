@@ -654,9 +654,9 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                  Text(Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6),
                       semanticsLabel:
-                      Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours'),
+                      Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours'),
                       style: const TextStyle(
                           color: textBlack,
                           fontWeight: FontWeight.w500,
@@ -745,13 +745,15 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         DashboardTile(DateTime.now(), 'mindfulnessTime', newSec.toString())
             .toJson());
 
+    debugPrint("MindFullness Min ==> ${Duration(seconds: newSec).inMinutes}");
+
     oldStoreSec = newSec;
     mindfulnessController.clear();
     loadSharedPrefs();
     setState(() {});
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
-    map['DurationInMins'] = minutes.toString();
+    map['DurationInMins'] = Duration(seconds: newSec).inMinutes.toString();
     map['RecordDate'] = dateFormat.format(DateTime.now());
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);

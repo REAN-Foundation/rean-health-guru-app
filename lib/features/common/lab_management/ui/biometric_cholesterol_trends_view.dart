@@ -5,6 +5,7 @@ import 'package:patient/features/common/lab_management/ui/cholesterol_trends_vie
 import 'package:patient/features/common/lab_management/ui/enter_all_cholesterol_values_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 class BiometricCholesterolTrendsView extends StatefulWidget {
@@ -25,10 +26,12 @@ class _BiometricCholesterolTrendsViewState
     late Widget screen;
     switch (_currentIndex) {
       case 0:
+        UserAnalyticsServices.registerScreenEntryEvent('enter-all-lab-record-screen', 'enter-all-lab-record-flow', 'enter-all-lab-record-screen-entry', '', null);
         FirebaseAnalytics.instance.logEvent(name: 'lab_values_enter_all_values_tab_click');
         screen = EnterAllCholesterolValuesView();
         break;
       case 1:
+        UserAnalyticsServices.registerScreenEntryEvent('lab-record-trends-screen', 'lab-record-trends-flow', 'lab-record-trends-screen-entry', '', null);
         FirebaseAnalytics.instance.logEvent(name: 'lab_values_trends_tab_click');
         screen = CholesterolTrendView();
         break;

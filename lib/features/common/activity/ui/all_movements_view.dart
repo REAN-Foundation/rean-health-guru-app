@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/enter_all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity_trends.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 import '../../../misc/ui/base_widget.dart';
@@ -28,9 +29,11 @@ class _AllMovementsViewState extends State<AllMovementsView> {
     late Widget screen;
     switch (widget._currentIndex) {
       case 0:
+        UserAnalyticsServices.registerScreenEntryEvent('enter-all-physical-activites-screen', 'enter-all-physical-activites-flow', 'enter-all-physical-activites-screen-entry', '', null);
         screen = EnterAllMovementsView();
         break;
       case 1:
+        UserAnalyticsServices.registerScreenEntryEvent('physical-activites-trends-screen', 'physical-activites-trends-flow', 'physical-activites-trends-screen-entry', '', null);
         screen = ViewMyAllDailyActivityTrends();
         break;
     }

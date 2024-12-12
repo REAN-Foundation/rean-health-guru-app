@@ -9,6 +9,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
@@ -96,8 +97,9 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
           TextPosition(offset: sleepInMinController.text.length),
         );
       }
-
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
@@ -124,7 +126,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
+    //progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -163,7 +165,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                 toastDisplay = true;
                                 if(sleepInHrsController.text.isEmpty && sleepInMinController.text.isEmpty && mindfulnessController.text.toString().isEmpty){
                                   showToast('Please enter valid input', context);
-                                }else {
+                                }else{
+                                  toastDisplay = true;
                                   if(sleepInHrsController.text.isNotEmpty || sleepInMinController.text.isNotEmpty) {
                                     recordMySleepTimeInHrs();
                                   }
@@ -697,38 +700,46 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   recordMySleepTimeInHrs() async {
     try {
 
-
       String sleepHrsInTextFeild = sleepInHrsController.text.isNotEmpty ? sleepInHrsController.text : "0";
       String sleepMinInTextFeild = sleepInMinController.text.isNotEmpty ? sleepInMinController.text : "0";
 
-      if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
-      if (_sleepTracking == null) {
-        debugPrint("123 ");
-        _sharedPrefUtils.save(
-            'sleepTime', MovementsTracking(startDate, int.parse(sleepHrsInTextFeild), sleepMinInTextFeild).toJson());
-        loadSleepMovement();
-      } else {
-        debugPrint("456 ");
-        _sleepTracking!.value = int.parse(sleepHrsInTextFeild.toString());
-        _sleepTracking!.date = startDate;
-        _sleepTracking!.discription = sleepMinInTextFeild;
-        _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
+      if(int.parse(sleepHrsInTextFeild) > 24 || int.parse(sleepMinInTextFeild) > 60) {
+      showToast('Please enter valid sleep input', NavigationService.navigatorKey.currentContext!);
+      return;
       }
-      clearAllFeilds();
-        //showToast("Sleep time recorded successfully", context);
-      }
-      setState(() {});
-       final map = <String, dynamic>{};
-      map['PatientUserId'] = patientUserId;
-      map['SleepDuration'] = sleepHrsInTextFeild;
-      map['SleepMinutes'] = sleepMinInTextFeild;
-      map['Unit'] = 'Hrs';
-      map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      final BaseResponse baseResponse = await model.recordMySleep(map);
-      if (baseResponse.status == 'success') {
-      } else {}
-    } catch (e) {
+
+      if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
+        if (_sleepTracking == null) {
+          debugPrint("123 ");
+          _sharedPrefUtils.save(
+              'sleepTime', MovementsTracking(
+              startDate, int.parse(sleepHrsInTextFeild), sleepMinInTextFeild)
+              .toJson());
+          loadSleepMovement();
+        } else {
+          debugPrint("456 ");
+          _sleepTracking!.value = int.parse(sleepHrsInTextFeild.toString());
+          _sleepTracking!.date = startDate;
+          _sleepTracking!.discription = sleepMinInTextFeild;
+          _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
+        }
+
+        //showToast("Sleep time recorded successfully", context);
+        final map = <String, dynamic>{};
+        map['PatientUserId'] = patientUserId;
+        map['SleepDuration'] = sleepHrsInTextFeild;
+        map['SleepMinutes'] = sleepMinInTextFeild;
+        map['Unit'] = 'Hrs';
+        map['RecordDate'] = dateFormat.format(DateTime.now());
+
+        final BaseResponse baseResponse = await model.recordMySleep(map);
+        if (baseResponse.status == 'success') {} else {}
+        clearAllFeilds();
+        setState(() {
+        });
+      }
+    } on FetchDataException catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -750,7 +761,6 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     oldStoreSec = newSec;
     mindfulnessController.clear();
     loadSharedPrefs();
-    setState(() {});
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
     map['DurationInMins'] = Duration(seconds: newSec).inMinutes.toString();
@@ -768,11 +778,18 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
   clearAllFeilds() {
     if (toastDisplay) {
+      showSuccessToast('Record Updated Successfully!', NavigationService.navigatorKey.currentContext!);
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
   }
 
+  @override
+  void dispose() {
+    if (mounted) {
+      // Perform any context-dependent actions here
+    }
+    super.dispose();
+  }
 }

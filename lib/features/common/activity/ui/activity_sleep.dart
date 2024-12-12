@@ -9,6 +9,7 @@ import 'package:patient/features/common/nutrition/view_models/patients_health_ma
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -744,6 +745,11 @@ class _ActivitySleepViewState extends State<ActivitySleepView> {
 
       String sleepHrsInTextFeild = sleepInHrsController.text.isNotEmpty ? sleepInHrsController.text : "0";
       String sleepMinInTextFeild = sleepInMinController.text.isNotEmpty ? sleepInMinController.text : "0";
+
+      if(int.parse(sleepHrsInTextFeild) > 24 || int.parse(sleepMinInTextFeild) > 60) {
+        showToast('Please enter valid sleep input', NavigationService.navigatorKey.currentContext!);
+        return;
+      }
 
       if(sleepHrsInTextFeild.isNotEmpty  || sleepMinInTextFeild.isNotEmpty) {
         if (_sleepTracking == null) {

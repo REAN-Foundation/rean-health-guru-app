@@ -738,7 +738,7 @@ class _ActivityMeditationViewState extends State<ActivityMeditationView> {
 
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['DurationInMins'] = minutes.toString();
+      map['DurationInMins'] = Duration(seconds: newSec).inMinutes.toString();
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMyMindfulness(map);

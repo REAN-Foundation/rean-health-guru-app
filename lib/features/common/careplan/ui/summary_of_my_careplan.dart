@@ -37,47 +37,56 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: currentWeek == 0 ? textMessage() : Column(
               children: [
-                Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: colorF6F6FF,
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      border: Border.all(color: primaryLightColor, width: 0.2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 8,
+                Semantics(
+                  label: "You Have enrolled to  ${carePlanEnrollmentForPatientGlobe!
+                      .data!.patientEnrollments!
+                      .elementAt(0)
+                      .planName
+                      .toString()} Health Journey, Currently you are in $currentWeek",
+                  child: ExcludeSemantics(
+                    child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: colorF6F6FF,
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          border: Border.all(color: primaryLightColor, width: 0.2),
                         ),
-                        Expanded(
-                          child: Text(
-                            carePlanEnrollmentForPatientGlobe!
-                                .data!.patientEnrollments!
-                                .elementAt(0)
-                                .planName
-                                .toString(),
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w200),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        /*InfoScreen(
-                            tittle: 'Health Journey Information',
-                            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                            height: 240),*/
-                        const SizedBox(
-                          width: 8,
-                        )
-                      ],
-                    )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Text(
+                                carePlanEnrollmentForPatientGlobe!
+                                    .data!.patientEnrollments!
+                                    .elementAt(0)
+                                    .planName
+                                    .toString(),
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            /*InfoScreen(
+                                tittle: 'Health Journey Information',
+                                description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                                height: 240),*/
+                            const SizedBox(
+                              width: 8,
+                            )
+                          ],
+                        )),
+                  ),
+                ),
                 const SizedBox(
                   height: 4,
                 ),

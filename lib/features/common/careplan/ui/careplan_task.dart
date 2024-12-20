@@ -902,6 +902,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return Semantics(
+      button: true,
       hint: task.finished
           ? taskName + ' task is already completed'
           : query == 'completed' && task.status == 'Delayed'

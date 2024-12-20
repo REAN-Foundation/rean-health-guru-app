@@ -42,7 +42,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       .data!.patientEnrollments!
                       .elementAt(0)
                       .planName
-                      .toString()} Health Journey, Currently you are in $currentWeek",
+                      .toString()} Health Journey, Currently you are in week $currentWeek",
                   child: ExcludeSemantics(
                     child: Container(
                         height: 40,

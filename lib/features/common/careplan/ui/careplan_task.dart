@@ -907,10 +907,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           : query == 'completed' && task.status == 'Delayed'
           ? taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
           task.scheduledStartTime.toString())
-          .toLocal())+' Pending task '
+          .toLocal())+' Pending task ' + " " +task.task.toString()
           : taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
           task.scheduledStartTime.toString())
-          .toLocal())+ ' task ',
+          .toLocal())+ ' task ' + " " +task.task.toString(),
       child: InkWell(
         onTap: () {
           debugPrint(

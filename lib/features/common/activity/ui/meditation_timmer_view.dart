@@ -340,7 +340,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             .symmetric(
                                                         horizontal: 32.0),
                                                     child: ElevatedButton(
-                                                      child: Text('Finish'),
+                                                      child: Text('Save'),
                                                       onPressed: () {
                                                         FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_mindfulness_finish_button_click');
                                                         showSuccessToast('Mindfulness duration recorded successfully', context);

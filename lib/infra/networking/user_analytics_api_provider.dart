@@ -9,11 +9,11 @@ import 'package:patient/infra/utils/common_utils.dart';
 
 import 'custom_exception.dart';
 
-class ApiProvider {
+class UserAnalyticsApiProvider {
   String? _baseUrl = '';
   String? _api_key = '';
 
-  ApiProvider(String? baseUrl) {
+  UserAnalyticsApiProvider(String? baseUrl) {
     _baseUrl = baseUrl;
     _api_key = dotenv.env['Patient_API_KEY'];
   }
@@ -26,8 +26,8 @@ class ApiProvider {
     if (_api_key != null) {
       headers['x-api-key'] = _api_key as String;
     }
-    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    debugPrint('User Analytics Base Url ==> GET ${_baseUrl! + url}');
+    debugPrint('User Analytics Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
@@ -55,9 +55,9 @@ class ApiProvider {
       headers['x-api-key'] = _api_key as String;
     }
 
-    debugPrint('Base Url ==> POST ${_baseUrl! + url}');
-    debugPrint('Request Body ==> ${json.encode(body).toString()}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    debugPrint('User Analytics Base Url ==> POST ${_baseUrl! + url}');
+    debugPrint('User Analytics Request Body ==> ${json.encode(body).toString()}');
+    debugPrint('User Analytics Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
@@ -92,9 +92,9 @@ class ApiProvider {
       contentBody.addAll(body as Map<String, dynamic>);
     }
 
-    debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
-    debugPrint('Request Body ==> ${json.encode(contentBody).toString()}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    debugPrint('User Analytics Base Url ==> PUT ${_baseUrl! + url}');
+    debugPrint('User Analytics Request Body ==> ${json.encode(contentBody).toString()}');
+    debugPrint('User Analytics Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
@@ -123,8 +123,8 @@ class ApiProvider {
       headers['x-api-key'] = _api_key as String;
     }
 
-    debugPrint('Base Url ==> DELETE ${_baseUrl! + url}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    debugPrint('User Analytics Base Url ==> DELETE ${_baseUrl! + url}');
+    debugPrint('User Analytics Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
@@ -144,8 +144,8 @@ class ApiProvider {
   }
 
   dynamic _response(http.Response response) {
-    debugPrint('Status_Code ${response.statusCode.toString()}');
-    debugPrint('Response Body ==> ${response.body.toString()}');
+    debugPrint('User Analytics Status_Code ==> ${response.statusCode.toString()}');
+    debugPrint('User Analytics Body ==> ${response.body.toString()}');
     switch (response.statusCode) {
       case 200:
       case 201:

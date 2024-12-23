@@ -434,7 +434,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 ),
               ),
             )*/
-                  IntlPhoneField(
+              getAppFlavour() == "Heart & Stroke Helper™ " ? _customMobileNumberFeild() : IntlPhoneField(
                 /*decoration: InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(
@@ -509,6 +509,50 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
         ],
       ),
+    );
+  }
+
+  Widget _customMobileNumberFeild(){
+    return TextFormField(
+      keyboardType: TextInputType.phone,
+      autocorrect: false,
+      controller: _mobileNumberController,
+      focusNode: _mobileNumberFocus,
+      enabled: !model.busy,
+      maxLength: 10,
+      decoration: InputDecoration(
+        //hintText: 'Mobile Number',
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          isDense: true,
+          prefixIcon:Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: Text(" + 1  ", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textBlack),),
+          ),
+          prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
+          /*prefixText: '  +1    ',
+          prefixStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textBlack),*/
+          counterText: "",
+          contentPadding: EdgeInsets.only(top: 12),
+          fillColor: Colors.white,
+          filled: true),
+      inputFormatters: [
+        // MaskedInputFormatter('(###) ###-####')
+      ],
+      onChanged: (phone){
+        debugPrint(phone);
+        mobileNumber = phone;
+        countryCode = '+1';
+        debugPrint("Mobile Number ==> $mobileNumber");
+        if (phone.length == maxLengthOfPhone) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      },
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+      // .. etc
     );
   }
 

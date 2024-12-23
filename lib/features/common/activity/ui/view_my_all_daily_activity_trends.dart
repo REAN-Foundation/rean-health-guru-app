@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/activity/ui/activity_excersize.dart';
+import 'package:patient/features/common/activity/ui/activity_stand.dart';
+import 'package:patient/features/common/activity/ui/activity_steps.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -106,9 +109,9 @@ class _ViewMyAllDailyActivityTrendsState
       data = GetHealthData();
       try {
         _timerRefrehs = Timer.periodic(durationInMin, (Timer t) => fetchData());
-        _timerRefreh = Timer.periodic(Duration(seconds: 1), (Timer t) {
+        /*_timerRefreh = Timer.periodic(Duration(seconds: 1), (Timer t) {
           setState(() {});
-        });
+        });*/
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -123,10 +126,10 @@ class _ViewMyAllDailyActivityTrendsState
       if (movements != null) {
         _standMovemntsTracking = MovementsTracking.fromJson(movements);
       }
-
+      debugPrint('Stand in View ==> ${movements.toString()}');
       if (_standMovemntsTracking != null) {
         if (todaysDate == _standMovemntsTracking!.date) {
-          debugPrint('Stand ==> ${_standMovemntsTracking!.value!}');
+
           standMovements = _standMovemntsTracking!.value!;
         }
       }
@@ -145,6 +148,7 @@ class _ViewMyAllDailyActivityTrendsState
       }
 
       if (_stepsMovemntsTracking != null) {
+        debugPrint('Steps Date And Time ==> ${_stepsMovemntsTracking!.date!}');
         if (todaysDate == _stepsMovemntsTracking!.date) {
           debugPrint('Steps ==> ${_stepsMovemntsTracking!.value!}');
           stepsMovements = _stepsMovemntsTracking!.value!;
@@ -238,10 +242,14 @@ class _ViewMyAllDailyActivityTrendsState
       //this.steps = steps;
 
       /// Update the UI to display the results
-      setState(() {
-        _state =
-            _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
-      });
+      try {
+        setState(() {
+          _state =
+          _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+        });
+      }catch (e){
+        debugPrint(e.toString());
+      }
     } else {
       debugPrint('Authorization not granted');
       setState(() => _state = AppState.DATA_NOT_FETCHED);
@@ -486,7 +494,6 @@ class _ViewMyAllDailyActivityTrendsState
 
   Widget standCounter() {
     return Container(
-      height: 200,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -494,64 +501,71 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: MergeSemantics(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Stand',
+                      semanticsLabel: 'Stand',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_stand.png'),
+                  size: 48,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                MergeSemantics(
+                  child: Column(
                     children: [
-                      Text(
-                        'Stand',
-                        semanticsLabel: 'Stand',
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.0,
-                            color: textBlack),
-                      ),
+                      Text(Conversion.durationFromMinToHrsToString(standMovements),
+                          semanticsLabel:
+                              Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Duration",
+                          semanticsLabel: 'Duration',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: textBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
                     ],
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_stand.png'),
-                    size: 48,
-                    color: primaryColor,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  MergeSemantics(
-                    child: Column(
-                      children: [
-                        Text(Conversion.durationFromMinToHrsToString(standMovements),
-                            semanticsLabel:
-                                Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
-                            style: const TextStyle(
-                                color: textBlack,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 22.0),
-                            textAlign: TextAlign.center),
-                        Text("Duration",
-                            semanticsLabel: 'Duration',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: textBlack,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ActivityStandView(false, (){
+                    debugPrint("Funtion called");
+                    loadStandMovement();
+                    setState(() {});
+                  }),
+                ),
+              ],
             ),
           ),
           /*Positioned(
@@ -597,7 +611,11 @@ class _ViewMyAllDailyActivityTrendsState
       } else {
         stepsToDisplay = stepsMovements;
       }*/
-      stepsToDisplay = steps + stepsMovements;
+      if(stepsMovements < steps) {
+        stepsToDisplay = steps + stepsMovements;
+      }else {
+        stepsToDisplay = stepsMovements;
+      }
     } else {
       stepsToDisplay = stepsMovements;
     }
@@ -608,7 +626,6 @@ class _ViewMyAllDailyActivityTrendsState
 
     stepcount = stepsToDisplay;
     return Container(
-      height: 200,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -616,64 +633,70 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: MergeSemantics(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Steps',
+                      semanticsLabel: 'Steps',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_steps_count.png'),
+                  size: 48,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                MergeSemantics(
+                  child: Column(
                     children: [
-                      Text(
-                        'Steps',
-                        semanticsLabel: 'Steps',
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.0,
-                            color: textBlack),
-                      ),
+                      Text(stepsToDisplay.toString(),
+                          semanticsLabel: stepsToDisplay.toString(),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Steps",
+                          semanticsLabel: 'Steps',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: textBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
                     ],
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_steps_count.png'),
-                    size: 48,
-                    color: primaryColor,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  MergeSemantics(
-                    child: Column(
-                      children: [
-                        Text(stepsToDisplay.toString(),
-                            semanticsLabel: stepsToDisplay.toString(),
-                            style: const TextStyle(
-                                color: textBlack,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 22.0),
-                            textAlign: TextAlign.center),
-                        Text("Steps",
-                            semanticsLabel: 'Steps',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: textBlack,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ActivityStepsView(false, (){
+                    debugPrint("Funtion called");
+                    loadStepsMovement();
+                    setState(() {});
+                  }),
+                ),
+              ],
             ),
           ),
           /*Positioned(
@@ -797,21 +820,24 @@ class _ViewMyAllDailyActivityTrendsState
 
   Widget exerciseTime() {
     int exerciseToDisplay = 0;
-    if (Platform.isIOS) {
+   /* if (Platform.isIOS) {
       debugPrint(
           "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
-      /*if (data!.getExerciseTimeInMin() > exerciseMovements) {
+      *//*if (data!.getExerciseTimeInMin() > exerciseMovements) {
         exerciseToDisplay = data!.getExerciseTimeInMin().abs();
       } else {
         exerciseToDisplay = exerciseMovements;
-      }*/
+      }*//*
+      debugPrint("Exercise To Display 0 ==> $exerciseMovements");
       exerciseToDisplay =
           data!.getExerciseTimeInMin().abs() + exerciseMovements;
-    } else {
+      debugPrint("Exercise Health Data ==> ${data!.getExerciseTimeInMin().abs()}");
+      debugPrint("Exercise To Display 1 ==> $exerciseToDisplay");
+    } else {*/
       exerciseToDisplay = exerciseMovements;
-    }
+    //}
+
     return Container(
-      height: 200,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -819,64 +845,71 @@ class _ViewMyAllDailyActivityTrendsState
         children: [
           Align(
             alignment: Alignment.center,
-            child: MergeSemantics(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 16,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Exercise',
+                      semanticsLabel: 'Exercise',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_exercise_person.png'),
+                  size: 48,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                MergeSemantics(
+                  child: Column(
                     children: [
-                      Text(
-                        'Exercise',
-                        semanticsLabel: 'Exercise',
-                        style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.0,
-                            color: textBlack),
-                      ),
+                      Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                          semanticsLabel:
+                              Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Duration",
+                          semanticsLabel: 'Duration',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: textBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
                     ],
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_exercise_person.png'),
-                    size: 48,
-                    color: primaryColor,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  MergeSemantics(
-                    child: Column(
-                      children: [
-                        Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                            semanticsLabel:
-                                Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
-                            style: const TextStyle(
-                                color: textBlack,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 22.0),
-                            textAlign: TextAlign.center),
-                        Text("Duration",
-                            semanticsLabel: 'Duration',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: textBlack,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ActivityExcersizeView(false, (){
+                    debugPrint("Funtion called");
+                    loadExerciseMovement();
+                    setState(() {});
+                  }),
+                ),
+              ],
             ),
           ),
           Positioned(
@@ -1198,7 +1231,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 1 ==> ' + e.toString());
     }
   }
 
@@ -1215,7 +1248,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 2 ==> ' + e.toString());
     }
   }
 
@@ -1233,7 +1266,7 @@ class _ViewMyAllDailyActivityTrendsState
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      debugPrint('Error 3 ==> ' + e.toString());
     }
   }
 }

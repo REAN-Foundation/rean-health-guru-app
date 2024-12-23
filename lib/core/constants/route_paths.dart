@@ -44,10 +44,12 @@ class RoutePaths {
   static const String MyExcersiceData = 'MyExcersiceData';
   static const String MySleepData = 'MySleepData';
   static const String Meditation = 'Meditation';
+  static const String Meditation_Trends = 'MeditationTrends';
   static const String My_Nutrition = 'MyNutrition';
   static const String ADD_MY_MEDICATION = 'AddMyMedication';
   static const String My_Care_Plan = 'MyCarePlan';
   static const String Select_Care_Plan = 'SelectCarePlan';
+  static const String Abnormal_Reading = 'AbnormalReading';
   static const String Start_Care_Plan = 'StartCarePlan';
   static const String Setup_Doctor_For_Care_Plan = 'SetupDoctorCarePlan';
   static const String Setup_Pharmacies_For_Care_Plan =

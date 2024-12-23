@@ -21,6 +21,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -456,6 +457,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'Progress 2 of 2',
                         child: InkWell(
                           onTap: () {
+                            UserAnalyticsServices.registerScreenEntryEvent('task-progress-screen', 'task-progress', 'task-progress-screen-entry', '', null);
                             if(!model.busy) {
                               query = 'completed';
                               getUserTask();
@@ -900,15 +902,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return Semantics(
+      button: true,
       hint: task.finished
           ? taskName + ' task is already completed'
           : query == 'completed' && task.status == 'Delayed'
           ? taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
           task.scheduledStartTime.toString())
-          .toLocal())+' Pending task '
+          .toLocal())+' Pending task ' + " " +task.task.toString()
           : taskName +" assigned on "+  dateFormatOnlyDate.format(DateTime.parse(
           task.scheduledStartTime.toString())
-          .toLocal())+ ' task ',
+          .toLocal())+ ' task ' + " " +task.task.toString(),
       child: InkWell(
         onTap: () {
           debugPrint(
@@ -1445,63 +1448,65 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 borderRadius: BorderRadius.all(Radius.circular(4.0))),
             child: Column(
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      color: colorF6F6FF,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0))),
+                ExcludeSemantics(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 6,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 8,
-                              ),
-                              //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
-                              //SizedBox(width: 4,),
-                              Container(
-                                width: MediaQuery.of(context).size.width - 200,
-                                child: Text(task.category.toString(),
-                                    maxLines: 2,
+                    decoration: BoxDecoration(
+                        color: colorF6F6FF,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0))),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 6,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
+                                //SizedBox(width: 4,),
+                                Container(
+                                  width: MediaQuery.of(context).size.width - 200,
+                                  child: Text(task.category.toString(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: primaryColor)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                    dateFormatOnlyDate.format(DateTime.parse(
+                                            task.scheduledStartTime.toString())
+                                        .toLocal()),
+                                    maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: primaryColor)),
-                              ),
-                            ],
+                                        color: primaryColor,)),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                  dateFormatOnlyDate.format(DateTime.parse(
-                                          task.scheduledStartTime.toString())
-                                      .toLocal()),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: primaryColor,)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1522,13 +1527,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(task.task ?? '',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w200,
-                                          color: textBlack)),
+                                  ExcludeSemantics(
+                                    child: Text(task.task ?? '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w200,
+                                            color: textBlack)),
+                                  ),
                                   task.task == 'Survey' || task.task == 'Patient Satisfaction Survey'
                                       ? IconButton(
                                           onPressed: () {

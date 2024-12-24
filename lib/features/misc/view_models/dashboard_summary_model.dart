@@ -61,7 +61,7 @@ class DashboardSummaryModel extends BaseModel {
     return TaskSummaryResponse.fromJson(response);
   }
 
-  Future<KnowledgeTopicResponse> getTodaysKnowledgeTopic() async {
+  Future<KnowledgeTopicResponse> getTodaysKnowledgeTopic(String tags) async {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
@@ -70,7 +70,7 @@ class DashboardSummaryModel extends BaseModel {
         '/educational/knowledge-nuggets/6b37b604-0157-426a-93e4-ecc0ba2b0ef3', //+ patientUserId!,
         header: map);*/
     final response = await apiProvider!.get(
-        '/educational/knowledge-nuggets/today/' + patientUserId!,
+        '/educational/knowledge-nuggets/today/' + patientUserId!+'?tags='+tags,
         header: map);
     setBusy(false);
     // Convert and return

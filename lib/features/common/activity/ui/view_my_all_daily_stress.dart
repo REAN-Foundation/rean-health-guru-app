@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/activity/ui/activity_meditation.dart';
+import 'package:patient/features/common/activity/ui/activity_sleep.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -440,12 +442,14 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       } else {
         sleepToDisplay = sleepInBed;
       }
-      //recordMySleepTimeInHrs(Conversion.durationFromMinToHrsToString(sleepToDisplay).substring(0,1));
+      if(sleepToDisplay != 0) {
+        recordMySleepTimeInHrs(
+            Conversion.durationFromMinToHrsToString(sleepToDisplay));
+      }
     } else {
       //https://pub.dev/packages/time_range_picker
     }
     return Container(
-      height: 240,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -455,6 +459,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -553,7 +560,16 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       ],
                     ),
                   ),
-                )
+                ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ActivitySleepView(false, (){
+                      loadSleepMovement();
+                      setState(() {
+
+                      });
+                }),
+              ),
             ],
           ),
           Positioned(
@@ -572,7 +588,6 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   Widget mindfulnessTime() {
     debugPrint('MindfulnessTime Dashboard Tile inisde ==> $oldStoreSec');
     return Container(
-      height: 240,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -582,6 +597,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -612,9 +630,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               MergeSemantics(
                 child: Column(
                   children: [
-                    Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                    Text(Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6),
                         semanticsLabel:
-                            Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours') + 'Duration',
+                            Conversion.durationFromSecToMinToString(oldStoreSec).substring(0,6).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours') + 'Duration',
                         style: const TextStyle(
                             color: textBlack,
                             fontWeight: FontWeight.w700,
@@ -660,6 +678,15 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                   ),
                 ),
               ),*/
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ActivityMeditationView(false , (){
+                      loadSharedPrefs();
+                      setState(() {
+
+                      });
+                }),
+              ),
             ],
           ),
           Positioned(
@@ -715,12 +742,15 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       if(sleepInHrs != 0 ) {
         final map = <String, dynamic>{};
         map['PatientUserId'] = patientUserId;
-        map['SleepDuration'] = sleepInHrs;
+        map['SleepDuration'] = sleepInHrs.substring(0,1);
+        map['SleepMinutes'] = sleepInHrs.substring(sleepInHrs.length-6 , sleepInHrs.length-4);
         map['Unit'] = 'Hrs';
         map['RecordDate'] = dateFormat.format(DateTime.now());
 
         final BaseResponse baseResponse = await model.recordMySleep(map);
-        if (baseResponse.status == 'success') {} else {}
+        if (baseResponse.status == 'success') {
+          setState(() {});
+        } else {}
       }
     } catch (e) {
       model.setBusy(false);

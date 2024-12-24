@@ -10,6 +10,7 @@ import 'package:patient/features/misc/ui/health_journey_registration.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -34,7 +35,7 @@ class _CreateProfileScreen2State extends State<CreateProfileScreen2> {
   @override
   void initState() {
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
-
+    UserAnalyticsServices.registerScreenEntryEvent('create-profile-2-screen', 'create-profile-2', 'create-profile-2-screen-entry', '', null);
     super.initState();
     loadSharedPrefs();
   }

@@ -23,6 +23,7 @@ import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -119,7 +120,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
     //RemoteConfigValues.hospitalSystemVisibility = false;
     progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
-
+    UserAnalyticsServices.registerScreenEntryEvent('health-journey-registration-flow-screen', 'health-journey-registration-flow', 'health-journey-registration-flow-screen-entry', '', null);
     /*if(carePlanEnrollmentForPatientGlobe != null) {
       getHealthSystem();
     }*/

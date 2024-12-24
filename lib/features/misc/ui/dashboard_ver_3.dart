@@ -104,9 +104,17 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     Future.delayed(
       Duration(seconds: 4),
       () {
-        getTodaysKnowledgeTopic();
+        //getTodaysKnowledgeTopic();
         getPendingUserTask("pending");
         getMyMedications();
+        //getMedicationSummary();
+        //getLatestBiometrics();
+      },
+    );
+    Future.delayed(
+      Duration(seconds: 6),
+          () {
+        getTodaysKnowledgeTopic();
         //getMedicationSummary();
         //getLatestBiometrics();
       },
@@ -1937,7 +1945,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                   ),
                 ),
               )
-                  : model.busy
+                  : briefInformation.toString().isEmpty
                       ? Center(
                           child: SizedBox(
                               height: 32,
@@ -2271,6 +2279,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context,
                                     RoutePaths
                                         .Biometric_Blood_Presure_Vitals_Care_Plan);
+
+                               /* Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return AbnormalReadingBpView();
+                                    }), (Route<dynamic> route) => false);*/
                               },
                               child: Container(
                                 height: 96,
@@ -3433,7 +3446,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                 /*Navigator.pushNamed(
                                     context, RoutePaths.MY_STRESS);*/
                                 FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_sleep_button_click');
-                                Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                Navigator.pushNamed(context, RoutePaths.MySleepData,
                                     arguments: 1);
                               },
                               child: Container(
@@ -3484,7 +3497,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                /* Navigator.pushNamed(
                                     context, RoutePaths.MY_STRESS);*/
                                 FirebaseAnalytics.instance.logEvent(name: 'mental_well_being_mindfulness_button_click');
-                                Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                Navigator.pushNamed(context, RoutePaths.Meditation_Trends,
                                     arguments: 1);
                               },
                               child: Container(
@@ -3668,10 +3681,37 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     );
   }
 
+
+
+  String getCarePlanNameTags(){
+    String knowledgeTags = "";
+    if(carePlanEnrollmentForPatientGlobe != null) {
+      if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+          .isNotEmpty) {
+        if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "HFMotivator") {
+          knowledgeTags = "hf, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "Cholesterol") {
+          knowledgeTags = "cholesterol, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "Stroke") {
+          knowledgeTags = "stroke, general";
+        } else if (carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0).planCode == "SMBP") {
+          knowledgeTags = "bp, general";
+        }
+      }
+    }else{
+      knowledgeTags = "general";
+    }
+    return knowledgeTags;
+  }
+
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-          await model.getTodaysKnowledgeTopic();
+          await model.getTodaysKnowledgeTopic(getCarePlanNameTags());
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {

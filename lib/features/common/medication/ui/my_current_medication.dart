@@ -9,6 +9,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
@@ -32,6 +33,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   @override
   void initState() {
+    UserAnalyticsServices.registerScreenEntryEvent('medication-current-screen', 'medication-current-flow', 'medication-current-screen-entry', '', null);
     getMyMedications();
     super.initState();
   }

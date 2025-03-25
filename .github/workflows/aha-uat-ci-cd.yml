@@ -24,10 +24,10 @@ jobs:
   #    - name: check tag
   #      uses: mukunku/tag-exists-action@v1.2.0
   #      id: checkTag
-  #      with: 
+  #      with:
   #        tag: ${{ github.event.inputs.Tag_name }}
   #    - run: if [[ ${{ steps.checkTag.outputs.exists }} == 'false' ]]; then exit 1; fi
-  
+
   gitguardian-scanning:
     # needs: Github-ECR-Tag-Check
     name: GitGuardian Scan
@@ -100,7 +100,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: "11"
+          java-version: "17"
           distribution: "adopt"
           cache: gradle
 

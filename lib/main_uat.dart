@@ -16,7 +16,6 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/chat_api_provider.dart';
@@ -57,6 +56,7 @@ Future<void> showNotification(RemoteMessage payload) async {
 
   await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
 }
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,9 +107,9 @@ class MyApp extends StatelessWidget {
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
     GetIt.instance
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
-    GetIt.instance
-        .registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));
+ GetIt.instance.registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));  
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
+
   }
 
   @override

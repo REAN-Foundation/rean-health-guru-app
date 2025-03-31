@@ -8,13 +8,14 @@ class UserAnalyticsServices{
 
   static UserAnalyticsApiProvider? apiProvider = GetIt.instance<UserAnalyticsApiProvider>();
 
-  static registerScreenEntryEvent(String eventType, String eventCategory, String eventSubject, String actionStatement, dynamic attribute)  {
+  static registerScreenEntryEvent(String eventType, String eventCategory, String eventSubject, String actionStatement, dynamic attribute, {String resourceType = ''})  {
+
 
     final body = <String, dynamic>{};
     body['UserId'] = patientUserId.toString();
     body['TenantId'] = tenantId.toString();
     body['ResourceId'] = null;
-    body['ResourceType'] = null;
+    body['ResourceType'] = resourceType;
     body['SessionId'] = null;
     body['SourceName'] = getAppName().toString();
     body['SourceVersion'] = appVersion;

@@ -39,7 +39,6 @@ lib/generated_plugin_registrant.dart
 ios/build/
 ios/output/
 
-
 # Exclude Firebase config files
 android/app/src/**/*.json
 android/app/src/*.json
@@ -55,3 +54,8 @@ ios/Flutter/Generated.xcconfig
 
 .flutter*
 .envrc
+
+# FVM Version Cache
+.fvm/
+.fvmrc
+.vscode/settings.json

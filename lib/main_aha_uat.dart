@@ -90,6 +90,7 @@ class MyApp extends StatelessWidget {
   String? _botBaseUrl;
   String? _awardBaseUrl;
   String? _userAnalyticsBaseUrl;
+
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);
@@ -128,6 +129,7 @@ class MyApp extends StatelessWidget {
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
     GetIt.instance
         .registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));
+
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 

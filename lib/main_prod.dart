@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/user_analytics_api_provider.dart';
+
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
 import 'package:patient/infra/services/NavigationService.dart';
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
   String? _botBaseUrl;
   String? _awardBaseUrl;
   String? _userAnalyticsBaseUrl;
+  
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);

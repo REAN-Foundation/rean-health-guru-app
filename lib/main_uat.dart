@@ -16,11 +16,9 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/chat_api_provider.dart';
-import 'infra/networking/user_analytics_api_provider.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -59,42 +57,6 @@ Future<void> showNotification(RemoteMessage payload) async {
   await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
 }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-}
-
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  if (notificationResponse != null) {
-    debugPrint('notification payload: $notificationResponse');
-  } else {
-    debugPrint("Notification Done");
-  }
-}
-
-
-Future<void> showNotification(RemoteMessage payload) async {
-  const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-    'default_notification_channel_id',
-    'Notification',
-    importance: Importance.max,
-    priority: Priority.high,
-    ticker: 'ticker',
-    playSound: true,
-  );
-  const iOSDetails = DarwinNotificationDetails(
-    presentAlert: true,
-    presentBadge: true,
-    presentSound: true,
-  );
-  const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidDetails, iOS: iOSDetails);
-
-  await flutterLocalNotificationsPlugin.show(0, payload.notification!.title, payload.notification!.body, platformChannelSpecifics, payload: payload.toString());
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

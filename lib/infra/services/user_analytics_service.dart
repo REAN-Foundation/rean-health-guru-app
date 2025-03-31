@@ -10,6 +10,7 @@ class UserAnalyticsServices{
 
   static registerScreenEntryEvent(String eventType, String eventCategory, String eventSubject, String actionStatement, dynamic attribute, {String resourceType = ''})  {
 
+
     final body = <String, dynamic>{};
     body['UserId'] = patientUserId.toString();
     body['TenantId'] = tenantId.toString();

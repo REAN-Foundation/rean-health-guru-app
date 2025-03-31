@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
 import 'package:patient/infra/networking/chat_api_provider.dart';
+import 'package:patient/infra/networking/user_analytics_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
 import 'package:patient/infra/services/NavigationService.dart';
@@ -88,6 +89,8 @@ class MyApp extends StatelessWidget {
   String? _baseUrl;
   String? _botBaseUrl;
   String? _awardBaseUrl;
+  String? _userAnalyticsBaseUrl;
+
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);
@@ -112,6 +115,7 @@ class MyApp extends StatelessWidget {
     _baseUrl = dotenv.env['AHA_BASE_URL'];
     _botBaseUrl = dotenv.env['AHA_BOT_BASE_URL'];
     _awardBaseUrl = dotenv.env['AWARD_BASE_URL'];
+    _userAnalyticsBaseUrl = dotenv.env['USER_ANALYTICS_BASE_URL'];
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setAppType('AHA');
@@ -123,6 +127,9 @@ class MyApp extends StatelessWidget {
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
     GetIt.instance
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
+    GetIt.instance
+        .registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));
+
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 

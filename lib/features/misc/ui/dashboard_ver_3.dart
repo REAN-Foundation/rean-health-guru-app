@@ -24,6 +24,7 @@ import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/services/user_analytics_service.dart';
+
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -2010,7 +2011,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int pdfLoadingCount = 0;
 
   initWebView(String url) async {
+
     UserAnalyticsServices.registerScreenEntryEvent("knowledge-nugget-link", topicName.toString(), 'knowledge-nugget', '', null, resourceType: 'knowledge-nugget');
+
+
     if(url.contains('.pdf') && Platform.isAndroid){
       /*createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
           .then((f) {

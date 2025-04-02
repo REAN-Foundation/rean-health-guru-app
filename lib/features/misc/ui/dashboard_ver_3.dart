@@ -23,7 +23,6 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
-import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -33,6 +32,8 @@ import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../infra/services/user_analytics_service.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer3View extends StatefulWidget {

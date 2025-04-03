@@ -33,6 +33,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../infra/services/user_analytics_service.dart';
+
 //ignore: must_be_immutable
 class DashBoardVer3View extends StatefulWidget {
   late Function positionToChangeNavigationBar;
@@ -2009,6 +2011,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   int pdfLoadingCount = 0;
 
   initWebView(String url) async {
+    UserAnalyticsServices.registerScreenEntryEvent("knowledge-nugget-link", topicName.toString(), 'knowledge-nugget', '', null, resourceType: 'knowledge-nugget');
     if(url.contains('.pdf') && Platform.isAndroid){
       /*createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
           .then((f) {

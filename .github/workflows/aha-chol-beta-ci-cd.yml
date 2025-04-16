@@ -73,12 +73,15 @@ jobs:
         with:
           fastlane-dir: android
 
+      - name: Ensure Gradle cache directory exists
+        run: mkdir -p ~/.gradle
+
       # Setting up jdk
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: "17"
-          distribution: "adopt"
+          distribution: "temurin"
           cache: gradle
 
       - name: Setup Android SDK

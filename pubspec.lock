@@ -289,7 +289,7 @@ packages:
       name: facebook_app_events
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0"
+    version: "0.19.6"
   fake_async:
     dependency: transitive
     description:

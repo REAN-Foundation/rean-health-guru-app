@@ -3,6 +3,17 @@ PODS:
     - Flutter
   - devicelocale (0.0.1):
     - Flutter
+  - facebook_app_events (0.0.1):
+    - FBAudienceNetwork (~> 6.9.0)
+    - FBSDKCoreKit (~> 15.0.0)
+    - Flutter
+  - FBAEMKit (15.0.0):
+    - FBSDKCoreKit_Basics (= 15.0.0)
+  - FBAudienceNetwork (6.9.0)
+  - FBSDKCoreKit (15.0.0):
+    - FBAEMKit (= 15.0.0)
+    - FBSDKCoreKit_Basics (= 15.0.0)
+  - FBSDKCoreKit_Basics (15.0.0)
   - Firebase/AnalyticsWithoutAdIdSupport (10.7.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics/WithoutAdIdSupport (~> 10.7.0)
@@ -164,6 +175,7 @@ PODS:
 DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - devicelocale (from `.symlinks/plugins/devicelocale/ios`)
+  - facebook_app_events (from `.symlinks/plugins/facebook_app_events/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -194,6 +206,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FBAEMKit
+    - FBAudienceNetwork
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -217,6 +233,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info_plus/ios"
   devicelocale:
     :path: ".symlinks/plugins/devicelocale/ios"
+  facebook_app_events:
+    :path: ".symlinks/plugins/facebook_app_events/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
@@ -275,6 +293,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   devicelocale: b22617f40038496deffba44747101255cee005b0
+  facebook_app_events: f4bc499add4505400a23f1a47aba38e4980afcad
+  FBAEMKit: d8312d8451ead46282adc7f3565ffc4965e3a4a7
+  FBAudienceNetwork: 83096d73433759c10f9cf9b3bad5e5cff58694cb
+  FBSDKCoreKit: 81879058dd06208c0820fc713d054ca54903e8ba
+  FBSDKCoreKit_Basics: eebc9bb69a0e5d133b92dca53a20716227faa454
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
   firebase_analytics: ff9f3d75b3407726bb0b9f7e4b093f265a456bac
   firebase_core: 18d44f087248303a4a8f05d0099a000c46e3c77a

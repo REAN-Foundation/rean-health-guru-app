@@ -549,14 +549,14 @@ class _EditProfileState extends State<EditProfile> {
         passwordController: _passwordController,
       ),
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: () async {
+        child: PopScope(
+          onPopInvokedWithResult: (bool didPop, Object? result) async {
             if (isEditable) {
-              final result = await _onBackPressed();
-              return result;
+              await _onBackPressed();
+              return;
             } else {
               Navigator.of(context).pop();
-              return true;
+              return;
             }
           },
               child: Scaffold(
@@ -2607,12 +2607,12 @@ class _EditProfileState extends State<EditProfile> {
           child: ElevatedButton(
               style: ButtonStyle(
                   foregroundColor:
-                  MaterialStateProperty.all<Color>(
+                  WidgetStateProperty.all<Color>(
                       primaryLightColor),
                   backgroundColor:
-                  MaterialStateProperty.all<Color>(
+                  WidgetStateProperty.all<Color>(
                       primaryColor),
-                  shape: MaterialStateProperty.all<
+                  shape: WidgetStateProperty.all<
                       RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius:

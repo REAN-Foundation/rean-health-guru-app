@@ -101,6 +101,9 @@ class _BaseWidgetState<T extends ChangeNotifier?>
       case AppLifecycleState.detached:
         onDetached();
         break;
+      case AppLifecycleState.hidden: // Add this case
+        debugPrint('<== Apps is in hidden state ==>');
+        break;
     }
   }
 

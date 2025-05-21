@@ -353,8 +353,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> with Widget
                       }).toList(),
                       hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
-                        FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
-                          'health_system': data,
+                        FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, Object>{
+                          'health_system': data as Object,
                         },);
                         debugPrint(data);
                         setState(() {
@@ -416,7 +416,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> with Widget
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
                           'select_hospital': data,
-                        },);
+                        }.map((key, value) => MapEntry(key, value as Object)),);
                         debugPrint(data);
                         setState(() {
                           healthSystemHospitalGlobe = data.toString();

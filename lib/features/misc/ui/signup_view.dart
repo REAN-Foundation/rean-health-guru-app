@@ -608,7 +608,7 @@ class _SignUpViewState extends State<SignUpView> {
       text: TextSpan(
           text: 'REAN',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
+            textStyle: Theme.of(context).textTheme.displayLarge,
             fontSize: 30,
             fontWeight: FontWeight.w600,
             color: primaryColor,

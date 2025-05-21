@@ -1041,11 +1041,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontSize: 14, fontWeight: FontWeight.w600)),
                 style: ButtonStyle(
                     foregroundColor:
-                    MaterialStateProperty.all<Color>(primaryLightColor),
+                    WidgetStateProperty.all<Color>(primaryLightColor),
                     backgroundColor:
-                    MaterialStateProperty.all<Color>(primaryColor),
+                    WidgetStateProperty.all<Color>(primaryColor),
                     shape:
-                    MaterialStateProperty.all<RoundedRectangleBorder>(
+                    WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                             side: BorderSide(color: primaryColor)))),

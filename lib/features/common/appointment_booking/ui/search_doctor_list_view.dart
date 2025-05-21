@@ -434,11 +434,11 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                         getDoctorDetails(doctorDetails.userId!);
                       },
                       style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
+                          foregroundColor: WidgetStateProperty.all<Color>(
                               primaryLightColor),
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(primaryColor),
-                          shape: MaterialStateProperty.all<
+                              WidgetStateProperty.all<Color>(primaryColor),
+                          shape: WidgetStateProperty.all<
                                   RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),

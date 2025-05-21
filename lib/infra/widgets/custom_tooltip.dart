@@ -23,7 +23,7 @@ class CustomTooltip extends StatelessWidget {
       margin: EdgeInsets.all(20),
       showDuration: Duration(seconds: 10),
       decoration: BoxDecoration(
-        color: colorEDEDED.withOpacity(1),
+        color: colorEDEDED.withAlpha(1),
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),

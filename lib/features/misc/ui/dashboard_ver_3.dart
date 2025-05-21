@@ -2038,29 +2038,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             .microsecondsSinceEpoch}.pdf');
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
-        await custom_web_wiew.launch(url,
-          customTabsOption: custom_web_wiew.CustomTabsOption(
-            toolbarColor: primaryColor,
-            enableDefaultShare: true,
-            enableUrlBarHiding: true,
-            showPageTitle: true,
-            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
-            extraCustomTabs: const <String>[
-              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-              'org.mozilla.firefox',
-              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-              'com.microsoft.emmx',
-            ],
-          ),
-          safariVCOption: custom_web_wiew.SafariViewControllerOption(
-            preferredBarTintColor: primaryColor,
-            preferredControlTintColor: Colors.white,
-            barCollapsingEnabled: false,
-            entersReaderIfAvailable: false,
-            dismissButtonStyle: custom_web_wiew
-                .SafariViewControllerDismissButtonStyle.close,
-          ),
-        );
+        await custom_web_wiew.launchUrl(Uri.parse(url));
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 //ignore: must_be_immutable
@@ -62,14 +62,26 @@ class PDFScreen extends StatelessWidget {
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
       /*final List fileList = List<String>.empty(growable: true);
       fileList.add(imgFile);*/
-      Share.shareFiles([imgFile.path],
+      final xFile = XFile(imgFile.path);
+      await SharePlus.instance.share(
+          ShareParams( files: [xFile],
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
+      /*Share.shareFiles([imgFile.path],
           subject: '',
           text: '',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);*/
     } else {
-      Share.shareFiles([imgFile.path],
+      final xFile = XFile(imgFile.path);
+      await SharePlus.instance.share(
+          ShareParams( files: [xFile],
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
+      /*Share.shareFiles([imgFile.path],
           subject: '',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);*/
     }
   }
 }

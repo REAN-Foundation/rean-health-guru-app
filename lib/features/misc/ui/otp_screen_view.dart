@@ -339,9 +339,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         controller: otpController,
         focusNode: focusNode,
 
-        androidSmsAutofillMethod:
+        /*androidSmsAutofillMethod:
         AndroidSmsAutofillMethod.smsUserConsentApi,
-        listenForMultipleSmsOnAndroid: true,
+        listenForMultipleSmsOnAndroid: true,*/
         defaultPinTheme: defaultPinTheme,
        /* validator: (value) {
           return value == '2222' ? null : 'Pin is incorrect';

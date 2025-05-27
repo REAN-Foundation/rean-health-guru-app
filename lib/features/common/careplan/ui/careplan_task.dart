@@ -411,7 +411,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         label: 'To Do 1 of 2',
                         child: InkWell(
                           onTap: () {
-                            if(!model!.busy) {
+                            if(!model.busy) {
                               query = 'pending';
                               getUserTask();
                               isUpCommingSelected = true;

@@ -67,7 +67,7 @@ dependencies:
     git:
       url: https://github.com/TusharKatakdound/charts_flutter.git
       path: charts_flutter
-      ref: main
+      ref: master
   lottie: ^3.3.1
   tutorial_coach_mark: ^1.2.4
   intl_phone_field: ^2.0.1

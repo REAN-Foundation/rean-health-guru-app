@@ -24,6 +24,7 @@ android {
     defaultConfig {
         applicationId = "org.reanfoundation.patient"
         minSdk = 28
+        targetSdk = 35
         versionCode = versionCodeProp
         versionName = versionNameProp
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

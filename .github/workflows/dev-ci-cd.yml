@@ -199,7 +199,7 @@ jobs:
   iOS-BuildApp:
     environment: dev
     # needs: [Code-Scan]
-    runs-on: macos-13
+    runs-on: macos-15
     outputs:
       branchName: ${{ steps.myref.outputs.branch }}
     steps:
@@ -268,7 +268,7 @@ jobs:
   iOS-PublishAppInternally:
     environment: dev
     needs: iOS-BuildApp
-    runs-on: macos-13
+    runs-on: macos-15
     defaults:
       run:
         shell: bash

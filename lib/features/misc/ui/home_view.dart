@@ -1277,6 +1277,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(56.0),
             child: AppBar(
+
               elevation: 10.0,
               backgroundColor: Colors.white,
               systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),

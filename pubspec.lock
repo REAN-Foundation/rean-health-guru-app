@@ -154,8 +154,8 @@ packages:
     dependency: "direct main"
     description:
       path: charts_flutter
-      ref: main
-      resolved-ref: "80ae0313f867dd764eabf3799a6155105f4b7f00"
+      ref: master
+      resolved-ref: "40f6a2a427032bdcdff4affbcf197a736deca595"
       url: "https://github.com/TusharKatakdound/charts_flutter.git"
     source: git
     version: "0.12.0"

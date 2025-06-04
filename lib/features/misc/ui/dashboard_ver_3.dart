@@ -809,7 +809,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               ),
             ),
             Container(
-              height: 108,
+              height: 116,
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
               child: Stack(
@@ -832,7 +832,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 100,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -872,7 +872,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 102,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -913,7 +913,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 102,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -2209,7 +2209,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                   RoutePaths.Biometric_Weight_Vitals_Care_Plan);
                             },
                             child: Container(
-                              height: 96,
+                              height: 102,
                               child: ExcludeSemantics(
                                 child: Column(
                                   children: [
@@ -2266,7 +2266,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     }), (Route<dynamic> route) => false);*/
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2319,7 +2319,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                         .Biometric_Blood_Glucose_Vitals_Care_Plan);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2370,7 +2370,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2511,7 +2511,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Lipid_Profile_Total_Cholesterol);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2560,7 +2560,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context, RoutePaths.Lipid_Profile_LDL);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2608,7 +2608,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context, RoutePaths.Lipid_Profile_HDL);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2656,7 +2656,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Lipid_Profile_Triglyceroid);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [

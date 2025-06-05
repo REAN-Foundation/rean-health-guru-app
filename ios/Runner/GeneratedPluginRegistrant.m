@@ -12,6 +12,12 @@
 @import device_info_plus;
 #endif
 
+#if __has_include(<device_region/DeviceRegionPlugin.h>)
+#import <device_region/DeviceRegionPlugin.h>
+#else
+@import device_region;
+#endif
+
 #if __has_include(<devicelocale/DevicelocalePlugin.h>)
 #import <devicelocale/DevicelocalePlugin.h>
 #else
@@ -148,6 +154,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [FPPDeviceInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPDeviceInfoPlusPlugin"]];
+  [DeviceRegionPlugin registerWithRegistrar:[registry registrarForPlugin:@"DeviceRegionPlugin"]];
   [DevicelocalePlugin registerWithRegistrar:[registry registrarForPlugin:@"DevicelocalePlugin"]];
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];

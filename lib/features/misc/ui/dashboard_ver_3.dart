@@ -2038,7 +2038,31 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             .microsecondsSinceEpoch}.pdf');
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
-        await custom_web_wiew.launchUrl(Uri.parse(url));
+        //await custom_web_wiew.launchUrl(Uri.parse(url));
+
+        try {
+          await custom_web_wiew.launchUrl(
+            Uri.parse(url),
+            customTabsOptions: const custom_web_wiew.CustomTabsOptions(
+              urlBarHidingEnabled: true,
+              showTitle: true,
+              shareIdentityEnabled: true,
+              instantAppsEnabled: true,
+            ),
+            safariVCOptions: const custom_web_wiew.SafariViewControllerOptions(
+              preferredBarTintColor: Colors.blue,
+              preferredControlTintColor: Colors.white,
+              barCollapsingEnabled: true,
+              entersReaderIfAvailable: false,
+              dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+            ),
+          );
+        } catch (e) {
+          /*ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $url')),
+          );*/
+        }
+
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:device_region/device_region.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -75,16 +76,17 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     appVersion = _packageInfo.version.toString();
     try {
-      /*final String? locale = await FlutterSimCountryCode.simCountryCode;
+      final String? locale = await DeviceRegion.getSIMCountryCode();
+      //debugPrint('Country Local above ==> ${locale!.toUpperCase()}');
       if (locale!.trim().isNotEmpty && locale != '--') {
         setCurrentLocale(locale.toUpperCase());
         debugPrint('Country Local ==> ${locale.toUpperCase()}');
-      } else {*/
+      } else {
         final Locale? countryLocale = await Devicelocale.currentAsLocale;
         setCurrentLocale(countryLocale!.countryCode!.toUpperCase());
         debugPrint(
             'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
-      //}
+      }
     } catch (e) {
       final Locale? countryLocale = await Devicelocale.currentAsLocale;
       setCurrentLocale(countryLocale!.countryCode!.toUpperCase());

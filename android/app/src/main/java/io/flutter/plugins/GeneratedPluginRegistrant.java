@@ -21,6 +21,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin device_info_plus, dev.fluttercommunity.plus.device_info.DeviceInfoPlusPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new com.example.device_region.DeviceRegionPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin device_region, com.example.device_region.DeviceRegionPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.example.devicelocale.DevicelocalePlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin devicelocale, com.example.devicelocale.DevicelocalePlugin", e);

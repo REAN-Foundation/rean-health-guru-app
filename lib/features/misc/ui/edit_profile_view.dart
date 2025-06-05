@@ -534,7 +534,9 @@ class _EditProfileState extends State<EditProfile> {
               await _onBackPressed();
               return;
             } else {
-              Navigator.of(context).pop();
+              Future.delayed(Duration(seconds: 1), () {
+                Navigator.of(context).pop();
+              });
               return;
             }
           },

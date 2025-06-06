@@ -24,7 +24,7 @@ jobs:
      - name: check tag
        uses: mukunku/tag-exists-action@v1.2.0
        id: checkTag
-       with: 
+       with:
          tag: ${{ github.event.inputs.Tag_name }}
      - run: if [[ ${{ steps.checkTag.outputs.exists }} == 'false' ]]; then exit 1; fi
 
@@ -98,10 +98,10 @@ jobs:
 
       # Setting up jdk
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
-          java-version: "11"
-          distribution: "adopt"
+          java-version: "17"
+          distribution: "temurin"
           cache: gradle
 
       - name: Setup Android SDK

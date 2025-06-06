@@ -191,9 +191,9 @@ class _MyDialogState extends State<BadgesDetailsDialog> {
             color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
       ),
       style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color>(primaryLightColor),
-          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          foregroundColor: WidgetStateProperty.all<Color>(primaryLightColor),
+          backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                   side: BorderSide(color: primaryColor)))),

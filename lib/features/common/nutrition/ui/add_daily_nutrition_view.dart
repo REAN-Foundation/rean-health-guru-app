@@ -383,9 +383,9 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
           },
           style: ButtonStyle(
               foregroundColor:
-                  MaterialStateProperty.all<Color>(primaryLightColor),
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  WidgetStateProperty.all<Color>(primaryLightColor),
+              backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                       side: BorderSide(color: primaryColor)))),

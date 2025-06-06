@@ -184,11 +184,11 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       width: 150,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(
+                            foregroundColor: WidgetStateProperty.all<Color>(
                                 primaryLightColor),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(primaryColor),
-                            shape: MaterialStateProperty.all<
+                                WidgetStateProperty.all<Color>(primaryColor),
+                            shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -222,11 +222,11 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       width: 150,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(
+                            foregroundColor: WidgetStateProperty.all<Color>(
                                 primaryLightColor),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(primaryColor),
-                            shape: MaterialStateProperty.all<
+                                WidgetStateProperty.all<Color>(primaryColor),
+                            shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -605,11 +605,11 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       width: 80,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(
+                            foregroundColor: WidgetStateProperty.all<Color>(
                                 primaryLightColor),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(primaryColor),
-                            shape: MaterialStateProperty.all<
+                                WidgetStateProperty.all<Color>(primaryColor),
+                            shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
@@ -628,11 +628,11 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       width: 80,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(
+                            foregroundColor: WidgetStateProperty.all<Color>(
                                 primaryLightColor),
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(primaryColor),
-                            shape: MaterialStateProperty.all<
+                                WidgetStateProperty.all<Color>(primaryColor),
+                            shape: WidgetStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),

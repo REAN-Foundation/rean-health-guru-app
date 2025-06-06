@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -793,11 +791,11 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   Future getFile() async {
     String? result;
     try {
-      result = await FlutterDocumentPicker.openDocument();
+      result = "";//await FlutterDocumentPicker.openDocument();
       debugPrint('File Result ==> $result');
 
       if (result != '') {
-        final File file = File(result!);
+        final File file = File(result);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');

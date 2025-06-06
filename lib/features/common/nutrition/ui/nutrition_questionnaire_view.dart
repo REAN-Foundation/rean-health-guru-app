@@ -273,6 +273,9 @@ class _NutritionQuestionnaireViewState
                     showToast('Please select serving values', context);
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                ),
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -291,6 +294,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -477,6 +481,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -660,6 +665,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -845,6 +851,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -1029,6 +1036,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -1215,6 +1223,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -1366,6 +1375,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
@@ -1550,6 +1560,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -1731,6 +1742,7 @@ class _NutritionQuestionnaireViewState
       semanticContainer: false,
       elevation: 0,
       child: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

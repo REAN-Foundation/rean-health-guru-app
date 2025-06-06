@@ -161,7 +161,7 @@ jobs:
   iOS-BuildApp:
     environment: uat
     # needs: [Code-Scan]
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       # Checkout Code
       - name: Checkout Code
@@ -224,7 +224,7 @@ jobs:
   iOS-Release-Alpha:
     environment: uat
     needs: iOS-BuildApp
-    runs-on: macos-13
+    runs-on: macos-15
     defaults:
       run:
         shell: bash

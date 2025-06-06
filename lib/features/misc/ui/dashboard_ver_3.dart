@@ -809,7 +809,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               ),
             ),
             Container(
-              height: 108,
+              height: 116,
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
               child: Stack(
@@ -832,7 +832,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 100,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -872,7 +872,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 102,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -913,7 +913,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               },
                               child: Container(
                                 width: 96,
-                                height: 96,
+                                height: 102,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -2038,29 +2038,31 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             .microsecondsSinceEpoch}.pdf');
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
-        await custom_web_wiew.launch(url,
-          customTabsOption: custom_web_wiew.CustomTabsOption(
-            toolbarColor: primaryColor,
-            enableDefaultShare: true,
-            enableUrlBarHiding: true,
-            showPageTitle: true,
-            animation: custom_web_wiew.CustomTabsSystemAnimation.slideIn(),
-            extraCustomTabs: const <String>[
-              // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-              'org.mozilla.firefox',
-              // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-              'com.microsoft.emmx',
-            ],
-          ),
-          safariVCOption: custom_web_wiew.SafariViewControllerOption(
-            preferredBarTintColor: primaryColor,
-            preferredControlTintColor: Colors.white,
-            barCollapsingEnabled: false,
-            entersReaderIfAvailable: false,
-            dismissButtonStyle: custom_web_wiew
-                .SafariViewControllerDismissButtonStyle.close,
-          ),
-        );
+        //await custom_web_wiew.launchUrl(Uri.parse(url));
+
+        try {
+          await custom_web_wiew.launchUrl(
+            Uri.parse(url),
+            customTabsOptions: const custom_web_wiew.CustomTabsOptions(
+              urlBarHidingEnabled: true,
+              showTitle: true,
+              shareIdentityEnabled: true,
+              instantAppsEnabled: true,
+            ),
+            safariVCOptions: const custom_web_wiew.SafariViewControllerOptions(
+              preferredBarTintColor: Colors.blue,
+              preferredControlTintColor: Colors.white,
+              barCollapsingEnabled: true,
+              entersReaderIfAvailable: false,
+              dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+            ),
+          );
+        } catch (e) {
+          /*ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $url')),
+          );*/
+        }
+
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';
@@ -2231,7 +2233,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                   RoutePaths.Biometric_Weight_Vitals_Care_Plan);
                             },
                             child: Container(
-                              height: 96,
+                              height: 102,
                               child: ExcludeSemantics(
                                 child: Column(
                                   children: [
@@ -2288,7 +2290,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     }), (Route<dynamic> route) => false);*/
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2341,7 +2343,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                         .Biometric_Blood_Glucose_Vitals_Care_Plan);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2392,7 +2394,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2533,7 +2535,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Lipid_Profile_Total_Cholesterol);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2582,7 +2584,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context, RoutePaths.Lipid_Profile_LDL);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2630,7 +2632,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     context, RoutePaths.Lipid_Profile_HDL);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
@@ -2678,7 +2680,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                                     RoutePaths.Lipid_Profile_Triglyceroid);
                               },
                               child: Container(
-                                height: 96,
+                                height: 102,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [

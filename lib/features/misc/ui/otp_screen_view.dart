@@ -5,7 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
@@ -306,7 +306,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     FirebaseAnalytics.instance.logEvent(name: 'resend_otp_button_click', parameters: <String, dynamic>{
                       'mobile_number': mobileNumber,
                       'country_code': countryCodeGlobe,
-                    },);
+                    }.map((key, value) => MapEntry(key, value as Object)),);
                     generateOTPForExistingUser(model);
                   },
                   child: Semantics(
@@ -339,9 +339,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         controller: otpController,
         focusNode: focusNode,
 
-        androidSmsAutofillMethod:
+        /*androidSmsAutofillMethod:
         AndroidSmsAutofillMethod.smsUserConsentApi,
-        listenForMultipleSmsOnAndroid: true,
+        listenForMultipleSmsOnAndroid: true,*/
         defaultPinTheme: defaultPinTheme,
        /* validator: (value) {
           return value == '2222' ? null : 'Pin is incorrect';
@@ -426,9 +426,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         child: ElevatedButton(
             child: Text('Submit', style: TextStyle(fontSize: 14)),
             style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(24)),
                         side: BorderSide(color: primaryColor)))),
@@ -537,7 +537,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       body['Token'] = _fcmToken;
       body['UserId'] = userId;
       if (Platform.isAndroid) {
-        body['DeviceName'] = androidInfo.brand! + ' ' + androidInfo.model!;
+        body['DeviceName'] = androidInfo.brand + ' ' + androidInfo.model;
         body['DeviceId'] = androidInfo.id;
         body['OSType'] = 'Android';
         body['OSVersion'] = androidInfo.version.release;

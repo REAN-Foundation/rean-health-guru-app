@@ -180,7 +180,7 @@ jobs:
     # needs: Github-ECR-Tag-Check
     environment: aha-uat
     # needs: [Code-Scan]
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       # Checkout Code
       - name: Checkout code
@@ -248,7 +248,7 @@ jobs:
   iOS-Release-Alpha:
     environment: aha-uat
     needs: iOS-BuildApp
-    runs-on: macos-13
+    runs-on: macos-15
     defaults:
       run:
         shell: bash

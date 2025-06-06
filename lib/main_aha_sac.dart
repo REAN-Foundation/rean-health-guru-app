@@ -143,7 +143,9 @@ class MyApp extends StatelessWidget {
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
         navigatorKey: NavigationService.navigatorKey,
-        theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),
+        theme: ThemeData(
+            useMaterial3: false,
+            primarySwatch: colorCustom, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml
         //initialRoute: RoutePaths.Login,
         initialRoute: RoutePaths.Splash_Screen,

@@ -145,8 +145,8 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: _onWillPop,
+        child: PopScope(
+          onPopInvokedWithResult: _onWillPop,
           child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: primaryColor,
@@ -395,7 +395,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
     }
   }
 
-  Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop(bool didPop, Object? result) async {
      Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) {
           return HomeView(1);

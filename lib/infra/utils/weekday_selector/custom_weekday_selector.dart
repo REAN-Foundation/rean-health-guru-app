@@ -466,16 +466,16 @@ class WeekdayButton extends StatelessWidget {
       currentElevation = elevation ?? weekdayTheme?.elevation ?? 1;
       currentFocusColor = focusColor ??
           weekdayTheme?.focusColor ??
-          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.12);
+          theme.buttonTheme.colorScheme!.onSurface.withAlpha((0.12 * 255).round());
       currentHoverColor = hoverColor ??
           weekdayTheme?.hoverColor ??
-          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.04);
+          theme.buttonTheme.colorScheme!.onSurface.withAlpha((0.04 * 255).round());
       currentSplashColor = splashColor ??
           weekdayTheme?.splashColor ??
-          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.16);
+          theme.buttonTheme.colorScheme!.onSurface.withAlpha((0.16 * 255).round());
       currentTextStyle = textStyle ??
           weekdayTheme?.textStyle ??
-          theme.textTheme.bodyText2!.copyWith(color: currentColor);
+          theme.textTheme.bodyMedium!.copyWith(color: currentColor);
       currentShape = shape;
     } else if (onPressed != null && selected == true) {
       currentColor = selectedColor ??
@@ -488,30 +488,30 @@ class WeekdayButton extends StatelessWidget {
           selectedElevation ?? weekdayTheme?.selectedElevation ?? 2;
       currentFocusColor = selectedFocusColor ??
           weekdayTheme?.selectedFocusColor ??
-          theme.buttonTheme.colorScheme!.primary.withOpacity(0.12);
+          theme.buttonTheme.colorScheme!.primary.withAlpha((0.12 * 255).round());
       currentHoverColor = selectedHoverColor ??
           weekdayTheme?.selectedHoverColor ??
-          theme.buttonTheme.colorScheme!.primary.withOpacity(0.04);
+          theme.buttonTheme.colorScheme!.primary.withAlpha((0.04 * 255).round());
       currentSplashColor = selectedSplashColor ??
           weekdayTheme?.selectedSplashColor ??
-          theme.buttonTheme.colorScheme!.primary.withOpacity(0.16);
+          theme.buttonTheme.colorScheme!.primary.withAlpha((0.16 * 255).round());
       currentShape = selectedShape ?? weekdayTheme?.selectedShape;
       currentTextStyle = selectedTextStyle ??
           weekdayTheme?.selectedTextStyle ??
-          theme.textTheme.bodyText2!.copyWith(color: currentColor);
+          theme.textTheme.bodyMedium!.copyWith(color: currentColor);
     } else {
       currentDisabledElevation =
           disabledElevation ?? weekdayTheme?.disabledElevation ?? 0;
       currentColor = disabledColor ??
           weekdayTheme?.disabledColor ??
-          theme.colorScheme.onSurface.withOpacity(0.38);
+          theme.colorScheme.onSurface.withAlpha((0.38 * 255).round());
       currentFillColor = disabledFillColor ??
           weekdayTheme?.disabledFillColor ??
-          theme.colorScheme.onSurface.withOpacity(0.05);
+          theme.colorScheme.onSurface.withAlpha((0.05 * 255).round());
       currentShape = disabledShape ?? weekdayTheme?.disabledShape;
       currentTextStyle = disabledTextStyle ??
           weekdayTheme?.disabledTextStyle ??
-          theme.textTheme.bodyText2!.copyWith(color: currentColor);
+          theme.textTheme.bodyMedium!.copyWith(color: currentColor);
     }
 
     return Expanded(

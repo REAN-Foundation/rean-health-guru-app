@@ -189,7 +189,7 @@ class _BiometricBodyTemperatureVitalsViewState
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 100, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
       child: model.busy
@@ -288,7 +288,10 @@ class _BiometricBodyTemperatureVitalsViewState
     return Card(
       semanticContainer: false,
       elevation: 0,
+      margin: EdgeInsets.zero,
+      clipBehavior: Clip.antiAlias,
       child: Container(
+        height: 32,
         color: colorF6F6FF,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

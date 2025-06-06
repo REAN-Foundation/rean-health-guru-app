@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/remainder/view_models/patients_remainder.dart';
@@ -215,7 +215,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                     onChanged: (data) {
                       FirebaseAnalytics.instance.logEvent(name: 'reminder_type_dropdown_selection', parameters: <String, dynamic>{
                         'type': data,
-                      },);
+                      }.map((key, value) => MapEntry(key, value as Object)),);
                       debugPrint(data);
                       setState(() {
                         frequencyValue = data.toString();
@@ -677,7 +677,7 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                                 onChanged: (data) {
                                   FirebaseAnalytics.instance.logEvent(name: 'reminder_type_dropdown_selection', parameters: <String, dynamic>{
                                     'type': data,
-                                  },);
+                                  }.map((key, value) => MapEntry(key, value as Object)),);
                                   debugPrint(data);
                                   setState(() {
                                     repeatValue = data.toString();
@@ -842,11 +842,11 @@ class _AddMyRemainderViewState extends State<AddMyRemainderView> {
                         fontSize: 14, fontWeight: FontWeight.w600)),
                 style: ButtonStyle(
                     foregroundColor:
-                    MaterialStateProperty.all<Color>(primaryLightColor),
+                    WidgetStateProperty.all<Color>(primaryLightColor),
                     backgroundColor:
-                    MaterialStateProperty.all<Color>(primaryColor),
+                    WidgetStateProperty.all<Color>(primaryColor),
                     shape:
-                    MaterialStateProperty.all<RoundedRectangleBorder>(
+                    WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                             side: BorderSide(color: primaryColor)))),

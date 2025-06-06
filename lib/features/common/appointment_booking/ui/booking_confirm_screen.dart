@@ -41,8 +41,8 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
     return BaseWidget<AppoinmentViewModel?>(
         model: AppoinmentViewModel(),
         builder: (context, model, child) => Container(
-                child: WillPopScope(
-              onWillPop: _onBackPressed,
+                child: PopScope(
+              onPopInvokedWithResult: _onBackPressed,
               child: Scaffold(
                 backgroundColor: Colors.white,
                 body: Column(
@@ -504,7 +504,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
     );
   }
 
-  Future<bool> _onBackPressed() {
+  Future<bool> _onBackPressed(bool didPop, Object? result) {
     return showDialog(
         barrierDismissible: false,
       context: context,

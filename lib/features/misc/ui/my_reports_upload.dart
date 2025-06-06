@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +28,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart' show ShareParams, SharePlus;
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../core/constants/route_paths.dart';
@@ -343,9 +343,9 @@ class _MyReportsViewState extends State<MyReportsView> {
         ),
         style: ButtonStyle(
             foregroundColor:
-            MaterialStateProperty.all<Color>(primaryLightColor),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            WidgetStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                     side: BorderSide(color: primaryColor)))),
@@ -373,9 +373,9 @@ class _MyReportsViewState extends State<MyReportsView> {
         ),
         style: ButtonStyle(
             foregroundColor:
-            MaterialStateProperty.all<Color>(primaryLightColor),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            WidgetStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                     side: BorderSide(color: primaryColor)))),
@@ -423,9 +423,9 @@ class _MyReportsViewState extends State<MyReportsView> {
           ),
           style: ButtonStyle(
               foregroundColor:
-                  MaterialStateProperty.all<Color>(primaryLightColor),
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  WidgetStateProperty.all<Color>(primaryLightColor),
+              backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                       side: BorderSide(color: primaryColor)))),
@@ -667,13 +667,25 @@ class _MyReportsViewState extends State<MyReportsView> {
       final documentDirectory = (await getExternalStorageDirectory()).path;*/
       //File imgFile = new File(pathPDF);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
-      Share.share(shareLink!,
+      await SharePlus.instance.share(
+          ShareParams( text: shareLink,
+            subject: 'Hello, check your shared file.',
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
+      /*Share.share(shareLink!,
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);*/
     } else {
-      Share.share(shareLink!,
+      await SharePlus.instance.share(
+          ShareParams( text: shareLink,
+            subject: 'Hello, check your shared file.',
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
+      /*Share.share(shareLink!,
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);*/
     }
   }
 
@@ -702,30 +714,14 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future getFile(String type) async {
-    String? result;
+    FilePickerResult? result;
     try {
-      final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
-          allowedMimeTypes: [
-            'application/pdf',
-            'application/docs',
-            'application/docx',
-            'application/doc',
-            'application/ppt'
-          ],
-          allowedFileExtensions: [
-            'pdf',
-            'docs',
-            'docx',
-            'doc',
-            'ppt'
-          ]);
+      result = await FilePicker.platform.pickFiles(type: FileType.image); //FlutterDocumentPicker.openDocument(params: params);
 
-      result = await FlutterDocumentPicker.openDocument(params: params);
-      debugPrint('File Result ==> $result');
+        final File file = File(result!.files.single.path!);
+      debugPrint('File Result ==> ${result.files.single.path!}');
 
-      if (result != '') {
-        final File file = File(result!);
-        debugPrint(result);
+      if (result != null) {
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
         uploadProfilePicture(file, type);
@@ -735,7 +731,6 @@ class _MyReportsViewState extends State<MyReportsView> {
     } catch (e) {
       showToast('Please select correct document', context);
       debugPrint(e.toString());
-      result = 'Error: $e';
     }
   }
 

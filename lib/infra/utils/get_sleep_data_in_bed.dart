@@ -54,7 +54,7 @@ class GetSleepDataInBed {
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    final HealthFactory health = HealthFactory();
+    final Health health = Health();
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -79,7 +79,7 @@ class GetSleepDataInBed {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+            await health.getHealthDataFromTypes(startTime: startDate, endTime:  endDate, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -88,7 +88,7 @@ class GetSleepDataInBed {
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
 
       /// Print the results
       /* _healthDataList.forEach((x) {
@@ -126,22 +126,22 @@ class GetSleepDataInBed {
     clearAllRecords();
     for (int i = 0; i < _healthDataList.length; i++) {
       final HealthDataPoint p = _healthDataList[i];
-      if (p.typeString == 'STEPS') {
+      /*if (p.typeString == 'STEPS') {
         steps = steps + p.value.toInt();
-      } else if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //weight = p.value.toDouble();
+      } else*/ if (p.typeString == 'WEIGHT') {
+        if (p.value.toJson()["numericValue"] != 0) {
+          //weight = p.value.toJson()["numericValue"];
         }
       } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //height = p.value.toDouble() * 100;
+        if (p.value.toJson()["numericValue"] != 0) {
+          //height = p.value.toJson()["numericValue"] * 100;
         }
       } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
-        totalActiveCalories = totalActiveCalories + p.value.toDouble();
+        totalActiveCalories = totalActiveCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
-        totalBasalCalories = totalBasalCalories + p.value.toDouble();
+        totalBasalCalories = totalBasalCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'SLEEP_ASLEEP') {
-        totalSleepInMin = totalSleepInMin + p.value.toDouble();
+        totalSleepInMin = totalSleepInMin + p.value.toJson()["numericValue"];
       }
     }
 

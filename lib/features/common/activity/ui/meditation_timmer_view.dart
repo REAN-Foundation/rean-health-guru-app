@@ -340,7 +340,13 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             .symmetric(
                                                         horizontal: 32.0),
                                                     child: ElevatedButton(
-                                                      child: Text('Save'),
+                                                      child: Text('Save', style: TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
                                                       onPressed: () {
                                                         FirebaseAnalytics.instance.logEvent(name: 'mental_wel_being_mindfulness_finish_button_click');
                                                         showSuccessToast('Mindfulness duration recorded successfully', context);
@@ -355,6 +361,8 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                   vertical: 14),
                                                           textStyle: TextStyle(
                                                               fontSize: 16,
+                                                              color: Colors
+                                                                  .white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600)),

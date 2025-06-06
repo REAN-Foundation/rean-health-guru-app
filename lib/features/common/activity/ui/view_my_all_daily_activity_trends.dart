@@ -187,6 +187,8 @@ class _ViewMyAllDailyActivityTrendsState
     super.dispose();
   }
 
+  final Health health = Health();
+
   Future<void> fetchData() async {
     /// Get everything from midnight until now
     //DateTime startDate = DateTime(2021, 01, 01, 0, 0, 0);
@@ -195,7 +197,7 @@ class _ViewMyAllDailyActivityTrendsState
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    final HealthFactory health = HealthFactory();
+
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -220,7 +222,7 @@ class _ViewMyAllDailyActivityTrendsState
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate!, endDate!, types);
+            await health.getHealthDataFromTypes(startTime: startDate!, endTime:  endDate!, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -229,7 +231,7 @@ class _ViewMyAllDailyActivityTrendsState
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
 
       /// Print the results
       /*_healthDataList.forEach((x) {
@@ -331,15 +333,16 @@ class _ViewMyAllDailyActivityTrendsState
     return _contentNotFetched();
   }
 
-  calculateSteps() {
+  calculateSteps() async {
     debugPrint('Iphone Name ==> ${iosInfo.name}'); //Tushar-Katakdounds-iPhone
     clearAllRecords();
+    steps = (await health.getTotalStepsInInterval(startDate!, endDate!, includeManualEntry: true))!.toInt();
     for (int i = 0; i < _healthDataList.length; i++) {
-      final HealthDataPoint p = _healthDataList[i];
-      if (p.typeString == 'STEPS') {
+    final HealthDataPoint p = _healthDataList[i];
+    /*if (p.typeString == 'STEPS') {
         if (Platform.isIOS) {
           if (p.sourceName == iosInfo.name) {
-            steps = steps + p.value.toInt();
+            steps = steps + p.value.toJson()["numericValue"].toInt();
           } else {
             stepsDevice = stepsDevice + p.value.toInt();
           }
@@ -349,22 +352,23 @@ class _ViewMyAllDailyActivityTrendsState
         } else {
           steps = steps + p.value.toInt();
         }
-      } else if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //weight = p.value.toDouble();
-        }
-      } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //height = p.value.toDouble() * 100;
-        }
-      } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
-        totalActiveCalories = totalActiveCalories + p.value.toDouble();
-      } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
-        totalBasalCalories = totalBasalCalories + p.value.toDouble();
-      } else if (p.typeString == 'HEART_RATE') {
-        heartRateBmp = p.value.toInt();
-      }
+      } else*/ if (p.typeString == 'WEIGHT') {
+    if (p.value.toJson()["numericValue"] != 0) {
+    //weight = p.value.toDouble();
     }
+    } else if (p.typeString == 'HEIGHT') {
+    if (p.value.toJson()["numericValue"] != 0) {
+    //height = p.value.toDouble() * 100;
+    }
+    } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
+    totalActiveCalories = totalActiveCalories + p.value.toJson()["numericValue"];
+    } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
+    totalBasalCalories = totalBasalCalories + p.value.toJson()["numericValue"];
+    } else if (p.typeString == 'HEART_RATE') {
+    heartRateBmp = p.value.toJson()["numericValue"];
+    }
+    }
+
 
     if (height == 0.0 || weight == 0.0) {
     } else {

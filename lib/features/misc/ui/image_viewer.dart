@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -75,13 +75,24 @@ class ImageViewer extends StatelessWidget {
           subject: '',
           text: '',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);*/
-      Share.shareFiles([file.path],
-          subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+      final xFile = XFile(file.path);
+      await SharePlus.instance.share(
+          ShareParams( files: [xFile],
+            text: 'Hello, check your shared file.',
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
+     /* SharePlus.instance.share( file: [file.path],
+          te: 'Hello, check your shared file.',
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);*/
     } else {
-      Share.share(path!,
-          subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+      final xFile = XFile(file.path);
+      await SharePlus.instance.share(
+          ShareParams( files: [xFile],
+            text: 'Hello, check your shared file.',
+            sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+          )
+      );
     }
   }
 }

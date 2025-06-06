@@ -9,7 +9,7 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
@@ -606,27 +606,7 @@ class _AppDrawerState extends State<AppDrawer> {
   initTerraWebView(String url) async {
     Navigator.pop(context);
     if (await canLaunchUrl(Uri.parse(url))) {
-    await tabs.launch(url,
-      customTabsOption: tabs.CustomTabsOption(
-        toolbarColor: primaryColor,
-        enableDefaultShare: true,
-        enableUrlBarHiding: true,
-        showPageTitle: true,
-        animation: tabs.CustomTabsSystemAnimation.slideIn(),
-        extraCustomTabs: const <String>[
-          // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
-          'org.mozilla.firefox',
-          // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
-          'com.microsoft.emmx',
-        ],
-      ),
-      safariVCOption: tabs.SafariViewControllerOption(
-        preferredBarTintColor: primaryColor,
-        preferredControlTintColor: Colors.white,
-        barCollapsingEnabled: false,
-        entersReaderIfAvailable: false,
-        dismissButtonStyle: tabs.SafariViewControllerDismissButtonStyle.close,
-      ),
+    await tabs.launchUrl(Uri.parse(url),
     );
     } else {
     showToast('Could not launch $url', context);

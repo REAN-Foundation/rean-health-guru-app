@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
@@ -30,7 +30,6 @@ import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
-import 'package:status_alert/status_alert.dart';
 
 import 'base_widget.dart';
 import 'login_with_otp_view.dart';
@@ -519,26 +518,6 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  showDeleteAlert(String title, String subtitle) {
-    StatusAlert.show(
-      context,
-      duration: Duration(seconds: 5),
-      title: title,
-      subtitle: subtitle,
-      dismissOnBackgroundTap: false,
-      backgroundColor: Colors.white,
-      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-      configuration: IconConfiguration(
-          icon: Icons.check_circle_outline, color: primaryColor),
-    );
-
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return LoginWithOTPView();
-      }), (Route<dynamic> route) => false);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -549,14 +528,16 @@ class _EditProfileState extends State<EditProfile> {
         passwordController: _passwordController,
       ),
       builder: (context, model, child) => Container(
-        child: WillPopScope(
-          onWillPop: () async {
+        child: PopScope(
+          onPopInvokedWithResult: (bool didPop, Object? result) async {
             if (isEditable) {
-              final result = await _onBackPressed();
-              return result;
+              await _onBackPressed();
+              return;
             } else {
-              Navigator.of(context).pop();
-              return true;
+              Future.delayed(Duration(seconds: 1), () {
+                Navigator.of(context).pop();
+              });
+              return;
             }
           },
               child: Scaffold(
@@ -1575,21 +1556,17 @@ class _EditProfileState extends State<EditProfile> {
     );*/
 
     //With parameters:
-    final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
-      allowedMimeTypes: ['image/*'],
-      invalidFileNameSymbols: ['/'],
-    );
 
     /*allowedFileExtensions: ['mwfbak'],
     allowedUtiTypes: ['com.sidlatau.example.mwfbak'],*/
 
-    String? result;
+    FilePickerResult? result;
     try {
-      result = await FlutterDocumentPicker.openDocument(params: params);
+      result = await FilePicker.platform.pickFiles(type: FileType.image); //FlutterDocumentPicker.openDocument(params: params);
 
       if (result != '') {
-        final File file = File(result!);
-        debugPrint(result);
+        final File file = File(result!.files.single.path!);
+        debugPrint(result.files.single.path);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
         //file.renameSync(pFile.name);
@@ -1600,7 +1577,6 @@ class _EditProfileState extends State<EditProfile> {
     } catch (e) {
       showToast('Please select document', context);
       debugPrint(e.toString());
-      result = 'Error: $e';
     }
   }
 
@@ -2607,12 +2583,12 @@ class _EditProfileState extends State<EditProfile> {
           child: ElevatedButton(
               style: ButtonStyle(
                   foregroundColor:
-                  MaterialStateProperty.all<Color>(
+                  WidgetStateProperty.all<Color>(
                       primaryLightColor),
                   backgroundColor:
-                  MaterialStateProperty.all<Color>(
+                  WidgetStateProperty.all<Color>(
                       primaryColor),
-                  shape: MaterialStateProperty.all<
+                  shape: WidgetStateProperty.all<
                       RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius:
@@ -3124,15 +3100,6 @@ class _EditProfileState extends State<EditProfile> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  showAlert(String title, String subtitle) {
-    StatusAlert.show(
-      context,
-      duration: Duration(seconds: 10),
-      title: title,
-      subtitle: subtitle,
-      configuration: IconConfiguration(icon: Icons.check_circle_outline),
-    );
-  }
 
   Widget _uploadImageSelector() {
     return Container(

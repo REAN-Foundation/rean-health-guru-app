@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:health/health.dart';
@@ -59,7 +58,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    final HealthFactory health = HealthFactory();
+    final Health health = Health();
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -83,7 +82,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+            await health.getHealthDataFromTypes(startTime: startDate, endTime:  endDate, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -92,7 +91,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
 
       /// Print the results
       /*_healthDataList.forEach((x) {

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:health/health.dart';
@@ -185,6 +184,8 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     super.dispose();
   }
 
+  final Health health = Health();
+
   Future<void> fetchData() async {
     /// Get everything from midnight until now
     //DateTime startDate = DateTime(2021, 01, 01, 0, 0, 0);
@@ -193,7 +194,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    final HealthFactory health = HealthFactory();
+
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -218,7 +219,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate!, endDate!, types);
+            await health.getHealthDataFromTypes(startTime: startDate!, endTime: endDate!, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -227,7 +228,8 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
+
 
       /// Print the results
       /*_healthDataList.forEach((x) {
@@ -350,15 +352,16 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     return _contentNotFetched();
   }
 
-  calculateSteps() {
+  calculateSteps() async {
     debugPrint('Iphone Name ==> ${iosInfo.name}'); //Tushar-Katakdounds-iPhone
     clearAllRecords();
+    steps = (await health.getTotalStepsInInterval(startDate!, endDate!, includeManualEntry: true))!.toInt();
     for (int i = 0; i < _healthDataList.length; i++) {
       final HealthDataPoint p = _healthDataList[i];
-      if (p.typeString == 'STEPS') {
+      /*if (p.typeString == 'STEPS') {
         if (Platform.isIOS) {
           if (p.sourceName == iosInfo.name) {
-            steps = steps + p.value.toInt();
+            steps = steps + p.value.toJson()["numericValue"].toInt();
           } else {
             stepsDevice = stepsDevice + p.value.toInt();
           }
@@ -368,20 +371,20 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         } else {
           steps = steps + p.value.toInt();
         }
-      } else if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
+      } else*/ if (p.typeString == 'WEIGHT') {
+        if (p.value.toJson()["numericValue"] != 0) {
           //weight = p.value.toDouble();
         }
       } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
+        if (p.value.toJson()["numericValue"] != 0) {
           //height = p.value.toDouble() * 100;
         }
       } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
-        totalActiveCalories = totalActiveCalories + p.value.toDouble();
+        totalActiveCalories = totalActiveCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
-        totalBasalCalories = totalBasalCalories + p.value.toDouble();
+        totalBasalCalories = totalBasalCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'HEART_RATE') {
-        heartRateBmp = p.value.toInt();
+        heartRateBmp = p.value.toJson()["numericValue"];
       }
     }
 

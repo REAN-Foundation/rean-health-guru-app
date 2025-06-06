@@ -16,7 +16,7 @@ import 'package:patient/infra/services/NavigationService.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
-import 'package:phone_number/phone_number.dart';
+
 
 GetCarePlanEnrollmentForPatient? carePlanEnrollmentForPatientGlobe;
 GetWeeklyCarePlanStatus? weeklyCarePlanStatusGlobe;
@@ -51,7 +51,6 @@ String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
 var dateFormatGraphStandard = date.DateFormat('MMM dd, yyyy');
-PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
@@ -391,11 +390,7 @@ setDailyCheckInDate(String viewedDate) async {
   //return knowledgeLinkDisplayedDate ?? '';
 }
 
-Future<bool> isValidPhoneNumber(String phone, String code) async {
-  debugPrint(
-      "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
-  return plugin.validate(code + '-' + phone, code);
-}
+
 
 extension EmailValidator on String {
   bool isValidEmail() {

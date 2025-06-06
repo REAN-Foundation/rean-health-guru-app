@@ -3,7 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -600,7 +600,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: const Color(0xffcecece).withOpacity(0.5)),
+                color: const Color(0xffcecece).withAlpha((0.5*255).round())),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -935,12 +935,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   startCarePlan() async {
     try {
-      final map = <String, String?>{};
+      final map = <String, dynamic>{};
       map['Provider'] = carePlanTypes!.provider;
       map['PlanCode'] = carePlanTypes!.code;
       map['StartDate'] = startDate;
 
-      FirebaseAnalytics.instance.logEvent(name: 'health_journey_register_button_click', parameters: map);
+      FirebaseAnalytics.instance.logEvent(name: 'health_journey_register_button_click', parameters: map.map((key, value) => MapEntry(key, value as Object)));
       progressDialog.show(max: 100, msg: 'Setting up your Health Journey...\nPlease wait a moment.', msgMaxLines: 4, msgFontSize: 14);
       model.setBusy(true);
 
@@ -1224,7 +1224,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'health_system_dropdown_selection', parameters: <String, dynamic>{
                           'health_system': data,
-                        },);
+                        }.map((key, value) => MapEntry(key, value as Object)));
                         debugPrint(data);
                         setState(() {
                           healthSystemGlobe = data.toString();
@@ -1300,7 +1300,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       onChanged: (data) {
                         FirebaseAnalytics.instance.logEvent(name: 'hospital_system_dropdown_selection', parameters: <String, dynamic>{
                           'select_hospital': data,
-                        },);
+                        }.map((key, value) => MapEntry(key, value as Object)),);
                         debugPrint(data);
                         setState(() {
                           healthSystemHospitalGlobe = data.toString();

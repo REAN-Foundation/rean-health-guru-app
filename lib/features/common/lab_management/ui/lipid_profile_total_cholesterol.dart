@@ -367,7 +367,10 @@ class _LipidProfileTotalCholesterolViewState
     return Card(
       semanticContainer: false,
       elevation: 0,
+      margin: EdgeInsets.zero,
+      clipBehavior: Clip.antiAlias,
       child: Container(
+        height: 32,
         color: colorF6F6FF,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

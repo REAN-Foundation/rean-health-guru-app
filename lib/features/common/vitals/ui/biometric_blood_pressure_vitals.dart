@@ -716,7 +716,7 @@ class _BiometricBloodPresureVitalsViewState
       constraints: BoxConstraints(
           minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 16, bottom: 16),
-      height: 160,
+      //height: 160,
       child: model.busy
           ? Center(
               child: CircularProgressIndicator(),
@@ -836,7 +836,10 @@ class _BiometricBloodPresureVitalsViewState
       child: Card(
         semanticContainer: false,
         elevation: 0,
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
         child: Container(
+          height: 32,
           color: colorF6F6FF,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -30,6 +30,7 @@ class GetHealthData {
   double bloodPressureSystolic = 0;
   double bloodPressureDiastolic = 0;
   double heartRate = 0;
+  final Health health = Health();
 
   GetHealthData() {
     startDate = DateTime(
@@ -57,7 +58,6 @@ class GetHealthData {
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    final HealthFactory health = HealthFactory();
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -89,7 +89,7 @@ class GetHealthData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-        await health.getHealthDataFromTypes(startDate, endDate, types);
+        await health.getHealthDataFromTypes(startTime: startDate, endTime:  endDate, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -98,7 +98,7 @@ class GetHealthData {
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
 
        //Print the results
        /*_healthDataList.forEach((x) {
@@ -132,48 +132,49 @@ class GetHealthData {
     }
   }
 
-  calculateData() {
+  calculateData() async {
     clearAllRecords();
+    steps = (await health.getTotalStepsInInterval(startDate, endDate, includeManualEntry: true))!.toInt();
     for (int i = 0; i < _healthDataList.length; i++) {
       final HealthDataPoint p = _healthDataList[i];
-      if (p.typeString == 'STEPS') {
+      /*if (p.typeString == 'STEPS') {
         steps = steps + p.value.toInt();
-      } else if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
+      } else*/ if (p.typeString == 'WEIGHT') {
+        if (p.value.toJson()["numericValue"] != 0) {
           if(weight == 0)
-          weight = p.value.toDouble();
+          weight = p.value.toJson()["numericValue"];
         }
       } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //height = p.value.toDouble() * 100;
+        if (p.value.toJson()["numericValue"] != 0) {
+          //height = p.value.toJson()["numericValue"] * 100;
         }
       } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
-        totalActiveCalories = totalActiveCalories + p.value.toDouble();
+        totalActiveCalories = totalActiveCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
-        totalBasalCalories = totalBasalCalories + p.value.toDouble();
+        totalBasalCalories = totalBasalCalories + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'SLEEP_ASLEEP') {
-        totalSleepInMin = totalSleepInMin + p.value.toDouble();
+        totalSleepInMin = totalSleepInMin + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'EXERCISE_TIME') {
-        totalExerciseMin = totalExerciseMin + p.value.toDouble();
+        totalExerciseMin = totalExerciseMin + p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BLOOD_OXYGEN') {
-        if (p.value.toDouble() != 0) {
-          bloodOxygen = p.value.toDouble() * 100;
+        if (p.value.toJson()["numericValue"] != 0) {
+          bloodOxygen = p.value.toJson()["numericValue"] * 100;
         }
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
-        bloodGlucose = p.value.toDouble();
+        bloodGlucose = p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
         if(bloodPressureDiastolic == 0)
-        bloodPressureDiastolic = p.value.toDouble();
+        bloodPressureDiastolic = p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
         if(bloodPressureSystolic == 0)
-        bloodPressureSystolic = p.value.toDouble();
+        bloodPressureSystolic = p.value.toJson()["numericValue"];
       } else if (p.typeString == 'BODY_TEMPERATURE') {
-        if (p.value.toDouble() != 0) {
-          bodyTemprature = p.value.toDouble();
+        if (p.value.toJson()["numericValue"] != 0) {
+          bodyTemprature = p.value.toJson()["numericValue"];
         }
       } else if (p.typeString == 'HEART_RATE') {
-        if (p.value.toDouble() != 0) {
-          heartRate = p.value.toDouble();
+        if (p.value.toJson()["numericValue"] != 0) {
+          heartRate = p.value.toJson()["numericValue"];
         }
       }
     }

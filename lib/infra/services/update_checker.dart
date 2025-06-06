@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart' show PackageInfo;
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

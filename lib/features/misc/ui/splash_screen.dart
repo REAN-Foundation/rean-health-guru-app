@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:device_region/device_region.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get_it/get_it.dart';
 import 'package:health/health.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/core/dbUtils/database_helper.dart';
@@ -76,7 +76,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     appVersion = _packageInfo.version.toString();
     try {
-      final String? locale = await FlutterSimCountryCode.simCountryCode;
+      final String? locale = await DeviceRegion.getSIMCountryCode();
+      //debugPrint('Country Local above ==> ${locale!.toUpperCase()}');
       if (locale!.trim().isNotEmpty && locale != '--') {
         setCurrentLocale(locale.toUpperCase());
         debugPrint('Country Local ==> ${locale.toUpperCase()}');
@@ -95,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   getHealthAppPermission() async {
-    final HealthFactory health = HealthFactory();
+    final Health health = Health();
 
     /// Define the types to get.
     final List<HealthDataType> types = [

@@ -68,7 +68,7 @@ class GetVitalsData {
   Future<void> fetchData() async {
 
 
-    final HealthFactory health = HealthFactory();
+    final Health health = Health();
 
     /// Define the types to get.
     final List<HealthDataType> types = [
@@ -96,7 +96,7 @@ class GetVitalsData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-        await health.getHealthDataFromTypes(startDate, endDate, types);
+        await health.getHealthDataFromTypes(startTime: startDate, endTime:  endDate, types: types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -105,7 +105,7 @@ class GetVitalsData {
       }
 
       /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
+      _healthDataList = health.removeDuplicates(_healthDataList);
 
        //Print the results
        /*_healthDataList.forEach((x) {
@@ -143,10 +143,10 @@ class GetVitalsData {
     for (int i = 0; i < _healthDataList.length; i++) {
       final HealthDataPoint p = _healthDataList[i];
        if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
+        if (p.value.toJson()["numericValue"] != 0) {
           if(weight == 0) {
             if(p.dateFrom.isAfter(startDate)) {
-              weight = p.value.toDouble();
+              weight = p.value.toJson()["numericValue"];
               debugPrint(
                   'WEIGHT : $weight Start Date : $startDate   DateFrom :  ${p.dateFrom} DateTo : ${p
                       .dateTo} ');
@@ -155,17 +155,17 @@ class GetVitalsData {
           }
         }
       } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //height = p.value.toDouble() * 100;
+        if (p.value.toJson()["numericValue"] != 0) {
+          //height = p.value.toJson()["numericValue"] * 100;
         }
       } else if (p.typeString == 'BLOOD_OXYGEN') {
-        if (p.value.toDouble() != 0) {
-          bloodOxygen = p.value.toDouble() * 100;
+        if (p.value.toJson()["numericValue"] != 0) {
+          bloodOxygen = p.value.toJson()["numericValue"] * 100;
           //addBloodOxygenSaturationVitals();
         }
       } else if (p.typeString == 'BLOOD_GLUCOSE') {
          if(p.dateFrom.isAfter(startDate)) {
-           bloodGlucose = p.value.toDouble();
+           bloodGlucose = p.value.toJson()["numericValue"];
            debugPrint('BLOOD_GLUCOSE : $bloodGlucose   DateFrom :  ${p
                .dateFrom} DateTo : ${p.dateTo} ');
            addBloodGlucoseVitals(p.dateFrom.toIso8601String());
@@ -173,7 +173,7 @@ class GetVitalsData {
       } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
         if(bloodPressureDiastolic == 0) {
           if(p.dateFrom.isAfter(startDate)) {
-            bloodPressureDiastolic = p.value.toDouble();
+            bloodPressureDiastolic = p.value.toJson()["numericValue"];
             debugPrint(
                 'BLOOD_PRESSURE_DIASTOLIC : $bloodPressureDiastolic   DateFrom :  ${p
                     .dateFrom} DateTo : ${p.dateTo} ');
@@ -183,16 +183,16 @@ class GetVitalsData {
       } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
         if(bloodPressureSystolic == 0)
           if(p.dateFrom.isAfter(startDate)) {
-            bloodPressureSystolic = p.value.toDouble();
+            bloodPressureSystolic = p.value.toJson()["numericValue"];
             debugPrint(
                 'BLOOD_PRESSURE_SYSTOLIC : $bloodPressureSystolic   DateFrom :  ${p
                     .dateFrom} DateTo : ${p.dateTo} ');
           }
       } else if (p.typeString == 'BODY_TEMPERATURE') {
-        if (p.value.toDouble() != 0) {
+        if (p.value.toJson()["numericValue"] != 0) {
           if(p.dateFrom.isAfter(startDate)) {
 
-            double temp = p.value.toDouble() * 1.8;
+            double temp = p.value.toJson()["numericValue"] * 1.8;
             double temperatureInFaranite = temp + 32;
             bodyTemprature = temperatureInFaranite;
             debugPrint('BODY_TEMPERATURE : $bodyTemprature   DateFrom :  ${p
@@ -201,8 +201,8 @@ class GetVitalsData {
           }
         }
       } else if (p.typeString == 'HEART_RATE') {
-        if (p.value.toDouble() != 0) {
-          heartRate = p.value.toDouble();
+        if (p.value.toJson()["numericValue"] != 0) {
+          heartRate = p.value.toJson()["numericValue"];
         }
       }
     }

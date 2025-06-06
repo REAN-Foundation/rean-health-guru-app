@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +11,6 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/widgets/bezier_container.dart';
 import 'package:patient/infra/widgets/login_header.dart';
 import 'package:provider/provider.dart';
-import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
@@ -558,8 +557,8 @@ class _SignUpViewState extends State<SignUpView> {
               final BaseResponse signUpSuccess = await model.signUp(map);
 
               if (signUpSuccess.status == 'success') {
-                showAlert('Success',
-                    'Please login your account for doctor appointment booking');
+                /*showAlert('Success',
+                    'Please login your account for doctor appointment booking');*/
                 if (Navigator.canPop(context)) {
                   Navigator.pop(context);
                 }
@@ -608,7 +607,7 @@ class _SignUpViewState extends State<SignUpView> {
       text: TextSpan(
           text: 'REAN',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
+            textStyle: Theme.of(context).textTheme.displayLarge,
             fontSize: 30,
             fontWeight: FontWeight.w600,
             color: primaryColor,
@@ -691,15 +690,6 @@ class _SignUpViewState extends State<SignUpView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  showAlert(String title, String subtitle) {
-    StatusAlert.show(
-      context,
-      duration: Duration(seconds: 2),
-      title: title,
-      subtitle: subtitle,
-      configuration: IconConfiguration(icon: Icons.check_circle_outline),
-    );
-  }
 
   bool validateEmail(String value) {
     const Pattern pattern =

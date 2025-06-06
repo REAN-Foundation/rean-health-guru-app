@@ -618,9 +618,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     fontWeight: FontWeight.w600,
                     color: Colors.white)),
             style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         side: BorderSide(color: primaryColor)))),

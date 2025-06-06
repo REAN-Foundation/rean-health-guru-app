@@ -75,10 +75,10 @@ jobs:
 
       # Setting up jdk
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
-          java-version: "11"
-          distribution: "adopt"
+          java-version: "17"
+          distribution: "temurin"
           cache: gradle
 
       - name: Setup Android SDK
@@ -155,7 +155,7 @@ jobs:
 
   iOS-BuildApp:
     environment: aha-chol-prod
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       # Checkout Code
       - name: Checkout Code
@@ -188,7 +188,6 @@ jobs:
         run: |
 
           mkdir -p ./ios/config/aha_sac/
-          rm -f ./ios/Runner/Info.plist
           echo $FIREBASE_CONFIG > ./ios/config/aha_sac/GoogleService-Info.plist
           echo $INFO_PLIST > ./ios/Runner/Info.plist
 
@@ -221,7 +220,7 @@ jobs:
   iOS-Release-Alpha:
     environment: aha-chol-prod
     needs: iOS-BuildApp
-    runs-on: macos-13
+    runs-on: macos-15
     defaults:
       run:
         shell: bash

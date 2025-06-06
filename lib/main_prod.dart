@@ -7,7 +7,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/infra/networking/awards_api_provider.dart';
-import 'package:patient/infra/networking/user_analytics_api_provider.dart';
 import 'package:patient/infra/provider_setup.dart';
 import 'package:patient/infra/router.dart';
 import 'package:patient/infra/services/NavigationService.dart';
@@ -86,7 +85,6 @@ class MyApp extends StatelessWidget {
   String? _baseUrl;
   String? _botBaseUrl;
   String? _awardBaseUrl;
-  String? _userAnalyticsBaseUrl;
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);
@@ -98,7 +96,6 @@ class MyApp extends StatelessWidget {
     _baseUrl = dotenv.env['PROD_BASE_URL'];
     _botBaseUrl = dotenv.env['PROD_BOT_BASE_URL'];
     _awardBaseUrl = dotenv.env['AWARD_BASE_URL'];
-    _userAnalyticsBaseUrl = dotenv.env['USER_ANALYTICS_BASE_URL'];
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
@@ -109,8 +106,6 @@ class MyApp extends StatelessWidget {
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
     GetIt.instance
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
-    GetIt.instance
-        .registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 
@@ -131,6 +126,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: NavigationService.navigatorKey,
         theme: ThemeData(
+            useMaterial3: false,
             primarySwatch: Colors.deepPurple, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml
         //initialRoute: RoutePaths.Login,

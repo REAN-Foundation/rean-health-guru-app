@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
+import 'infra/networking/user_analytics_api_provider.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
   String? _baseUrl;
   String? _botBaseUrl;
   String? _awardBaseUrl;
+  String? _userAnalyticsBaseUrl;
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
   FirebaseAnalyticsObserver(analytics: analytics);
@@ -112,6 +114,7 @@ class MyApp extends StatelessWidget {
     _baseUrl = dotenv.env['AHA_BASE_URL'];
     _botBaseUrl = dotenv.env['AHA_BOT_BASE_URL'];
     _awardBaseUrl = dotenv.env['AWARD_BASE_URL'];
+    _userAnalyticsBaseUrl = dotenv.env['USER_ANALYTICS_BASE_URL'];
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setAppType('AHA');
@@ -123,6 +126,8 @@ class MyApp extends StatelessWidget {
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
     GetIt.instance
         .registerSingleton<AwardApiProvider>(AwardApiProvider(_awardBaseUrl));
+    GetIt.instance
+        .registerSingleton<UserAnalyticsApiProvider>(UserAnalyticsApiProvider(_userAnalyticsBaseUrl));
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 

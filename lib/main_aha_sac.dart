@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
-
+//
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 

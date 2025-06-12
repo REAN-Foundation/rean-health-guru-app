@@ -44,7 +44,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   String selectedGender = 'Male';
   String? mobileNumber = '';
   String? countryCode = '';
-  int? maxLengthOfPhone = 0;
+  int? maxLengthOfPhone = 10;
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   @override
@@ -398,7 +398,8 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             height: 10,
           ),
           Container(
-              padding: EdgeInsets.only(right: 8.0),
+              height: 48,
+              padding: EdgeInsets.only(right: 8.0, left: 8.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   border: Border.all(color: primaryColor, width: 1),

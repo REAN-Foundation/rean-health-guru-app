@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,7 +19,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
+
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/user_analytics_api_provider.dart';
@@ -61,6 +63,11 @@ Future<void> showNotification(RemoteMessage payload) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // FIX: Enable UI overlays
+  await SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: SystemUiOverlay.values,
+  );
   await Firebase.initializeApp();
   NotificationHandler().initialize();
   if(Platform.isIOS) {

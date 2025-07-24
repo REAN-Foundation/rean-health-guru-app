@@ -59,7 +59,8 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
       imagePadding: EdgeInsets.zero,
     );
 
-    return IntroductionScreen(
+    return SafeArea(
+        child:IntroductionScreen(
       key: introKey,
       globalBackgroundColor: colorF6F6FF,
       /*globalHeader: Align(
@@ -141,6 +142,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),*/
+      ),
     );
   }
 }

@@ -17,7 +17,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io';
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/user_analytics_api_provider.dart';
@@ -63,12 +63,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   NotificationHandler().initialize();
-  Permission.notification.request();
-  await Permission.notification.isDenied.then((value) {
+  if(Platform.isIOS) {
+    Permission.notification.request();
+  }
+  /*await Permission.notification.isDenied.then((value) {
     if (value) {
       Permission.notification.request();
     }
-  });
+  });*/
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');

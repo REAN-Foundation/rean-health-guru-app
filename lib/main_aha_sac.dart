@@ -79,7 +79,6 @@ Future<void> main() async {
     }
   });*/
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.167');

@@ -679,6 +679,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
+    await FirebaseMessaging.instance.requestPermission();
     RemoteMessage? initialMessage =
     await FirebaseMessaging.instance.getInitialMessage();
 

@@ -30,28 +30,30 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: widget.tittle ?? 'information',
-      button: true,
-      child: InkWell(
-        onTap: () {
-          showMaterialModalBottomSheet(
-              isDismissible: true,
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+    return SafeArea(
+      child: Semantics(
+        label: widget.tittle ?? 'information',
+        button: true,
+        child: InkWell(
+          onTap: () {
+            showMaterialModalBottomSheet(
+                isDismissible: true,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                context: context,
+                builder: (context) => _showInfo());
+          },
+          child: Container(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Icon(
+                Icons.info_outline_rounded,
+                color: Colors.white,
+                size: 24,
               ),
-              context: context,
-              builder: (context) => _showInfo());
-        },
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Icon(
-              Icons.info_outline_rounded,
-              color: Colors.white,
-              size: 24,
             ),
           ),
         ),

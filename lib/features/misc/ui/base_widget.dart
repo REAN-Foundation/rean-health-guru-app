@@ -128,9 +128,11 @@ class _BaseWidgetState<T extends ChangeNotifier?>
     _context = context;
     return ChangeNotifierProvider<T?>(
       create: (context) => model,
-      child: Consumer<T>(
-        builder: widget.builder!,
-        child: widget.child,
+      child: SafeArea(
+        child: Consumer<T>(
+          builder: widget.builder!,
+          child: widget.child,
+        ),
       ),
     );
   }

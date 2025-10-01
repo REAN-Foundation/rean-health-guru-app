@@ -58,6 +58,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values,);
     if(getAppType() == "AHA"){
       privacySemanticsLabel = 'I agree to the American Heart Association’s privacy policy and terms of service';
       privacySemanticsLabel = "I agree to the REAN HealthGuru privacy policy";
@@ -190,7 +191,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       ],
                     ),
                     Positioned(
-                      top: 60,
+                      top: 20,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         child: Column(
@@ -273,7 +274,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget loginContent(LoginViewModel model) {
     return Container(
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height - 140,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

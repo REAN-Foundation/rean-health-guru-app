@@ -2011,8 +2011,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
 
   initWebView(String url) async {
     UserAnalyticsServices.registerScreenEntryEvent("knowledge-nugget-link", topicName.toString(), 'knowledge-nugget', '', null, resourceType: 'knowledge-nugget');
-    if(url.contains('.pdf') && Platform.isAndroid){
-      /*createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
+    /*if(url.contains('.pdf') && Platform.isAndroid){
+      *//*createFileOfPdfUrl(Uri.parse(url).toString(), 'knowledge_${DateTime.now().microsecondsSinceEpoch}.pdf')
           .then((f) {
 
         debugPrint("File Length ==> ${f.lengthSync().toString()}");
@@ -2032,11 +2032,11 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
             progressDialog.close();
           }
         }
-      });*/
+      });*//*
         downloadPDFWithDio(url, 'knowledge_${DateTime
             .now()
             .microsecondsSinceEpoch}.pdf');
-    }else {
+    }else {*/
       if (await canLaunchUrl(Uri.parse(url))) {
         //await custom_web_wiew.launchUrl(Uri.parse(url));
 
@@ -2067,7 +2067,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';
       }
-    }
+    //}
   }
 
   Future<void> downloadPDFWithDio(String pdfUrl, String? fileName) async {

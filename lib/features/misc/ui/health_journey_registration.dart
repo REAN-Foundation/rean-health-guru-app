@@ -195,10 +195,10 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
         ));
       }*/
     }
-    items.add(DropdownMenuItem(
+    /*items.add(DropdownMenuItem(
       child: Text("None"),
       value: "None",
-    ));
+    ));*/
     debugPrint('List Length ${items.length}');
 
     return items;

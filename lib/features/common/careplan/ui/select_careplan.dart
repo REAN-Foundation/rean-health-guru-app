@@ -1084,7 +1084,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         semanticContainer: false,
         child: Container(
           height: 400.0,
-          width: 300.0,
+          width: 320.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

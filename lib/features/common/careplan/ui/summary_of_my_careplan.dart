@@ -30,6 +30,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
       final BaseResponse baseResponse = await model.stopCarePlan(enrollId);
       debugPrint('Registered Care Plan ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
+        carePlanEnrollmentForPatientGlobe = null;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
               return HomeView(0);

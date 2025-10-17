@@ -46,6 +46,7 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer_v2.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -168,6 +169,23 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
+    }
+  }
+
+  Future<void> checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isGranted) {
+      isNotificationEnabled = true;
+      print("✅ Notification permission is enabled");
+    } else if (status.isDenied) {
+      isNotificationEnabled = false;
+      print("❌ Notification permission is denied");
+    } else if (status.isPermanentlyDenied) {
+      isNotificationEnabled = false;
+      print("🚫 Notification permission permanently denied");
+    } else {
+      isNotificationEnabled = false;
+      print("⚠️ Notification permission status: $status");
     }
   }
 
@@ -543,6 +561,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
       body['AppName'] = getAppName();
       body['AppVersion'] = _packageInfo.version;
+      body['isNotificationEnabled'] = isNotificationEnabled;
 
       final response = await apiProvider!
           .post('/user-device-details', header: map, body: body);
@@ -975,6 +994,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     // Initialize the NotificationHandler
     NotificationHandler().initialize();
     vitalsData = GetIt.instance<GetVitalsData>();
+    checkNotificationPermission();
     getDeviceData();
     loadAllHistoryData();
     getCarePlanSubscribe();

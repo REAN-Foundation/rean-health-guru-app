@@ -43,40 +43,42 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<PatientCarePlanViewModel?>(
-      model: model,
-      builder: (context, model, child) => Container(
-          child: Scaffold(
-              backgroundColor: colorF6F6FF,
-              body: Container(
-                height: height,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: Container(
-                        height: 400,
-                        color: primaryColor,
-                      ),
-                    ),
-                    /*Positioned(
-                      top: 100,
-                      child: Align(
-                        alignment: Alignment.topCenter,
+    return SafeArea(
+      child: BaseWidget<PatientCarePlanViewModel?>(
+        model: model,
+        builder: (context, model, child) => Container(
+            child: Scaffold(
+                backgroundColor: colorF6F6FF,
+                body: Container(
+                  height: height,
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
                         child: Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle
-                          ),
+                          height: 400,
+                          color: primaryColor,
                         ),
                       ),
-                    ),*/
-                    _content(),
-                    Positioned(top: 40, left: 0, child: _backButton()),
-                  ],
-                ),
-              ))),
+                      /*Positioned(
+                        top: 100,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                            color: Colors.orange,
+                            shape: BoxShape.circle
+                            ),
+                          ),
+                        ),
+                      ),*/
+                      _content(),
+                      Positioned(top: 40, left: 0, child: _backButton()),
+                    ],
+                  ),
+                ))),
+      ),
     );
   }
 
@@ -91,7 +93,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               height: 150,
             ),
             Container(
-              height: MediaQuery.of(context).size.height - 150,
+              height: MediaQuery.of(context).size.height - 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24),
@@ -160,112 +162,112 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           height: 60,
         ),
         Expanded(
-            flex: 5,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 8,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 8,
+                ),
+                getAppType() == 'AHA' ? _titleAha() : _title(),
+                SizedBox(
+                  height: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        getAppType() == 'AHA' ? textMsg2 : textMsg1,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            height: 1.4,
+                            fontWeight: FontWeight.w500,
+                            fontSize: getAppType() == 'AHA' ? 14 : 16,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      getAppType() == 'AHA'
+                          ? _ahaContent()
+                          : Container(
+                              child: Text(
+                                'REAN HealthGuru app helps set your health and wellness goals and achieve them in the comfort of your home. You can create your community including your doctor, family members and other wellness experts. The application helps track your progress and stay motivated.',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    height: 1.4,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: getAppType() == 'AHA' ? 14 : 16,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            ),
+                    ],
                   ),
-                  getAppType() == 'AHA' ? _titleAha() : _title(),
-                  SizedBox(
-                    height: 0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          getAppType() == 'AHA' ? textMsg2 : textMsg1,
+                          'For more information,',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              height: 1.4,
-                              fontWeight: FontWeight.w500,
-                              fontSize: getAppType() == 'AHA' ? 14 : 16,
+                              fontWeight: FontWeight.w200,
+                              fontSize: 14,
                               fontFamily: 'Montserrat'),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        getAppType() == 'AHA'
-                            ? _ahaContent()
-                            : Container(
-                                child: Text(
-                                  'REAN HealthGuru app helps set your health and wellness goals and achieve them in the comfort of your home. You can create your community including your doctor, family members and other wellness experts. The application helps track your progress and stay motivated.',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      height: 1.4,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: getAppType() == 'AHA' ? 14 : 16,
-                                      fontFamily: 'Montserrat'),
+                        Row(
+                          children: [
+                            Text(
+                              'Visit: ',
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.black,
+                                  fontSize: 14),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                //_launchURL('https://www.reanfoundation.org/');
+                                String url =
+                                    'https://www.reanfoundation.org/';
+                                if (getAppType() == 'AHA') {
+                                  url = 'https://www.heart.org';
+                                }
+                                if (await canLaunchUrl(Uri.parse(url))) {
+                                  await launchUrl(Uri.parse(url));
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Text(
+                                getAppType() == 'AHA'
+                                    ? 'https://www.heart.org'
+                                    : 'https://www.reanfoundation.org',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w200,
                                 ),
                               ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'For more information,',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 14,
-                                fontFamily: 'Montserrat'),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Visit: ',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.black,
-                                    fontSize: 14),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  //_launchURL('https://www.reanfoundation.org/');
-                                  String url =
-                                      'https://www.reanfoundation.org/';
-                                  if (getAppType() == 'AHA') {
-                                    url = 'https://www.heart.org';
-                                  }
-                                  if (await canLaunchUrl(Uri.parse(url))) {
-                                    await launchUrl(Uri.parse(url));
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Text(
-                                  getAppType() == 'AHA'
-                                      ? 'https://www.heart.org'
-                                      : 'https://www.reanfoundation.org',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w200,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
+                ),
+              ],
+            ),
+          ),
+        ),
         Container(
           width: MediaQuery.of(context).size.width,
           height: 56,

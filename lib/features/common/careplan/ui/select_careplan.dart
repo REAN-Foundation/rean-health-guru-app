@@ -953,6 +953,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         //showSuccessDialog();
         //showToast(response.message!, context);
       } else {
+        progressDialog.close();
+        if(progressDialog.isOpen()){
+          progressDialog.close();
+        }
+        model.setBusy(false);
         showToast(response.message!, context);
       }
     } catch (CustomException) {

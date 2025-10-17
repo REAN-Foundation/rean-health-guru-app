@@ -62,7 +62,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: Padding(
+          body: carePlanEnrollmentForPatientGlobe == null ? CircularProgressIndicator() : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: currentWeek == 0 ? textMessage() : Column(
               children: [

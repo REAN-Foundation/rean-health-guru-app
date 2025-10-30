@@ -613,6 +613,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         duration: Duration(milliseconds: 500), //duration of scroll
         curve:Curves.fastOutSlowIn //scroll type
     );
+    displayList = displayList
+        .fold<Map<String, Items>>({}, (map, item) {
+      map[item.id.toString()] = item; // Overwrite duplicates
+      return map;
+    })
+        .values
+        .toList();
     setState(() {
 
     });

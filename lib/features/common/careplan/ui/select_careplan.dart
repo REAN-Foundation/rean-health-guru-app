@@ -947,7 +947,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
-        _fcm.subscribeToTopic(selectedCarePlan.toString());
+        _fcm.subscribeToTopic(selectedCarePlan.toString().replaceAll(" ", "_"));
 
         getCarePlan();
         //showSuccessDialog();

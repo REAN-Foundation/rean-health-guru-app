@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart' show ConfirmationBottomSheet;
 
 class SummaryOfMyCarePlanView extends StatefulWidget {
   @override
@@ -18,6 +21,32 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('MMM dd, yyyy');
   int? currentWeek = 0;
+
+  stopCarePlan(String enrollId) async {
+    try {
+
+      model.setBusy(true);
+      setState(() {});
+      final BaseResponse baseResponse = await model.stopCarePlan(enrollId);
+      debugPrint('Registered Care Plan ==> ${baseResponse.toJson()}');
+      if (baseResponse.status == 'success') {
+        carePlanEnrollmentForPatientGlobe = null;
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+              return HomeView(0);
+            }), (Route<dynamic> route) => false);
+        showToast(baseResponse.message!, context);
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+      model.setBusy(false);
+      setState(() {});
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
 
   @override
   void initState() {
@@ -33,7 +62,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: Padding(
+          body: carePlanEnrollmentForPatientGlobe == null ? CircularProgressIndicator() : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: currentWeek == 0 ? textMessage() : Column(
               children: [
@@ -125,6 +154,30 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
 
                                 ],
                               ),
+                              
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              
+                              SizedBox(width: MediaQuery.sizeOf(context).width, child: model.busy ? Center(child: CircularProgressIndicator(),) : ElevatedButton.icon(onPressed: (){
+                                ConfirmationBottomSheet(
+                                    context: context,
+                                    height: 180,
+                                    onPositiveButtonClickListner: () {
+                                      //debugPrint('Positive Button Click');
+                                      stopCarePlan(carePlanEnrollmentForPatientGlobe!
+                                          .data!.patientEnrollments!
+                                          .elementAt(0)
+                                          .id!);
+
+
+                                    },
+                                    onNegativeButtonClickListner: () {
+                                      //debugPrint('Negative Button Click');
+                                    },
+                                    question: 'Are you sure you want to stop your Health Journey?',
+                                    tittle: 'Alert!');
+                              },icon: Icon(Icons.warning, color: Colors.white, size: 20,),  label: Text("Stop Health Journey", style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),)))
                             ],
                           ),
                         ),

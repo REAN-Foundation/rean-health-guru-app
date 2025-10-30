@@ -182,6 +182,26 @@ class PatientCarePlanViewModel extends BaseModel {
     return EnrollCarePlanResponse.fromJson(response);
   }
 
+  Future<BaseResponse> stopCarePlan(String careplanEnrollmentId) async {
+    // Get user profile for id
+
+    //debugPrint(json.encode(body).toString());
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final body = <String, String>{};
+
+    final response = await apiProvider!.post(
+        '/care-plans/' + careplanEnrollmentId + '/stop',
+        body: body,
+        header: map);
+    //setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<AddTeamMemberResponse> addTeamMembers(Map body) async {
     // Get user profile for id
 

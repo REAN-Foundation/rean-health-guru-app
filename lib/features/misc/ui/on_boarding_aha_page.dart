@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -19,6 +20,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
   static const Color primaryColorLocal = Color(0XFFc10e21);
 
   Future<void> _initPackageInfo() async {
+    await FirebaseMessaging.instance.requestPermission();
     if (getCurrentLocale() == '') {
       final Locale countryLocale =
           await (Devicelocale.currentAsLocale as FutureOr<Locale>);
@@ -59,7 +61,8 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
       imagePadding: EdgeInsets.zero,
     );
 
-    return IntroductionScreen(
+    return SafeArea(
+        child:IntroductionScreen(
       key: introKey,
       globalBackgroundColor: colorF6F6FF,
       /*globalHeader: Align(
@@ -141,6 +144,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),*/
+      ),
     );
   }
 }

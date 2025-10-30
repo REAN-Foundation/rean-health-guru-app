@@ -30,31 +30,33 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: widget.tittle ?? 'information',
-      button: true,
-      child: InkWell(
-        highlightColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        onTap: () {
-          showMaterialModalBottomSheet(
-              isDismissible: true,
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+    return SafeArea(
+      child: Semantics(
+        label: widget.tittle ?? 'information',
+        button: true,
+        child: InkWell(
+          highlightColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onTap: () {
+            showMaterialModalBottomSheet(
+                isDismissible: true,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                context: context,
+                builder: (context) => _showInfo());
+          },
+          child: Container(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.info_outline,
+                color: widget.infoIconcolor ?? primaryColor,
+                size: 24,
               ),
-              context: context,
-              builder: (context) => _showInfo());
-        },
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.info_outline,
-              color: widget.infoIconcolor ?? primaryColor,
-              size: 24,
             ),
           ),
         ),

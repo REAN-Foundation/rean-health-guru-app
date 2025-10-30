@@ -8,6 +8,7 @@ String? tenantId = '';
 String? patientGender = '';
 String? appVersion = '';
 int assrotedUICount = 1;
+bool isNotificationEnabled = false;
 var doctorSearchListGlobe = <Doctors>[];
 var parmacySearchListGlobe = <Pharmacies>[];
 var nurseMemberListGlobe = <TeamMember?>[];

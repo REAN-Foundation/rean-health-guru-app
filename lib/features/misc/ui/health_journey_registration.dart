@@ -1,5 +1,6 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -57,6 +58,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   late ProgressDialog progressDialog;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   getHealthSystem(String planName) async {
     try {
@@ -195,10 +197,10 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
         ));
       }*/
     }
-    items.add(DropdownMenuItem(
+    /*items.add(DropdownMenuItem(
       child: Text("None"),
       value: "None",
-    ));
+    ));*/
     debugPrint('List Length ${items.length}');
 
     return items;
@@ -1015,7 +1017,7 @@ class _HealthJourneyRegistrationViewState extends State<HealthJourneyRegistratio
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
-
+        _fcm.subscribeToTopic(selectedCarePlan.toString().replaceAll(" ", "_"));
         getCarePlan();
         //showSuccessDialog();
         //showToast(response.message!, context);

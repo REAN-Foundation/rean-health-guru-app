@@ -147,6 +147,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
         displayList.addAll(oldUserTaskResponse.data!.userTasks!.items!.toList());
         displayList = displayList.toSet().toList();
+        displayList = displayList
+            .fold<Map<String, Items>>({}, (map, item) {
+          map[item.id.toString()] = item; // Overwrite duplicates
+          return map;
+        })
+            .values
+            .toList();
         //_sortOldHjUserTask(userTaskResponse.data!.userTasks!.items!.toList());
       } else {
 

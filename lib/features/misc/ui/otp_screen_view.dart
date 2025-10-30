@@ -137,7 +137,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               body: Container(
                 height: height,
                 child: Stack(children: <Widget>[
-                  Positioned(top: 40, left: 0, child: _backButton()),
+                  Positioned(top: 4, left: 0, child: _backButton()),
                   Positioned(
                       top: -90,
                       right: 40,
@@ -146,9 +146,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 100),
+                      SizedBox(height: 60),
                       Container(
-                        height: MediaQuery.of(context).size.height - 100,
+                        height: MediaQuery.of(context).size.height - 135,
                         padding: EdgeInsets.symmetric(horizontal: 12.0),
                         decoration: BoxDecoration(
                             color: Colors.white,

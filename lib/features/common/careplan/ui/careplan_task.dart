@@ -2538,6 +2538,40 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
+  initWebView(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      //await custom_web_wiew.launchUrl(Uri.parse(url));
+
+      try {
+        await custom_web_wiew.launchUrl(
+          Uri.parse(url),
+          customTabsOptions: const custom_web_wiew.CustomTabsOptions(
+            urlBarHidingEnabled: true,
+            showTitle: true,
+            shareIdentityEnabled: true,
+            instantAppsEnabled: true,
+          ),
+          safariVCOptions: const custom_web_wiew.SafariViewControllerOptions(
+            preferredBarTintColor: Colors.blue,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: true,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
+      } catch (e) {
+        /*ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $url')),
+          );*/
+      }
+
+    } else {
+      showToast('Could not launch $url', context);
+      //throw 'Could not launch $url';
+    }
+    //}
+  }
+
   completeMessageTaskOfAHACarePlan(String taskId) async {
     try {
       final BaseResponse _startTaskOfAHACarePlanResponse =
@@ -2649,6 +2683,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       // Open the PDF file using the open_file package
       //OpenFile.open(filePath);
     } catch (e) {
+      progressDialog.close();
+      showToast("Broken pdf file Url, Please try again.", context);
       // Handle the error if the PDF download fails
       debugPrint('Error downloading PDF: $e');
     }

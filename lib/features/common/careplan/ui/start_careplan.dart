@@ -285,9 +285,11 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
       debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
       if (startCarePlanResponse.status == 'success') {
         _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
+        model.setBusy(false);
         Navigator.pushNamed(context, RoutePaths.Setup_Doctor_For_Care_Plan);
         showToast(startCarePlanResponse.message!, context);
       } else {
+        model.setBusy(false);
         showToast(startCarePlanResponse.message!, context);
       }
     } catch (CustomException) {

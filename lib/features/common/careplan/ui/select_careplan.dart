@@ -947,12 +947,17 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
-        _fcm.subscribeToTopic(selectedCarePlan.toString());
+        _fcm.subscribeToTopic(selectedCarePlan.toString().replaceAll(" ", "_"));
 
         getCarePlan();
         //showSuccessDialog();
         //showToast(response.message!, context);
       } else {
+        progressDialog.close();
+        if(progressDialog.isOpen()){
+          progressDialog.close();
+        }
+        model.setBusy(false);
         showToast(response.message!, context);
       }
     } catch (CustomException) {
@@ -1084,7 +1089,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         semanticContainer: false,
         child: Container(
           height: 400.0,
-          width: 300.0,
+          width: 320.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

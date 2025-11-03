@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -61,16 +63,22 @@ Future<void> showNotification(RemoteMessage payload) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // FIX: Enable UI overlays
+  await SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: SystemUiOverlay.values,
+  );
   await Firebase.initializeApp();
   NotificationHandler().initialize();
-  Permission.notification.request();
-  await Permission.notification.isDenied.then((value) {
+  if(Platform.isIOS) {
+    Permission.notification.request();
+  }
+  /*await Permission.notification.isDenied.then((value) {
     if (value) {
       Permission.notification.request();
     }
-  });
+  });*/
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.167');

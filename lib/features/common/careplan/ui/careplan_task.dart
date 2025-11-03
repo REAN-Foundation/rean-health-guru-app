@@ -2597,6 +2597,33 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   _launchURL(String url) async {
     if(url.contains('.pdf') && Platform.isAndroid){
+
+
+
+      try {
+        await custom_web_wiew.launchUrl(
+          Uri.parse('https://docs.google.com/gview?embedded=true&url='+url),
+          customTabsOptions: const custom_web_wiew.CustomTabsOptions(
+            urlBarHidingEnabled: true,
+            showTitle: true,
+            shareIdentityEnabled: true,
+            instantAppsEnabled: true,
+          ),
+          safariVCOptions: const custom_web_wiew.SafariViewControllerOptions(
+            preferredBarTintColor: Colors.blue,
+            preferredControlTintColor: Colors.white,
+            barCollapsingEnabled: true,
+            entersReaderIfAvailable: false,
+            dismissButtonStyle: custom_web_wiew.SafariViewControllerDismissButtonStyle.close,
+          ),
+        );
+      } catch (e) {
+        /*ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Could not launch $url')),
+          );*/
+      }
+
+
      /* if (await canLaunchUrl(Uri.parse(url))) {
         await tabs.launch('https://docs.google.com/gview?embedded=true&url='+url);
       } else {
@@ -2623,9 +2650,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
         }
       });*/
-      downloadPDFWithDio(url, 'careplan_${DateTime
+      /*downloadPDFWithDio(url, 'careplan_${DateTime
           .now()
-          .microsecondsSinceEpoch}.pdf');
+          .microsecondsSinceEpoch}.pdf');*/
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
         try {

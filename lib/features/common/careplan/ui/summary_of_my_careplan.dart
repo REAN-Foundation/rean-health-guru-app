@@ -35,7 +35,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
             MaterialPageRoute(builder: (context) {
               return HomeView(0);
             }), (Route<dynamic> route) => false);
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
       } else {
         showToast(baseResponse.message!, context);
       }
@@ -162,7 +162,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                               SizedBox(width: MediaQuery.sizeOf(context).width, child: model.busy ? Center(child: CircularProgressIndicator(),) : ElevatedButton.icon(onPressed: (){
                                 ConfirmationBottomSheet(
                                     context: context,
-                                    height: 180,
+                                    height: 200,
                                     onPositiveButtonClickListner: () {
                                       //debugPrint('Positive Button Click');
                                       stopCarePlan(carePlanEnrollmentForPatientGlobe!

@@ -561,7 +561,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
       body['AppName'] = getAppName();
       body['AppVersion'] = _packageInfo.version;
-      body['isNotificationEnabled'] = isNotificationEnabled;
+      body['IsNotificationEnabled'] = isNotificationEnabled;
 
       final response = await apiProvider!
           .post('/user-device-details', header: map, body: body);

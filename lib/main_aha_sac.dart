@@ -23,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/constants/route_paths.dart';
 import 'infra/networking/api_provider.dart';
 import 'infra/networking/user_analytics_api_provider.dart';
+import 'infra/services/appsflyer_sdk.dart';
 //
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -80,6 +81,7 @@ Future<void> main() async {
   });*/
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await dotenv.load(fileName: 'res/.env');
+  await AppsFlyerService().initSdk();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.167');
   login ??= false;

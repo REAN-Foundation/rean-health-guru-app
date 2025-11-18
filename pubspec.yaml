@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.438+2088
+version: 1.8.440+2090
 
 publish_to: none
 
@@ -104,6 +104,7 @@ dependencies:
   path_provider_windows: ^2.1.0
   webview_flutter: ^4.4.4
   device_region: ^1.4.0
+  appsflyer_sdk: ^6.12.2
 
 dev_dependencies:
   #test: any

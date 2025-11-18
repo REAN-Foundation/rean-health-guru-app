@@ -34,6 +34,7 @@ import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
+import 'package:patient/infra/services/appsflyer_sdk.dart';
 import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -109,6 +110,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
+  }
+
+  getDeviceId() async {
+    String? id = await AppsFlyerService().appsflyerSdk.getAppsFlyerUID();
+    debugPrint("AppsFlyer UID: ==>  $id");
   }
 
   loadSharedPrefs() async {

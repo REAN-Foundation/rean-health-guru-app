@@ -182,7 +182,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 60,
+                          height: 58,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(0.0),

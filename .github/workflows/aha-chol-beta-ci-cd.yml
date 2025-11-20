@@ -247,7 +247,7 @@ jobs:
         id: download
         with:
           name: ios-artifacts
-          path: ios
+          path: ios/output
 
       - name: List downloaded artifacts
         run: |
@@ -257,6 +257,8 @@ jobs:
           ls -la output/ || echo "output directory not found"
           echo "Listing ios/output/build directory:"
           ls -la output/build/ || echo "output/build directory not found"
+          echo "Looking for IPA file:"
+          find output -name "*.ipa" -type f || echo "No IPA files found"
 
       - name: Publish to Appstore
         run: bundle exec fastlane upload_build_to_testflight_aha_chol flavor:aha_sac mode:release

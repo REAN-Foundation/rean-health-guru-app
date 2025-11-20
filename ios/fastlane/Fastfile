@@ -209,17 +209,23 @@ platform :ios do
     UI.user_error!("IPA file not found at #{ipa_path}") unless File.exist?(ipa_path)
     UI.success("Found IPA file at: #{ipa_path}")
 
-    # Upload to TestFlight using App Store Connect API and iTMSTransporter
+    UI.message("Uploading IPA to TestFlight...")
     upload_to_testflight(
       api_key: get_api_key,
-      apple_id: app_store_app_id,
       ipa: ipa_path,
-      skip_waiting_for_build_processing: true,
-      skip_pkg_validation: true,
-      changelog: options[:changelog],
+      skip_waiting_for_build_processing: false
+    )
+
+    UI.success("Upload complete! Now distributing to testers...")
+
+    pilot(
+      api_key: get_api_key,
+      apple_id: app_store_app_id,
+      distribute_only: true,
       distribute_external: true,
       groups: testers_group,
       notify_external_testers: true,
+      changelog: options[:changelog],
       beta_app_review_info: {
         contact_email: "support@reanfoundation.org",
         contact_first_name: "REANCare",
@@ -233,7 +239,8 @@ platform :ios do
       beta_app_description: "#{options[:description]}-#{options[:flavor]}",
       demo_account_required: true,
       uses_non_exempt_encryption: true,
-      reject_build_waiting_for_review: false
+      reject_build_waiting_for_review: false,
+      skip_waiting_for_build_processing: true
     )
   end
 

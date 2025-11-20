@@ -203,7 +203,14 @@ platform :ios do
       testers_group = [ "Beta Testers" ]
     end
 
-    ipa_path = "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa"
+    ipa_path = "../output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa"
+
+    # Debug: Show current directory and list files
+    UI.message("Current working directory: #{Dir.pwd}")
+    UI.message("Listing output directory:")
+    sh("ls -la output/ || echo 'output dir not found'")
+    UI.message("Looking for IPA files:")
+    sh("find . -name '*.ipa' -type f || echo 'no IPA found'")
 
     # Verify IPA exists
     UI.user_error!("IPA file not found at #{ipa_path}") unless File.exist?(ipa_path)

@@ -247,12 +247,14 @@ jobs:
         id: download
         with:
           name: ios-artifacts
-          path: ios/output
+          path: ios
 
       - name: List downloaded artifacts
         run: |
+          echo "Listing ios directory:"
+          ls -la .
           echo "Listing ios/output directory:"
-          ls -la output/
+          ls -la output/ || echo "output directory not found"
           echo "Listing ios/output/build directory:"
           ls -la output/build/ || echo "output/build directory not found"
 

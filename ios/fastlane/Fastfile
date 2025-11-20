@@ -203,7 +203,23 @@ platform :ios do
       testers_group = [ "Beta Testers" ]
     end
 
+    ipa_path = "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa"
+
+    # Verify IPA exists
+    UI.user_error!("IPA file not found at #{ipa_path}") unless File.exist?(ipa_path)
+    UI.success("Found IPA file at: #{ipa_path}")
+
+    # Upload to TestFlight using App Store Connect API and iTMSTransporter
     upload_to_testflight(
+      api_key: get_api_key,
+      apple_id: app_store_app_id,
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true,
+      skip_pkg_validation: true,
+      changelog: options[:changelog],
+      distribute_external: true,
+      groups: testers_group,
+      notify_external_testers: true,
       beta_app_review_info: {
         contact_email: "support@reanfoundation.org",
         contact_first_name: "REANCare",
@@ -213,18 +229,11 @@ platform :ios do
         demo_account_password: ENV["IOS_DEMO_PASSWORD"],
         notes: options[:changelog]
       },
-      apple_id:app_store_app_id,
-      ipa: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
-      api_key: get_api_key,
-      skip_waiting_for_build_processing: true,
-      changelog: options[:changelog],
-      distribute_external: true,
-      groups: testers_group,
-      notify_external_testers: true,
-      uses_non_exempt_encryption: true,
       beta_app_feedback_email: "support@reanfoundation.org",
       beta_app_description: "#{options[:description]}-#{options[:flavor]}",
-      demo_account_required: true
+      demo_account_required: true,
+      uses_non_exempt_encryption: true,
+      reject_build_waiting_for_review: false
     )
   end
 

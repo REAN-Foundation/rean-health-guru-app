@@ -203,14 +203,15 @@ platform :ios do
       testers_group = [ "Beta Testers" ]
     end
 
-    ipa_path = "../output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa"
+    # Construct absolute path to IPA
+    ipa_path = File.expand_path("../output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa", __dir__)
 
-    # Debug: Show current directory and list files
+    # Debug: Show paths and files
     UI.message("Current working directory: #{Dir.pwd}")
-    UI.message("Listing output directory:")
-    sh("ls -la output/ || echo 'output dir not found'")
-    UI.message("Looking for IPA files:")
-    sh("find . -name '*.ipa' -type f || echo 'no IPA found'")
+    UI.message("Fastfile directory: #{__dir__}")
+    UI.message("Looking for IPA at absolute path: #{ipa_path}")
+    UI.message("Checking if parent directory exists:")
+    sh("ls -la #{File.dirname(File.dirname(ipa_path))} || echo 'parent dir not found'")
 
     # Verify IPA exists
     UI.user_error!("IPA file not found at #{ipa_path}") unless File.exist?(ipa_path)

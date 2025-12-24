@@ -38,7 +38,6 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        if: ${{ secrets.APP_ENV_BUCKET_PATH != '' }}
         run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Firebase config

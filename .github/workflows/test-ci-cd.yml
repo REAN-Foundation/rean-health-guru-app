@@ -41,7 +41,6 @@ jobs:
         run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Firebase config
-        if: ${{ secrets.FIREBASE_SECRET_JSON != '' }}
         run: |
           echo '${{ secrets.FIREBASE_SECRET_JSON }}' > android/app/src/dev/google-services.json
 

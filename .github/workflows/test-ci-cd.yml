@@ -1,0 +1,61 @@
+name: Test-Workflow
+
+# Controls when the workflow will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  workflow_dispatch:
+
+jobs:
+  Android-BuildAPK:
+    name: Build Android APK (test)
+    runs-on: ubuntu-latest
+    environment: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        if: ${{ secrets.APP_ENV_BUCKET_PATH != '' }}
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
+
+      - name: Firebase config
+        if: ${{ secrets.FIREBASE_SECRET_JSON != '' }}
+        run: |
+          echo '${{ secrets.FIREBASE_SECRET_JSON }}' > android/app/src/dev/google-services.json
+
+      - name: Build Debug APK
+        run: |
+          flutter clean
+          flutter build apk --debug \
+            --flavor dev \
+            -t lib/main_dev.dart
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-apk
+          path: build/app/outputs/flutter-apk/app-dev-debug.apk
+          retention-days: 7

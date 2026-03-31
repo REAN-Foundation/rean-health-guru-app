@@ -11,7 +11,6 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/features/misc/ui/create_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
@@ -605,11 +604,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         } else {
           userDiviceData(
               model, userData.data!.accessToken!, userData.data!.user!.id);
-          Navigator.pushAndRemoveUntil(context,
+         /* Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return CreateProfile();
-          }), (Route<dynamic> route) => false);
+          }), (Route<dynamic> route) => false);*/
           model.setBusy(false);
+          _customAlertForDisablingNewRegistration();
         }
       } else {
         showToast(userData.message!, context);
@@ -622,6 +622,92 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       model.setBusy(false);
       setState(() {});
     }
+  }
+
+
+  _customAlertForDisablingNewRegistration() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false, // User must acknowledge
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            elevation: 10,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Icon Header
+                  Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.info_outline_rounded,
+                      color: primaryColor,
+                      size: 40,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Title
+                  Text(
+                    'Registrations Closed',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Content
+                  Text(
+                    'The Heart & Stroke Helper™ application will be discontinued on June 30.\n\nNew user registrations and enrollments are no longer available.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey[700],
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'I Understand',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
  getCarePlan(LoginViewModel model, String auth, String userId) async {

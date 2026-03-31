@@ -994,8 +994,37 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
   }
 
+  Future<void> _checkForcedLogoutByDate() async {
+    final now = DateTime.now();
+    final target = DateTime(2026, 7, 1);
+
+    if (now.year == target.year && now.month == target.month && now.day == target.day) {
+      // Clear stored session/preferences
+      try {
+        await _sharedPrefUtils.clearAll(); // existing helper used elsewhere in the project
+      } catch (e) {
+        debugPrint('Error clearing prefs during forced logout: $e');
+      }
+
+      // Optionally clear specific flags (keeps consistent with existing code)
+      try {
+        await _sharedPrefUtils.saveBoolean('login1.8.167', null);
+      } catch (_) {}
+
+      // Navigate to login and remove all routes
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginWithOTPView()),
+              (Route<dynamic> route) => false,
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
+    _checkForcedLogoutByDate();
     setupInteractedMessage();
     // Initialize the NotificationHandler
     NotificationHandler().initialize();

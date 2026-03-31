@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -69,6 +71,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
   List<task_pojo.Items> pendingTasksList = <task_pojo.Items>[];
   List<task_pojo.Items> completedTasksList = <task_pojo.Items>[];
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  bool _hideDiscontinuationRichText = false;
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -87,6 +91,13 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
+      try {
+        final val = await _sharedPrefUtils.readBoolean('hide_discontinuation_banner');
+        _hideDiscontinuationRichText = val ?? false;
+      } catch (_) {
+        _hideDiscontinuationRichText = false;
+      }
+      setState(() {});
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -328,6 +339,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
+                discontinuationBanner(),
+
                 for (int i = 0 ; i < RemoteConfigValues.homeScreenTile.length ; i++)...[
                   if(RemoteConfigValues.homeScreenTile[i] == 'Medications')
                     myMedication(),
@@ -363,6 +376,106 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     Future.delayed(const Duration(seconds: 5), () {
       healthJourney();
       setState(() {});
+    });
+  }
+
+  Widget discontinuationBanner(){
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: redLightAha,
+          border: Border.all(color: primaryColor),
+          borderRadius: BorderRadius.circular(4)
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('This application will be discontinued on\nJune 30th.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat')),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(width: MediaQuery.of(context).size.width - 120, height: 1, color: primaryColor),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Click here ',
+                    style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Montserrat')),
+                Text('to Download Patient Report',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Montserrat')),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(width: MediaQuery.of(context).size.width - 120, height: 1, color: primaryColor),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black, // Default color for the whole span
+                ),
+                children: [
+                  TextSpan(
+                    text: 'To stop receiving app discontinuation notifications, please ',
+                  ),
+                  TextSpan(
+                    text: 'Click here',
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        _suppressDiscontinuationRichText();
+                        // Logic for stopping notifications goes here
+                        debugPrint('Stop notifications clicked');
+                      },
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _suppressDiscontinuationRichText() async {
+    try {
+      await _fcm.unsubscribeFromTopic("All_Users");
+    } catch (e) {
+      debugPrint('unsubscribe error: $e');
+    }
+    try {
+      await _sharedPrefUtils.saveBoolean('hide_discontinuation_banner', true);
+    } catch (e) {
+      debugPrint('save preference error: $e');
+    }
+    setState(() {
+      _hideDiscontinuationRichText = true;
     });
   }
 

@@ -380,109 +380,151 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     });
   }
 
-  Widget discontinuationBanner(){
+  Widget discontinuationBanner() {
+    
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: redLightAha,
-          border: Border.all(color: primaryColor),
-          borderRadius: BorderRadius.circular(4)
+          color: const Color(0xFFFCF3E8),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.black.withOpacity(0.05)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('This application will be discontinued on\nJune 30th.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat')),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(width: MediaQuery.of(context).size.width - 120, height: 1, color: primaryColor),
-            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: (){
-                    widget.positionToChangeNavigationBar(2);
-                  },
-                  child: Text('Click here ',
-                      style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.warning_rounded, color: Color(0xFFECAE35), size: 28),
+                      const SizedBox(width: 8),
+                      const Expanded(
+                        child: Text(
+                          'Application Discontinuation',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Text('to Download Patient Report',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat')),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(width: MediaQuery.of(context).size.width - 120, height: 1, color: primaryColor),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat',
-                  color: Colors.black, // Default color for the whole span
-                ),
-                children:  _hideDiscontinuationRichText
-                    ? [
-                  TextSpan(
-                    text: 'Discontinuation notifications are disabled.',
-                  )
-                ]
-                    : [
-                  TextSpan(
-                    text: 'To stop receiving app discontinuation notifications, please ',
-                  ),
-                  TextSpan(
-                    text: 'Click here',
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      decoration: TextDecoration.underline,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        ConfirmationBottomSheet(
-                          context: context,
-                          height: 200,
-                          tittle: 'Stop Notifications',
-                          question:
-                          'Do you want to stop receiving app discontinuation notifications?',
-                          onPositiveButtonClickListner: () {
-                            _suppressDiscontinuationRichText();
-                            debugPrint('Stop notifications confirmed');
-                          },
-                          onNegativeButtonClickListner: () {
-
-                            debugPrint('Stop notifications canceled');
-                          },
-                        );
-                        // Logic for stopping notifications goes here
-                        debugPrint('Stop notifications clicked');
-                      },
-                  ),
-                ],
+            const SizedBox(height: 12),
+            const Text(
+              'This application will be discontinued effective June 30th.',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                height: 1.4,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Montserrat',
               ),
-            )
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Please download your patient report before this date.',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                height: 1.4,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  widget.positionToChangeNavigationBar(2);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF5B8BE4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Download Patient Report',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Center(
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: Color(0xFF6F7492),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Montserrat',
+                  ),
+                  children: _hideDiscontinuationRichText
+                      ? const [
+                          TextSpan(
+                            text: "You will not receive any further discontinuation notifications",
+                          )
+                        ]
+                      : [
+                          TextSpan(
+                            text: 'Click Here',
+                            style: const TextStyle(
+                              color: Colors.blueAccent,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                ConfirmationBottomSheet(
+                                  context: context,
+                                  height: 200,
+                                  tittle: 'Stop Notifications',
+                                  question: 'Do you want to stop receiving app discontinuation notifications?',
+                                  onPositiveButtonClickListner: () {
+                                    _suppressDiscontinuationRichText();
+                                    debugPrint('Stop notifications confirmed');
+                                  },
+                                  onNegativeButtonClickListner: () {
+                                    debugPrint('Stop notifications canceled');
+                                  },
+                                );
+                              },
+                          ),
+                          const TextSpan(
+                            text: ' to stop receiving these discontinuation notifications',
+                          ),
+                        ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

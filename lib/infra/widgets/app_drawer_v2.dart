@@ -784,7 +784,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                   const SizedBox(height: 20),
                   // Title
                   Text(
-                    'Registrations Closed',
+                    'Health Journey\nRegistrations Closed',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -795,7 +795,7 @@ class _AppDrawerState extends State<AppDrawerV2> {
                   const SizedBox(height: 16),
                   // Content
                   Text(
-                    'The Heart & Stroke Helper™ application will be discontinued on June 30.\n\nNew health journey enrollments are no longer available.',
+                    'The Heart & Stroke Helper™ application will be discontinued effective June 30.\n\nNew health journey enrollments are no longer available.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,

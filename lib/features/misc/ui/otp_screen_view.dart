@@ -669,7 +669,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   const SizedBox(height: 16),
                   // Content
                   Text(
-                    'The Heart & Stroke Helper™ application will be discontinued on June 30.\n\nNew user registrations and enrollments are no longer available.',
+                    'The Heart & Stroke Helper™ application will be discontinued effective June 30.\n\nNew user registrations and enrollments are no longer available.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,

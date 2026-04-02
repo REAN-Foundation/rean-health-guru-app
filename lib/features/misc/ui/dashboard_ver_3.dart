@@ -30,6 +30,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_outlined_screen.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -409,13 +410,18 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Click here ',
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat')),
+                InkWell(
+                  onTap: (){
+                    widget.positionToChangeNavigationBar(2);
+                  },
+                  child: Text('Click here ',
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 14,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat')),
+                ),
                 Text('to Download Patient Report',
                     style: TextStyle(
                         color: Colors.black,
@@ -437,7 +443,13 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                   fontFamily: 'Montserrat',
                   color: Colors.black, // Default color for the whole span
                 ),
-                children: [
+                children:  _hideDiscontinuationRichText
+                    ? [
+                  TextSpan(
+                    text: 'Discontinuation notifications are disabled.',
+                  )
+                ]
+                    : [
                   TextSpan(
                     text: 'To stop receiving app discontinuation notifications, please ',
                   ),
@@ -449,7 +461,21 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        _suppressDiscontinuationRichText();
+                        ConfirmationBottomSheet(
+                          context: context,
+                          height: 200,
+                          tittle: 'Stop Notifications',
+                          question:
+                          'Do you want to stop receiving app discontinuation notifications?',
+                          onPositiveButtonClickListner: () {
+                            _suppressDiscontinuationRichText();
+                            debugPrint('Stop notifications confirmed');
+                          },
+                          onNegativeButtonClickListner: () {
+
+                            debugPrint('Stop notifications canceled');
+                          },
+                        );
                         // Logic for stopping notifications goes here
                         debugPrint('Stop notifications clicked');
                       },

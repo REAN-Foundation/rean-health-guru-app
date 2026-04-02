@@ -617,8 +617,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
-        Future.delayed(
-            const Duration(seconds: 2), () => showHealthJourneyDialog());
+        /*Future.delayed(
+            const Duration(seconds: 2), () => showHealthJourneyDialog());*/
         /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(

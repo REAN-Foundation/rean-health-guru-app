@@ -70,7 +70,7 @@ platform :ios do
       app_identifier: options[:identifier],
       api_key: get_api_key,
       type: options[:type],
-      readonly: true
+      readonly: false
     )
   end
 

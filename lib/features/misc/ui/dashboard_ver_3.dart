@@ -478,6 +478,28 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               ),
             ),
             const SizedBox(height: 12),
+            if (RemoteConfigValues.faq_url.isNotEmpty) ...[
+              Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'View FAQs for More Information',
+                    style: const TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Montserrat',
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        initWebView(RemoteConfigValues.faq_url);
+                      },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             Center(
               child: RichText(
                 textAlign: TextAlign.center,

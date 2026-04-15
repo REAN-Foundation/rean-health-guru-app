@@ -195,6 +195,12 @@ jobs:
         with:
           fastlane-dir: ios
 
+      - name: Install iOS Platform SDK
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.3.app
+          sudo xcodebuild -runFirstLaunch
+          xcodebuild -downloadPlatform iOS
+
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 

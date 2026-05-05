@@ -2,9 +2,14 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # xcversion(version: "~> 14.1")
-    #xcversion(version: "16.3")
-    xcversion(version: "26.4")
+    xcode_version = ENV["XCODE_VERSION"]
+
+    if xcode_version.to_s.strip.empty?
+      UI.important("XCODE_VERSION not provided. Using runner default Xcode.")
+    else
+      xcodes(version: xcode_version, select_for_current_build_only: true)
+    end
+
     setup_ci
   end
 

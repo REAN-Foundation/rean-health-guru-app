@@ -646,7 +646,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     height: 70,
                     width: 70,
                     decoration: BoxDecoration(
-                      color: primaryColor.withOpacity(0.1),
+                      color: primaryColor..withAlpha((0.01 * 255).round()),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

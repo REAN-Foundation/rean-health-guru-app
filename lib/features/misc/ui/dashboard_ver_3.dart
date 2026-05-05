@@ -94,7 +94,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
       try {
         final val = await _sharedPrefUtils.readBoolean('hide_discontinuation_banner');
-        _hideDiscontinuationRichText = val ?? false;
+        _hideDiscontinuationRichText = val;
       } catch (_) {
         _hideDiscontinuationRichText = false;
       }
@@ -389,10 +389,10 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         decoration: BoxDecoration(
           color: const Color(0xFFFCF3E8),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.black.withOpacity(0.05)),
+          border: Border.all(color: Colors.black.withAlpha((0.05 * 255).round())),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withAlpha((0.05 * 255).round()),
               spreadRadius: 1,
               blurRadius: 4,
               offset: const Offset(0, 2),

@@ -180,7 +180,7 @@ jobs:
     # needs: Github-ECR-Tag-Check
     environment: aha-uat
     # needs: [Code-Scan]
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       # Checkout Code
       - name: Checkout code
@@ -194,6 +194,12 @@ jobs:
         uses: ./.github/actions/setup_fastlane
         with:
           fastlane-dir: ios
+
+      - name: Install iOS Platform SDK
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.3.app
+          sudo xcodebuild -runFirstLaunch
+          xcodebuild -downloadPlatform iOS
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
@@ -248,7 +254,7 @@ jobs:
   iOS-Release-Alpha:
     environment: aha-uat
     needs: iOS-BuildApp
-    runs-on: macos-15
+    runs-on: macos-26
     defaults:
       run:
         shell: bash

@@ -344,9 +344,10 @@ class _AppDrawerState extends State<AppDrawerV2> {
                 child: InkWell(
                   onTap: () {
                     if (carePlanEnrollmentForPatientGlobe == null) {
-                      Navigator.popAndPushNamed(
+                      _customAlertForDisablingNewRegistration();
+                      /*Navigator.popAndPushNamed(
                           context, RoutePaths.Select_Care_Plan);
-                      FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_select_health_journey_button_click');
+                      FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_select_health_journey_button_click');*/
                     } else {
                       FirebaseAnalytics.instance.logEvent(name: 'navigation_menu_view_health_journey_status_button_click');
                       Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
@@ -748,6 +749,91 @@ class _AppDrawerState extends State<AppDrawerV2> {
         ),
       ],
     );
+  }
+
+  _customAlertForDisablingNewRegistration() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false, // User must acknowledge
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            elevation: 10,
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Icon Header
+                  Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      color: primaryColor..withAlpha((0.01 * 255).round()),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.info_outline_rounded,
+                      color: primaryColor,
+                      size: 40,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Title
+                  Text(
+                    'Health Journey\nRegistrations Closed',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Content
+                  Text(
+                    'The Heart & Stroke Helper™ application will be discontinued effective June 30.\n\nNew health journey enrollments are no longer available.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey[700],
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'I Understand',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   _logoutConfirmation() {

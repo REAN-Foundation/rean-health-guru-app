@@ -34,6 +34,7 @@ import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/services/NotificationHandler.dart';
+import 'package:patient/infra/services/appsflyer_sdk.dart';
 import 'package:patient/infra/services/update_checker.dart';
 import 'package:patient/infra/services/user_analytics_service.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -109,6 +110,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
+  }
+
+  getDeviceId() async {
+    String? id = await AppsFlyerService().appsflyerSdk.getAppsFlyerUID();
+    debugPrint("AppsFlyer UID: ==>  $id");
   }
 
   loadSharedPrefs() async {
@@ -561,7 +567,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
       body['AppName'] = getAppName();
       body['AppVersion'] = _packageInfo.version;
-      body['isNotificationEnabled'] = isNotificationEnabled;
+      body['IsNotificationEnabled'] = isNotificationEnabled;
 
       final response = await apiProvider!
           .post('/user-device-details', header: map, body: body);
@@ -611,8 +617,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
-        Future.delayed(
-            const Duration(seconds: 2), () => showHealthJourneyDialog());
+        /*Future.delayed(
+            const Duration(seconds: 2), () => showHealthJourneyDialog());*/
         /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(
@@ -988,8 +994,37 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       }
   }
 
+  Future<void> _checkForcedLogoutByDate() async {
+    final now = DateTime.now();
+    final target = DateTime(2026, 7, 1);
+
+    if (now.year == target.year && now.month == target.month && now.day == target.day) {
+      // Clear stored session/preferences
+      try {
+        await _sharedPrefUtils.clearAll(); // existing helper used elsewhere in the project
+      } catch (e) {
+        debugPrint('Error clearing prefs during forced logout: $e');
+      }
+
+      // Optionally clear specific flags (keeps consistent with existing code)
+      try {
+        await _sharedPrefUtils.saveBoolean('login1.8.167', null);
+      } catch (_) {}
+
+      // Navigate to login and remove all routes
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginWithOTPView()),
+              (Route<dynamic> route) => false,
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
+    _checkForcedLogoutByDate();
     setupInteractedMessage();
     // Initialize the NotificationHandler
     NotificationHandler().initialize();

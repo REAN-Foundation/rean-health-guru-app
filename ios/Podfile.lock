@@ -1,4 +1,12 @@
 PODS:
+  - appsflyer_sdk (6.17.7):
+    - appsflyer_sdk/Core (= 6.17.7)
+  - appsflyer_sdk/Core (6.17.7):
+    - AppsFlyerFramework (= 6.17.7)
+    - Flutter
+  - AppsFlyerFramework (6.17.7):
+    - AppsFlyerFramework/Main (= 6.17.7)
+  - AppsFlyerFramework/Main (6.17.7)
   - device_info_plus (0.0.1):
     - Flutter
   - device_region (0.0.1):
@@ -197,6 +205,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - device_region (from `.symlinks/plugins/device_region/ios`)
   - devicelocale (from `.symlinks/plugins/devicelocale/ios`)
@@ -225,6 +234,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - DKImagePickerController
     - DKPhotoGallery
     - Firebase
@@ -247,6 +257,8 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
+  appsflyer_sdk:
+    :path: ".symlinks/plugins/appsflyer_sdk/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   device_region:
@@ -299,6 +311,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
+  appsflyer_sdk: a6fdf00590a89e91bd9794815691ab8738e465b9
+  AppsFlyerFramework: ae7caf1688348f2d7a742037bd4fc6966d39d362
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   device_region: 896a80820f38a841066c458ac96ad821c1e259d3
   devicelocale: 35ba84dc7f45f527c3001535d8c8d104edd5d926

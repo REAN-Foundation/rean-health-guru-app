@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_web_wiew;
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -28,6 +30,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_outlined_screen.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -69,6 +72,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
   List<task_pojo.Items> pendingTasksList = <task_pojo.Items>[];
   List<task_pojo.Items> completedTasksList = <task_pojo.Items>[];
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  bool _hideDiscontinuationRichText = false;
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -87,6 +92,13 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
+      try {
+        final val = await _sharedPrefUtils.readBoolean('hide_discontinuation_banner');
+        _hideDiscontinuationRichText = val;
+      } catch (_) {
+        _hideDiscontinuationRichText = false;
+      }
+      setState(() {});
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -328,6 +340,8 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
+                discontinuationBanner(),
+
                 for (int i = 0 ; i < RemoteConfigValues.homeScreenTile.length ; i++)...[
                   if(RemoteConfigValues.homeScreenTile[i] == 'Medications')
                     myMedication(),
@@ -363,6 +377,195 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     Future.delayed(const Duration(seconds: 5), () {
       healthJourney();
       setState(() {});
+    });
+  }
+
+  Widget discontinuationBanner() {
+    
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFCF3E8),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.black.withAlpha((0.05 * 255).round())),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha((0.05 * 255).round()),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.warning_rounded, color: Color(0xFFECAE35), size: 28),
+                      const SizedBox(width: 8),
+                      const Expanded(
+                        child: Text(
+                          'Application Discontinuation',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'This application will be discontinued effective June 30th.',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                height: 1.4,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Please download your patient report before this date.',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                height: 1.4,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  widget.positionToChangeNavigationBar(2);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF5B8BE4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Download Patient Report',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            if (RemoteConfigValues.faq_url.isNotEmpty) ...[
+              Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'View FAQs for More Information',
+                    style: const TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Montserrat',
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        initWebView(RemoteConfigValues.faq_url);
+                      },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+            Center(
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    color: Color(0xFF6F7492),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Montserrat',
+                  ),
+                  children: _hideDiscontinuationRichText
+                      ? const [
+                          TextSpan(
+                            text: "You will not receive any further discontinuation notifications",
+                          )
+                        ]
+                      : [
+                          TextSpan(
+                            text: 'Click Here',
+                            style: const TextStyle(
+                              color: Colors.blueAccent,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                ConfirmationBottomSheet(
+                                  context: context,
+                                  height: 200,
+                                  tittle: 'Stop Notifications',
+                                  question: 'Do you want to stop receiving app discontinuation notifications?',
+                                  onPositiveButtonClickListner: () {
+                                    _suppressDiscontinuationRichText();
+                                    debugPrint('Stop notifications confirmed');
+                                  },
+                                  onNegativeButtonClickListner: () {
+                                    debugPrint('Stop notifications canceled');
+                                  },
+                                );
+                              },
+                          ),
+                          const TextSpan(
+                            text: ' to stop receiving these discontinuation notifications',
+                          ),
+                        ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _suppressDiscontinuationRichText() async {
+    try {
+      await _fcm.unsubscribeFromTopic("All_Users");
+    } catch (e) {
+      debugPrint('unsubscribe error: $e');
+    }
+    try {
+      await _sharedPrefUtils.saveBoolean('hide_discontinuation_banner', true);
+    } catch (e) {
+      debugPrint('save preference error: $e');
+    }
+    setState(() {
+      _hideDiscontinuationRichText = true;
     });
   }
 

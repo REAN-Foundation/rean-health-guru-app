@@ -268,7 +268,7 @@ jobs:
   iOS-PublishAppInternally:
     environment: dev
     needs: iOS-BuildApp
-    runs-on: macos-15
+    runs-on: macos-26
     defaults:
       run:
         shell: bash
